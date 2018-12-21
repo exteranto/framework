@@ -1,4 +1,6 @@
 
+install: apt-get install sed
+
 script: ./bin/script.sh
 
 before_deploy: ./bin/release.sh
