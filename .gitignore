@@ -1,8 +1,8 @@
 
 # Dependencies and builds
-node_modules/
-types/
-dist/
+*node_modules/
+*types/
+*dist/
 
 # Editors
 .vscode/*

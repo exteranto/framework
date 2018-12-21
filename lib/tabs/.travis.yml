@@ -1,9 +1,7 @@
-install:
-  - npm i
-  - npm run build
 
-script:
-  - npm run test
+script: ./bin/script.sh
+
+before_deploy: ./bin/release.sh
 
 deploy:
   skip_cleanup: true
