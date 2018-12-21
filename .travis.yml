@@ -1,5 +1,5 @@
 
-install: apt-get install sed
+install: sudo apt-get install sed
 
 script: ./bin/script.sh
 
