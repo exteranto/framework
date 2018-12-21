@@ -1,0 +1,16 @@
+install:
+  - npm i
+  - npm run build
+
+script:
+  - npm run test
+
+deploy:
+  skip_cleanup: true
+  provider: npm
+  email: kouks.koch@gmail.com
+  api_key:
+    secure: 1hP4AXCIMLIxTh9WxOBrdZZOeSGZgn3qyZhFRveCGCMu3MRvEiI6TGuY4cIigxLtLdtemZF/4jaZaWn/mX1cF3V0vGsAKfl6SzcbXXsUGq5gkZ4W4JUkaCCiT+cgfvi74DWjTxcbov/65Kh6jLTmx4LnWk/dZdrvUqNENf7uHPeFL558QAzmYScHbiHfTFAOnB4uy+kOqLL+dq2arN3aVi/rA2M+4H1sFePfszMudnqfxuLYloDqp/71qlGFdhvad2Jn+qWyTgU1wYsh8AM0mLQpy/iSESEJkzfNveCOiUheXfR7iRNxBgxWL07Q73VOOZpRAM8IaihssLecWZTVdmdswujLQadwHEdmwlR5Vmcumtf0+Wtde3I8DiGwmNx3C6qgsDEDB0QTIglhHDvP25WI8DT7v5oP2t2bLWSoJYIZaUzRzGz+LW81Wc0YLPc9yeHFNZdr3SERZeys9sdwwugmDiEuAR/aOA20gVmqoPeisbtvYUhzzhWxH+YJnP/w3AOl2OruEuezO9J4Oj9dnaPGOVJ4f31/O/uA1v5AOoByhAhr2DBVBSLR84a2JOgUGy/cYQv/CZa4Ke+SxqyTFj0gGiyquAsWSwCkrWAeuyeQlJkCyxNLZKYtBgzppwPpVrEtjMiFl4eo2HJ12NYFhMLtNDae42TvgWUcIvrEz2s=
+  on:
+    tags: true
+    repo: exteranto/core

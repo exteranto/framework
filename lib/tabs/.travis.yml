@@ -1,0 +1,16 @@
+install:
+  - npm i
+  - npm run build
+
+script:
+  - npm run test
+
+deploy:
+  skip_cleanup: true
+  provider: npm
+  email: kouks.koch@gmail.com
+  api_key:
+    secure: r8QnadrBjym81ibVA1mbJJK0Rpg01PPkIov/xovs/lnxsaLOzE5xXqyXc4yl+5Up58Nf/urfIxIYAJatGxt+K92amFYE7+JR289E4XqXVjf8NGzDQjSZNybwTKjFfOBRJtqNMFEKWHrpt00PNs7McMEpjx5jkdQN/tOG7NBvONiVXhS7Y74ETDNmx9/0FLBX+1VWjEBIzuaO/W6/riVz6Qw51xWdN7A8Y9d2+kgOAPfUN8bxgoLYS7+yai/n+7fZGrlhstoOUYFp3pG5S1tjeVMpFxn7iKMLMkbN0NRxYig7exO2laNrv7NH83T7wS13y107fiKXvFK3KbyjLDt9TgS47sfBtkAySgRKPQL20t/+9qvPRqzuDitba1WQuak2AbTl9KB8sS88rYQHrWuniiPpvqJmSHq9WwE/8ooVH3B5n2CaimjUwBj9A8KanjVikr+XNMo7CHhRK6eYqCAbayuc/TQAIkEx5yWi26vPujIntmCp/5bhXsOq4+43Cm2QAJa2Hz+L8nO+8j+d+8vkkwihmof2nYlJ00mAGoao4FkubbSIAKIl6JoQHBb3LBMLZFTk1srimqDeLgpAoXdtgh3Ns+v2G35DLjVo2dwKS0ghokEsZ0UJ+xAW35MY0iPhMOI27rUJXFgA6/kTAonGATiJlcB1iXM78SrIhGoZRsY=
+  on:
+    tags: true
+    repo: exteranto/tabs

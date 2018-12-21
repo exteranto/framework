@@ -1,0 +1,38 @@
+{
+  "name": "@exteranto/aop",
+  "version": "1.0.10",
+  "description": "The Aspects Package for the Exteranto Framework.",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "build": "tslint --project tsconfig.json && tsc",
+    "test": "mocha test/setup.ts test/**/*.spec.ts -r ts-node/register"
+  },
+  "keywords": [
+    "extension",
+    "framework",
+    "typescript",
+    "exteranto",
+    "aop",
+    "aspect"
+  ],
+  "author": {
+    "name": "Pavel Koch",
+    "email": "kouks.koch@gmail.com",
+    "url": "https://pavelkoch.io"
+  },
+  "repository": "github:exteranto/aop",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^10.12.10",
+    "typescript": "^2.9.2"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.2.0",
+    "mocha": "^5.1.1",
+    "ts-node": "^6.2.0",
+    "tslint": "^5.11.0"
+  }
+}

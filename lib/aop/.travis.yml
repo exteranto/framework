@@ -1,0 +1,16 @@
+install:
+  - npm i
+  - npm run build
+
+script:
+  - npm run test
+
+deploy:
+  skip_cleanup: true
+  provider: npm
+  email: kouks.koch@gmail.com
+  api_key:
+    secure: kCub91Fz9guITLn9lRik3GfQoUL0QRU/KI8k20/DAWUPul6oFQOqGcwEZJKOShKx/YyC05dCkUdhfH4iOT/2NHqsDMBoZh3lPwZjYLItP3Msum0WxBuu4uKSzWPSeGPqkvWno5brv/V5u09D/uL6gxbKblxnneBDDL9vgl3RyAl46ohOdiWnetUsMs5MfiMX8RmnFs5vWdiaXrnp4MZEJztlrcQbEL+qgH1HZUCk6igRWN5vAD/lhDzo0RWNE8qPhUg46GEJgc5V1CWCMKZy55MzpvW3S8T1uk40xFNtiHuZI7QQjzye2ub1M+kuAke6XX61GVHT/e0s8/87IK/m1gGSrUa+bBsVZ9byvqPTpLoAhLBMdL3DxkI6ULIaBZcL6sgGOxqIOC81gWIYk4rMMGdavQK47FkSMNlCm9cy7DlIFYmvRVyPfcyIuz6PyLOzEZ+nPl4EqJW6GEOp4fs6iuFK7gKkwpl5RosaBBsaBHfq+Gmxg0ILIvAUDAJ6TkEXClaPRKzH8L8zo4CxlEyQeT/VhZEdCeGgMIKK9HF0tnIQQ3DIzGZnQmJdzJQUcDph9xZZkFn8gE+zHvRkJVU/pVVINxwuOB4Sn6cAmugqhGI+T5kKss/kyhFSuWY/GKTKQR4e5Wa/wY2wWCOSTtidgOJXor4oFRbVUU9aRo52iis=
+  on:
+    tags: true
+    repo: exteranto/aop

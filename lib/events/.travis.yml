@@ -1,0 +1,16 @@
+install:
+  - npm i
+  - npm run build
+
+script:
+  - npm run test
+
+deploy:
+  skip_cleanup: true
+  provider: npm
+  email: kouks.koch@gmail.com
+  api_key:
+    secure: dOWXv4pUpjaJwuGj9wSknEBCoceVOM4xjx2bd6V1NXpnwzGprrQzBShH49POKO80sGHoF1TA9QBv3HO0o8oHujWc5K845qchXTps4p+1/ZAc3JJgo5Aldji1IiSZETGu7RGxsGXj4SjNM020gQjNMp+IVAheHpofZdV5NMD1EGexC/QuJBnBU+rHsf900TqpqTP2G1+952diHGw32LHE0MCJhsYlEHhYq4B7qg+EdFJ9q80Iu5Pq3isXHT6VLqEW25ysbtprPISGKgYkUGGdqCWIqEzbMq6Do2C0jxUt+SbQw91X+Vmj8LWr30S2j/eCGH4/hNpB+tXH761E7lVhfgTfcOyEXFyTsauyM/jIdUHvJCsLLp3lR/AGWl2Mb5u84h0IaTF0OkM9YPlvdn5JNefdoNxMKAybLU9DtOBUtr2SJFeCoQLmQpEdkf+/4Oy/tlqModrk4Om/YQMeh+GZKb+Ih6YQF/Z1BDX9GNMJsGLuVKbZaTx8D5vXxp9xWm2tVAINUEaga+OlsY5ImkzejhO+8mErXO8Ra7QR0vaU8nIa8plpWvPH7s/InypR45WTxQsole7RDnkQcN8lgOKzC9xHBq/+I691HGV78wbyUsISY0D3HH8QKSiRzLozzTtrT14yx7gbYMCneyUR4RUdpH5GZIeFj+vgspfVPnjbzWc=
+  on:
+    tags: true
+    repo: exteranto/events

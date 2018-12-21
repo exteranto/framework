@@ -1,0 +1,16 @@
+install:
+  - npm i
+  - npm run build
+
+script:
+  - npm run test
+
+deploy:
+  skip_cleanup: true
+  provider: npm
+  email: kouks.koch@gmail.com
+  api_key:
+    secure: 1puASbQ7bXLqCjFlG01xJBOQOyrOoPdC741uurNEETYL2BWEK0c+0Vb3xaG1ugdYIia2VBJwmnUEVKt2iH2rNywa1Y5fL9ByTgKRlE+uzSVu22ppninVfT8fWj/B/TG7UIN/s0kY1I2mArBK9ie+8FnoAoB5V43TTXT97/+HIlCFoTH3lFYjWCVEY7sqK2ytgEREK2QHmcr3O+8S/7ev6Ao919AGfWWYItBJMrBVmcPDr9tTM0eWoprZ+B+wkKbm9fvG1peUxyWo+7z8cxiYt4PLzLEmP0fpB5uIptWGLCm6cWlyRXlXQH7qcixchRZQDcBmpGFPkWsvWAhn1j9h7McUmBw3T/A2k+Cg2fiVTkoxvfpF/Zj+yNWSymbLKMqqPo4kwDPFvZ2CM+5Wmx1+B1s5qMBwh4tc6uUKe6IHuLS/A4xSdqeXfuy5OnsPih/HeUh2FFC/OzwEb6Q6389txIueHNFxRIxM3OFL3b99fanAe5gbMWMI9lP6Px2bwObqJXHJ2ECgyIDEiqB+jYKCSEzUwOxtMWYH7SlT2TiODi/HWUhXdcH4RgInESmCOMa8ifWre5ahDjB9kB16n5YYPaqBUcebAQKuCSk1+FmBJkEUfrSh6tdPAQ5ylVbqvEWEqJkrXe7sMn0YFCKc1CreGN5zsToweVa88uj+AOes+28=
+  on:
+    tags: true
+    repo: exteranto/storage
