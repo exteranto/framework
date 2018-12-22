@@ -16,26 +16,20 @@ export class TabsProvider extends Provider {
   }
 
   /**
-   * Register the provider services.
-   *
-   * @param {any} container
+   * Boot the provider services.
    */
-  public register (container: any) : void {
-    container.bind(ChromeTabs).to(Tabs).for(Browser.CHROME)
-    container.bind(ExtensionsTabs).to(Tabs).for(Browser.EXTENSIONS)
-    container.bind(SafariTabs).to(Tabs).for(Browser.SAFARI)
-
-    container.resolve(Tabs).registerEvents(
-      container.resolve(Dispatcher),
-    )
+  public boot () : void {
+    this.container.bind(ChromeTabs).to(Tabs).for(Browser.CHROME)
+    this.container.bind(ExtensionsTabs).to(Tabs).for(Browser.EXTENSIONS)
+    this.container.bind(SafariTabs).to(Tabs).for(Browser.SAFARI)
   }
 
   /**
-   * Register all native events on the given module.
-   *
-   * @param {Dispatcher} dispatcher
+   * Register the provider services.
    */
-  public registerEvents (dispatcher: Dispatcher) : void {
-    //
+  public register () : void {
+    this.container.resolve(Tabs).registerEvents(
+      this.container.resolve(Dispatcher),
+    )
   }
 }

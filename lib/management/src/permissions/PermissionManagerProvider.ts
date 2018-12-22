@@ -6,18 +6,23 @@ import { PermissionManager as SafariPermissionManager } from './safari/Permissio
 
 export class PermissionManagerProvider extends Provider {
   /**
-   * Register the provider services.
-   *
-   * @param {any} container
+   * Boot the provider services.
    */
-  public register (container: any) : void {
-    container.bind(ChromePermissionManager)
+  public boot () : void {
+    this.container.bind(ChromePermissionManager)
       .to(PermissionManager).for(Browser.CHROME)
 
-    container.bind(ExtensionsPermissionManager)
+    this.container.bind(ExtensionsPermissionManager)
       .to(PermissionManager).for(Browser.EXTENSIONS)
 
-    container.bind(SafariPermissionManager)
+    this.container.bind(SafariPermissionManager)
       .to(PermissionManager).for(Browser.SAFARI)
+  }
+
+  /**
+   * Register the provider services.
+   */
+  public register () : void {
+    //
   }
 }
