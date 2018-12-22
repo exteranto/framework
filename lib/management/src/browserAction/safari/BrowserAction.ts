@@ -77,7 +77,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * Refresh the badge based on the meta data stored on tab objects.
    *
-   * @param {number} info
+   * @param {number} tabId
    */
   @Listen('app.tabs.activated')
   private refreshBadge (tabId: number) : void {
