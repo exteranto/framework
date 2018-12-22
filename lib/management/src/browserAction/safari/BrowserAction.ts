@@ -57,35 +57,21 @@ export class BrowserAction extends AbstractBrowserAction {
    * @inheritdoc
    */
   public async getTitle (tabId: number) : Promise<any> {
-    return Promise.reject()
+    return Promise.reject('To be implemented.')
   }
 
   /**
    * @inheritdoc
    */
   public async setTitle (title: string, tabId: number) : Promise<any> {
-    return Promise.reject()
+    return Promise.reject('To be implemented.')
   }
 
   /**
    * @inheritdoc
    */
   public async setIcon (path: string | object, tabId: number) : Promise<any> {
-    return Promise.reject()
-  }
-
-  /**
-   * @inheritdoc
-   */
-  public async getPopup (tabId: number) : Promise<any> {
-    return Promise.reject()
-  }
-
-  /**
-   * @inheritdoc
-   */
-  public async setPopup (popup: string, tabId: number) : Promise<any> {
-    return Promise.reject()
+    return Promise.reject('To be implemented.')
   }
 
   /**

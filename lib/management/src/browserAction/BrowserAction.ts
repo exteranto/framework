@@ -59,21 +59,4 @@ export abstract class BrowserAction {
    * @return {Promise<any>}
    */
   public abstract async setIcon (path: string | object, tabId: number) : Promise<any>
-
-  /**
-   * Get the popup at a specified tab.
-   *
-   * @param {number} tabId
-   * @return {Promise<any>}
-   */
-  public abstract async getPopup (tabId: number) : Promise<any>
-
-  /**
-   * Set the popup at a specified tab.
-   *
-   * @param {string} popup
-   * @param {number} tabId
-   * @return {Promise<any>}
-   */
-  public abstract async setPopup (popup: string, tabId: number) : Promise<any>
 }

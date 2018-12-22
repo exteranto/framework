@@ -78,26 +78,4 @@ export class BrowserAction extends AbstractBrowserAction {
       })
     })
   }
-
-  /**
-   * @inheritdoc
-   */
-  public async getPopup (tabId: number) : Promise<any> {
-    return new Promise((resolve, reject) => {
-      (chrome as any).browserAction.getPopup({ tabId }, (popup) => {
-        chrome.runtime.lastError ? reject(new TabIdUnknownException()) : resolve(popup)
-      })
-    })
-  }
-
-  /**
-   * @inheritdoc
-   */
-  public async setPopup (popup: string, tabId: number) : Promise<any> {
-    return new Promise((resolve, reject) => {
-      (chrome as any).browserAction.setPopup({ popup, tabId }, () => {
-        chrome.runtime.lastError ? reject(new TabIdUnknownException()) : resolve()
-      })
-    })
-  }
 }

@@ -60,23 +60,4 @@ export class BrowserAction extends AbstractBrowserAction {
     return browser.browserAction.setIcon({ path, tabId })
       .catch(() => Promise.reject(new TabIdUnknownException()))
   }
-
-  /**
-   * @inheritdoc
-   */
-  public async getPopup (tabId: number) : Promise<any> {
-    return browser.browserAction.getPopup({ tabId })
-      .catch(() => Promise.reject(new TabIdUnknownException()))
-  }
-
-  /**
-   * @inheritdoc
-   */
-  public async setPopup (popup: string, tabId: number) : Promise<any> {
-    try {
-      browser.browserAction.setPopup({ popup, tabId })
-    } catch {
-      return Promise.reject(new TabIdUnknownException())
-    }
-  }
 }
