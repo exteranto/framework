@@ -14,6 +14,7 @@
     "member-ordering": false,
     "no-bitwise": false,
     "only-arrow-functions": false,
+    "ordered-imports": false,
     "typedef-whitespace": [
       true,
       {

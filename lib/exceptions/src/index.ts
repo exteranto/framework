@@ -1,3 +1,4 @@
 export { Handler } from './Handler'
 
-export { PermissionNotGrantedException } from './management'
+export * from './management'
+export * from './tabs'

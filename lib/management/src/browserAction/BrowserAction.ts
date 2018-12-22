@@ -1,0 +1,79 @@
+
+export abstract class BrowserAction {
+  /**
+   * Getter for the badge text.
+   *
+   * @param {number} tabId
+   * @return {Promise<string>}
+   */
+  public abstract async getText (tabId: number) : Promise<string>
+
+  /**
+   * Setter for the badge text.
+   *
+   * @param {string} text
+   * @param {number} tabId
+   * @return {Promise<void>}
+   */
+  public abstract async setText (text: string, tabId: number) : Promise<void>
+
+  /**
+   * Getter for the badge color.
+   *
+   * @param {number} tabId
+   * @return {Promise<string>}
+   */
+  public abstract async getColor (tabId?: number) : Promise<string>
+
+  /**
+   * Setter for the badge color.
+   *
+   * @param {string} color
+   * @param {number} tabId
+   * @return {Promise<void>}
+   */
+  public abstract async setColor (color: string, tabId?: number) : Promise<void>
+
+  /**
+   * Get the title at a specified tab.
+   *
+   * @param {number} tabId
+   * @return {Promise<any>}
+   */
+  public abstract async getTitle (tabId: number) : Promise<any>
+
+  /**
+   * Set the title at a specified tab.
+   *
+   * @param {string} title
+   * @param {number} tabId
+   * @return {Promise<any>}
+   */
+  public abstract async setTitle (title: string, tabId: number) : Promise<any>
+
+  /**
+   * Set the icon at a specified tab.
+   *
+   * @param {string | object} path
+   * @param {number} tabId
+   * @return {Promise<any>}
+   */
+  public abstract async setIcon (path: string | object, tabId: number) : Promise<any>
+
+  /**
+   * Get the popup at a specified tab.
+   *
+   * @param {number} tabId
+   * @return {Promise<any>}
+   */
+  public abstract async getPopup (tabId: number) : Promise<any>
+
+  /**
+   * Set the popup at a specified tab.
+   *
+   * @param {string} popup
+   * @param {number} tabId
+   * @return {Promise<any>}
+   */
+  public abstract async setPopup (popup: string, tabId: number) : Promise<any>
+}
