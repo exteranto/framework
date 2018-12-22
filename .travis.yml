@@ -2,14 +2,10 @@ install: sudo apt-get install sed
 
 script: "./bin/script.sh"
 
-before_deploy: "./bin/release.sh"
-
 deploy:
-  provider: npm
+  provider: script
+  script: "./bin/release.sh"
   skip_cleanup: true
-  email: kouks.koch@gmail.com
-  api_key:
-    secure: QHp25WCELuJKodoC/eVEbbIS5Z7uKKGDnQgfuayJG1iHxtrKZ2PVYx8F4pcvuDEZoU1W0cpMzodjS7y4P+W2IjfWA8i3tOCBtCj1ETdp+tQgP51MZ0JiW+EcW7w6mOTlsq79+Ob0ObLNXuyisv6cTBenkNSVzArUdWMmvVrPrFv+pLkvRAoDgXwgRoSHMu2ZLega+uFPVO5Ye2lYk6Tj6gcLLL7XgzQx9YNtQ9iJM+6h13LTX82opwcU0Y51BP9zt3Ar8/Pc2zTRNpes7xKmLyK26EW1kDg7RH61262zycgGWCOZC/FGoGxjoR6U130ibeWBx62pNkWbDt1yFJhJlS53CTjdXS5UcJZx8ZKKT4KbZWNjs9DpMz8jc3BONMEyTMMy0EquLcIS/8kLjZJusHbA1lulYGR7cO9kbFfblMX7bBpnVUU5+HZSgIFrf2JlGpIQvUqv6LyeVCctp2zGIIiOsft/kj1ZTw+8oaSzDZFDSDpuAAqzlm4NtZ0uiLJ16HsOC8XBF6WGgFUL9wbX0o+v57PlqbbNJ+sVVAQRYK3nCz6E83z3YP0Mf0MMijS7YlFzXXvv/AS8+c85Ir4KWGjqbGdgeoYB7uiHVWmEiuhrzBCGdVrJAaM0Ix3yKhLBFq+DG8MCiOnl7g/Yehy8vRCfkA/Tu5S/kD3WVErP12M=
   on:
     tags: true
     repo: exteranto/framework
