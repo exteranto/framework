@@ -7,9 +7,7 @@ do
   cd ${lib}
   # Start commands, use ${lib} to refer to the current package.
 
-  sed -i -e 's/file:\.\.[^"]*/'"${TRAVIS_TAG/v/^}"'/g' package.json
-
-  npm publish
+  sed -i -e 's/file:\.\.[^"]*/'"${TRAVIS_TAG/v/^}"'/g' package.json package-lock.json
 
   # End commands.
   cd ..
