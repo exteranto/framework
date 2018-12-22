@@ -18,10 +18,23 @@ describe('App Class', () => {
     expect(Container.resolveParam('script')).to.equal(Script.BACKGROUND)
   })
 
-  it('should register providers', () => {
+  it('should find providers', () => {
+    const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, {})
+    app.bootstrap()
+
+    expect((app as any).providers).to.have.lengthOf(1)
+  })
+
+  it('should boot providers', () => {
     new App(Script.BACKGROUND, { providers: [TestProvider] }, {}).bootstrap()
 
     expect(Container.resolveParam('test')).to.equal('test')
+  })
+
+  it('should register providers', () => {
+    new App(Script.BACKGROUND, { providers: [TestProvider] }, {}).bootstrap()
+
+    expect(Container.resolveParam('test2')).to.equal('test2')
   })
 
   it('should register param bindings', () => {
@@ -48,8 +61,12 @@ describe('App Class', () => {
 
 class TestProvider extends Provider {
 
-  register (container: any) : void {
-    container.bindParam('test', 'test')
+  boot () : void {
+    this.container.bindParam('test', 'test')
+  }
+
+  register () : void {
+    this.container.bindParam('test2', 'test2')
   }
 }
 

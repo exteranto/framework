@@ -12,6 +12,13 @@ export class App {
   private dispatcher: Dispatcher
 
   /**
+   * The provider instances.
+   *
+   * @var {Provider[]} providers
+   */
+  private providers: Provider[]
+
+  /**
    * Class constructor.
    *
    * @param {Script} script
@@ -32,7 +39,12 @@ export class App {
   public bootstrap () : void {
     this.registerBaseParams()
     this.registerParamBindings()
+
+    // Find, boot and register providers.
+    this.findProviders()
+    this.bootProviders()
     this.registerProviders()
+
     this.registerEvents()
     this.fireBootedEvent()
   }
@@ -46,18 +58,26 @@ export class App {
   }
 
   /**
+   * Find and instantiate specified service providers.
+   */
+  private findProviders () : void {
+    this.providers = this.config.providers
+      .map(Constructor => new Constructor(Container))
+      .filter(provider => provider.only().filter(script => script === this.script).length === 1)
+  }
+
+  /**
+   * Boot specified service providers.
+   */
+  private bootProviders () : void {
+    this.providers.forEach(provider => provider.boot())
+  }
+
+  /**
    * Register specified service providers.
    */
   private registerProviders () : void {
-    this.config.providers.forEach((Constructor) => {
-      const provider: Provider = new Constructor
-
-      // Register the provider only if the current script is in the desired
-      // scripts array.
-      if (provider.only().filter(i => i === this.script).length === 1) {
-        provider.register(Container)
-      }
-    })
+    this.providers.forEach(provider => provider.register())
   }
 
   /**
