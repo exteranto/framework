@@ -1,16 +1,15 @@
-
 install: sudo apt-get install sed
 
-script: ./bin/script.sh
+script: "./bin/script.sh"
 
-before_deploy: ./bin/release.sh
+before_deploy: "./bin/release.sh"
 
 deploy:
-  skip_cleanup: true
   provider: npm
+  skip_cleanup: true
   email: kouks.koch@gmail.com
   api_key:
-    secure: r8QnadrBjym81ibVA1mbJJK0Rpg01PPkIov/xovs/lnxsaLOzE5xXqyXc4yl+5Up58Nf/urfIxIYAJatGxt+K92amFYE7+JR289E4XqXVjf8NGzDQjSZNybwTKjFfOBRJtqNMFEKWHrpt00PNs7McMEpjx5jkdQN/tOG7NBvONiVXhS7Y74ETDNmx9/0FLBX+1VWjEBIzuaO/W6/riVz6Qw51xWdN7A8Y9d2+kgOAPfUN8bxgoLYS7+yai/n+7fZGrlhstoOUYFp3pG5S1tjeVMpFxn7iKMLMkbN0NRxYig7exO2laNrv7NH83T7wS13y107fiKXvFK3KbyjLDt9TgS47sfBtkAySgRKPQL20t/+9qvPRqzuDitba1WQuak2AbTl9KB8sS88rYQHrWuniiPpvqJmSHq9WwE/8ooVH3B5n2CaimjUwBj9A8KanjVikr+XNMo7CHhRK6eYqCAbayuc/TQAIkEx5yWi26vPujIntmCp/5bhXsOq4+43Cm2QAJa2Hz+L8nO+8j+d+8vkkwihmof2nYlJ00mAGoao4FkubbSIAKIl6JoQHBb3LBMLZFTk1srimqDeLgpAoXdtgh3Ns+v2G35DLjVo2dwKS0ghokEsZ0UJ+xAW35MY0iPhMOI27rUJXFgA6/kTAonGATiJlcB1iXM78SrIhGoZRsY=
+    secure: QHp25WCELuJKodoC/eVEbbIS5Z7uKKGDnQgfuayJG1iHxtrKZ2PVYx8F4pcvuDEZoU1W0cpMzodjS7y4P+W2IjfWA8i3tOCBtCj1ETdp+tQgP51MZ0JiW+EcW7w6mOTlsq79+Ob0ObLNXuyisv6cTBenkNSVzArUdWMmvVrPrFv+pLkvRAoDgXwgRoSHMu2ZLega+uFPVO5Ye2lYk6Tj6gcLLL7XgzQx9YNtQ9iJM+6h13LTX82opwcU0Y51BP9zt3Ar8/Pc2zTRNpes7xKmLyK26EW1kDg7RH61262zycgGWCOZC/FGoGxjoR6U130ibeWBx62pNkWbDt1yFJhJlS53CTjdXS5UcJZx8ZKKT4KbZWNjs9DpMz8jc3BONMEyTMMy0EquLcIS/8kLjZJusHbA1lulYGR7cO9kbFfblMX7bBpnVUU5+HZSgIFrf2JlGpIQvUqv6LyeVCctp2zGIIiOsft/kj1ZTw+8oaSzDZFDSDpuAAqzlm4NtZ0uiLJ16HsOC8XBF6WGgFUL9wbX0o+v57PlqbbNJ+sVVAQRYK3nCz6E83z3YP0Mf0MMijS7YlFzXXvv/AS8+c85Ir4KWGjqbGdgeoYB7uiHVWmEiuhrzBCGdVrJAaM0Ix3yKhLBFq+DG8MCiOnl7g/Yehy8vRCfkA/Tu5S/kD3WVErP12M=
   on:
     tags: true
-    repo: exteranto/tabs
+    repo: exteranto/framework

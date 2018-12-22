@@ -1,6 +1,6 @@
 {
   "name": "@exteranto/tabs",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "The Tabs API Driver for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -23,15 +23,15 @@
   "repository": "github:exteranto/tabs",
   "license": "MIT",
   "dependencies": {
-    "@exteranto/events": "^1.0.10",
-    "@exteranto/support": "^1.0.10",
+    "@exteranto/events": "file:../events",
+    "@exteranto/support": "file:../support",
     "@types/chrome": "0.0.65",
     "typescript": "^2.9.2",
     "web-ext-types": "^2.1.0"
   },
   "devDependencies": {
-    "@exteranto/core": "^1.0.10",
-    "@exteranto/ioc": "^1.0.10",
+    "@exteranto/core": "file:../core",
+    "@exteranto/ioc": "file:../ioc",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7.1.0",
     "@types/mocha": "^5.2.5",

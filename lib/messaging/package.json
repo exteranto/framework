@@ -1,6 +1,6 @@
 {
   "name": "@exteranto/messaging",
-  "version": "1.0.10",
+  "version": "1.0.12",
   "description": "The Messaging API Driver for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",

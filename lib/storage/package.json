@@ -1,6 +1,6 @@
 {
   "name": "@exteranto/storage",
-  "version": "1.0.10",
+  "version": "1.0.12",
   "description": "The Storage API Driver for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",

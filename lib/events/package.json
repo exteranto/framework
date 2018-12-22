@@ -1,6 +1,6 @@
 {
   "name": "@exteranto/events",
-  "version": "1.0.10",
+  "version": "1.0.12",
   "description": "The Event Dispatcher Package for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
