@@ -50,7 +50,7 @@ export class App {
    */
   private registerProviders () : void {
     this.config.providers.forEach((Constructor) => {
-      const provider: Provider = new Constructor
+      const provider: Provider = new Constructor()
 
       // Register the provider only if the current script is in the desired
       // scripts array.
@@ -81,7 +81,7 @@ export class App {
       }
 
       for (const Listener of this.events[event]) {
-        this.dispatcher.touch(event).addListener(new Listener)
+        this.dispatcher.touch(event).addListener(new Listener())
       }
     }
   }

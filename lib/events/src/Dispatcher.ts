@@ -18,7 +18,7 @@ export class Dispatcher {
    */
   public touch (event: string) : ListenerBag {
     return this.events[event] === undefined
-      ? this.events[event] = new ListenerBag
+      ? this.events[event] = new ListenerBag()
       : this.events[event]
   }
 
