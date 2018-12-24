@@ -30,21 +30,23 @@ export class App {
     private config: any,
     private events: any,
   ) {
-    //
   }
 
   /**
-   * Bootstraps the whole application.
+   * Starts the whole application.
    */
-  public bootstrap () : void {
+  public start () : void {
     this.registerBaseParams()
     this.registerParamBindings()
-
-    // Find, boot and register providers.
     this.findProviders()
     this.bootProviders()
-    this.registerProviders()
+  }
 
+  /**
+   * Boots the whole application.
+   */
+  public boot () : void {
+    this.registerProviders()
     this.registerEvents()
     this.fireBootedEvent()
   }
@@ -58,12 +60,21 @@ export class App {
   }
 
   /**
+   * Register specified parameter bindings.
+   */
+  private registerParamBindings () : void {
+    for (const key in this.config.bound || []) {
+      Container.bindParam(key, this.config.bound[key])
+    }
+  }
+
+  /**
    * Find and instantiate specified service providers.
    */
   private findProviders () : void {
     this.providers = this.config.providers
       .map(Constructor => new Constructor(Container))
-      .filter(provider => provider.only().filter(script => script === this.script).length === 1)
+      .filter(provider => provider.only().indexOf(this.script) !== -1)
   }
 
   /**
@@ -78,15 +89,6 @@ export class App {
    */
   private registerProviders () : void {
     this.providers.forEach(provider => provider.register())
-  }
-
-  /**
-   * Register specified parameter bindings.
-   */
-  private registerParamBindings () : void {
-    for (const key in this.config.bound || []) {
-      Container.bindParam(key, this.config.bound[key])
-    }
   }
 
   /**

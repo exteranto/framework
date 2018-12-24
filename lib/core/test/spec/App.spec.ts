@@ -12,7 +12,9 @@ describe('App Class', () => {
   })
 
   it('should register base container parameters', () => {
-    new App(Script.BACKGROUND, { providers: [] }, {}).bootstrap()
+    const app: App = new App(Script.BACKGROUND, { providers: [] }, {})
+    app.start()
+    app.boot()
 
     expect(Container.resolveParam('browser')).to.equal(Browser.TESTING)
     expect(Container.resolveParam('script')).to.equal(Script.BACKGROUND)
@@ -20,41 +22,52 @@ describe('App Class', () => {
 
   it('should find providers', () => {
     const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, {})
-    app.bootstrap()
+    app.start()
+    app.boot()
 
     expect((app as any).providers).to.have.lengthOf(1)
   })
 
   it('should boot providers', () => {
-    new App(Script.BACKGROUND, { providers: [TestProvider] }, {}).bootstrap()
+    const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, {})
+    app.start()
+    app.boot()
 
     expect(Container.resolveParam('test')).to.equal('test')
   })
 
   it('should register providers', () => {
-    new App(Script.BACKGROUND, { providers: [TestProvider] }, {}).bootstrap()
+    const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, {})
+    app.start()
+    app.boot()
 
     expect(Container.resolveParam('test2')).to.equal('test2')
   })
 
   it('should register param bindings', () => {
-    new App(Script.BACKGROUND, { providers: [], bound: { param: 'exteranto' } }, {}).bootstrap()
+    const app: App = new App(Script.BACKGROUND, { providers: [], bound: { param: 'exteranto' } }, {})
+    app.start()
+    app.boot()
 
     expect(Container.resolveParam('param')).to.equal('exteranto')
   })
 
   it('should register events', (done) => {
-    new App(Script.BACKGROUND, { providers: [] }, { 'app.test': TestListener }).bootstrap()
+    const app: App = new App(Script.BACKGROUND, { providers: [] }, { 'app.test': TestListener })
+    app.start()
+    app.boot()
 
     dispatcher.fire('app.test', done)
   })
 
   it('should fire the app.booted event', (done) => {
-    new App(Script.BACKGROUND, { providers: [] }, { 'app.booted': class implements Listener {
+    const app: App = new App(Script.BACKGROUND, { providers: [] }, { 'app.booted': class implements Listener {
       handle () : void {
         done()
       }
-    } }).bootstrap()
+    } })
+    app.start()
+    app.boot()
   })
 
 })

@@ -9,9 +9,12 @@ import { Script } from '@exteranto/support'
 
 chai.use(chaiAsPromised);
 
-new App(Script.BACKGROUND, {
+const app: App = new App(Script.BACKGROUND, {
   providers: [],
   bound: {
     cache: { driver: 'local', timeout: 1 }
   }
-}, {}).bootstrap()
+}, {})
+
+app.start()
+app.boot()
