@@ -12,6 +12,13 @@ export class App {
   private dispatcher: Dispatcher
 
   /**
+   * The provider instances.
+   *
+   * @var {Provider[]} providers
+   */
+  private providers: Provider[]
+
+  /**
    * Class constructor.
    *
    * @param {Script} script
@@ -23,15 +30,22 @@ export class App {
     private config: any,
     private events: any,
   ) {
-    //
   }
 
   /**
-   * Bootstraps the whole application.
+   * Starts the whole application.
    */
-  public bootstrap () : void {
+  public start () : void {
     this.registerBaseParams()
     this.registerParamBindings()
+    this.findProviders()
+    this.bootProviders()
+  }
+
+  /**
+   * Boots the whole application.
+   */
+  public boot () : void {
     this.registerProviders()
     this.registerEvents()
     this.fireBootedEvent()
@@ -46,27 +60,35 @@ export class App {
   }
 
   /**
-   * Register specified service providers.
-   */
-  private registerProviders () : void {
-    this.config.providers.forEach((Constructor) => {
-      const provider: Provider = new Constructor
-
-      // Register the provider only if the current script is in the desired
-      // scripts array.
-      if (provider.only().filter(i => i === this.script).length === 1) {
-        provider.register(Container)
-      }
-    })
-  }
-
-  /**
    * Register specified parameter bindings.
    */
   private registerParamBindings () : void {
     for (const key in this.config.bound || []) {
       Container.bindParam(key, this.config.bound[key])
     }
+  }
+
+  /**
+   * Find and instantiate specified service providers.
+   */
+  private findProviders () : void {
+    this.providers = this.config.providers
+      .map(Constructor => new Constructor(Container))
+      .filter(provider => provider.only().indexOf(this.script) !== -1)
+  }
+
+  /**
+   * Boot specified service providers.
+   */
+  private bootProviders () : void {
+    this.providers.forEach(provider => provider.boot())
+  }
+
+  /**
+   * Register specified service providers.
+   */
+  private registerProviders () : void {
+    this.providers.forEach(provider => provider.register())
   }
 
   /**

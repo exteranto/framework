@@ -17,9 +17,12 @@ import { PermissionManagerProvider } from '../src'
 
 chai.use(chaiAsPromised)
 
-new App(Script.BACKGROUND, {
+const app: App = new App(Script.BACKGROUND, {
   providers: [PermissionManagerProvider]
-}, {}).bootstrap()
+}, {})
+
+app.start()
+app.boot()
 
 ;(global as any).chrome = chrome
 ;(global as any).browser = browser
