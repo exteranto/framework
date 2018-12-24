@@ -6,13 +6,18 @@ import { Storage } from './Storage'
 
 export class StorageProvider extends Provider {
   /**
-   * Register the provider services.
-   *
-   * @param {any} container
+   * Boot the provider services.
    */
-  public register (container: any) : void {
-    container.bind(ChromeStorage).to(Storage).for(Browser.CHROME)
-    container.bind(ExtensionsStorage).to(Storage).for(Browser.EXTENSIONS)
-    container.bind(SafariStorage).to(Storage).for(Browser.SAFARI)
+  public boot () : void {
+    this.container.bind(ChromeStorage).to(Storage).for(Browser.CHROME)
+    this.container.bind(ExtensionsStorage).to(Storage).for(Browser.EXTENSIONS)
+    this.container.bind(SafariStorage).to(Storage).for(Browser.SAFARI)
+  }
+
+  /**
+   * Register the provider services.
+   */
+  public register () : void {
+    //
   }
 }

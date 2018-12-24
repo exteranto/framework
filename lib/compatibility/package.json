@@ -23,6 +23,7 @@
   "repository": "github:exteranto/compatibility",
   "license": "MIT",
   "dependencies": {
+    "@exteranto/exceptions": "file:../exceptions",
     "@exteranto/ioc": "file:../ioc",
     "@exteranto/support": "file:../support",
     "typescript": "^2.9.2"

@@ -17,13 +17,16 @@ import { StorageProvider } from '../src/StorageProvider'
 
 chai.use(chaiAsPromised)
 
-new App(Script.BACKGROUND, {
+const app: App = new App(Script.BACKGROUND, {
   providers: [StorageProvider],
-}, {}).bootstrap();
+}, {})
 
-(global as any).chrome = chrome;
-(global as any).browser = browser;
-(global as any).localStorage = localStorage;
+app.start()
+app.boot()
+
+;(global as any).chrome = chrome;
+;(global as any).browser = browser;
+;(global as any).localStorage = localStorage;
 
 beforeEach(() => {
   chrome.flush()
