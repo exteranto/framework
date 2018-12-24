@@ -1,3 +1,4 @@
+import { VersionNotMatchedException } from '@exteranto/exceptions'
 import { Autowired, Binding, Param } from '@exteranto/ioc'
 import { VersionResolver } from './VersionResolver'
 
@@ -30,6 +31,8 @@ export class Versioning {
     if (this.resolver.equal(this.version, version) || this.resolver.higher(this.version, version)) {
       return callback()
     }
+
+    return Promise.reject(new VersionNotMatchedException())
   }
 
   /**
@@ -43,5 +46,7 @@ export class Versioning {
     if (this.resolver.equal(this.version, version) || this.resolver.lower(this.version, version)) {
       return callback()
     }
+
+    return Promise.reject(new VersionNotMatchedException())
   }
 }
