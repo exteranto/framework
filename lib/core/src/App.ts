@@ -103,7 +103,7 @@ export class App {
       }
 
       for (const Listener of this.events[event]) {
-        this.dispatcher.touch(event).addListener(new Listener)
+        this.dispatcher.touch(event).addListener(new Listener())
       }
     }
   }
