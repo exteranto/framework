@@ -12,36 +12,43 @@ import { BrowserAction as ExtensionsBrowserAction } from './browserAction/extens
 
 export class ManagementProvider extends Provider {
   /**
-   * Register the provider services.
+   * Boot the provider services.
    *
    * @param {any} container
    */
-  public register (container: any) : void {
+  public boot () : void {
 
     /**
      * Binding the permissions service to the IOC container.
      */
 
-    container.bind(ChromePermissionManager)
+    this.container.bind(ChromePermissionManager)
       .to(PermissionManager).for(Browser.CHROME)
 
-    container.bind(ExtensionsPermissionManager)
+    this.container.bind(ExtensionsPermissionManager)
       .to(PermissionManager).for(Browser.EXTENSIONS)
 
-    container.bind(SafariPermissionManager)
+    this.container.bind(SafariPermissionManager)
       .to(PermissionManager).for(Browser.SAFARI)
 
     /**
      * Binding the browser action service to the IOC container.
      */
 
-    container.bind(ChromeBrowserAction)
+    this.container.bind(ChromeBrowserAction)
       .to(BrowserAction).for(Browser.CHROME)
 
-    container.bind(ExtensionsBrowserAction)
+    this.container.bind(ExtensionsBrowserAction)
       .to(BrowserAction).for(Browser.EXTENSIONS)
 
-    container.bind(SafariBrowserAction)
+    this.container.bind(SafariBrowserAction)
       .to(BrowserAction).for(Browser.SAFARI)
+  }
+
+  /**
+   * Register the provider services.
+   */
+  public register () : void {
+    //
   }
 }

@@ -20,7 +20,7 @@ export class AspectContainer {
     when: string,
     target: any,
     method: string,
-   ) : void {
+  ) : void {
     if (this.aspects[pointcut] === undefined) {
       this.aspects[pointcut] = {}
     }

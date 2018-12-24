@@ -2,6 +2,15 @@ import { Script } from './Script'
 
 export abstract class Provider {
   /**
+   * Class constructor.
+   *
+   * @param {any} container
+   */
+  constructor (protected container: any) {
+    //
+  }
+
+  /**
    * The scripts that this provider should be registered for.
    *
    * @return {Script[]}
@@ -11,9 +20,12 @@ export abstract class Provider {
   }
 
   /**
-   * Register the provider services.
-   *
-   * @param {any} container
+   * Boot the provider services.
    */
-  public abstract register (container: any) : void
+  public abstract boot () : void
+
+  /**
+   * Register the provider services.
+   */
+  public abstract register () : void
 }

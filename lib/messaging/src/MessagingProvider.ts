@@ -6,13 +6,18 @@ import { Messaging as SafariMessaging } from './safari/Messaging'
 
 export class MessagingProvider extends Provider {
   /**
-   * Register the provider services.
-   *
-   * @param {any} container
+   * Boot the provider services.
    */
-  public register (container: any) : void {
-    container.bind(ChromeMessaging).to(Messaging).for(Browser.CHROME)
-    container.bind(ExtensionsMessaging).to(Messaging).for(Browser.EXTENSIONS)
-    container.bind(SafariMessaging).to(Messaging).for(Browser.SAFARI)
+  public boot () : void {
+    this.container.bind(ChromeMessaging).to(Messaging).for(Browser.CHROME)
+    this.container.bind(ExtensionsMessaging).to(Messaging).for(Browser.EXTENSIONS)
+    this.container.bind(SafariMessaging).to(Messaging).for(Browser.SAFARI)
+  }
+
+  /**
+   * Register the provider services.
+   */
+  public register () : void {
+    //
   }
 }

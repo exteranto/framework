@@ -17,13 +17,16 @@ import { MessagingProvider } from '../src/MessagingProvider'
 
 chai.use(chaiAsPromised);
 
-new App(Script.BACKGROUND, {
+const app: App = new App(Script.BACKGROUND, {
   providers: [MessagingProvider],
-}, {}).bootstrap();
+}, {})
 
-(global as any).chrome = chrome;
-(global as any).browser = browser;
-(global as any).safari = safari;
+app.start()
+app.boot()
+
+;(global as any).chrome = chrome;
+;(global as any).browser = browser;
+;(global as any).safari = safari;
 
 beforeEach(() => {
   chrome.flush()
