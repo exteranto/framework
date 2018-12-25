@@ -40,7 +40,7 @@ describe('Router Class', () => {
   })
 
   it('should register routes via provider', () => {
-    const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, {})
+    const app: App = new App(Script.CONTENT, { providers: [TestProvider] }, {})
     app.start()
     app.boot()
 
