@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { App } from '../../src/App'
+import { App } from '../../src'
 import { Container } from '@exteranto/ioc'
 import { Dispatcher, Listener } from '@exteranto/events'
 import { Browser, Provider, Script } from '@exteranto/support'
@@ -9,6 +9,10 @@ describe('App Class', () => {
 
   before(() => {
     dispatcher = Container.resolve(Dispatcher)
+  })
+
+  afterEach(() => {
+    (dispatcher as any).events = {}
   })
 
   it('should register base container parameters', () => {

@@ -1,6 +1,7 @@
 import { Dispatcher } from '@exteranto/events'
 import { Autowired, Container } from '@exteranto/ioc'
 import { Provider, Script, Utils } from '@exteranto/support'
+import { Router } from './Router'
 
 export class App {
   /**
@@ -73,7 +74,7 @@ export class App {
    */
   private findProviders () : void {
     this.providers = this.config.providers
-      .map(Constructor => new Constructor(Container))
+      .map(Constructor => new Constructor(Container, Router))
       .filter(provider => provider.only().indexOf(this.script) !== -1)
   }
 

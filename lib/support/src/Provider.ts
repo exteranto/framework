@@ -6,7 +6,10 @@ export abstract class Provider {
    *
    * @param {any} container
    */
-  constructor (protected container: any) {
+  constructor (
+    protected container: any,
+    protected router: any,
+  ) {
     //
   }
 
