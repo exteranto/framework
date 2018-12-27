@@ -13,7 +13,13 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
   public get (url: string, name: string) : Promise<any> {
     return new Promise((resolve, reject) => {
       chrome.cookies.get({ url, name }, (cookie) => {
-        cookie === null || chrome.runtime.lastError !== undefined
+        const error: any = chrome.runtime.lastError
+
+        if (error) {
+          return reject(new InvalidCookieRequestException(error.message))
+        }
+
+        cookie === null
           ? reject(new EmptyResponseException())
           : resolve(cookie)
       })
@@ -28,7 +34,7 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
       chrome.cookies.getAll(params, (cookies) => {
         const error: any = chrome.runtime.lastError
 
-        error === undefined
+        !error
           ? resolve(cookies)
           : reject(new InvalidCookieRequestException(error.message))
       })
@@ -43,7 +49,7 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
       chrome.cookies.set(params, () => {
         const error: any = chrome.runtime.lastError
 
-        error === undefined
+        !error
           ? resolve()
           : reject(new InvalidCookieRequestException(error.message))
       })

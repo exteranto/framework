@@ -14,19 +14,26 @@ import { localStorage } from './localStorage'
 import { App } from '@exteranto/core'
 import { Script } from '@exteranto/support'
 import { StorageProvider } from '../src/StorageProvider'
+import { CookiesProvider } from '../src/CookiesProvider'
 
 chai.use(chaiAsPromised)
 
+;(global as any).window = {}
+;(global as any).chrome = chrome
+;(global as any).browser = browser
+;(global as any).localStorage = localStorage
+
 const app: App = new App(Script.BACKGROUND, {
-  providers: [StorageProvider],
+  providers: [
+    StorageProvider,
+    CookiesProvider
+  ],
 }, {})
 
 app.start()
 app.boot()
 
-;(global as any).chrome = chrome;
-;(global as any).browser = browser;
-;(global as any).localStorage = localStorage;
+;(global as any).app = app
 
 beforeEach(() => {
   chrome.flush()

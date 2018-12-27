@@ -25,7 +25,6 @@
   "dependencies": {
     "@exteranto/events": "file:../events",
     "@exteranto/support": "file:../support",
-    "@exteranto/management": "file:../management",
     "@exteranto/exceptions": "file:../exceptions",
     "@types/chrome": "0.0.65",
     "typescript": "^2.9.2",

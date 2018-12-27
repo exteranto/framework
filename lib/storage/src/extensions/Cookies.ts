@@ -12,12 +12,12 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
    */
   public get (url: string, name: string) : Promise<any> {
     return browser.cookies.get({ url, name })
+      .catch(e => Promise.reject(new InvalidCookieRequestException(e)))
       .then((cookie: any) => {
         return cookie === null
           ? Promise.reject(new EmptyResponseException())
           : cookie
       })
-      .catch(e => Promise.reject(new InvalidCookieRequestException(e)))
   }
 
   /**
