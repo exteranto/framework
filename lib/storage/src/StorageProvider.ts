@@ -1,8 +1,8 @@
 import { Browser, Provider } from '@exteranto/support'
+import { Storage } from './Storage'
 import { Storage as ChromeStorage } from './chrome/Storage'
 import { Storage as ExtensionsStorage } from './extensions/Storage'
 import { Storage as SafariStorage } from './safari/Storage'
-import { Storage } from './Storage'
 
 export class StorageProvider extends Provider {
   /**
