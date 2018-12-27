@@ -8,11 +8,6 @@ import * as chrome from 'sinon-chrome'
 import { Container } from '@exteranto/ioc'
 import { Cookies } from '../../../src/Cookies'
 import { Browser } from '@exteranto/support'
-import { Dispatcher } from '@exteranto/events'
-import {
-  EmptyResponseException,
-  InvalidCookieRequestException
-} from '@exteranto/exceptions'
 
 describe('Cookies API', () => {
   chromeTests()
