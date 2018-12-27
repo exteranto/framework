@@ -14,17 +14,9 @@ export class CookiesProvider extends Provider {
     this.container.bind(ChromeCookies).to(Cookies).for(Browser.CHROME)
     this.container.bind(ExtensionsCookies).to(Cookies).for(Browser.EXTENSIONS)
 
-    /*
     if (Browser.SAFARI) {
-      new NotImplementedException('Cookies APIs')
+      console.warn(new NotImplementedException('@exteranto/cookies'))
     }
-
-    // or
-
-    Browser.SAFARI && console.warn(
-      new NotImplementedException('[Exteranto][Cookies]'),
-    )
-    */
   }
 
   /**
