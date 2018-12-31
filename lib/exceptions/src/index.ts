@@ -12,3 +12,7 @@ export class EmptyResponseException extends Error {
 export class NotImplementedException extends Error {
   //
 }
+
+export class InvalidUrlFormatException extends Error {
+  //
+}
