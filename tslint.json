@@ -1,6 +1,7 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "max-classes-per-file": false,
     "arrow-parens": [2, "as-needed", { "requireForBlockBody": true }],
     "completed-docs": [true, "enums", "functions", "methods", "properties"],
     "forin": false,
