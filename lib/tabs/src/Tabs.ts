@@ -1,6 +1,7 @@
 import { TabInterface } from './TabInterface'
+import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
 
-export abstract class Tabs {
+export abstract class Tabs implements RegistersNativeEvents {
 
   /**
    * Returns the active tab object.
@@ -91,4 +92,9 @@ export abstract class Tabs {
    * @return {Promise<TabInterface>}
    */
   public abstract open (url: string, active?: boolean) : Promise<TabInterface>
+
+  /**
+   * @inheritdoc
+   */
+  public abstract registerEvents(dispatcher: Dispatcher): void
 }

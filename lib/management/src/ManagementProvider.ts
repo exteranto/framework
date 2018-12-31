@@ -1,3 +1,4 @@
+import { Dispatcher } from '@exteranto/events'
 import { Browser, Provider } from '@exteranto/support'
 
 import { PermissionManager } from './permissions/PermissionManager'
@@ -9,6 +10,11 @@ import { BrowserAction } from './browserAction/BrowserAction'
 import { BrowserAction as ChromeBrowserAction } from './browserAction/chrome/BrowserAction'
 import { BrowserAction as SafariBrowserAction } from './browserAction/safari/BrowserAction'
 import { BrowserAction as ExtensionsBrowserAction } from './browserAction/extensions/BrowserAction'
+
+import { Runtime } from './runtime/Runtime'
+import { Runtime as ChromeRuntime } from './runtime/chrome/Runtime'
+import { Runtime as SafariRuntime } from './runtime/safari/Runtime'
+import { Runtime as ExtensionsRuntime } from './runtime/extensions/Runtime'
 
 export class ManagementProvider extends Provider {
   /**
@@ -43,12 +49,27 @@ export class ManagementProvider extends Provider {
 
     this.container.bind(SafariBrowserAction)
       .to(BrowserAction).for(Browser.SAFARI)
+
+    /**
+     * Binding the runtime service to the IOC container.
+     */
+
+    this.container.bind(ChromeRuntime)
+    .to(Runtime).for(Browser.CHROME)
+
+    this.container.bind(ExtensionsRuntime)
+      .to(Runtime).for(Browser.EXTENSIONS)
+
+    this.container.bind(SafariRuntime)
+      .to(Runtime).for(Browser.SAFARI)
   }
 
   /**
    * Register the provider services.
    */
   public register () : void {
-    //
+    this.container.resolve(Runtime).registerEvents(
+      this.container.resolve(Dispatcher),
+    )
   }
 }

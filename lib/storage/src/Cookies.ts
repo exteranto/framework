@@ -1,7 +1,7 @@
 import { Autowired } from '@exteranto/ioc'
-import { Dispatcher } from '@exteranto/events'
+import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
 
-export abstract class Cookies {
+export abstract class Cookies implements RegistersNativeEvents {
 
   /**
    * The dispatcher implementation.
@@ -47,4 +47,9 @@ export abstract class Cookies {
    * @return {Promise<void>}
    */
   public abstract set (params?: any) : Promise<void>
+
+  /**
+   * @inheritdoc
+   */
+  public abstract registerEvents(dispatcher: Dispatcher): void
 }

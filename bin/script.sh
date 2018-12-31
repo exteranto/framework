@@ -6,11 +6,13 @@ for lib in support ioc aop events exceptions core storage messaging tabs cache c
 do
   cd ${lib}
   # Start commands, use ${lib} to refer to the current package.
+  rm -rf package-lock.json
+  rm -rf node_modules
 
-    if ! npm i || ! npm run build || ! npm run test
-    then
-        exit 1
-    fi
+  if ! npm i || ! npm run build || ! npm run test
+  then
+    exit 1
+  fi
 
   # End commands.
   cd ..
