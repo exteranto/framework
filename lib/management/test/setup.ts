@@ -7,18 +7,19 @@
 
 import * as chai from 'chai'
 import * as chrome from 'sinon-chrome'
-import * as chaiAsPromised from 'chai-as-promised'
+import { safari } from './safari'
 import * as browser from 'sinon-chrome/extensions'
+import * as chaiAsPromised from 'chai-as-promised'
 
 import { App } from '@exteranto/core'
 import { Script } from '@exteranto/support'
 
-import { PermissionManagerProvider } from '../src'
+import { ManagementProvider } from '../src'
 
 chai.use(chaiAsPromised)
 
 const app: App = new App(Script.BACKGROUND, {
-  providers: [PermissionManagerProvider]
+  providers: [ManagementProvider]
 }, {})
 
 app.start()
@@ -26,6 +27,7 @@ app.boot()
 
 ;(global as any).chrome = chrome
 ;(global as any).browser = browser
+;(global as any).safari = safari
 
 beforeEach(() => {
   chrome.flush()
