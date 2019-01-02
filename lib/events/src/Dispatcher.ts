@@ -48,4 +48,18 @@ export class Dispatcher {
       throw e
     }
   }
+
+  /**
+   * Puts an event into a mailbox for future listeners to read it.
+   *
+   * @param {string} event
+   * @param {any} payload
+   */
+  public mail (event: string, payload: any = null) : void {
+    if (this.events[event] !== undefined) {
+      return this.fire(event, payload)
+    }
+
+    this.touch(event).mailbox.push(payload)
+  }
 }

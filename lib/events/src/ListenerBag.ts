@@ -9,11 +9,11 @@ export class ListenerBag {
   private listeners: Listener[] = []
 
   /**
-   * Hooks assigned to this instance.
+   * Events that are waiting to be read.
    *
-   * @var {Array<(payload: any) => void>}
+   * @var {any[]} mailbox
    */
-  private hooks: Array<(payload: any) => void> = []
+  public mailbox: any[] = []
 
   /**
    * Adds a listener to this instance.
@@ -22,6 +22,8 @@ export class ListenerBag {
    */
   public addListener (listener: Listener) : void {
     this.listeners.push(listener)
+
+    this.mailbox.forEach(payload => this.dispatch(payload))
   }
 
   /**
@@ -29,8 +31,8 @@ export class ListenerBag {
    *
    * @param {(payload: any) => void} hook
    */
-  public addHook (hook: (payload: any) => void) : void {
-    this.hooks.push(hook)
+  public addHook (handle: (payload: any) => void) : void {
+    this.addListener({ handle })
   }
 
   /**
@@ -40,7 +42,5 @@ export class ListenerBag {
    */
   public dispatch (payload: any) : void {
     this.listeners.forEach(listener => listener.handle(payload))
-
-    this.hooks.forEach(hook => hook(payload))
   }
 }
