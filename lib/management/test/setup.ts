@@ -7,8 +7,8 @@
 
 import * as chai from 'chai'
 import * as chrome from 'sinon-chrome'
-import { safari } from './safari'
-import { localStorage } from './localStorage'
+import { safari } from '../../test/mocks/safari'
+import { localStorage } from '../../test/mocks/localStorage'
 import * as browser from 'sinon-chrome/extensions'
 import * as chaiAsPromised from 'chai-as-promised'
 

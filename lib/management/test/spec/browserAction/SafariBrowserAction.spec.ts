@@ -1,11 +1,12 @@
 import { expect } from 'chai'
-import { safari } from '../../safari'
 
 import { Container } from '@exteranto/ioc'
 import { Browser } from '@exteranto/support'
 
 import { BrowserAction } from '../../../src'
 import { TabIdUnknownException } from '@exteranto/exceptions'
+
+declare var safari: any
 
 export const tests = () => {
   describe('Safari', () => {
