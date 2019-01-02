@@ -1,5 +1,6 @@
 import { Dispatcher } from '@exteranto/events'
 import { Browser, Provider } from '@exteranto/support'
+import { NotImplementedException } from '@exteranto/exceptions'
 
 import { PermissionManager } from './permissions/PermissionManager'
 import { PermissionManager as ChromePermissionManager } from './permissions/chrome/PermissionManager'
@@ -62,6 +63,12 @@ export class ManagementProvider extends Provider {
 
     this.container.bind(SafariRuntime)
       .to(Runtime).for(Browser.SAFARI)
+
+    if (this.container.resolveParam('browser') === Browser.SAFARI) {
+      console.warn(new NotImplementedException(
+        '@exteranto/management', 'Runtime', 'setUninstallUrl',
+      ))
+    }
   }
 
   /**
