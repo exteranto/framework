@@ -29,7 +29,7 @@ export class ListenerBag {
   /**
    * Adds a hook to this instance.
    *
-   * @param {(payload: any) => void} hook
+   * @param {(payload: any) => void} handle
    */
   public addHook (handle: (payload: any) => void) : void {
     this.addListener({ handle })
