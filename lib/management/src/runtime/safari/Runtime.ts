@@ -3,6 +3,8 @@ import { Dispatcher } from '@exteranto/events'
 import { Runtime as AbstractRuntime } from '../Runtime'
 import { NotImplementedException } from '@exteranto/exceptions'
 
+declare var safari: any
+
 export class Runtime extends AbstractRuntime {
   /**
    * @inheritdoc
@@ -11,6 +13,13 @@ export class Runtime extends AbstractRuntime {
     throw new NotImplementedException(
       '@exteranto/management', 'Runtime', 'setUninstallUrl',
     )
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public extensionUrl (path: string = '') : string {
+    return `${safari.extension.baseURI}${path}`
   }
 
   /**
