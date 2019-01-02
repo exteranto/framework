@@ -12,6 +12,6 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
       return
     }
 
-    dispatcher.fire(`app.management.runtime.${event}`, details)
+    dispatcher.mail(`app.management.runtime.${event}`, details)
   })
 }

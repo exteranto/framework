@@ -11,7 +11,7 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
 
   const event = exteranto.version ? 'installed' : 'updated'
 
-  dispatcher.fire(`app.management.runtime.${event}`, {
+  dispatcher.mail(`app.management.runtime.${event}`, {
     previousVersion: exteranto.version
   })
 
