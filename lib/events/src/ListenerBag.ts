@@ -23,7 +23,7 @@ export class ListenerBag {
   public addListener (listener: Listener) : void {
     this.listeners.push(listener)
 
-    this.mailbox.forEach(payload => this.dispatch(payload))
+    this.deliverMail()
   }
 
   /**
@@ -42,5 +42,11 @@ export class ListenerBag {
    */
   public dispatch (payload: any) : void {
     this.listeners.forEach(listener => listener.handle(payload))
+  }
+
+  private deliverMail () : void {
+    this.mailbox.forEach(payload => this.dispatch(payload))
+
+    this.mailbox = []
   }
 }
