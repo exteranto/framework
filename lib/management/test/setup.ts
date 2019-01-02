@@ -18,6 +18,7 @@ import { ManagementProvider } from '../src'
 
 chai.use(chaiAsPromised)
 
+;(global as any).window = {}
 ;(global as any).chrome = chrome
 ;(global as any).browser = browser
 ;(global as any).safari = safari
