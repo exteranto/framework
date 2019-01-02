@@ -49,7 +49,9 @@ export abstract class Cookies implements RegistersNativeEvents {
   public abstract set (params?: any) : Promise<void>
 
   /**
-   * @inheritdoc
+   * Register all native events on the given module.
+   *
+   * @param {Dispatcher} dispatcher
    */
-  public abstract registerEvents(dispatcher: Dispatcher): void
+  public abstract registerEvents (dispatcher: Dispatcher) : void
 }

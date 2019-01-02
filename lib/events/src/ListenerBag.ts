@@ -45,6 +45,15 @@ export class ListenerBag {
   }
 
   /**
+   * Checks if event has a listener assigned.
+   *
+   * @return {boolean}
+   */
+  public hasListeners () : boolean {
+    return this.listeners.length !== 0
+  }
+
+  /**
    * Delivers all events in the mailbox.
    *
    * @return {void}

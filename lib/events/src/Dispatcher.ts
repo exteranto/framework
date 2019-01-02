@@ -56,7 +56,9 @@ export class Dispatcher {
    * @param {any} payload
    */
   public mail (event: string, payload: any = null) : void {
-    if (this.events[event] !== undefined) {
+    const bag: ListenerBag = this.events[event]
+
+    if (bag !== undefined && bag.hasListeners()) {
       return this.fire(event, payload)
     }
 

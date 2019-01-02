@@ -94,7 +94,9 @@ export abstract class Tabs implements RegistersNativeEvents {
   public abstract open (url: string, active?: boolean) : Promise<TabInterface>
 
   /**
-   * @inheritdoc
+   * Register all native events on the given module.
+   *
+   * @param {Dispatcher} dispatcher
    */
-  public abstract registerEvents(dispatcher: Dispatcher): void
+  public abstract registerEvents (dispatcher: Dispatcher) : void
 }
