@@ -44,6 +44,11 @@ export class ListenerBag {
     this.listeners.forEach(listener => listener.handle(payload))
   }
 
+  /**
+   * Delivers all events in the mailbox.
+   *
+   * @return {void}
+   */
   private deliverMail () : void {
     this.mailbox.forEach(payload => this.dispatch(payload))
 
