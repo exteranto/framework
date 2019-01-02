@@ -2,18 +2,18 @@ import { Listener } from './Listener'
 
 export class ListenerBag {
   /**
-   * Listeners assigned to this instance.
-   *
-   * @type {Listener[]}
-   */
-  private listeners: Listener[] = []
-
-  /**
    * Events that are waiting to be read.
    *
    * @var {any[]} mailbox
    */
   public mailbox: any[] = []
+
+  /**
+   * Listeners assigned to this instance.
+   *
+   * @type {Listener[]}
+   */
+  private listeners: Listener[] = []
 
   /**
    * Adds a listener to this instance.
