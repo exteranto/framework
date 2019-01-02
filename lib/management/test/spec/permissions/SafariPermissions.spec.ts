@@ -5,7 +5,7 @@ import { Browser } from '@exteranto/support'
 
 import { Permission, PermissionManager } from '../../../src'
 
-export const safariTests = () => {
+export const tests = () => {
   describe('Safari', () => {
     let manager: PermissionManager
 

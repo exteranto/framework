@@ -1,8 +1,8 @@
 import { assert } from 'chai'
 
-import { extensionsTests } from './ExtensionsPermissions.spec'
-import { safariTests } from './SafariPermissions.spec'
-import { chromeTests } from './ChromePermissions.spec'
+import { tests as ExtensionsTests } from './ExtensionsPermissions.spec'
+import { tests as SafariTests } from './SafariPermissions.spec'
+import { tests as ChromeTests } from './ChromePermissions.spec'
 
 import { Container } from '@exteranto/ioc'
 import { Browser } from '@exteranto/support'
@@ -50,9 +50,9 @@ describe('Permissions', () => {
     return assert.isRejected(manager.test('2'), PermissionNotGrantedException, BOOKMARKS)
   })
 
-  chromeTests()
+  ChromeTests()
 
-  extensionsTests()
+  ExtensionsTests()
 
-  safariTests()
+  SafariTests()
 })

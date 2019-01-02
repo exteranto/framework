@@ -7,7 +7,7 @@ import { Browser } from '@exteranto/support'
 import { BrowserAction } from '../../../src'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 
-export const safariTests = () => {
+export const tests = () => {
   describe('Safari', () => {
     let browserAction
 

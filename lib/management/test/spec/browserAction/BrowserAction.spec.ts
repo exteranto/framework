@@ -1,9 +1,9 @@
-import { extensionsTests } from './ExtensionsBrowserAction.spec'
-import { safariTests } from './SafariBrowserAction.spec'
-import { chromeTests } from './ChromeBrowserAction.spec'
+import { tests as ExtensionTests } from './ExtensionsBrowserAction.spec'
+import { tests as SafariTests } from './SafariBrowserAction.spec'
+import { tests as ChromeTests } from './ChromeBrowserAction.spec'
 
 describe('Browser Action', () => {
-  chromeTests()
-  extensionsTests()
-  safariTests()
+  ChromeTests()
+  ExtensionTests()
+  SafariTests()
 })
