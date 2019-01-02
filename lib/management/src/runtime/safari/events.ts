@@ -1,5 +1,5 @@
-import { Dispatcher } from '@exteranto/events'
 import { Container } from '@exteranto/ioc'
+import { Dispatcher } from '@exteranto/events'
 
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   const exteranto: any = getExterantoInfo()
@@ -9,10 +9,10 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
     return
   }
 
-  const event = exteranto.version ? 'installed' : 'updated'
+  const event: string = exteranto.version ? 'installed' : 'updated'
 
   dispatcher.mail(`app.management.runtime.${event}`, {
-    previousVersion: exteranto.version
+    previousVersion: exteranto.version,
   })
 
   localStorage.setItem('@exteranto', JSON.stringify({ ...exteranto, version }))

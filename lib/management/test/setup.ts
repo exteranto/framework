@@ -18,16 +18,16 @@ import { ManagementProvider } from '../src'
 
 chai.use(chaiAsPromised)
 
+;(global as any).chrome = chrome
+;(global as any).browser = browser
+;(global as any).safari = safari
+
 const app: App = new App(Script.BACKGROUND, {
   providers: [ManagementProvider]
 }, {})
 
 app.start()
 app.boot()
-
-;(global as any).chrome = chrome
-;(global as any).browser = browser
-;(global as any).safari = safari
 
 beforeEach(() => {
   chrome.flush()

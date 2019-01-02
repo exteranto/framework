@@ -2,10 +2,10 @@ import { Dispatcher } from '@exteranto/events'
 
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   browser.runtime.onInstalled.addListener((details) => {
-    const event = {
+    const event: string = {
+      browser_update: 'browserUpdated',
       install: 'installed',
       update: 'updated',
-      browser_update: 'browserUpdated'
     }[details.reason]
 
     if (!event) {
