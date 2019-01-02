@@ -9,7 +9,7 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
     return
   }
 
-  const event: string = exteranto.version ? 'installed' : 'updated'
+  const event: string = exteranto.version ? 'updated' : 'installed'
 
   dispatcher.mail(`app.management.runtime.${event}`, {
     previousVersion: exteranto.version,

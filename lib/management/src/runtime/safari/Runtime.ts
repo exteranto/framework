@@ -9,10 +9,8 @@ export class Runtime extends AbstractRuntime {
   /**
    * @inheritdoc
    */
-  public setUninstallUrl (_: string) : Promise<void> {
-    throw new NotImplementedException(
-      '@exteranto/management', 'Runtime', 'setUninstallUrl',
-    )
+  public async setUninstallUrl (_: string) : Promise<void> {
+    throw new NotImplementedException()
   }
 
   /**

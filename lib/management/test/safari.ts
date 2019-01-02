@@ -5,6 +5,7 @@ export const safari: any = {
     browserWindows: []
   },
   extension: {
+    baseURI: 'safari-extension://abc/',
     toolbarItems: []
   }
 }

@@ -12,7 +12,7 @@ export class Runtime extends AbstractRuntime {
       chrome.runtime.setUninstallURL(url, () => {
         const error: any = chrome.runtime.lastError
 
-        error !== undefined
+        error
           ? reject(new InvalidUrlFormatException(error.message))
           : resolve()
       })

@@ -8,6 +8,7 @@
 import * as chai from 'chai'
 import * as chrome from 'sinon-chrome'
 import { safari } from './safari'
+import { localStorage } from './localStorage'
 import * as browser from 'sinon-chrome/extensions'
 import * as chaiAsPromised from 'chai-as-promised'
 
@@ -22,10 +23,13 @@ chai.use(chaiAsPromised)
 ;(global as any).chrome = chrome
 ;(global as any).browser = browser
 ;(global as any).safari = safari
+;(global as any).localStorage = localStorage
 
 const app: App = new App(Script.BACKGROUND, {
   providers: [ManagementProvider]
 }, {})
+
+;(global as any).app = app
 
 app.start()
 app.boot()
