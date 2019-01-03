@@ -1,6 +1,6 @@
 import { Dispatcher } from '@exteranto/events'
 
-export const namespace = 'app.management.runtime'
+export const namespace: string = 'app.management.runtime'
 
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   chrome.runtime.onInstalled.addListener((event) => {

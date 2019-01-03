@@ -1,6 +1,6 @@
 import { Dispatcher } from '@exteranto/events'
 
-export const namespace = 'app.management.runtime'
+export const namespace: string = 'app.management.runtime'
 
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   browser.runtime.onInstalled.addListener((event) => {
@@ -17,7 +17,7 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
     dispatcher.mail(`app.management.runtime.${route}`, event)
   })
 
-  const filter = { urls: ['<all_urls>'] }
+  const filter: any = { urls: ['<all_urls>'] }
 
   browser.webRequest.onBeforeRedirect.addListener((event) => {
     dispatcher.fire(`${namespace}.webRequest.beforeRedirected`, event)

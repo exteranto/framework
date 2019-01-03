@@ -3,23 +3,23 @@ import { Dispatcher } from '@exteranto/events'
 
 declare var safari: any
 
-export const namespace = 'app.management.runtime'
+export const namespace: string = 'app.management.runtime'
 
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   safari.application.addEventListener('beforeNavigate', (event) => {
     dispatcher.fire(`${namespace}.webRequest.beforeRedirected`, {
-      url: event.target.url,
+      redirectUrl: event.url,
       tabId: event.target.eid,
       timeStamp: event.timeStamp,
-      redirectUrl: event.url,
+      url: event.target.url,
     })
   })
 
   safari.application.addEventListener('navigate', (event) => {
     dispatcher.fire(`${namespace}.webRequest.completed`, {
-      url: event.target.url,
       tabId: event.target.eid,
       timeStamp: event.timeStamp,
+      url: event.target.url,
     })
   })
 
