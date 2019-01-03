@@ -6,6 +6,7 @@ import { Browser } from '@exteranto/support'
 import { Dispatcher } from '@exteranto/events'
 import { Runtime } from '../../../src/runtime/Runtime'
 import { InvalidUrlFormatException } from '@exteranto/exceptions'
+import { safari } from '../../../../test/mocks/safari';
 
 declare var global: any
 
@@ -92,6 +93,36 @@ export const tests = () => {
       })
 
       sinon.assert.calledOnce(browserUpdated)
+    })
+
+    it('registers web request on before redirect event', async () => {
+      await global.app.boot()
+
+      const hook = sinon.spy()
+
+      Container.resolve(Dispatcher)
+        .touch('app.management.runtime.webRequest.beforeRedirected')
+        .addHook(hook)
+
+      chrome.webRequest.onBeforeRedirect.trigger('message')
+
+      sinon.assert.calledOnce(hook)
+      sinon.assert.calledWith(hook, 'message')
+    })
+
+    it('registers web request on completed event', async () => {
+      await global.app.boot()
+
+      const hook = sinon.spy()
+
+      Container.resolve(Dispatcher)
+        .touch('app.management.runtime.webRequest.completed')
+        .addHook(hook)
+
+      chrome.webRequest.onCompleted.trigger('message')
+
+      sinon.assert.calledOnce(hook)
+      sinon.assert.calledWith(hook, 'message')
     })
   })
 }

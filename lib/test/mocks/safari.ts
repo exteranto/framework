@@ -2,7 +2,8 @@
 export const safari: any = {
   application: {
     activeBrowserWindow: {} as any,
-    browserWindows: []
+    browserWindows: [],
+    addEventListener: (event: string, cb: (details: any) => void) : void => {}
   },
   extension: {
     baseURI: 'safari-extension://abc/',

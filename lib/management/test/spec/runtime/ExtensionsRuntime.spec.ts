@@ -94,5 +94,35 @@ export const tests = () => {
 
       sinon.assert.calledOnce(browserUpdated)
     })
+
+    it('registers web request on before redirect event', async () => {
+      await global.app.boot()
+
+      const hook = sinon.spy()
+
+      Container.resolve(Dispatcher)
+        .touch('app.management.runtime.webRequest.beforeRedirected')
+        .addHook(hook)
+
+      browser.webRequest.onBeforeRedirect.trigger('message')
+
+      sinon.assert.calledOnce(hook)
+      sinon.assert.calledWith(hook, 'message')
+    })
+
+    it('registers web request on completed event', async () => {
+      await global.app.boot()
+
+      const hook = sinon.spy()
+
+      Container.resolve(Dispatcher)
+        .touch('app.management.runtime.webRequest.completed')
+        .addHook(hook)
+
+      browser.webRequest.onCompleted.trigger('message')
+
+      sinon.assert.calledOnce(hook)
+      sinon.assert.calledWith(hook, 'message')
+    })
   })
 }

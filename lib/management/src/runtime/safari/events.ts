@@ -26,6 +26,11 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   registerInstallAndUpdateEvents(dispatcher)
 }
 
+/**
+ * Registers safari mocks of install and update events.
+ *
+ * @param {Dispatcher} dispatcher
+ */
 const registerInstallAndUpdateEvents: (dispatcher: Dispatcher) => void = (dispatcher) => {
   const exteranto: any = getExterantoInfo()
   const version: string = Container.resolveParam('app.version')
