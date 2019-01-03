@@ -6,8 +6,6 @@ declare var safari: any
 export const namespace = 'app.management.runtime'
 
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
-  registerInstallAndUpdateEvents(dispatcher)
-
   safari.application.addEventListener('beforeNavigate', (event) => {
     dispatcher.fire(`${namespace}.webRequest.beforeRedirected`, {
       url: event.target.url,
@@ -24,6 +22,8 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
       timeStamp: event.timeStamp,
     })
   })
+
+  registerInstallAndUpdateEvents(dispatcher)
 }
 
 const registerInstallAndUpdateEvents: (dispatcher: Dispatcher) => void = (dispatcher) => {
