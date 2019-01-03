@@ -1,17 +1,27 @@
 import { Dispatcher } from '@exteranto/events'
 
+export const namespace = 'app.management.runtime'
+
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
-  chrome.runtime.onInstalled.addListener((details) => {
-    const event: string = {
+  chrome.runtime.onInstalled.addListener((event) => {
+    const route: string = {
       chrome_update: 'browserUpdated',
       install: 'installed',
       update: 'updated',
-    }[details.reason]
+    }[event.reason]
 
-    if (!event) {
+    if (!route) {
       return
     }
 
-    dispatcher.mail(`app.management.runtime.${event}`, details)
+    dispatcher.mail(`${namespace}.${route}`, event)
+  })
+
+  chrome.webRequest.onBeforeRedirect.addListener((event) => {
+    dispatcher.fire(`${namespace}.webRequest.beforeRedirected`, event)
+  })
+
+  chrome.webRequest.onCompleted.addListener((event) => {
+    dispatcher.fire(`${namespace}.webRequest.completed`, event)
   })
 }

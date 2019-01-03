@@ -1,7 +1,32 @@
 import { Container } from '@exteranto/ioc'
 import { Dispatcher } from '@exteranto/events'
 
+declare var safari: any
+
+export const namespace = 'app.management.runtime'
+
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
+  registerInstallAndUpdateEvents(dispatcher)
+
+  safari.application.addEventListener('beforeNavigate', (event) => {
+    dispatcher.fire(`${namespace}.webRequest.beforeRedirected`, {
+      url: event.target.url,
+      tabId: event.target.eid,
+      timeStamp: event.timeStamp,
+      redirectUrl: event.url,
+    })
+  })
+
+  safari.application.addEventListener('navigate', (event) => {
+    dispatcher.fire(`${namespace}.webRequest.completed`, {
+      url: event.target.url,
+      tabId: event.target.eid,
+      timeStamp: event.timeStamp,
+    })
+  })
+}
+
+const registerInstallAndUpdateEvents: (dispatcher: Dispatcher) => void = (dispatcher) => {
   const exteranto: any = getExterantoInfo()
   const version: string = Container.resolveParam('app.version')
 
@@ -11,7 +36,7 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
 
   const event: string = exteranto.version ? 'updated' : 'installed'
 
-  dispatcher.mail(`app.management.runtime.${event}`, {
+  dispatcher.mail(`${namespace}.${event}`, {
     previousVersion: exteranto.version,
   })
 
@@ -23,7 +48,7 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
  *
  * @return {any}
  */
-const getExterantoInfo: () => any = () : any => {
+const getExterantoInfo: () => any = () => {
   try {
     return JSON.parse(localStorage.getItem('@exteranto')) || {}
   } catch (_) {
