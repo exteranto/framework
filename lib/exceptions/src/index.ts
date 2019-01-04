@@ -1,9 +1,10 @@
 export { Handler } from './Handler'
 
-export * from './management'
+export * from './core'
 export * from './tabs'
-export * from './compatibility'
 export * from './storage'
+export * from './management'
+export * from './compatibility'
 
 export class EmptyResponseException extends Error {
   //
