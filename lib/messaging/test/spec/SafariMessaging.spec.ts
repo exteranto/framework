@@ -1,4 +1,3 @@
-import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { safari } from '../safari'
 import { Container } from '@exteranto/ioc'
@@ -21,9 +20,11 @@ describe('Messaging API for Safari', () => {
   })
 
   it('sends a message via runtime port', async () => {
+    Math.random = sinon.stub().returns(1)
+
     messaging.send(Script.POPUP, 'test', 'test')
 
     sinon.assert.calledOnce(safari.self.tab.dispatchMessage)
-    sinon.assert.calledWith(safari.self.tab.dispatchMessage, '_', { script: Script.POPUP, event: 'test', payload: 'test' })
+    sinon.assert.calledWith(safari.self.tab.dispatchMessage, '_', { script: Script.POPUP, event: 'test', payload: 'test', id: '1' })
   })
 })

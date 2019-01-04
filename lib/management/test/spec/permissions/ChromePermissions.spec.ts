@@ -8,7 +8,7 @@ import { Permission, PermissionManager } from '../../../src'
 
 const { ACTIVE_TAB, STORAGE, BOOKMARKS } = Permission
 
-export const chromeTests = () => {
+export const tests = () => {
   describe('Chrome', () => {
     let manager: PermissionManager
 

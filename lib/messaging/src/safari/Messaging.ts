@@ -21,7 +21,7 @@ export class Messaging extends AbstractMessaging {
       // If the message is a response, resolve the stored promise and do not
       // dispatch any events.
       if (event.name === '_response_') {
-        return this.promises[event.message.event](event.message.payload)
+        return this.promises[event.message.id](event.message.payload)
       }
 
       this.dispatch(event.message, (response) => {
@@ -31,6 +31,7 @@ export class Messaging extends AbstractMessaging {
         // resolved
         event.target.page.dispatchMessage('_response_', {
           event: event.message.event,
+          id: event.message.id,
           payload: response,
         })
       })
@@ -51,8 +52,10 @@ export class Messaging extends AbstractMessaging {
         return this.dispatch({ script, event, payload }, resolve)
       }
 
-      this.promises[event] = resolve
-      this.sendToRuntime({ script, event, payload })
+      const id: string = this.getUniqueId()
+
+      this.promises[id] = resolve
+      this.sendToRuntime({ script, id, event, payload })
     })
   }
 
@@ -64,5 +67,16 @@ export class Messaging extends AbstractMessaging {
    */
   private sendToRuntime (request: object) : void {
     safari.self.tab.dispatchMessage('_', request)
+  }
+
+  /**
+   * Returns an id that has not been used yet.
+   *
+   * @return {string}
+   */
+  private getUniqueId () : string {
+    const id: string = Math.random().toString(16)
+
+    return this.promises[id] === undefined ? id : this.getUniqueId()
   }
 }

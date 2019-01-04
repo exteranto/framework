@@ -7,9 +7,10 @@ do
   cd ${lib}
   # Start commands, use ${lib} to refer to the current package.
 
-  npm i
-  npm run build
-  npm run test
+    if ! npm i || ! npm run build || ! npm run test
+    then
+      exit 1
+    fi
 
   # End commands.
   cd ..

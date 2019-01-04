@@ -1,5 +1,18 @@
+
 /**
  * Permissions module.
  */
 
-export { HasAccessTo, Permission, PermissionManager, PermissionManagerProvider } from './permissions'
+export * from './permissions'
+
+/**
+ * Browser action module.
+ */
+
+export * from './browserAction'
+
+/**
+ * Tre service provider.
+ */
+
+export { ManagementProvider } from './ManagementProvider'

@@ -18,7 +18,7 @@ export class Dispatcher {
    */
   public touch (event: string) : ListenerBag {
     return this.events[event] === undefined
-      ? this.events[event] = new ListenerBag
+      ? this.events[event] = new ListenerBag()
       : this.events[event]
   }
 
@@ -47,5 +47,21 @@ export class Dispatcher {
 
       throw e
     }
+  }
+
+  /**
+   * Puts an event into a mailbox for future listeners to read it.
+   *
+   * @param {string} event
+   * @param {any} payload
+   */
+  public mail (event: string, payload: any = null) : void {
+    const bag: ListenerBag = this.events[event]
+
+    if (bag !== undefined && bag.hasListeners()) {
+      return this.fire(event, payload)
+    }
+
+    this.touch(event).mailbox.push(payload)
   }
 }

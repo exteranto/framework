@@ -20,9 +20,12 @@ chai.use(chaiAsPromised)
 ;(global as any).chrome = chrome
 ;(global as any).browser = browser
 
-new App(Script.BACKGROUND, {
+const app: App = new App(Script.BACKGROUND, {
   providers: [TabsProvider],
-}, {}).bootstrap()
+}, {})
+
+app.start()
+app.boot()
 
 beforeEach(() => {
   chrome.flush()
