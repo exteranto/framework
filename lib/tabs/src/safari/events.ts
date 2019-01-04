@@ -1,8 +1,15 @@
-import { Dispatcher } from '@exteranto/events'
 import { Tab } from './Tab'
+import { ResponseHub } from './ResponseHub'
+import { Dispatcher } from '@exteranto/events'
 
 declare var safari: any
 
+/**
+ * Checks whether target is a tab or window.
+ *
+ * @param {any} target
+ * @return {boolean}
+ */
 const isTab: (target: any) => boolean = (target) => {
   return target.url !== undefined
 }
@@ -12,12 +19,29 @@ const isTab: (target: any) => boolean = (target) => {
  *
  * @return {number[]}
  */
-const getAllIds: () => number[] = () => safari.application.browserWindows
+const getAllIds: () => number[] = () => safari.application
+  .browserWindows
   .reduce((ids, window) => {
     return [...ids, ...window.tabs.map(({ eid }) => eid), window.eid]
   }, [])
 
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
+  nativeTabListeners(dispatcher)
+
+  safari.application.addEventListener('message', (response) => {
+    // If the message is a response and the event name matches, resolve the promise.
+    if (response.name === '_response_' && response.message.id) {
+      ResponseHub.resolve(response.message.id, response.message.payload)
+    }
+  })
+}
+
+/**
+ * Registers native tab events.
+ *
+ * @param {Dispatcher} dispatcher
+ */
+const nativeTabListeners: (dispatcher: Dispatcher) => void = (dispatcher) => {
   safari.application.addEventListener('open', ({ target }) => {
     const tabs: number[] = getAllIds()
 
