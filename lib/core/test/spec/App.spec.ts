@@ -11,10 +11,6 @@ describe('App Class', () => {
     dispatcher = Container.resolve(Dispatcher)
   })
 
-  beforeEach(() => {
-    dispatcher.touch('app.booted').mailbox = []
-  })
-
   it('should register base container parameters', () => {
     const app: App = new App(Script.BACKGROUND, { providers: [] }, {})
     app.start()

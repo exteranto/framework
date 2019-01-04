@@ -112,6 +112,6 @@ export class App {
    * Fires the application booted event.
    */
   private fireBootedEvent () : void {
-    this.dispatcher.mail('app.booted')
+    this.dispatcher.fire('app.booted')
   }
 }
