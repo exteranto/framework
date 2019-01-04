@@ -20,53 +20,53 @@ export const tests = () => {
     it('Sets a badge text.', async () => {
       chrome.browserAction.setBadgeText.yields(undefined)
 
-      await expect(browserAction.setText('test', 1)).to.eventually.be.fulfilled
+      await expect(browserAction.setBadgeText('test', 1)).to.eventually.be.fulfilled
     })
 
     it('Rejects when trying to set a badge text of an unknown tab.', async () => {
       chrome.runtime.lastError = { message: 'test' };
       chrome.browserAction.setBadgeText.yields(undefined)
 
-      await expect(browserAction.setText('test', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
+      await expect(browserAction.setBadgeText('test', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
     })
 
     it('Gets a badge text.', async () => {
       chrome.browserAction.getBadgeText.yields('test')
 
-      await expect(browserAction.getText(1)).to.eventually.equal('test')
+      await expect(browserAction.getBadgeText(1)).to.eventually.equal('test')
     })
 
     it('Rejects when trying to get a badge text of an unknown tab.', async () => {
       chrome.runtime.lastError = { message: 'test' };
       chrome.browserAction.getBadgeText.yields(undefined)
 
-      await expect(browserAction.getText('test', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
+      await expect(browserAction.getBadgeText('test', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
     })
 
     it('Sets a badge background color.', async () => {
       chrome.browserAction.setBadgeBackgroundColor.yields(undefined)
 
-      await expect(browserAction.setColor('#000', 1)).to.eventually.be.fulfilled
+      await expect(browserAction.setBadgeColor('#000', 1)).to.eventually.be.fulfilled
     })
 
     it('Rejects when trying to set a badge background color of an unknown tab.', async () => {
       chrome.runtime.lastError = { message: '#000' };
       chrome.browserAction.setBadgeBackgroundColor.yields(undefined)
 
-      await expect(browserAction.setColor('#000', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
+      await expect(browserAction.setBadgeColor('#000', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
     })
 
     it('Gets a badge background color.', async () => {
       chrome.browserAction.getBadgeBackgroundColor.yields('#000')
 
-      await expect(browserAction.getColor(1)).to.eventually.equal('#000')
+      await expect(browserAction.getBadgeColor(1)).to.eventually.equal('#000')
     })
 
     it('Rejects when trying to get a badge background color of an unknown tab.', async () => {
       chrome.runtime.lastError = { message: '#000' };
       chrome.browserAction.getBadgeBackgroundColor.yields(undefined)
 
-      await expect(browserAction.getColor('#000', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
+      await expect(browserAction.getBadgeColor('#000', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
     })
 
     it('Sets the extension title.', async () => {
