@@ -9,7 +9,7 @@ import * as chai from 'chai'
 import * as chrome from 'sinon-chrome'
 import * as chaiAsPromised from 'chai-as-promised'
 import * as browser from 'sinon-chrome/extensions'
-import { localStorage } from './localStorage'
+import { localStorage } from '../../test/mocks/localStorage'
 
 import { App } from '@exteranto/core'
 import { Script } from '@exteranto/support'
