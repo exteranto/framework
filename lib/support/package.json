@@ -1,6 +1,6 @@
 {
   "name": "@exteranto/support",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "The Support Package for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
