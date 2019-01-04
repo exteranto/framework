@@ -3,8 +3,6 @@ import { TabInterface } from '../TabInterface'
 import { Autowired } from '@exteranto/ioc'
 import { Tabs } from '../Tabs'
 
-declare var safari: any
-
 export class Tab implements TabInterface {
   /**
    * Tabs manager instance.
@@ -73,17 +71,11 @@ export class Tab implements TabInterface {
    * @inheritdoc
    */
   public send (event: string, payload?: object) : Promise<any>  {
-    this.tab.dispatchMessage('_', { script: Script.CONTENT, event, payload })
+    const { resolvable, id } = (this.tabs as any).responseHub
 
-    return new Promise((resolve) => {
-      safari.application.addEventListener('message', (response) => {
-        // If the message is a response and the event name matches, resolve the
-        // promise.
-        if (response.name === '_response_' && response.message.event === event) {
-          return resolve(response.message.payload)
-        }
-      })
-    })
+    this.tab.dispatchMessage('_', { script: Script.CONTENT, id, event, payload })
+
+    return resolvable
   }
 
   /**
