@@ -1,6 +1,5 @@
 import { Tab } from './Tab'
 import { register } from './events'
-import { ResponseHub } from './ResponseHub'
 import { TabInterface } from '../TabInterface'
 import { Tabs as AbstractTabs } from '../Tabs'
 import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
@@ -8,14 +7,6 @@ import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
 declare var safari: any
 
 export class Tabs extends AbstractTabs implements RegistersNativeEvents {
-
-  /**
-   * Holds Safari message promises that are resolved with payload when
-   * the script receives a response from another script.
-   *
-   * @param {ResponseHub}
-   */
-  public responseHub: ResponseHub = new ResponseHub()
 
   /**
    * Returns all tabs that match the provided query.
@@ -59,7 +50,7 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
    * @param {Dispatcher} dispatcher
    */
   public registerEvents (dispatcher: Dispatcher) : void {
-    register(dispatcher, this.responseHub)
+    register(dispatcher)
   }
 
   /**

@@ -25,13 +25,13 @@ const getAllIds: () => number[] = () => safari.application
     return [...ids, ...window.tabs.map(({ eid }) => eid), window.eid]
   }, [])
 
-export const register: (dispatcher: Dispatcher, hub: ResponseHub) => void = (dispatcher, hub) => {
+export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   nativeTabListeners(dispatcher)
 
   safari.application.addEventListener('message', (response) => {
     // If the message is a response and the event name matches, resolve the promise.
     if (response.name === '_response_' && response.message.id) {
-      hub.resolve(response.message.id, response.message.payload)
+      ResponseHub.resolve(response.message.id, response.message.payload)
     }
   })
 }

@@ -1,7 +1,8 @@
+import { Tabs } from '../Tabs'
+import { Autowired } from '@exteranto/ioc'
+import { ResponseHub } from './ResponseHub'
 import { Script } from '@exteranto/support'
 import { TabInterface } from '../TabInterface'
-import { Autowired } from '@exteranto/ioc'
-import { Tabs } from '../Tabs'
 
 export class Tab implements TabInterface {
   /**
@@ -71,7 +72,7 @@ export class Tab implements TabInterface {
    * @inheritdoc
    */
   public send (event: string, payload?: object) : Promise<any>  {
-    const { resolvable, id } = (this.tabs as any).responseHub
+    const { resolvable, id }: any = ResponseHub
 
     this.tab.dispatchMessage('_', { script: Script.CONTENT, id, event, payload })
 

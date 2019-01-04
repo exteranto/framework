@@ -1,12 +1,17 @@
-
-export class ResponseHub {
+/**
+ * Holds Safari message promises that are resolved with payload when
+ * the script receives a response from another script.
+ *
+ * @param {any}
+ */
+export const ResponseHub: any = {
 
   /**
    * Key value store.
    *
    * @param {any}
    */
-  private resolvables: any = {}
+  resolvables: {},
 
   /**
    * Creates a new promise.
@@ -14,13 +19,13 @@ export class ResponseHub {
    * @param {string} key
    * @return {any}
    */
-  public createResolvable () : any {
+  createResolvable () : any {
     const id: string = this.getUniqueId()
 
     const resolvable: Promise<any> = new Promise(resolve => this.resolvables[id] = resolve)
 
     return { resolvable, id }
-  }
+  },
 
   /**
    * Resolves a promise with payload.
@@ -29,7 +34,7 @@ export class ResponseHub {
    * @param {any} payload
    * @return {void}
    */
-  public resolve (key: string, payload?: any) : void {
+  resolve (key: string, payload?: any) : void {
     if (this.resolvables[key] === undefined) {
       return
     }
@@ -37,16 +42,16 @@ export class ResponseHub {
     this.resolvables[key].resolve(payload)
 
     delete this.resolvables[key]
-  }
+  },
 
   /**
    * Returns an id that has not been used yet.
    *
    * @return {string}
    */
-  private getUniqueId () : string {
+  getUniqueId () : string {
     const id: string = Math.random().toString(16)
 
     return this.resolvables[id] === undefined ? id : this.getUniqueId()
-  }
+  },
 }
