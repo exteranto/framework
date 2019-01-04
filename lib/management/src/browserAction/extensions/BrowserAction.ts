@@ -5,7 +5,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * @inheritdoc
    */
-  public async getText (tabId: number) : Promise<any> {
+  public async getBadgeText (tabId: number) : Promise<any> {
     return browser.browserAction.getBadgeText({ tabId })
       .catch(() => Promise.reject(new TabIdUnknownException()))
   }
@@ -13,7 +13,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * @inheritdoc
    */
-  public async setText (text: string, tabId: number) : Promise<any> {
+  public async setBadgeText (text: string, tabId: number) : Promise<any> {
     return (browser as any).browserAction.setBadgeText({ text, tabId })
       .catch(() => Promise.reject(new TabIdUnknownException()))
   }
@@ -21,7 +21,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * @inheritdoc
    */
-  public async getColor (tabId?: number) : Promise<any> {
+  public async getBadgeColor (tabId?: number) : Promise<any> {
     return browser.browserAction.getBadgeBackgroundColor({ tabId })
       .catch(() => Promise.reject(new TabIdUnknownException()))
   }
@@ -29,7 +29,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * @inheritdoc
    */
-  public async setColor (color: string, tabId?: number) : Promise<any> {
+  public async setBadgeColor (color: string, tabId?: number) : Promise<any> {
     return (browser as any).browserAction.setBadgeBackgroundColor({ color, tabId })
       .catch(() => Promise.reject(new TabIdUnknownException()))
   }

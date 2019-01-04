@@ -6,7 +6,7 @@ export abstract class BrowserAction {
    * @param {number} tabId
    * @return {Promise<string>}
    */
-  public abstract async getText (tabId: number) : Promise<string>
+  public abstract async getBadgeText (tabId: number) : Promise<string>
 
   /**
    * Setter for the badge text.
@@ -15,7 +15,7 @@ export abstract class BrowserAction {
    * @param {number} tabId
    * @return {Promise<void>}
    */
-  public abstract async setText (text: string, tabId: number) : Promise<void>
+  public abstract async setBadgeText (text: string, tabId: number) : Promise<void>
 
   /**
    * Getter for the badge color.
@@ -23,7 +23,7 @@ export abstract class BrowserAction {
    * @param {number} tabId
    * @return {Promise<string>}
    */
-  public abstract async getColor (tabId?: number) : Promise<string>
+  public abstract async getBadgeColor (tabId?: number) : Promise<string>
 
   /**
    * Setter for the badge color.
@@ -32,7 +32,7 @@ export abstract class BrowserAction {
    * @param {number} tabId
    * @return {Promise<void>}
    */
-  public abstract async setColor (color: string, tabId?: number) : Promise<void>
+  public abstract async setBadgeColor (color: string, tabId?: number) : Promise<void>
 
   /**
    * Get the title at a specified tab.
