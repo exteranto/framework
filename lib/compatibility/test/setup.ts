@@ -9,4 +9,7 @@ import { Script } from '@exteranto/support'
 
 chai.use(chaiAsPromised);
 
-new App(Script.BACKGROUND, { providers: [] }, {}).bootstrap()
+const app: App = new App(Script.BACKGROUND, { providers: [] }, {})
+
+app.start()
+app.boot()

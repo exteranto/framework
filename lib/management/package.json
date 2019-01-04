@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "build": "tslint --project tsconfig.json && tsc",
+    "build": "tslint --config ../../tslint.json --project tsconfig.json && tsc",
     "test": "mocha test/setup.ts test/**/*.spec.ts -r ts-node/register"
   },
   "keywords": [
@@ -22,6 +22,7 @@
   "repository": "github:exteranto/management",
   "license": "MIT",
   "dependencies": {
+    "@exteranto/events": "file:../events",
     "@exteranto/exceptions": "file:../exceptions",
     "@exteranto/ioc": "file:../ioc",
     "@exteranto/support": "file:../support",

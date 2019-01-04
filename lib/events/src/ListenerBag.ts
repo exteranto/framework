@@ -2,18 +2,18 @@ import { Listener } from './Listener'
 
 export class ListenerBag {
   /**
+   * Events that are waiting to be read.
+   *
+   * @var {any[]} mailbox
+   */
+  public mailbox: any[] = []
+
+  /**
    * Listeners assigned to this instance.
    *
    * @type {Listener[]}
    */
   private listeners: Listener[] = []
-
-  /**
-   * Hooks assigned to this instance.
-   *
-   * @var {Array<(payload: any) => void>}
-   */
-  private hooks: Array<(payload: any) => void> = []
 
   /**
    * Adds a listener to this instance.
@@ -22,15 +22,17 @@ export class ListenerBag {
    */
   public addListener (listener: Listener) : void {
     this.listeners.push(listener)
+
+    this.deliverMail()
   }
 
   /**
    * Adds a hook to this instance.
    *
-   * @param {(payload: any) => void} hook
+   * @param {(payload: any) => void} handle
    */
-  public addHook (hook: (payload: any) => void) : void {
-    this.hooks.push(hook)
+  public addHook (handle: (payload: any) => void) : void {
+    this.addListener({ handle })
   }
 
   /**
@@ -40,7 +42,25 @@ export class ListenerBag {
    */
   public dispatch (payload: any) : void {
     this.listeners.forEach(listener => listener.handle(payload))
+  }
 
-    this.hooks.forEach(hook => hook(payload))
+  /**
+   * Checks if event has a listener assigned.
+   *
+   * @return {boolean}
+   */
+  public hasListeners () : boolean {
+    return this.listeners.length !== 0
+  }
+
+  /**
+   * Delivers all events in the mailbox.
+   *
+   * @return {void}
+   */
+  private deliverMail () : void {
+    this.mailbox.forEach(payload => this.dispatch(payload))
+
+    this.mailbox = []
   }
 }

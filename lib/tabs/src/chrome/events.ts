@@ -1,6 +1,5 @@
 import { Dispatcher } from '@exteranto/events'
 import { Tab } from './Tab'
-import { Tabs } from '../safari/Tabs'
 
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   chrome.tabs.onCreated.addListener((tab) => {

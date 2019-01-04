@@ -1,8 +1,8 @@
-import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
-import { TabInterface } from '../TabInterface'
-import { Tabs as AbstractTabs } from '../Tabs'
 import { Tab } from './Tab'
 import { register } from './events'
+import { TabInterface } from '../TabInterface'
+import { Tabs as AbstractTabs } from '../Tabs'
+import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
 
 declare var safari: any
 

@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "build": "tslint --project tsconfig.json && tsc",
+    "build": "tslint --config ../../tslint.json --project tsconfig.json && tsc",
     "test": "mocha test/setup.ts test/**/*.spec.ts -r ts-node/register"
   },
   "keywords": [
@@ -25,6 +25,7 @@
   "dependencies": {
     "@exteranto/events": "file:../events",
     "@exteranto/support": "file:../support",
+    "@exteranto/exceptions": "file:../exceptions",
     "@types/chrome": "0.0.65",
     "typescript": "^2.9.2",
     "web-ext-types": "^2.1.0"
