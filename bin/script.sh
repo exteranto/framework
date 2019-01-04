@@ -9,7 +9,7 @@ do
 
     if ! npm i || ! npm run build || ! npm run test
     then
-        exit 1
+      exit 1
     fi
 
   # End commands.

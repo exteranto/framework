@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+import * as sinon from 'sinon'
 import { Listener } from '../../src/Listener'
 import { Dispatcher } from '../../src/Dispatcher'
 import { ListenerBag } from '../../src/ListenerBag'
@@ -7,7 +8,7 @@ describe('Dispatcher', () => {
   let dispatcher
 
   before(() => {
-    dispatcher = new Dispatcher
+    dispatcher = new Dispatcher()
   })
 
   it('communicates with the listener bag', () => {
@@ -37,10 +38,34 @@ describe('Dispatcher', () => {
     })
 
     dispatcher.touch('faulty-event').addHook(() => {
-      throw new TestException;
+      throw new TestException()
     })
 
     dispatcher.fire('faulty-event')
+  })
+
+  it('puts an event to mailbox', () => {
+    dispatcher.mail('app.events.test-mailbox-1')
+    dispatcher.mail('app.events.test-mailbox-1')
+
+    expect(dispatcher.touch('app.events.test-mailbox-1').mailbox)
+      .to.have.lengthOf(2)
+  })
+
+  it('fires events upon assigning a listener and clears mailbox', () => {
+    const spy = sinon.spy()
+
+    dispatcher.mail('app.events.test-mailbox-2', 'payload')
+    dispatcher.touch('app.events.test-mailbox-2').addHook(spy)
+
+    sinon.assert.calledOnce(spy)
+    sinon.assert.calledWith(spy, 'payload')
+    expect(dispatcher.touch('app.events.test-mailbox-2').mailbox)
+      .to.have.lengthOf(0)
+
+    dispatcher.mail('app.events.test-mailbox-2', 'payload')
+
+    sinon.assert.calledTwice(spy)
   })
 })
 
