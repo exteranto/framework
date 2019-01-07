@@ -9,10 +9,6 @@ describe('App Class should', () => {
 
   before(() => {
     dispatcher = Container.resolve(Dispatcher)
-
-    ;(global as any).window = {
-      addEventListener: (_, l) => l()
-    }
   })
 
   afterEach(() => {
