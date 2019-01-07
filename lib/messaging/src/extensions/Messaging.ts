@@ -11,7 +11,9 @@ export class Messaging extends AbstractMessaging {
   public listen () : void {
     browser.runtime.onConnect.addListener((port) => {
       port.onMessage.addListener((request) => {
-        this.dispatch(request, response => port.postMessage(response))
+        const respond = body => port.postMessage({ ok: !(body instanceof Error), body })
+
+        this.dispatch(request, respond)
       })
     })
   }
@@ -25,10 +27,12 @@ export class Messaging extends AbstractMessaging {
    * @return {Promise<any>}
    */
   public send (script: Script, event: string, payload?: object) : Promise<any> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
+      const respond = response => response.ok ? resolve(response.body) : reject(response.body)
+
       script === this.script
-        ? this.dispatch({ script, event, payload }, resolve)
-        : this.sendToRuntime({ script, event, payload }, resolve)
+        ? this.dispatch({ script, event, payload }, respond)
+        : this.sendToRuntime({ script, event, payload }, respond)
     })
   }
 
@@ -36,10 +40,10 @@ export class Messaging extends AbstractMessaging {
    * Sends a message to the application runtime (background/popup).
    *
    * @param {any} request
-   * @param {() => any} resolve
+   * @param {(response: any) => any} resolve
    * @return {void}
    */
-  private sendToRuntime (request: object, resolve: () => any) : void {
+  private sendToRuntime (request: object, resolve: (response: any) => any) : void {
     const port: Port = browser.runtime.connect()
 
     port.postMessage(request)

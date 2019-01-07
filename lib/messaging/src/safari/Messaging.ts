@@ -21,7 +21,10 @@ export class Messaging extends AbstractMessaging {
       // If the message is a response, resolve the stored promise and do not
       // dispatch any events.
       if (event.name === '_response_') {
-        return this.promises[event.message.id](event.message.payload)
+        return this.promises[event.message.id]({
+          body: event.message.payload,
+          ok: !(event.message.payload instanceof Error),
+        })
       }
 
       this.dispatch(event.message, (response) => {
@@ -47,14 +50,16 @@ export class Messaging extends AbstractMessaging {
    * @return {Promise<any>}
    */
   public send (script: Script, event: string, payload?: object) : Promise<any> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
+      const respond = response => response.ok ? resolve(response.body) : reject(response.body)
+
       if (script === this.script) {
-        return this.dispatch({ script, event, payload }, resolve)
+        return this.dispatch({ script, event, payload }, respond)
       }
 
       const id: string = this.getUniqueId()
 
-      this.promises[id] = resolve
+      this.promises[id] = respond
       this.sendToRuntime({ script, id, event, payload })
     })
   }
