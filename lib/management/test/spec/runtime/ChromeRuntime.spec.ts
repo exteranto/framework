@@ -6,7 +6,6 @@ import { Browser } from '@exteranto/support'
 import { Dispatcher } from '@exteranto/events'
 import { Runtime } from '../../../src/runtime/Runtime'
 import { InvalidUrlFormatException } from '@exteranto/exceptions'
-import { safari } from '../../../../test/mocks/safari';
 
 declare var global: any
 

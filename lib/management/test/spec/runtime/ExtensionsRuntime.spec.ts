@@ -124,5 +124,6 @@ export const tests = () => {
       sinon.assert.calledOnce(hook)
       sinon.assert.calledWith(hook, 'message')
     })
+
   })
 }

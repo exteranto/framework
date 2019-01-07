@@ -1,3 +1,4 @@
+import { Dispatcher } from '@exteranto/events'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 import { BrowserAction as AbstractBrowserAction } from '../BrowserAction'
 
@@ -76,6 +77,15 @@ export class BrowserAction extends AbstractBrowserAction {
       (chrome as any).browserAction.setIcon({ path, tabId }, () => {
         chrome.runtime.lastError ? reject(new TabIdUnknownException()) : resolve()
       })
+    })
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public registerEvents (dispatcher: Dispatcher) : void {
+    chrome.browserAction.onClicked.addListener(({ id }) => {
+      dispatcher.fire('app.management.browser-action.clicked', id)
     })
   }
 }
