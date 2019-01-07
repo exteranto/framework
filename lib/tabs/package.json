@@ -23,15 +23,16 @@
   "repository": "github:exteranto/tabs",
   "license": "MIT",
   "dependencies": {
+    "@exteranto/exceptions": "file:../exceptions",
     "@exteranto/events": "file:../events",
     "@exteranto/support": "file:../support",
+    "@exteranto/core": "file:../core",
+    "@exteranto/ioc": "file:../ioc",
     "@types/chrome": "0.0.65",
     "typescript": "^2.9.2",
     "web-ext-types": "^2.1.0"
   },
   "devDependencies": {
-    "@exteranto/core": "file:../core",
-    "@exteranto/ioc": "file:../ioc",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7.1.0",
     "@types/mocha": "^5.2.5",
