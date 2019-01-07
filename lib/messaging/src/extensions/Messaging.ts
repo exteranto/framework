@@ -13,7 +13,10 @@ export class Messaging extends AbstractMessaging {
       port.onMessage.addListener((request) => {
         const respond: (body: any) => any = body => port.postMessage({ ok: !(body instanceof Error), body })
 
-        this.dispatch(request, respond)
+        this.dispatch({
+          context: { tabId: port.sender.tab ? port.sender.tab.id : undefined },
+          ...request,
+        }, respond)
       })
     })
   }

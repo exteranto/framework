@@ -24,7 +24,10 @@ export class Messaging extends AbstractMessaging {
         return this.promises[event.message.id](event.message.payload)
       }
 
-      this.dispatch(event.message, (response) => {
+      this.dispatch({
+        context: { tabId: event.target.eid },
+        ...event.message,
+      }, (response) => {
         // Safari does not support ports, so we need to send a message back
         // specifying that it is a response in the name. The response object is
         // also carrying the event id, so we can find the promise to be
