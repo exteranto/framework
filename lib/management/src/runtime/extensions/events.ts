@@ -5,7 +5,7 @@ export const namespace: string = 'app.management.runtime'
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   browser.runtime.onInstalled.addListener((event) => {
     const route: string = {
-      browser_update: 'browserUpdated',
+      browser_update: 'browser-updated',
       install: 'installed',
       update: 'updated',
     }[event.reason]
@@ -20,7 +20,7 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   const filter: any = { urls: ['<all_urls>'] }
 
   browser.webRequest.onBeforeRedirect.addListener((event) => {
-    dispatcher.fire(`${namespace}.webRequest.beforeRedirected`, event)
+    dispatcher.fire(`${namespace}.webRequest.before-redirected`, event)
   }, filter)
 
   browser.webRequest.onCompleted.addListener((event) => {

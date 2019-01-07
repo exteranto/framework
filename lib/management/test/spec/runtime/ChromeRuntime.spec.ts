@@ -100,7 +100,7 @@ export const tests = () => {
       const hook = sinon.spy()
 
       Container.resolve(Dispatcher)
-        .touch('app.management.runtime.webRequest.beforeRedirected')
+        .touch('app.management.runtime.web-request.beforeRedirected')
         .addHook(hook)
 
       chrome.webRequest.onBeforeRedirect.trigger('message')
@@ -115,7 +115,7 @@ export const tests = () => {
       const hook = sinon.spy()
 
       Container.resolve(Dispatcher)
-        .touch('app.management.runtime.webRequest.completed')
+        .touch('app.management.runtime.web-request.completed')
         .addHook(hook)
 
       chrome.webRequest.onCompleted.trigger('message')
