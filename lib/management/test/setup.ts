@@ -19,11 +19,14 @@ import { ManagementProvider } from '../src'
 
 chai.use(chaiAsPromised)
 
-;(global as any).window = {}
 ;(global as any).chrome = chrome
 ;(global as any).browser = browser
 ;(global as any).safari = safari
 ;(global as any).localStorage = localStorage
+
+;(global as any).window = {
+  addEventListener: (_, l) => l()
+}
 
 const app: App = new App(Script.BACKGROUND, {
   providers: [ManagementProvider]
