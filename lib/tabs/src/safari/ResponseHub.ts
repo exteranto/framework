@@ -43,7 +43,7 @@ export const ResponseHub: any = {
 
     this.resolvables[key]({
       body: payload,
-      ok: !(payload instanceof Error)
+      ok: !(payload instanceof Error),
     })
 
     delete this.resolvables[key]

@@ -11,7 +11,7 @@ export class Messaging extends AbstractMessaging {
   public listen () : void {
     chrome.runtime.onConnect.addListener((port) => {
       port.onMessage.addListener((request) => {
-        const respond = body => port.postMessage({ ok: !(body instanceof Error), body })
+        const respond: (body: any) => any = body => port.postMessage({ ok: !(body instanceof Error), body })
 
         this.dispatch(request, respond)
       })
@@ -28,7 +28,7 @@ export class Messaging extends AbstractMessaging {
    */
   public send (script: Script, event: string, payload?: object) : Promise<any> {
     return new Promise((resolve, reject) => {
-      const respond = response => response.ok ? resolve(response.body) : reject(response.body)
+      const respond: (response: any) => any = response => response.ok ? resolve(response.body) : reject(response.body)
 
       script === this.script
         ? this.dispatch({ script, event, payload }, respond)
