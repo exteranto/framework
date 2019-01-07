@@ -7,6 +7,8 @@ do
   cd ${lib}
   # Start commands, use ${lib} to refer to the current package.
 
+    rm -rf node_modules package-lock.json
+
     if ! npm i || ! npm run build || ! npm run test
     then
       exit 1
