@@ -1,4 +1,3 @@
-import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { Container } from '@exteranto/ioc'
 import { Messaging } from '../../src/Messaging'
