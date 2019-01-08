@@ -84,7 +84,7 @@ export const tests = () => {
       const browserUpdated = sinon.spy()
 
       Container.resolve(Dispatcher)
-        .touch('app.management.runtime.browserUpdated')
+        .touch('app.management.runtime.browser-updated')
         .addHook(browserUpdated)
 
       browser.runtime.onInstalled.trigger({
@@ -101,7 +101,7 @@ export const tests = () => {
       const hook = sinon.spy()
 
       Container.resolve(Dispatcher)
-        .touch('app.management.runtime.web-request.beforeRedirected')
+        .touch('app.management.runtime.web-request.before-redirected')
         .addHook(hook)
 
       browser.webRequest.onBeforeRedirect.trigger('message')

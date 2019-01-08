@@ -20,10 +20,10 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   const filter: any = { urls: ['<all_urls>'] }
 
   browser.webRequest.onBeforeRedirect.addListener((event) => {
-    dispatcher.fire(`${namespace}.webRequest.before-redirected`, event)
+    dispatcher.fire(`${namespace}.web-request.before-redirected`, event)
   }, filter)
 
   browser.webRequest.onCompleted.addListener((event) => {
-    dispatcher.fire(`${namespace}.webRequest.completed`, event)
+    dispatcher.fire(`${namespace}.web-request.completed`, event)
   }, filter)
 }
