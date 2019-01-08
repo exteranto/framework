@@ -24,6 +24,7 @@ describe('Messaging API in general', () => {
 
     sinon.assert.calledOnce(spy)
     sinon.assert.calledWith(spy, 'test', {
+      context: {},
       request: 'test',
       respond: 'respond'
     })
