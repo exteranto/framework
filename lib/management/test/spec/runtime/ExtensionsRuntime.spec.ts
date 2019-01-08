@@ -84,7 +84,7 @@ export const tests = () => {
       const browserUpdated = sinon.spy()
 
       Container.resolve(Dispatcher)
-        .touch('app.management.runtime.browserUpdated')
+        .touch('app.management.runtime.browser-updated')
         .addHook(browserUpdated)
 
       browser.runtime.onInstalled.trigger({
@@ -101,7 +101,7 @@ export const tests = () => {
       const hook = sinon.spy()
 
       Container.resolve(Dispatcher)
-        .touch('app.management.runtime.webRequest.beforeRedirected')
+        .touch('app.management.runtime.web-request.before-redirected')
         .addHook(hook)
 
       browser.webRequest.onBeforeRedirect.trigger('message')
@@ -116,7 +116,7 @@ export const tests = () => {
       const hook = sinon.spy()
 
       Container.resolve(Dispatcher)
-        .touch('app.management.runtime.webRequest.completed')
+        .touch('app.management.runtime.web-request.completed')
         .addHook(hook)
 
       browser.webRequest.onCompleted.trigger('message')
@@ -124,5 +124,6 @@ export const tests = () => {
       sinon.assert.calledOnce(hook)
       sinon.assert.calledWith(hook, 'message')
     })
+
   })
 }

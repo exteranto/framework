@@ -1,5 +1,5 @@
+import { Listen, Dispatcher } from '@exteranto/events'
 import { TabIdUnknownException } from '@exteranto/exceptions'
-import { Listen } from '@exteranto/events'
 import { BrowserAction as AbstractBrowserAction } from '../BrowserAction'
 
 declare var safari: any
@@ -94,6 +94,22 @@ export class BrowserAction extends AbstractBrowserAction {
     tab.meta.icon = typeof path === 'string' ? path : path[Object.keys(path)[0]]
 
     this.refreshBadge(tabId)
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public registerEvents (dispatcher: Dispatcher) : void {
+    safari.application.addEventListener('command', ({ command }) => {
+      if (command !== 'openOverlay') {
+        return
+      }
+
+      dispatcher.fire(
+        'app.management.browser-action.clicked',
+        safari.application.activeBrowserWindow.activeTab.eid,
+      )
+    }, false)
   }
 
   /**

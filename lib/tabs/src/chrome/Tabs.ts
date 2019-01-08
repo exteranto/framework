@@ -1,3 +1,4 @@
+import { TabIdUnknownException } from '@exteranto/exceptions'
 import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
 import { TabInterface } from '../TabInterface'
 import { Tabs as AbstractTabs } from '../Tabs'
@@ -5,6 +6,7 @@ import { register } from './events'
 import { Tab } from './Tab'
 
 export class Tabs extends AbstractTabs implements RegistersNativeEvents {
+
   /**
    * Returns all tabs that match the provided query.
    *
@@ -28,6 +30,24 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
     return new Promise((resolve) => {
       chrome.tabs.create({ url, active }, tab => resolve(new Tab(tab)))
     })
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public async get (id: number) : Promise<TabInterface> {
+    const { error, tab }: any = await new Promise((resolve) => {
+      chrome.tabs.get(id, (data) => resolve({
+        error: chrome.runtime.lastError,
+        tab: data,
+      }))
+    })
+
+    if (error) {
+      throw new TabIdUnknownException()
+    }
+
+    return new Tab(tab)
   }
 
   /**

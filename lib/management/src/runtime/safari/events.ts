@@ -7,7 +7,7 @@ export const namespace: string = 'app.management.runtime'
 
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   safari.application.addEventListener('beforeNavigate', (event) => {
-    dispatcher.fire(`${namespace}.webRequest.beforeRedirected`, {
+    dispatcher.fire(`${namespace}.web-request.before-redirected`, {
       redirectUrl: event.url,
       tabId: event.target.eid,
       timeStamp: event.timeStamp,
@@ -16,7 +16,7 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   })
 
   safari.application.addEventListener('navigate', (event) => {
-    dispatcher.fire(`${namespace}.webRequest.completed`, {
+    dispatcher.fire(`${namespace}.web-request.completed`, {
       tabId: event.target.eid,
       timeStamp: event.timeStamp,
       url: event.target.url,

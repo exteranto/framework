@@ -1,3 +1,4 @@
+import { Autowired } from '@exteranto/ioc'
 import { Dispatcher } from '@exteranto/events'
 import { Browser, Provider } from '@exteranto/support'
 import { NotImplementedException } from '@exteranto/exceptions'
@@ -18,6 +19,15 @@ import { Runtime as SafariRuntime } from './runtime/safari/Runtime'
 import { Runtime as ExtensionsRuntime } from './runtime/extensions/Runtime'
 
 export class ManagementProvider extends Provider {
+
+  /**
+   * Autowires dispatcher
+   *
+   * @var {Dispatcher}
+   */
+  @Autowired
+  private dispatcher: Dispatcher
+
   /**
    * Boot the provider services.
    *
@@ -75,8 +85,10 @@ export class ManagementProvider extends Provider {
    * Register the provider services.
    */
   public register () : void {
-    this.container.resolve(Runtime).registerEvents(
-      this.container.resolve(Dispatcher),
-    )
+    this.container.resolve(Runtime)
+      .registerEvents(this.dispatcher)
+
+    this.container.resolve(BrowserAction)
+      .registerEvents(this.dispatcher)
   }
 }
