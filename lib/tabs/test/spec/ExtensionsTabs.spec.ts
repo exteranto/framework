@@ -5,6 +5,7 @@ import { Container } from '@exteranto/ioc'
 import { Browser } from '@exteranto/support'
 import { Tab } from '../../src/extensions/Tab'
 import * as browser from 'sinon-chrome/extensions'
+import { TabIdUnknownException } from '@exteranto/exceptions'
 
 export const extensionsTests = () => {
   describe('Extensions', () => {
@@ -53,6 +54,18 @@ export const extensionsTests = () => {
         .to.eventually.equal(2)
 
       sinon.assert.calledOnce(browser.tabs.duplicate)
+    })
+
+    it('gets a tab by id', async () => {
+      browser.tabs.get.resolves({ id: 2 })
+
+      await expect(tabs.get(2)).to.eventually.have.property('id')
+    })
+
+    it('throws an exception if tab does not exist', async () => {
+      browser.tabs.get.rejects()
+
+      await expect(tabs.get(2)).to.eventually.be.rejectedWith(TabIdUnknownException)
     })
 
   })

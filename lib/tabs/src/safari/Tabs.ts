@@ -3,6 +3,7 @@ import { register } from './events'
 import { TabInterface } from '../TabInterface'
 import { Tabs as AbstractTabs } from '../Tabs'
 import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
+import { TabIdUnknownException } from '@exteranto/exceptions'
 
 declare var safari: any
 
@@ -42,6 +43,19 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
 
       resolve(new Tab(tab))
     })
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public async get (id: number) : Promise<TabInterface> {
+    const tab: TabInterface = this.getAllTabs().find(t => t.id() === id)
+
+    if (!tab) {
+      throw new TabIdUnknownException()
+    }
+
+    return tab
   }
 
   /**

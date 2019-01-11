@@ -6,7 +6,6 @@ import { Browser } from '@exteranto/support'
 import { Dispatcher } from '@exteranto/events'
 import { Runtime } from '../../../src/runtime/Runtime'
 import { InvalidUrlFormatException } from '@exteranto/exceptions'
-import { safari } from '../../../../test/mocks/safari';
 
 declare var global: any
 
@@ -84,7 +83,7 @@ export const tests = () => {
       const browserUpdated = sinon.spy()
 
       Container.resolve(Dispatcher)
-        .touch('app.management.runtime.browserUpdated')
+        .touch('app.management.runtime.browser-updated')
         .addHook(browserUpdated)
 
       chrome.runtime.onInstalled.trigger({
@@ -101,7 +100,7 @@ export const tests = () => {
       const hook = sinon.spy()
 
       Container.resolve(Dispatcher)
-        .touch('app.management.runtime.webRequest.beforeRedirected')
+        .touch('app.management.runtime.web-request.before-redirected')
         .addHook(hook)
 
       chrome.webRequest.onBeforeRedirect.trigger('message')
@@ -116,7 +115,7 @@ export const tests = () => {
       const hook = sinon.spy()
 
       Container.resolve(Dispatcher)
-        .touch('app.management.runtime.webRequest.completed')
+        .touch('app.management.runtime.web-request.completed')
         .addHook(hook)
 
       chrome.webRequest.onCompleted.trigger('message')
