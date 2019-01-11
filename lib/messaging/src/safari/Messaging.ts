@@ -36,7 +36,7 @@ export class Messaging extends AbstractMessaging {
           event: event.message.event,
           id: event.message.id,
           payload: {
-            body: response,
+            body: { name: response.name, message: response.message },
             ok: !(response instanceof Error),
           },
         })

@@ -11,7 +11,12 @@ export class Messaging extends AbstractMessaging {
   public listen () : void {
     chrome.runtime.onConnect.addListener((port) => {
       port.onMessage.addListener((request) => {
-        const respond: (body: any) => any = body => port.postMessage({ ok: !(body instanceof Error), body })
+        const respond: (body: any) => any = (body) => {
+          port.postMessage({
+            body: { name: body.name, message: body.message },
+            ok: !(body instanceof Error),
+          })
+        }
 
         this.dispatch({
           context: { tabId: port.sender.tab.id },
