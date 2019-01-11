@@ -1,4 +1,3 @@
-import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { Container } from '@exteranto/ioc'
 import { Messaging } from '../../src/Messaging'
@@ -24,6 +23,7 @@ describe('Messaging API in general', () => {
 
     sinon.assert.calledOnce(spy)
     sinon.assert.calledWith(spy, 'test', {
+      context: {},
       request: 'test',
       respond: 'respond'
     })

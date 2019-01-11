@@ -24,15 +24,21 @@ export class Messaging extends AbstractMessaging {
         return this.promises[event.message.id](event.message.payload)
       }
 
-      this.dispatch(event.message, (response) => {
+      this.dispatch({
+        context: { tabId: event.target.eid },
+        ...event.message,
+      }, (response) => {
         // Safari does not support ports, so we need to send a message back
         // specifying that it is a response in the name. The response object is
-        // also carrying the event name, so we can find the promise to be
+        // also carrying the event id, so we can find the promise to be
         // resolved
         event.target.page.dispatchMessage('_response_', {
           event: event.message.event,
           id: event.message.id,
-          payload: response,
+          payload: {
+            body: { name: response.name, message: response.message },
+            ok: !(response instanceof Error),
+          },
         })
       })
     }, false)
@@ -47,14 +53,16 @@ export class Messaging extends AbstractMessaging {
    * @return {Promise<any>}
    */
   public send (script: Script, event: string, payload?: object) : Promise<any> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
+      const respond: (response: any) => any = response => response.ok ? resolve(response.body) : reject(response.body)
+
       if (script === this.script) {
-        return this.dispatch({ script, event, payload }, resolve)
+        return this.dispatch({ script, event, payload }, respond)
       }
 
       const id: string = this.getUniqueId()
 
-      this.promises[id] = resolve
+      this.promises[id] = respond
       this.sendToRuntime({ script, id, event, payload })
     })
   }

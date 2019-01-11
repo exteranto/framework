@@ -52,6 +52,7 @@ export abstract class Messaging {
     // We use the dispatcher to dispatch a message event to the appropriate
     // listener.
     this.dispatcher.fire(request.event, {
+      context: request.context || {},
       request: request.payload,
       respond,
     })

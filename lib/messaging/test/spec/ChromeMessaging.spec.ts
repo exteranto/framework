@@ -23,7 +23,7 @@ describe('Messaging API for Chrome', () => {
   it('sends a message via runtime port', async () => {
     chrome.runtime.connect.returns({
       postMessage: m => m,
-      onMessage: { addListener: l => l('resolved') }
+      onMessage: { addListener: l => l({ ok: true, body: 'resolved' }) }
     })
 
     await expect(messaging.send(Script.POPUP, 'test', 'test'))
@@ -31,4 +31,18 @@ describe('Messaging API for Chrome', () => {
 
     sinon.assert.calledOnce(chrome.runtime.connect)
   })
+
+  it('rejects the promise when error returned', async () => {
+    chrome.runtime.connect.returns({
+      postMessage: m => m,
+      onMessage: { addListener: l => l({ ok: false, body: 'error' }) }
+    })
+
+    await expect(messaging.send(Script.POPUP, 'test', 'test'))
+      .to.eventually.be.rejected
+      .and.to.equal('error')
+
+    sinon.assert.calledOnce(chrome.runtime.connect)
+  })
 })
+
