@@ -1,6 +1,6 @@
 install: sudo apt-get install sed
 
-script: "./bin/script.sh"
+script: "./bin/install.sh"
 
 deploy:
   provider: script
