@@ -9,9 +9,7 @@ do
     # Links the package for local development.
     npm link
 
-    npm i
-
-    if ! npm run build || ! npm run test
+    if ! npm i || ! npm run build || ! npm run test
     then
       exit 1
     fi
