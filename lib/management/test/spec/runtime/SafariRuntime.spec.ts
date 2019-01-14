@@ -37,13 +37,19 @@ export const tests = () => {
     it('registers install event', async () => {
       await global.app.boot()
 
-      const installed = sinon.spy()
+      const spy = sinon.spy()
+      const handle = payload => new Promise((resolve) => {
+        spy(payload)
+        resolve()
+      })
 
       Container.resolve(Dispatcher)
         .touch('app.management.runtime.installed')
-        .addHook(installed)
+        .addHook(handle)
 
-      sinon.assert.calledOnce(installed)
+      await handle
+
+      sinon.assert.calledOnce(spy)
 
       expect(localStorage.getItem('@exteranto'))
         .to.equal('{"version":"1.0.0"}')
@@ -54,13 +60,19 @@ export const tests = () => {
 
       await global.app.boot()
 
-      const updated = sinon.spy()
+      const spy = sinon.spy()
+      const handle = payload => new Promise((resolve) => {
+        spy(payload)
+        resolve()
+      })
 
       Container.resolve(Dispatcher)
         .touch('app.management.runtime.updated')
-        .addHook(updated)
+        .addHook(handle)
 
-      sinon.assert.calledOnce(updated)
+      await handle
+
+      sinon.assert.calledOnce(spy)
     })
 
     it('does not trigger update if versions match', async () => {
