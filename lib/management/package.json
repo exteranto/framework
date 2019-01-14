@@ -1,6 +1,6 @@
 {
   "name": "@exteranto/management",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "The management API Driver for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
