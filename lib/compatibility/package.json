@@ -23,13 +23,13 @@
   "repository": "github:exteranto/compatibility",
   "license": "MIT",
   "dependencies": {
-    "@exteranto/exceptions": "file:../exceptions",
-    "@exteranto/ioc": "file:../ioc",
-    "@exteranto/support": "file:../support",
+    "@exteranto/exceptions": "^1.1.1",
+    "@exteranto/ioc": "^1.1.1",
+    "@exteranto/support": "^1.1.1",
     "typescript": "^2.9.2"
   },
   "devDependencies": {
-    "@exteranto/core": "file:../core",
+    "@exteranto/core": "^1.1.1",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7.1.0",
     "@types/mocha": "^5.2.5",
