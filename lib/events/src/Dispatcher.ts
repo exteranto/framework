@@ -34,19 +34,18 @@ export class Dispatcher {
       return
     }
 
-    try {
-      this.events[event].dispatch(payload)
-    } catch (e) {
-      if (e.name && this.events[`app.exception.${e.name}`]) {
-        return this.events[`app.exception.${e.name}`].dispatch(e)
-      }
+    this.events[event].dispatch(payload)
+      .catch((e) => {
+        if (e.name && this.events[`app.exception.${e.name}`]) {
+          return this.events[`app.exception.${e.name}`].dispatch(e)
+        }
 
-      if (this.events['app.exception']) {
-        return this.events['app.exception'].dispatch(e)
-      }
+        if (this.events['app.exception']) {
+          return this.events['app.exception'].dispatch(e)
+        }
 
-      throw e
-    }
+        throw e
+      })
   }
 
   /**
@@ -62,6 +61,6 @@ export class Dispatcher {
       return this.fire(event, payload)
     }
 
-    this.touch(event).mailbox.push(payload)
+    this.touch(event).mailbox.push(() => this.fire(event, payload))
   }
 }

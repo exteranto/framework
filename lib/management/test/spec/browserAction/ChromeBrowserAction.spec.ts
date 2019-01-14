@@ -121,16 +121,22 @@ export const tests = () => {
     it('Registers badge click event.', async () => {
       await global.app.boot()
 
-      const hook = sinon.spy()
+      const spy = sinon.spy()
+      const handle = payload => new Promise((resolve) => {
+        spy(payload)
+        resolve()
+      })
 
       Container.resolve(Dispatcher)
         .touch('app.management.browser-action.clicked')
-        .addHook(hook)
+        .addHook(handle)
 
       chrome.tabs.get.yields({ id: 2 })
       chrome.browserAction.onClicked.trigger({ id: 2 })
 
-      sinon.assert.calledOnce(hook)
+      await handle
+
+      sinon.assert.calledOnce(spy)
     })
   })
 }

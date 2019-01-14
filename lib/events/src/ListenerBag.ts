@@ -1,4 +1,6 @@
 import { Listener } from './Listener'
+import { Middleware } from './Middleware'
+import { Pipeline } from '@exteranto/support'
 
 export class ListenerBag {
   /**
@@ -14,6 +16,13 @@ export class ListenerBag {
    * @type {Listener[]}
    */
   private listeners: Listener[] = []
+
+  /**
+   * Middleware assigned to this instance.
+   *
+   * @type {Middleware[]}
+   */
+  private middleware: Middleware[] = []
 
   /**
    * Adds a listener to this instance.
@@ -34,14 +43,28 @@ export class ListenerBag {
   public addHook (handle: (payload: any) => void) : void {
     this.addListener({ handle })
   }
+  /**
+   * Adds a middlware to this instance.
+   *
+   * @param {Middleware} middleware
+   */
+  public addMiddleware (middleware: Middleware) : void {
+    this.middleware.push(middleware)
+  }
 
   /**
-   * Dispatch all listeners on this instance with provided payload.
+   * Dispatch all listeners on this instance with provided payload. Trigger
+   * all middleware in the process.
    *
    * @param {any} payload
+   * @param {Promise<void>}
    */
-  public dispatch (payload: any) : void {
-    this.listeners.forEach(listener => listener.handle(payload))
+  public async dispatch (payload: any) : Promise<void> {
+    return new Pipeline()
+      .send(payload)
+      .via('handle')
+      .through(this.middleware)
+      .then(result => this.listeners.forEach(listener => listener.handle(result)))
   }
 
   /**
@@ -59,7 +82,7 @@ export class ListenerBag {
    * @return {void}
    */
   private deliverMail () : void {
-    this.mailbox.forEach(payload => this.dispatch(payload))
+    this.mailbox.forEach(deliver => deliver())
 
     this.mailbox = []
   }

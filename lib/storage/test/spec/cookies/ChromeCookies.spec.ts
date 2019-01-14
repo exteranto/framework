@@ -94,16 +94,22 @@ export const tests = () => {
     it('registers event listener', async () => {
       await global.app.boot()
 
-      const handle = sinon.spy()
+      const spy = sinon.spy()
+      const handle = payload => new Promise((resolve) => {
+        spy(payload)
+        resolve()
+      })
 
       Container.resolve(Dispatcher)
         .touch('app.cookies.changed')
-        .addListener({ handle })
+        .addHook(handle)
 
       chrome.cookies.onChanged.trigger('cookie')
 
-      sinon.assert.calledOnce(handle)
-      sinon.assert.calledWith(handle, 'cookie')
+      await handle
+
+      sinon.assert.calledOnce(spy)
+      sinon.assert.calledWith(spy, 'cookie')
     })
   })
 }
