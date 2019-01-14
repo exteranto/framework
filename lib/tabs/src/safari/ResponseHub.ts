@@ -22,7 +22,9 @@ export const ResponseHub: any = {
   createResolvable () : any {
     const id: string = this.getUniqueId()
 
-    const resolvable: Promise<any> = new Promise(resolve => this.resolvables[id] = resolve)
+    const resolvable: Promise<any> = new Promise((resolve, reject) => {
+      this.resolvables[id] = response => response.ok ? resolve(response.body) : reject(response.body)
+    })
 
     return { resolvable, id }
   },
@@ -39,7 +41,10 @@ export const ResponseHub: any = {
       return
     }
 
-    this.resolvables[key].resolve(payload)
+    this.resolvables[key]({
+      body: payload,
+      ok: !(payload instanceof Error),
+    })
 
     delete this.resolvables[key]
   },

@@ -4,7 +4,7 @@ import { Container } from '@exteranto/ioc'
 import { Dispatcher, Listener } from '@exteranto/events'
 import { Browser, Provider, Script } from '@exteranto/support'
 
-describe('App Class', () => {
+describe('App Class should', () => {
   let dispatcher
 
   before(() => {
@@ -15,16 +15,16 @@ describe('App Class', () => {
     (dispatcher as any).events = {}
   })
 
-  it('should register base container parameters', () => {
+  it('register base container parameters', () => {
     const app: App = new App(Script.BACKGROUND, { providers: [] }, {})
     app.start()
     app.boot()
 
-    expect(Container.resolveParam('browser')).to.equal(Browser.TESTING)
+    expect(Container.resolveParam('browser')).to.be.ok
     expect(Container.resolveParam('script')).to.equal(Script.BACKGROUND)
   })
 
-  it('should find providers', () => {
+  it('find providers', () => {
     const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, {})
     app.start()
     app.boot()
@@ -32,7 +32,7 @@ describe('App Class', () => {
     expect((app as any).providers).to.have.lengthOf(1)
   })
 
-  it('should boot providers', () => {
+  it('boot providers', () => {
     const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, {})
     app.start()
     app.boot()
@@ -40,7 +40,7 @@ describe('App Class', () => {
     expect(Container.resolveParam('test')).to.equal('test')
   })
 
-  it('should register providers', () => {
+  it('register providers', () => {
     const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, {})
     app.start()
     app.boot()
@@ -48,7 +48,7 @@ describe('App Class', () => {
     expect(Container.resolveParam('test2')).to.equal('test2')
   })
 
-  it('should register param bindings', () => {
+  it('register param bindings', () => {
     const app: App = new App(Script.BACKGROUND, { providers: [], bound: { param: 'exteranto' } }, {})
     app.start()
     app.boot()
@@ -56,7 +56,7 @@ describe('App Class', () => {
     expect(Container.resolveParam('param')).to.equal('exteranto')
   })
 
-  it('should register events', (done) => {
+  it('register events', (done) => {
     const app: App = new App(Script.BACKGROUND, { providers: [] }, { 'app.test': TestListener })
     app.start()
     app.boot()
@@ -64,8 +64,18 @@ describe('App Class', () => {
     dispatcher.fire('app.test', done)
   })
 
-  it('should fire the app.booted event', (done) => {
+  it('fire the app booted event', (done) => {
     const app: App = new App(Script.BACKGROUND, { providers: [] }, { 'app.booted': class implements Listener {
+      handle () : void {
+        done()
+      }
+    } })
+    app.start()
+    app.boot()
+  })
+
+  it('register the window load event', (done) => {
+    const app: App = new App(Script.BACKGROUND, { providers: [] }, { 'window.loaded': class implements Listener {
       handle () : void {
         done()
       }

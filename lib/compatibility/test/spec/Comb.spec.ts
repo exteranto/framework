@@ -1,8 +1,13 @@
 import { expect } from 'chai'
 import { Comb } from '../../src/Comb'
 import { Browser } from '@exteranto/support'
+import { Container } from '@exteranto/ioc'
 
 describe('Comb Service', () => {
+
+  before(() => {
+    Container.bindParam('browser', Browser.TESTING)
+  })
 
   it('only executes a callback on certain browser', async () => {
     await expect(new Comb().only([Browser.SAFARI], () => 'test'))

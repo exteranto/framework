@@ -1,6 +1,6 @@
 {
   "name": "@exteranto/exceptions",
-  "version": "1.0.13",
+  "version": "1.1.2",
   "description": "The Exceptions Package for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -23,7 +23,7 @@
   "repository": "github:exteranto/exceptions",
   "license": "MIT",
   "dependencies": {
-    "@exteranto/events": "file:../events",
+    "@exteranto/events": "^1.1.1",
     "typescript": "^2.9.2"
   },
   "devDependencies": {

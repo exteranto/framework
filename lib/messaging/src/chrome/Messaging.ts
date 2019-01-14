@@ -11,7 +11,17 @@ export class Messaging extends AbstractMessaging {
   public listen () : void {
     chrome.runtime.onConnect.addListener((port) => {
       port.onMessage.addListener((request) => {
-        this.dispatch(request, response => port.postMessage(response))
+        const respond: (body: any) => any = (body) => {
+          port.postMessage({
+            body: { name: body.name, message: body.message },
+            ok: !(body instanceof Error),
+          })
+        }
+
+        this.dispatch({
+          context: { tabId: port.sender.tab.id },
+          ...request,
+        }, respond)
       })
     })
   }
@@ -25,10 +35,12 @@ export class Messaging extends AbstractMessaging {
    * @return {Promise<any>}
    */
   public send (script: Script, event: string, payload?: object) : Promise<any> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
+      const respond: (response: any) => any = response => response.ok ? resolve(response.body) : reject(response.body)
+
       script === this.script
-        ? this.dispatch({ script, event, payload }, resolve)
-        : this.sendToRuntime({ script, event, payload }, resolve)
+        ? this.dispatch({ script, event, payload }, respond)
+        : this.sendToRuntime({ script, event, payload }, respond)
     })
   }
 
@@ -36,15 +48,15 @@ export class Messaging extends AbstractMessaging {
    * Sends a message to the application runtime (background/popup).
    *
    * @param {any} request
-   * @param {() => any} resolve
+   * @param {(response: any) => any} respond
    * @return {void}
    */
-  private sendToRuntime (request: object, resolve: () => any) : void {
+  private sendToRuntime (request: object, respond: (response: any) => any) : void {
     const port: Port = chrome.runtime.connect()
 
     port.postMessage(request)
 
     // This is triggered upon receiving a response from the listener.
-    port.onMessage.addListener(resolve)
+    port.onMessage.addListener(respond)
   }
 }

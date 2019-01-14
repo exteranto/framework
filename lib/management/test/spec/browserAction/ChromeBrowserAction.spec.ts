@@ -1,11 +1,15 @@
 import { expect } from 'chai'
+import * as sinon from 'sinon'
 import * as chrome from 'sinon-chrome'
 
 import { Container } from '@exteranto/ioc'
 import { Browser } from '@exteranto/support'
+import { Dispatcher } from '@exteranto/events'
 
 import { BrowserAction } from '../../../src'
 import { TabIdUnknownException } from '@exteranto/exceptions'
+
+declare var global: any
 
 export const tests = () => {
   describe('Chrome', () => {
@@ -112,6 +116,27 @@ export const tests = () => {
       chrome.browserAction.setIcon.yields(undefined)
       await expect(browserAction.setIcon('test.png', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
       await expect(chrome.browserAction.setIcon.calledOnce).to.be.true
+    })
+
+    it('Registers badge click event.', async () => {
+      await global.app.boot()
+
+      const spy = sinon.spy()
+      const handle = payload => new Promise((resolve) => {
+        spy(payload)
+        resolve()
+      })
+
+      Container.resolve(Dispatcher)
+        .touch('app.management.browser-action.clicked')
+        .addHook(handle)
+
+      chrome.tabs.get.yields({ id: 2 })
+      chrome.browserAction.onClicked.trigger({ id: 2 })
+
+      await handle
+
+      sinon.assert.calledOnce(spy)
     })
   })
 }

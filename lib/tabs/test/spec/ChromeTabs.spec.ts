@@ -5,6 +5,7 @@ import * as chrome from 'sinon-chrome'
 import { Container } from '@exteranto/ioc'
 import { Tab } from '../../src/chrome/Tab'
 import { Browser } from '@exteranto/support'
+import { TabIdUnknownException } from '@exteranto/exceptions'
 
 export const chromeTests = () => {
   describe('Chrome', () => {
@@ -53,6 +54,19 @@ export const chromeTests = () => {
         .to.eventually.equal(2)
 
       sinon.assert.calledOnce(chrome.tabs.duplicate)
+    })
+
+    it('gets a tab by id', async () => {
+      chrome.tabs.get.yields({ id: 2 })
+
+      await expect(tabs.get(2)).to.eventually.have.property('id')
+    })
+
+    it('throws an exception if tab does not exist', async () => {
+      chrome.tabs.get.yields()
+      chrome.runtime.lastError = { message: 'Tab ID does not exist' }
+
+      await expect(tabs.get(2)).to.eventually.be.rejectedWith(TabIdUnknownException)
     })
 
   })

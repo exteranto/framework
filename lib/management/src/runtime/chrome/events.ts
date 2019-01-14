@@ -5,7 +5,7 @@ export const namespace: string = 'app.management.runtime'
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   chrome.runtime.onInstalled.addListener((event) => {
     const route: string = {
-      chrome_update: 'browserUpdated',
+      chrome_update: 'browser-updated',
       install: 'installed',
       update: 'updated',
     }[event.reason]
@@ -18,10 +18,10 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   })
 
   chrome.webRequest.onBeforeRedirect.addListener((event) => {
-    dispatcher.fire(`${namespace}.webRequest.beforeRedirected`, event)
+    dispatcher.fire(`${namespace}.web-request.before-redirected`, event)
   })
 
   chrome.webRequest.onCompleted.addListener((event) => {
-    dispatcher.fire(`${namespace}.webRequest.completed`, event)
+    dispatcher.fire(`${namespace}.web-request.completed`, event)
   })
 }

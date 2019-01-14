@@ -31,6 +31,7 @@ export class App {
     private config: any,
     private events: any,
   ) {
+    //
   }
 
   /**
@@ -39,6 +40,7 @@ export class App {
   public start () : void {
     this.registerBaseParams()
     this.registerParamBindings()
+    this.registerWindowLoadEvent()
     this.findProviders()
     this.bootProviders()
   }
@@ -67,6 +69,15 @@ export class App {
     for (const key in this.config.bound || []) {
       Container.bindParam(key, this.config.bound[key])
     }
+  }
+
+  /**
+   * Register the arbitrary window load event.
+   */
+  private registerWindowLoadEvent () : void {
+    window.addEventListener('load', () => {
+      this.dispatcher.mail('window.loaded')
+    })
   }
 
   /**

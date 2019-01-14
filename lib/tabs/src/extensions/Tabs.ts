@@ -1,4 +1,5 @@
 import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
+import { TabIdUnknownException } from '@exteranto/exceptions'
 import { TabInterface } from '../TabInterface'
 import { Tabs as AbstractTabs } from '../Tabs'
 import { register } from './events'
@@ -26,6 +27,15 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   public open (url: string, active: boolean = false) : Promise<TabInterface> {
     return browser.tabs.create({ url, active })
       .then(tab => new Tab(tab))
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public async get (id: number) : Promise<TabInterface> {
+    return browser.tabs.get(id)
+      .then(tab => new Tab(tab))
+      .catch(() => Promise.reject(new TabIdUnknownException()))
   }
 
   /**

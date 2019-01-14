@@ -48,81 +48,115 @@ export const tests = () => {
     it('registers install event', async () => {
       await global.app.boot()
 
-      const installed = sinon.spy()
+      const spy = sinon.spy()
+      const handle = payload => new Promise((resolve) => {
+        spy(payload)
+        resolve()
+      })
 
       Container.resolve(Dispatcher)
         .touch('app.management.runtime.installed')
-        .addHook(installed)
+        .addHook(handle)
 
       browser.runtime.onInstalled.trigger({
         reason: 'install'
       })
 
-      sinon.assert.calledOnce(installed)
+      await handle
+
+      sinon.assert.calledOnce(spy)
+      sinon.assert.calledWith(spy, { reason: 'install' })
     })
 
     it('registers update event', async () => {
       await global.app.boot()
 
-      const updated = sinon.spy()
+      const spy = sinon.spy()
+      const handle = payload => new Promise((resolve) => {
+        spy(payload)
+        resolve()
+      })
 
       Container.resolve(Dispatcher)
         .touch('app.management.runtime.updated')
-        .addHook(updated)
+        .addHook(handle)
 
       browser.runtime.onInstalled.trigger({
         reason: 'update',
         previousVersion: '0.0.0'
       })
 
-      sinon.assert.calledOnce(updated)
+      await handle
+
+      sinon.assert.calledOnce(spy)
+      sinon.assert.calledWith(spy, { reason: 'update', previousVersion: '0.0.0' })
     })
 
     it('registers browser update event', async () => {
       await global.app.boot()
 
-      const browserUpdated = sinon.spy()
+      const spy = sinon.spy()
+      const handle = payload => new Promise((resolve) => {
+        spy(payload)
+        resolve()
+      })
 
       Container.resolve(Dispatcher)
-        .touch('app.management.runtime.browserUpdated')
-        .addHook(browserUpdated)
+        .touch('app.management.runtime.browser-updated')
+        .addHook(handle)
 
       browser.runtime.onInstalled.trigger({
         reason: 'browser_update',
         previousVersion: '0.0.0'
       })
 
-      sinon.assert.calledOnce(browserUpdated)
+      await handle
+
+      sinon.assert.calledOnce(spy)
+      sinon.assert.calledWith(spy, { reason: 'browser_update', previousVersion: '0.0.0' })
     })
 
     it('registers web request on before redirect event', async () => {
       await global.app.boot()
 
-      const hook = sinon.spy()
+      const spy = sinon.spy()
+      const handle = payload => new Promise((resolve) => {
+        spy(payload)
+        resolve()
+      })
 
       Container.resolve(Dispatcher)
-        .touch('app.management.runtime.webRequest.beforeRedirected')
-        .addHook(hook)
+        .touch('app.management.runtime.web-request.before-redirected')
+        .addHook(handle)
 
       browser.webRequest.onBeforeRedirect.trigger('message')
 
-      sinon.assert.calledOnce(hook)
-      sinon.assert.calledWith(hook, 'message')
+      await handle
+
+      sinon.assert.calledOnce(spy)
+      sinon.assert.calledWith(spy, 'message')
     })
 
     it('registers web request on completed event', async () => {
       await global.app.boot()
 
-      const hook = sinon.spy()
+      const spy = sinon.spy()
+      const handle = payload => new Promise((resolve) => {
+        spy(payload)
+        resolve()
+      })
 
       Container.resolve(Dispatcher)
-        .touch('app.management.runtime.webRequest.completed')
-        .addHook(hook)
+        .touch('app.management.runtime.web-request.completed')
+        .addHook(handle)
 
       browser.webRequest.onCompleted.trigger('message')
 
-      sinon.assert.calledOnce(hook)
-      sinon.assert.calledWith(hook, 'message')
+      await handle
+
+      sinon.assert.calledOnce(spy)
+      sinon.assert.calledWith(spy, 'message')
     })
+
   })
 }

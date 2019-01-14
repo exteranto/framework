@@ -1,3 +1,4 @@
+import { Dispatcher } from '@exteranto/events'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 import { BrowserAction as AbstractBrowserAction } from '../BrowserAction'
 
@@ -59,5 +60,14 @@ export class BrowserAction extends AbstractBrowserAction {
   public async setIcon (path: string | object, tabId: number) : Promise<any> {
     return browser.browserAction.setIcon({ path, tabId })
       .catch(() => Promise.reject(new TabIdUnknownException()))
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public registerEvents (dispatcher: Dispatcher) : void {
+    browser.browserAction.onClicked.addListener(({ id }) => {
+      dispatcher.fire('app.management.browser-action.clicked', id)
+    })
   }
 }

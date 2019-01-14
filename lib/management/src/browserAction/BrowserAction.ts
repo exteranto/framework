@@ -1,5 +1,7 @@
+import { RegistersNativeEvents, Dispatcher } from '@exteranto/events'
 
-export abstract class BrowserAction {
+export abstract class BrowserAction implements RegistersNativeEvents {
+
   /**
    * Getter for the badge text.
    *
@@ -59,4 +61,11 @@ export abstract class BrowserAction {
    * @return {Promise<any>}
    */
   public abstract async setIcon (path: string | object, tabId: number) : Promise<any>
+
+  /**
+   * Register all native events on the given module.
+   *
+   * @param {Dispatcher} dispatcher
+   */
+  public abstract registerEvents (dispatcher: Dispatcher) : void
 }

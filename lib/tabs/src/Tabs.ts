@@ -77,6 +77,13 @@ export abstract class Tabs implements RegistersNativeEvents {
   }
 
   /**
+   * Gets tab by id.
+   *
+   * @return {Promise<Tab>}
+   */
+  public abstract get (id: number) : Promise<TabInterface>
+
+  /**
    * Returns all tabs that match the provided query.
    *
    * @param {any} query
