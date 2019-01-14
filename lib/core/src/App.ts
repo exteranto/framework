@@ -31,6 +31,7 @@ export class App {
     private config: any,
     private events: any,
   ) {
+    //
   }
 
   /**
