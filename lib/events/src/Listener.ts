@@ -1,9 +1,10 @@
+import { Event } from './Event'
 
 export interface Listener {
   /**
    * Handle the fired event.
    *
-   * @param {any} payload
+   * @param {Event} event
    */
-  handle (payload: any) : void
+  handle (event: Event) : void
 }

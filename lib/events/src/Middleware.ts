@@ -1,9 +1,10 @@
+import { Event } from './Event'
 
 export interface Middleware {
   /**
-   * Intercept the incoming request.
+   * Intercept the incoming event.
    *
-   * @param {any} request
+   * @param {Event} event
    */
-  handle (request: any) : Promise<any>
+  handle (event: Event) : Promise<any>
 }

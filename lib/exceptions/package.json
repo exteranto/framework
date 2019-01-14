@@ -23,7 +23,6 @@
   "repository": "github:exteranto/exceptions",
   "license": "MIT",
   "dependencies": {
-    "@exteranto/events": "^1.1.1",
     "typescript": "^2.9.2"
   },
   "devDependencies": {
