@@ -19,7 +19,7 @@ const app: App = new App(Script.BACKGROUND, {
   bound: {
     cache: { driver: 'local', timeout: 1 }
   }
-}, {})
+}, () => {})
 
 app.start()
 app.boot()

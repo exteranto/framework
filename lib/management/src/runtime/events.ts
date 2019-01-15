@@ -4,7 +4,7 @@ class WebRequestEvent extends Event {
   /**
    * @inheritdoc
    */
-  constructor (protected data?: any) {
+  constructor (public data?: any) {
     super()
   }
 
@@ -24,16 +24,6 @@ class WebRequestEvent extends Event {
    */
   public timestamp () : number {
     return this.data.timeStamp
-  }
-
-  /**
-   * Returns the whole data object as in each browser,
-   * there's different level of information available.
-   *
-   * @return {any}
-   */
-  public raw () : any {
-    return this.data
   }
 }
 
