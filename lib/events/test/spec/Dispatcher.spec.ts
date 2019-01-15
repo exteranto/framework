@@ -1,6 +1,5 @@
 import { expect } from 'chai'
-import * as sinon from 'sinon'
-import { Dispatcher, Listener, ListenerBag, Middleware } from '../../src'
+import { Dispatcher, Event, Listen, Listener, ListenerBag, Middleware } from '../../src'
 
 describe('Dispatcher', () => {
   let dispatcher
@@ -14,130 +13,167 @@ describe('Dispatcher', () => {
   })
 
   it('communicates with the listener bag', () => {
-    expect(dispatcher.touch('test')).to.be.instanceof(ListenerBag)
+    expect(dispatcher.touch(TestEvent)).to.be.instanceof(ListenerBag)
   })
 
   it('binds an event listener', (done) => {
-    dispatcher.touch('test-listener').addListener(new TestListener)
-    dispatcher.fire('test-listener', { test: 'test-listener', done })
+    dispatcher.touch(TestEvent).addListener(new class implements Listener {
+      public handle (event: TestEvent) : void {
+        try {
+          expect(event.getText()).to.equal('asd')
+          done()
+        } catch (e) { done(e) }
+      }
+    })
+
+    dispatcher.fire(new TestEvent({ text: 'asd' }))
   })
 
   it('binds an event hook', (done) => {
-    dispatcher.touch('test-hook').addHook((payload) => {
+    dispatcher.touch(TestEvent).addHook((event: TestEvent) => {
       try {
-        expect(payload.test).to.equal('test-hook')
-        payload.done()
-      } catch (e) {
-        payload.done(e)
-      }
+        expect(event.getText()).to.equal('hook')
+        done()
+      } catch (e) { done(e) }
     })
 
-    dispatcher.fire('test-hook', { test: 'test-hook', done })
+    dispatcher.fire(new TestEvent({ text: 'hook' }))
   })
 
   it('supports named exceptions', (done) => {
-    dispatcher.touch('app.exception.test-exception').addHook((payload) => {
-      expect(payload).to.be.instanceof(TestException)
-
-      done()
+    dispatcher.touch(TestException).addHook((event: TestException) => {
+      try {
+        expect(event).to.be.instanceOf(TestException)
+          .and.to.have.property('message')
+          .that.equals('exception_request')
+        done()
+      } catch (e) { done(e) }
     })
 
-    dispatcher.touch('faulty-event').addHook(() => {
-      throw new TestException()
+    dispatcher.touch(TestEvent).addHook((event: TestEvent) => {
+      throw new TestException(`exception_${event.getText()}`)
     })
 
-    dispatcher.fire('faulty-event')
+    dispatcher.fire(new TestEvent({ text: 'request' }))
   })
 
   it('puts an event to mailbox', () => {
-    dispatcher.mail('app.events.test-mailbox-1')
-    dispatcher.mail('app.events.test-mailbox-1')
+    dispatcher.mail(new TestEvent)
+    dispatcher.mail(new TestEvent)
 
-    expect(dispatcher.touch('app.events.test-mailbox-1').mailbox)
+    expect(dispatcher.touch(TestEvent).mailbox)
       .to.have.lengthOf(2)
   })
 
-  it('fires events upon assigning a listener and clears mailbox', async () => {
-    const spy = sinon.spy()
-    const handle = payload => new Promise((resolve) => {
-      spy(payload)
-      resolve()
+  it('fires events upon assigning a listener and clears mailbox', (done) => {
+    dispatcher.mail(new TestEvent({ text: 'test' }))
+
+    dispatcher.touch(TestEvent).addHook((event: TestEvent) => {
+      try {
+        expect(event.getText()).to.equal('test')
+        expect(dispatcher.touch(TestEvent).mailbox).to.have.lengthOf(0)
+        done()
+      } catch (e) { done(e) }
     })
-
-    dispatcher.mail('app.events.test-mailbox-2', 'payload')
-    dispatcher.touch('app.events.test-mailbox-2').addHook(handle)
-
-    await handle
-
-    sinon.assert.calledOnce(spy)
-    sinon.assert.calledWith(spy, 'payload')
-
-    expect(dispatcher.touch('app.events.test-mailbox-2').mailbox)
-      .to.have.lengthOf(0)
   })
 
   it('adds event middlware to a listener bag', async () => {
-    dispatcher.touch('app.events.test-middleware-1').addMiddleware(new class implements Middleware {
-      public async handle (payload: any) {
+    dispatcher.touch(TestEvent).addMiddleware(new class implements Middleware {
+      public async handle (payload: any) : Promise<any> {
         return payload + '1'
       }
     })
 
-    expect(dispatcher.touch('app.events.test-middleware-1').middleware).to.have.lengthOf(1)
+    expect(dispatcher.touch(TestEvent).middleware).to.have.lengthOf(1)
   })
 
   it('correctly exetuces middleware', (done) => {
-    dispatcher.touch('app.events.test-middleware-2').addMiddleware(new class implements Middleware {
-      public async handle (payload: any) {
-        return payload + '1'
+    dispatcher.touch(TestEvent).addMiddleware(new class implements Middleware {
+      public async handle (event: TestEvent) {
+        event.setText(event.getText() + '_changed')
+
+        return event
       }
     })
 
-    dispatcher.touch('app.events.test-middleware-2').addHook((payload) => {
+    dispatcher.touch(TestEvent).addHook((event: TestEvent) => {
       try {
-        expect(payload).to.equal('request1')
+        expect(event.getText()).to.equal('request_changed')
         done()
-      } catch (e) {
-        done(e)
-      }
+      } catch (e) { done(e) }
     })
 
-    dispatcher.fire('app.events.test-middleware-2', 'request')
+    dispatcher.fire(new TestEvent({ text: 'request' }))
   })
 
   it('correctly handles exceptions from a middleware', (done) => {
-    dispatcher.touch('app.events.test-middleware-3').addMiddleware(new class implements Middleware {
-      public async handle (payload: any) {
-        throw new TestException
+    dispatcher.touch(TestEvent).addMiddleware(new class implements Middleware {
+      public async handle (event: TestEvent) {
+        throw new TestException(`exception_${event.getText()}`)
       }
     })
 
-    dispatcher.touch('app.exception.test-exception').addHook((payload) => {
+    dispatcher.touch(TestException).addHook((event: TestException) => {
       try {
-        expect(payload).to.be.instanceOf(TestException)
+        expect(event).to.be.instanceOf(TestException)
+          .and.to.have.property('message')
+          .that.equals('exception_request')
         done()
-      } catch (e) {
-        done(e)
+      } catch (e) { done(e) }
+    })
+
+    dispatcher.touch(TestEvent).addHook(() => {
+      done(new Error('Should not have been called.'))
+    })
+
+    dispatcher.fire(new TestEvent({ text: 'request' }))
+  })
+
+  it('correctly handles exceptions from a middleware', (done) => {
+    dispatcher.touch(TestEvent).addMiddleware(new class implements Middleware {
+      public async handle (event: TestEvent) {
+        throw new TestException(`exception_${event.getText()}`)
       }
     })
 
-    dispatcher.touch('app.events.test-middleware-3').addHook(() => {
-      done(new Error('Should now have been called.'))
+    dispatcher.touch(TestException).addHook((event: TestException) => {
+      try {
+        expect(event).to.be.instanceOf(TestException)
+          .and.to.have.property('message')
+          .that.equals('exception_request')
+        done()
+      } catch (e) { done(e) }
     })
 
-    dispatcher.fire('app.events.test-middleware-3', 'request')
+    dispatcher.touch(TestEvent).addHook(() => {
+      done(new Error('Should not have been called.'))
+    })
+
+    dispatcher.fire(new TestEvent({ text: 'request' }))
+  })
+
+  it('registers event types', () => {
+    dispatcher.touch(TestEvent)
+
+    const Constructor = dispatcher.type('TestEvent')
+    expect(new Constructor).to.be.instanceOf(TestEvent)
   })
 })
 
-class TestListener implements Listener {
-
-  public handle(payload: any) : void {
-    expect(payload.test).to.equal('test-listener')
-
-    payload.done()
-  }
+class TestException extends Error {
+  //
 }
 
-class TestException extends Error {
-  public name: string = 'test-exception'
+class TestEvent extends Event {
+  constructor (private data?: any) {
+    super()
+  }
+
+  public getText () : string {
+    return this.data.text
+  }
+
+  public setText (text: string) : void {
+    this.data.text = text
+  }
 }

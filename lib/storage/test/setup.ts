@@ -31,7 +31,7 @@ const app: App = new App(Script.BACKGROUND, {
     StorageProvider,
     CookiesProvider
   ],
-}, {})
+}, () => {})
 
 app.start()
 app.boot()

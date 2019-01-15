@@ -24,10 +24,10 @@
   "repository": "github:exteranto/core",
   "license": "MIT",
   "dependencies": {
-    "@exteranto/events": "^1.1.1",
-    "@exteranto/exceptions": "^1.1.1",
-    "@exteranto/ioc": "^1.1.1",
-    "@exteranto/support": "^1.1.1",
+    "@exteranto/events": "^1.1.2",
+    "@exteranto/exceptions": "^1.1.2",
+    "@exteranto/ioc": "^1.1.2",
+    "@exteranto/support": "^1.1.2",
     "typescript": "^2.9.2"
   },
   "devDependencies": {

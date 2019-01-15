@@ -1,18 +1,9 @@
-
-/**
- * Permissions module.
- */
-
+export * from './runtime'
 export * from './permissions'
-
-/**
- * Browser action module.
- */
-
 export * from './browserAction'
 
 /**
- * Tre service provider.
+ * The service provider.
  */
 
 export { ManagementProvider } from './ManagementProvider'

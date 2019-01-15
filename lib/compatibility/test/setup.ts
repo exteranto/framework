@@ -14,7 +14,7 @@ chai.use(chaiAsPromised);
   addEventListener: (_, l) => l()
 }
 
-const app: App = new App(Script.BACKGROUND, { providers: [] }, {})
+const app: App = new App(Script.BACKGROUND, { providers: [] }, () => {})
 
 app.start()
 app.boot()

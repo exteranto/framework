@@ -1,6 +1,12 @@
 import { Tab } from './Tab'
 import { ResponseHub } from './ResponseHub'
 import { Dispatcher } from '@exteranto/events'
+import {
+  TabCreatedEvent,
+  TabUpdatedEvent,
+  TabActivatedEvent,
+  TabRemovedEvent,
+} from '../events'
 
 declare var safari: any
 
@@ -15,15 +21,22 @@ const isTab: (target: any) => boolean = (target) => {
 }
 
 /**
+ * Gets all opened tabs.
+ *
+ * @return {any[]}
+ */
+const getAllTabs: () => any[] = () => safari.application
+  .browserWindows
+  .reduce((tabs, window) => {
+    return [...tabs, ...window.tabs]
+  }, [])
+
+/**
  * Puts ids of all objects in safari (windows and tabs) into one array.
  *
  * @return {number[]}
  */
-const getAllIds: () => number[] = () => safari.application
-  .browserWindows
-  .reduce((ids, window) => {
-    return [...ids, ...window.tabs.map(({ eid }) => eid), window.eid]
-  }, [])
+const getAllIds: () => number[] = () => getAllTabs().map(({ eid }) => eid)
 
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   nativeTabListeners(dispatcher)
@@ -34,6 +47,9 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
       ResponseHub.resolve(response.message.id, response.message.payload)
     }
   })
+
+  // Registers currently opened tabs.
+  getAllTabs().forEach(tab => introduceToEcosystem(tab, dispatcher))
 }
 
 /**
@@ -43,32 +59,48 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
  */
 const nativeTabListeners: (dispatcher: Dispatcher) => void = (dispatcher) => {
   safari.application.addEventListener('open', ({ target }) => {
-    const tabs: number[] = getAllIds()
+    introduceToEcosystem(target, dispatcher)
+  }, true)
+}
 
-    const getUniqueId: (id: number) => number = (id) => {
-      return tabs.indexOf(id) === -1 ? id : getUniqueId(id + 1)
-    }
+/**
+ * Does all necessary preprocesses for tab/window so that
+ * it can be used by the framework.
+ *
+ * @param {any} target
+ * @param {Dispatcher} dispatcher
+ * @return {void}
+ */
+const introduceToEcosystem: (target: any, dispatcher: Dispatcher) => void = (target, dispatcher) => {
+  if (target.eid) {
+    return
+  }
 
-    // Sets a unique id for a target
-    target.eid = getUniqueId(Date.now())
-    target.meta = {}
+  const ids: number[] = getAllIds()
 
-    if (!isTab(target)) {
-      return
-    }
+  const getUniqueId: (id: number) => number = (id) => {
+    return ids.indexOf(id) === -1 ? id : getUniqueId(id + 1)
+  }
 
-    dispatcher.fire('app.tabs.created', new Tab(target))
+  // Sets a unique id for a target
+  target.eid = getUniqueId(Date.now())
+  target.meta = {}
 
-    target.addEventListener('navigate', () => {
-      dispatcher.fire('app.tabs.updated', new Tab(target))
-    }, true)
+  if (!isTab(target)) {
+    return
+  }
 
-    target.addEventListener('close', () => {
-      dispatcher.fire('app.tabs.removed', target.eid)
-    }, true)
+  dispatcher.fire(new TabCreatedEvent(new Tab(target)))
 
-    target.addEventListener('activate', () => {
-      dispatcher.fire('app.tabs.activated', target.eid)
-    }, true)
+  target.addEventListener('navigate', () => {
+    dispatcher.fire(new TabUpdatedEvent(new Tab(target)))
+  }, true)
+
+  target.addEventListener('close', () => {
+    dispatcher.fire(new TabRemovedEvent(target.eid))
+  }, true)
+
+  target.addEventListener('activate', () => {
+    dispatcher.fire(new TabActivatedEvent(target.eid))
   }, true)
 }

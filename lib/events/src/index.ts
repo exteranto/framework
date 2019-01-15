@@ -1,3 +1,4 @@
+export { Event } from './Event'
 export { Listener } from './Listener'
 export { Listen } from './Annotations'
 export { Dispatcher } from './Dispatcher'

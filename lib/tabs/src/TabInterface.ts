@@ -1,3 +1,4 @@
+import { Message } from '@exteranto/messaging'
 
 export interface TabInterface {
 
@@ -46,15 +47,14 @@ export interface TabInterface {
   /**
    * Sends a message to the tab.
    *
-   * @param {string} event
-   * @param {object} payload
+   * @param {Message} message
    * @return {Promise<any>}
    */
-  send (event: string, payload?: object) : Promise<any>
+  send (message: Message) : Promise<any>
 
   /**
-   * Resolves a value from the original cached tab object.
-   * Note that values on this object might not be
+   * Resolves a value from the original cached tab object. Note that values on
+   * this object might not be cross-browser compatible.
    *
    * @param {string} key
    * @return {any}

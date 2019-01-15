@@ -1,6 +1,7 @@
+import { Message } from './Message'
+import { Script } from '@exteranto/support'
 import { Dispatcher } from '@exteranto/events'
 import { Autowired, Param } from '@exteranto/ioc'
-import { Script } from '@exteranto/support'
 
 export abstract class Messaging {
   /**
@@ -27,34 +28,38 @@ export abstract class Messaging {
   public abstract listen () : void
 
   /**
-   * Sends a message to the specified script and event.
+   * Sends a message across scripts.
    *
-   * @param {Script} script
-   * @param {string} event
-   * @param {object} payload
+   * @param {Message} message
    * @return {Promise<any>}
    */
-  public abstract send (script: Script, event: string, payload?: object) : Promise<any>
+  public abstract send (message: Message) : Promise<any>
 
   /**
-   * Dispatches an event to all suitable events.
+   * Dispatches the received message via the dispatcher dependency.
    *
-   * @param {object} request
+   * @param {string} event
+   * @param {any} payload
+   * @param {any} context
    * @param {(response: any) => any} respond
    * @return {void}
    */
-  protected dispatch (request: any, respond: (response: any) => any) : void {
-    // If the message was not meant for this script, cancel the execution.
-    if (request.script !== this.script) {
-      return
-    }
+  protected dispatch (
+    name: string,
+    payload: any,
+    context: any,
+    respond: (response: any) => any,
+  ) : void {
+    // Get and instantiate the desired message event model.
+    const Constructor: any = this.dispatcher.type(name)
+    const event: Message = new Constructor(payload)
+
+    // Assign important data to the model.
+    event.context = context
+    event.respond = respond
 
     // We use the dispatcher to dispatch a message event to the appropriate
     // listener.
-    this.dispatcher.fire(request.event, {
-      context: request.context || {},
-      request: request.payload,
-      respond,
-    })
+    this.dispatcher.fire(event)
   }
 }

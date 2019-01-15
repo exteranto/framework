@@ -2,9 +2,9 @@ import { expect } from 'chai'
 import * as sinon from 'sinon'
 import * as chrome from 'sinon-chrome'
 import { Container } from '@exteranto/ioc'
-import { Cookies } from '../../../src/Cookies'
 import { Browser } from '@exteranto/support'
 import { Dispatcher } from '@exteranto/events'
+import { CookieChangedEvent, Cookies } from '../../../src'
 import {
   EmptyResponseException,
   InvalidCookieRequestException
@@ -22,7 +22,8 @@ export const tests = () => {
       cookies = Container.resolve(Cookies)
     })
 
-    beforeEach(() => {
+    afterEach(() => {
+      Container.resolve(Dispatcher).events = {}
       chrome.runtime.lastError = undefined
     })
 
@@ -91,25 +92,19 @@ export const tests = () => {
       sinon.assert.calledOnce(chrome.cookies.set)
     })
 
-    it('registers event listener', async () => {
-      await global.app.boot()
-
-      const spy = sinon.spy()
-      const handle = payload => new Promise((resolve) => {
-        spy(payload)
-        resolve()
-      })
+    it('registers event listener', (done) => {
+      global.app.boot()
 
       Container.resolve(Dispatcher)
-        .touch('app.cookies.changed')
-        .addHook(handle)
+        .touch(CookieChangedEvent)
+        .addHook((event: CookieChangedEvent) => {
+          try {
+            expect(event.getCookie()).to.equal('cookie')
+            done()
+          } catch (e) { done(e) }
+        })
 
       chrome.cookies.onChanged.trigger('cookie')
-
-      await handle
-
-      sinon.assert.calledOnce(spy)
-      sinon.assert.calledWith(spy, 'cookie')
     })
   })
 }

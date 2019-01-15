@@ -1,11 +1,20 @@
-import * as sinon from 'sinon'
 import { expect } from 'chai'
+import * as sinon from 'sinon'
 import { Tabs } from '../../src/Tabs'
 import * as chrome from 'sinon-chrome'
 import { Container } from '@exteranto/ioc'
 import { Tab } from '../../src/chrome/Tab'
 import { Browser } from '@exteranto/support'
+import { Dispatcher } from '@exteranto/events'
 import { TabIdUnknownException } from '@exteranto/exceptions'
+import {
+  TabCreatedEvent,
+  TabUpdatedEvent,
+  TabActivatedEvent,
+  TabRemovedEvent,
+} from '../../src'
+
+declare var global: any
 
 export const chromeTests = () => {
   describe('Chrome', () => {
@@ -15,6 +24,11 @@ export const chromeTests = () => {
       Container.bindParam('browser', Browser.CHROME)
 
       tabs = Container.resolve(Tabs)
+    })
+
+    afterEach(() => {
+      Container.resolve(Dispatcher).events = {}
+      chrome.runtime.lastError = undefined
     })
 
     it('opens a new tab', async () => {
@@ -67,6 +81,66 @@ export const chromeTests = () => {
       chrome.runtime.lastError = { message: 'Tab ID does not exist' }
 
       await expect(tabs.get(2)).to.eventually.be.rejectedWith(TabIdUnknownException)
+    })
+
+    it('registers tab created event', (done) => {
+      global.app.boot()
+
+      Container.resolve(Dispatcher)
+        .touch(TabCreatedEvent)
+        .addHook((event: TabCreatedEvent) => {
+          try {
+            expect(event.getTab().id()).to.equal(1)
+            done()
+          } catch (e) { done(e) }
+        })
+
+      chrome.tabs.onCreated.trigger({ id: 1 })
+    })
+
+    it('registers tab updated event', (done) => {
+      global.app.boot()
+
+      Container.resolve(Dispatcher)
+        .touch(TabUpdatedEvent)
+        .addHook((event: TabUpdatedEvent) => {
+          try {
+            expect(event.getTab().id()).to.equal(2)
+            done()
+          } catch (e) { done(e) }
+        })
+
+      chrome.tabs.onUpdated.trigger(1, 2, { id: 2 })
+    })
+
+    it('registers tab activated event', (done) => {
+      global.app.boot()
+
+      Container.resolve(Dispatcher)
+        .touch(TabActivatedEvent)
+        .addHook((event: TabActivatedEvent) => {
+          try {
+            expect(event.getTabId()).to.equal(3)
+            done()
+          } catch (e) { done(e) }
+        })
+
+      chrome.tabs.onActivated.trigger({ tabId: 3 })
+    })
+
+    it('registers tab removed event', (done) => {
+      global.app.boot()
+
+      Container.resolve(Dispatcher)
+        .touch(TabRemovedEvent)
+        .addHook((event: TabRemovedEvent) => {
+          try {
+            expect(event.getTabId()).to.equal(4)
+            done()
+          } catch (e) { done(e) }
+        })
+
+      chrome.tabs.onRemoved.trigger(4)
     })
 
   })

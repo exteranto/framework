@@ -1,9 +1,10 @@
-import { assert } from 'chai'
 import * as sinon from 'sinon'
+import { assert, expect } from 'chai'
 import * as chrome from 'sinon-chrome'
 import { Container } from '@exteranto/ioc'
-import { Storage } from '../../../src/Storage'
 import { Browser } from '@exteranto/support'
+import { Dispatcher } from '@exteranto/events'
+import { StorageChangedEvent, Storage } from '../../../src'
 
 export const tests = () => {
   describe('Chrome', () => {
@@ -13,6 +14,10 @@ export const tests = () => {
       Container.bindParam('browser', Browser.CHROME)
 
       storage = Container.resolve(Storage, ['local'])
+    })
+
+    afterEach(() => {
+      Container.resolve(Dispatcher).events = {}
     })
 
     it('populates a value', async () => {
@@ -85,6 +90,22 @@ export const tests = () => {
 
       chrome.storage.local.getBytesInUse.yields(50)
       await assert.eventually.equal(storage.size('value'), 50)
+    })
+
+    it('registers the correct listener', (done) => {
+      chrome.storage.local.set.yields(null)
+
+      Container.resolve(Dispatcher)
+        .touch(StorageChangedEvent)
+        .addHook((event: StorageChangedEvent) => {
+          try {
+            expect(event.getStorable()).to.deep.equal({ key: 'value' })
+            expect(event.getType()).to.equal('local')
+            done()
+          } catch (e) { done(e) }
+        })
+
+      storage.set('key', 'value')
     })
   })
 }

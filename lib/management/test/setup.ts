@@ -30,7 +30,7 @@ chai.use(chaiAsPromised)
 
 const app: App = new App(Script.BACKGROUND, {
   providers: [ManagementProvider]
-}, {})
+}, () => {})
 
 ;(global as any).app = app
 

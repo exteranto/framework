@@ -1,26 +1,30 @@
 import { Container } from '@exteranto/ioc'
-import { Dispatcher } from '@exteranto/events'
+import { Dispatcher, Event } from '@exteranto/events'
+import {
+  WebRequestBeforeRedirectedEvent,
+  WebRequestCompletedEvent,
+  ExtensionUpdatedEvent,
+  ExtensionInstalledEvent,
+} from '../events'
 
 declare var safari: any
 
-export const namespace: string = 'app.management.runtime'
-
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   safari.application.addEventListener('beforeNavigate', (event) => {
-    dispatcher.fire(`${namespace}.web-request.before-redirected`, {
+    dispatcher.fire(new WebRequestBeforeRedirectedEvent({
       redirectUrl: event.url,
       tabId: event.target.eid,
       timeStamp: event.timeStamp,
       url: event.target.url,
-    })
+    }))
   })
 
   safari.application.addEventListener('navigate', (event) => {
-    dispatcher.fire(`${namespace}.web-request.completed`, {
+    dispatcher.fire(new WebRequestCompletedEvent({
       tabId: event.target.eid,
       timeStamp: event.timeStamp,
       url: event.target.url,
-    })
+    }))
   })
 
   registerInstallAndUpdateEvents(dispatcher)
@@ -33,17 +37,20 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
  */
 const registerInstallAndUpdateEvents: (dispatcher: Dispatcher) => void = (dispatcher) => {
   const exteranto: any = getExterantoInfo()
+  const previousVersion: string = exteranto.version
   const version: string = Container.resolveParam('app.version')
 
-  if (exteranto.version === version) {
+  if (previousVersion === version) {
     return
   }
 
-  const event: string = exteranto.version ? 'updated' : 'installed'
+  console.log(previousVersion, version)
 
-  dispatcher.mail(`${namespace}.${event}`, {
-    previousVersion: exteranto.version,
-  })
+  const event: Event = previousVersion
+    ? new ExtensionUpdatedEvent({ previousVersion })
+    : new ExtensionInstalledEvent()
+
+  dispatcher.mail(event)
 
   localStorage.setItem('@exteranto', JSON.stringify({ ...exteranto, version }))
 }

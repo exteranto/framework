@@ -25,8 +25,9 @@
   "repository": "github:exteranto/events",
   "license": "MIT",
   "dependencies": {
-    "@exteranto/ioc": "^1.1.1",
-    "@exteranto/support": "^1.1.1",
+    "@exteranto/exceptions": "^1.1.2",
+    "@exteranto/ioc": "^1.1.2",
+    "@exteranto/support": "^1.1.2",
     "typescript": "^2.9.2"
   },
   "devDependencies": {

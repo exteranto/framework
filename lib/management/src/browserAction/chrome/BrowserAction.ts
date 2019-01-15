@@ -1,4 +1,5 @@
 import { Dispatcher } from '@exteranto/events'
+import { BrowserActionClickedEvent } from '../events'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 import { BrowserAction as AbstractBrowserAction } from '../BrowserAction'
 
@@ -85,7 +86,7 @@ export class BrowserAction extends AbstractBrowserAction {
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     chrome.browserAction.onClicked.addListener(({ id }) => {
-      dispatcher.fire('app.management.browser-action.clicked', id)
+      dispatcher.fire(new BrowserActionClickedEvent({ id }))
     })
   }
 }
