@@ -75,7 +75,7 @@ export class Tab implements TabInterface {
 
     port.postMessage({
       event: message.constructor.name,
-      payload: message.payload
+      payload: message.payload,
     })
 
     return new Promise((resolve) => {

@@ -77,7 +77,7 @@ export class Tab implements TabInterface {
     this.tab.dispatchMessage('_', {
       event: message.constructor.name,
       id,
-      payload: message.payload
+      payload: message.payload,
     })
 
     return resolvable
