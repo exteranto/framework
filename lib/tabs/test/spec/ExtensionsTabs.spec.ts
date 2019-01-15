@@ -5,7 +5,16 @@ import { Container } from '@exteranto/ioc'
 import { Browser } from '@exteranto/support'
 import { Tab } from '../../src/extensions/Tab'
 import * as browser from 'sinon-chrome/extensions'
+import { Dispatcher } from '@exteranto/events'
 import { TabIdUnknownException } from '@exteranto/exceptions'
+import {
+  TabCreatedEvent,
+  TabUpdatedEvent,
+  TabActivatedEvent,
+  TabRemovedEvent,
+} from '../../src'
+
+declare var global: any
 
 export const extensionsTests = () => {
   describe('Extensions', () => {
@@ -66,6 +75,66 @@ export const extensionsTests = () => {
       browser.tabs.get.rejects()
 
       await expect(tabs.get(2)).to.eventually.be.rejectedWith(TabIdUnknownException)
+    })
+
+    it('registers tab created event', (done) => {
+      global.app.boot()
+
+      Container.resolve(Dispatcher)
+        .touch(TabCreatedEvent)
+        .addHook((event: TabCreatedEvent) => {
+          try {
+            expect(event.getTab().id()).to.equal(1)
+            done()
+          } catch (e) { done(e) }
+        })
+
+      browser.tabs.onCreated.trigger({ id: 1 })
+    })
+
+    it('registers tab updated event', (done) => {
+      global.app.boot()
+
+      Container.resolve(Dispatcher)
+        .touch(TabUpdatedEvent)
+        .addHook((event: TabUpdatedEvent) => {
+          try {
+            expect(event.getTab().id()).to.equal(2)
+            done()
+          } catch (e) { done(e) }
+        })
+
+      browser.tabs.onUpdated.trigger(1, 2, { id: 2 })
+    })
+
+    it('registers tab activated event', (done) => {
+      global.app.boot()
+
+      Container.resolve(Dispatcher)
+        .touch(TabActivatedEvent)
+        .addHook((event: TabActivatedEvent) => {
+          try {
+            expect(event.getTabId()).to.equal(3)
+            done()
+          } catch (e) { done(e) }
+        })
+
+      browser.tabs.onActivated.trigger({ tabId: 3 })
+    })
+
+    it('registers tab removed event', (done) => {
+      global.app.boot()
+
+      Container.resolve(Dispatcher)
+        .touch(TabRemovedEvent)
+        .addHook((event: TabRemovedEvent) => {
+          try {
+            expect(event.getTabId()).to.equal(4)
+            done()
+          } catch (e) { done(e) }
+        })
+
+      browser.tabs.onRemoved.trigger(4)
     })
 
   })

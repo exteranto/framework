@@ -1,6 +1,12 @@
 import { Tab } from './Tab'
 import { ResponseHub } from './ResponseHub'
 import { Dispatcher } from '@exteranto/events'
+import {
+  TabCreatedEvent,
+  TabUpdatedEvent,
+  TabActivatedEvent,
+  TabRemovedEvent,
+} from '../events'
 
 declare var safari: any
 
@@ -57,18 +63,18 @@ const nativeTabListeners: (dispatcher: Dispatcher) => void = (dispatcher) => {
       return
     }
 
-    dispatcher.fire('app.tabs.created', new Tab(target))
+    dispatcher.fire(new TabCreatedEvent(new Tab(target)))
 
     target.addEventListener('navigate', () => {
-      dispatcher.fire('app.tabs.updated', new Tab(target))
+      dispatcher.fire(new TabUpdatedEvent(new Tab(target)))
     }, true)
 
     target.addEventListener('close', () => {
-      dispatcher.fire('app.tabs.removed', target.eid)
+      dispatcher.fire(new TabRemovedEvent(target.eid))
     }, true)
 
     target.addEventListener('activate', () => {
-      dispatcher.fire('app.tabs.activated', target.eid)
+      dispatcher.fire(new TabActivatedEvent(target.eid))
     }, true)
   }, true)
 }

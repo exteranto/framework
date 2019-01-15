@@ -31,6 +31,8 @@ const app: App = new App(Script.BACKGROUND, {
 app.start()
 app.boot()
 
+;(global as any).app = app
+
 beforeEach(() => {
   chrome.flush()
   browser.flush()
