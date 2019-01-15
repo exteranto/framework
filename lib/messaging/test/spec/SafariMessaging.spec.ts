@@ -1,8 +1,8 @@
 import * as sinon from 'sinon'
 import { safari } from '../safari'
 import { Container } from '@exteranto/ioc'
-import { Browser, Script } from '@exteranto/support'
-import { Messaging } from '../../src/Messaging'
+import { Browser } from '@exteranto/support'
+import { Message, Messaging } from '../../src'
 
 describe('Messaging API for Safari', () => {
   let messaging
@@ -22,9 +22,15 @@ describe('Messaging API for Safari', () => {
   it('sends a message via runtime port', async () => {
     Math.random = sinon.stub().returns(1)
 
-    messaging.send(Script.POPUP, 'test', 'test')
+    const message: Message = new TestMessage('test')
+
+    messaging.send(message)
 
     sinon.assert.calledOnce(safari.self.tab.dispatchMessage)
-    sinon.assert.calledWith(safari.self.tab.dispatchMessage, '_', { script: Script.POPUP, event: 'test', payload: 'test', id: '1' })
+    sinon.assert.calledWith(safari.self.tab.dispatchMessage, '_', { event: 'TestMessage', payload: 'test', id: '1' })
   })
 })
+
+class TestMessage extends Message {
+  //
+}

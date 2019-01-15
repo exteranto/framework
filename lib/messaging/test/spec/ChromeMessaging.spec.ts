@@ -2,8 +2,8 @@ import { expect } from 'chai'
 import * as sinon from 'sinon'
 import * as chrome from 'sinon-chrome'
 import { Container } from '@exteranto/ioc'
-import { Messaging } from '../../src/Messaging'
-import { Browser, Script } from '@exteranto/support'
+import { Browser } from '@exteranto/support'
+import { Message, Messaging } from '../../src'
 
 describe('Messaging API for Chrome', () => {
   let messaging
@@ -26,7 +26,7 @@ describe('Messaging API for Chrome', () => {
       onMessage: { addListener: l => l({ ok: true, body: 'resolved' }) }
     })
 
-    await expect(messaging.send(Script.POPUP, 'test', 'test'))
+    await expect(messaging.send(new TestMessage('test')))
       .to.eventually.equal('resolved')
 
     sinon.assert.calledOnce(chrome.runtime.connect)
@@ -38,7 +38,7 @@ describe('Messaging API for Chrome', () => {
       onMessage: { addListener: l => l({ ok: false, body: 'error' }) }
     })
 
-    await expect(messaging.send(Script.POPUP, 'test', 'test'))
+    await expect(messaging.send(new TestMessage('test')))
       .to.eventually.be.rejected
       .and.to.equal('error')
 
@@ -46,3 +46,6 @@ describe('Messaging API for Chrome', () => {
   })
 })
 
+class TestMessage extends Message {
+  //
+}

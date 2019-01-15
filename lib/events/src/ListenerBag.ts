@@ -28,28 +28,37 @@ export class ListenerBag {
    * Adds a listener to this instance.
    *
    * @param {Listener} listener
+   * @return {ListenerBag}
    */
-  public addListener (listener: Listener) : void {
+  public addListener (listener: Listener) : ListenerBag {
     this.listeners.push(listener)
 
     this.deliverMail()
+
+    return this
   }
 
   /**
    * Adds a hook to this instance.
    *
    * @param {(payload: any) => void} handle
+   * @return {ListenerBag}
    */
-  public addHook (handle: (payload: any) => void) : void {
+  public addHook (handle: (payload: any) => void) : ListenerBag {
     this.addListener({ handle })
+
+    return this
   }
   /**
    * Adds a middlware to this instance.
    *
    * @param {Middleware} middleware
+   * @return {ListenerBag}
    */
-  public addMiddleware (middleware: Middleware) : void {
+  public addMiddleware (middleware: Middleware) : ListenerBag {
     this.middleware.push(middleware)
+
+    return this
   }
 
   /**

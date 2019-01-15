@@ -27,7 +27,7 @@ chai.use(chaiAsPromised);
 
 const app: App = new App(Script.BACKGROUND, {
   providers: [MessagingProvider],
-}, {})
+}, () => {})
 
 app.start()
 app.boot()

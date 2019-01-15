@@ -1,4 +1,4 @@
-import { Script } from '@exteranto/support'
+import { Message } from '../Message'
 import { Messaging as AbstractMessaging } from '../Messaging'
 
 declare var safari: any
@@ -12,9 +12,7 @@ export class Messaging extends AbstractMessaging {
   private promises: any = {}
 
   /**
-   * Establish a listener server.
-   *
-   * @return {void}
+   * @inheritdoc
    */
   public listen () : void {
     safari.application.addEventListener('message', (event) => {
@@ -24,10 +22,7 @@ export class Messaging extends AbstractMessaging {
         return this.promises[event.message.id](event.message.payload)
       }
 
-      this.dispatch({
-        context: { tabId: event.target.eid },
-        ...event.message,
-      }, (response) => {
+      const respond: (response: any) => any = (response) => {
         // Safari does not support ports, so we need to send a message back
         // specifying that it is a response in the name. The response object is
         // also carrying the event id, so we can find the promise to be
@@ -40,41 +35,34 @@ export class Messaging extends AbstractMessaging {
             ok: !(response instanceof Error),
           },
         })
-      })
+      }
+
+      this.dispatch(
+        event.message.event,
+        event.message.payload,
+        { tabId: event.target.eid },
+        respond,
+      )
     }, false)
   }
 
   /**
-   * Sends a message to the specified script and event.
-   *
-   * @param {Script} script
-   * @param {string} event
-   * @param {object} payload
-   * @return {Promise<any>}
+   * @inheritdoc
    */
-  public send (script: Script, event: string, payload?: object) : Promise<any> {
+  public send (message: Message) : Promise<any> {
     return new Promise((resolve, reject) => {
       const respond: (response: any) => any = response => response.ok ? resolve(response.body) : reject(response.body)
-
-      if (script === this.script) {
-        return this.dispatch({ script, event, payload }, respond)
-      }
 
       const id: string = this.getUniqueId()
 
       this.promises[id] = respond
-      this.sendToRuntime({ script, id, event, payload })
-    })
-  }
 
-  /**
-   * Sends a message to the application runtime (background/popup).
-   *
-   * @param {any} request
-   * @return {void}
-   */
-  private sendToRuntime (request: object) : void {
-    safari.self.tab.dispatchMessage('_', request)
+      safari.self.tab.dispatchMessage('_', {
+        event: message.constructor.name,
+        id,
+        payload: message.payload,
+      })
+    })
   }
 
   /**
