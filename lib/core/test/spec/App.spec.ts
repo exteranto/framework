@@ -9,7 +9,6 @@ describe('App Class should', () => {
   let dispatcher
 
   before(() => {
-    console.log(Container)
     dispatcher = Container.resolve(Dispatcher)
   })
 

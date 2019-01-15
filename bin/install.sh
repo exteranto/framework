@@ -6,7 +6,7 @@ for lib in support ioc aop exceptions events core storage messaging tabs cache c
 do
   cd ${lib}
   # Start commands, use ${lib} to refer to the current package.
-    if ! npm i
+    if ! npm i || ! npm up
     then
       exit 1
     fi
