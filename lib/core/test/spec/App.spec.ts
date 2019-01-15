@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { App } from '../../src'
 import { Container } from '@exteranto/ioc'
-import { Dispatcher, Listener, Event } from '@exteranto/events'
+import { Dispatcher, Event } from '@exteranto/events'
 import { Provider, Script } from '@exteranto/support'
 import { WindowLoadedEvent, AppBootedEvent } from '../../src'
 
@@ -9,6 +9,7 @@ describe('App Class should', () => {
   let dispatcher
 
   before(() => {
+    console.log(Container)
     dispatcher = Container.resolve(Dispatcher)
   })
 

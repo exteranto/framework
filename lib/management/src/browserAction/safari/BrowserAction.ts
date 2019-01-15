@@ -1,3 +1,4 @@
+import { BrowserActionClickedEvent } from '../events'
 import { Listen, Dispatcher } from '@exteranto/events'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 import { BrowserAction as AbstractBrowserAction } from '../BrowserAction'
@@ -105,10 +106,9 @@ export class BrowserAction extends AbstractBrowserAction {
         return
       }
 
-      dispatcher.fire(
-        'app.management.browser-action.clicked',
-        safari.application.activeBrowserWindow.activeTab.eid,
-      )
+      dispatcher.fire(new BrowserActionClickedEvent({
+        id: safari.application.activeBrowserWindow.activeTab.eid,
+      }))
     }, false)
   }
 

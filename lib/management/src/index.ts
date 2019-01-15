@@ -12,7 +12,13 @@ export * from './permissions'
 export * from './browserAction'
 
 /**
- * Tre service provider.
+ * Browser action module.
+ */
+
+export * from './runtime'
+
+/**
+ * The service provider.
  */
 
 export { ManagementProvider } from './ManagementProvider'

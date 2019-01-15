@@ -1,5 +1,4 @@
 import { expect } from 'chai'
-import * as sinon from 'sinon'
 import * as browser from 'sinon-chrome/extensions'
 
 import { Container } from '@exteranto/ioc'
@@ -7,18 +6,26 @@ import { Browser } from '@exteranto/support'
 import { Dispatcher } from '@exteranto/events'
 
 import { BrowserAction } from '../../../src'
+import { BrowserActionClickedEvent } from '../../../src/'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 
 declare var global: any
 
 export const tests = () => {
   describe('Extensions', () => {
+    let dispatcher
     let browserAction
 
     before(() => {
       Container.bindParam('browser', Browser.EXTENSIONS)
 
       browserAction = Container.resolve(BrowserAction)
+
+      dispatcher = Container.resolve(Dispatcher)
+    })
+
+    afterEach(() => {
+      dispatcher.events = {}
     })
 
     it('Sets a badge text.', async () => {
@@ -111,25 +118,20 @@ export const tests = () => {
       await expect(browser.browserAction.setIcon.calledOnce).to.be.true
     })
 
-    it('Registers badge click event.', async () => {
-      await global.app.boot()
-
-      const spy = sinon.spy()
-      const handle = payload => new Promise((resolve) => {
-        spy(payload)
-        resolve()
-      })
+    it('Registers badge click event.', (done) => {
+      global.app.boot()
 
       Container.resolve(Dispatcher)
-        .touch('app.management.browser-action.clicked')
-        .addHook(handle)
+        .touch(BrowserActionClickedEvent)
+        .addHook((event: BrowserActionClickedEvent) => {
+          try {
+            expect(event.tabId()).to.equal(2)
+            done()
+          } catch (e) { done(e) }
+        })
 
       browser.tabs.get.resolves({ id: 2 })
       browser.browserAction.onClicked.trigger({ id: 2 })
-
-      await handle
-
-      sinon.assert.calledOnce(spy)
     })
 
   })

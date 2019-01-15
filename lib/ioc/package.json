@@ -24,7 +24,7 @@
   "repository": "github:exteranto/ioc",
   "license": "MIT",
   "dependencies": {
-    "@exteranto/support": "^1.1.1",
+    "@exteranto/support": "^1.1.2",
     "reflect-metadata": "^0.1.12",
     "typescript": "^2.9.2"
   },
