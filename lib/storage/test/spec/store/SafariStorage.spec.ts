@@ -1,8 +1,8 @@
 import { assert, expect } from 'chai'
-import { spy } from 'sinon'
 import { Container } from '@exteranto/ioc'
-import { Storage } from '../../../src/Storage'
 import { Browser } from '@exteranto/support'
+import { Dispatcher } from '@exteranto/events'
+import { StorageChangedEvent, Storage } from '../../../src'
 
 export const tests = () => {
   describe('Safari', async () => {
@@ -13,6 +13,10 @@ export const tests = () => {
 
       local = Container.resolve(Storage, ['local'])
       sync = Container.resolve(Storage, ['sync'])
+    })
+
+    afterEach(() => {
+      Container.resolve(Dispatcher).events = {}
     })
 
     it('populates a value', async () => {
@@ -86,5 +90,18 @@ export const tests = () => {
       await expect(sync.size()).to.eventually.equal(42)
     })
 
+    it('registers the correct listener', (done) => {
+      Container.resolve(Dispatcher)
+        .touch(StorageChangedEvent)
+        .addHook((event: StorageChangedEvent) => {
+          try {
+            expect(event.getStorable()).to.deep.equal({ key: 'value' })
+            expect(event.getType()).to.equal('local')
+            done()
+          } catch (e) { done(e) }
+        })
+
+      local.set('key', 'value')
+    })
   })
 }

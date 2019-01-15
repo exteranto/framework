@@ -1,3 +1,4 @@
+import { StorageChangedEvent } from '../events'
 import { Storage as AbstractStorage } from '../Storage'
 
 export class Storage extends AbstractStorage {
@@ -34,7 +35,7 @@ export class Storage extends AbstractStorage {
       const storable: any = value ? { [key]: value } : key
 
       chrome.storage[this.type].set(storable, () => {
-        this.dispatcher.fire(`app.storage.${this.type}.changed`, storable)
+        this.dispatcher.fire(new StorageChangedEvent(this.type, storable))
 
         resolve()
       })

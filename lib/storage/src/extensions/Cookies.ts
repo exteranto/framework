@@ -1,3 +1,4 @@
+import { CookieChangedEvent } from '../events'
 import { Cookies as AbstractCookies } from '../Cookies'
 import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
 import {
@@ -44,7 +45,7 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     browser.cookies.onChanged.addListener((cookie) => {
-      dispatcher.fire('app.cookies.changed', cookie)
+      dispatcher.fire(new CookieChangedEvent(cookie))
     })
   }
 }

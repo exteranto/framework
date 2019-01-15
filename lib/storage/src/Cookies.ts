@@ -1,16 +1,6 @@
-import { Autowired } from '@exteranto/ioc'
 import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
 
 export abstract class Cookies implements RegistersNativeEvents {
-
-  /**
-   * The dispatcher implementation.
-   *
-   * @var {Dispatcher}
-   */
-  @Autowired
-  protected dispatcher: Dispatcher
-
   /**
    * Creates a cookies unless it already exists.
    *

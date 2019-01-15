@@ -1,9 +1,10 @@
-import { Browser, Provider } from '@exteranto/support'
 import { Cookies } from './Cookies'
+import { Dispatcher } from '@exteranto/events'
+import { Browser, Provider } from '@exteranto/support'
+import { NotImplementedException } from '@exteranto/exceptions'
+
 import { Cookies as ChromeCookies } from './chrome/Cookies'
 import { Cookies as ExtensionsCookies } from './extensions/Cookies'
-import { Dispatcher } from '@exteranto/events'
-import { NotImplementedException } from '@exteranto/exceptions'
 
 export class CookiesProvider extends Provider {
 

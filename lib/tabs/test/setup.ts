@@ -26,7 +26,7 @@ chai.use(chaiAsPromised)
 
 const app: App = new App(Script.BACKGROUND, {
   providers: [TabsProvider],
-}, {})
+}, () => {})
 
 app.start()
 app.boot()
