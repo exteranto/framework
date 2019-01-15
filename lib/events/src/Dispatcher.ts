@@ -13,12 +13,32 @@ export class Dispatcher {
   private events: object = {}
 
   /**
+   * Map of event names to their respective types.
+   *
+   * @var {Map<string, typeof Event>} types
+   */
+  private types: Map<string, typeof Event> = new Map()
+
+  /**
+   * Return the type associated with the event name.
+   *
+   * @param {string} name
+   * @return {typeof Event}
+   */
+  public type (name: string) : typeof Event {
+    return this.types.get(name)
+  }
+
+  /**
    * Return the listener bag assigned to the specified event.
    *
    * @param {typeof Event} event
    * @return {ListenerBag}
    */
   public touch (event: typeof Event) : ListenerBag {
+    // Add the types to the event map.
+    this.types.set(event.name, event)
+
     return this.events[event.name] === undefined
       ? this.events[event.name] = new ListenerBag()
       : this.events[event.name]

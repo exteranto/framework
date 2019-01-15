@@ -1,5 +1,4 @@
 import { expect } from 'chai'
-import * as sinon from 'sinon'
 import { Dispatcher, Event, Listen, Listener, ListenerBag, Middleware } from '../../src'
 
 describe('Dispatcher', () => {
@@ -151,6 +150,13 @@ describe('Dispatcher', () => {
     })
 
     dispatcher.fire(new TestEvent({ text: 'request' }))
+  })
+
+  it('registers event types', () => {
+    dispatcher.touch(TestEvent)
+
+    const Constructor = dispatcher.type('TestEvent')
+    expect(new Constructor).to.be.instanceOf(TestEvent)
   })
 })
 

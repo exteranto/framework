@@ -1,9 +1,9 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { Container } from '@exteranto/ioc'
-import { Messaging } from '../../src/Messaging'
+import { Browser } from '@exteranto/support'
+import { Message, Messaging } from '../../src'
 import * as browser from 'sinon-chrome/extensions'
-import { Browser, Script } from '@exteranto/support'
 
 describe('Messaging API for Extensions', () => {
   let messaging
@@ -26,7 +26,7 @@ describe('Messaging API for Extensions', () => {
       onMessage: { addListener: l => l({ ok: true, body: 'resolved' }) }
     })
 
-    await expect(messaging.send(Script.POPUP, 'test', 'test'))
+    await expect(messaging.send(new TestMessage('test')))
       .to.eventually.equal('resolved')
 
     sinon.assert.calledOnce(browser.runtime.connect)
@@ -38,10 +38,14 @@ describe('Messaging API for Extensions', () => {
       onMessage: { addListener: l => l({ ok: false, body: 'error' }) }
     })
 
-    await expect(messaging.send(Script.POPUP, 'test', 'test'))
+    await expect(messaging.send(new TestMessage('test')))
       .to.eventually.be.rejected
       .and.to.equal('error')
 
     sinon.assert.calledOnce(browser.runtime.connect)
   })
 })
+
+class TestMessage extends Message {
+  //
+}

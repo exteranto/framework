@@ -1,4 +1,4 @@
-import { Script } from '@exteranto/support'
+import { Message } from '@exteranto/messaging'
 import { TabInterface } from '../TabInterface'
 import Port = chrome.runtime.Port
 
@@ -70,10 +70,13 @@ export class Tab implements TabInterface {
   /**
    * @inheritdoc
    */
-  public send (event: string, payload?: object) : Promise<any> {
+  public send (message: Message) : Promise<any> {
     const port: Port = chrome.tabs.connect(this.tab.id)
 
-    port.postMessage({ script: Script.CONTENT, event, payload })
+    port.postMessage({
+      event: message.constructor.name,
+      payload: message.payload
+    })
 
     return new Promise((resolve) => {
       // This is triggered upon receiving a response from the listener.
