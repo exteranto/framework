@@ -1,21 +1,6 @@
-
-/**
- * Permissions module.
- */
-
-export * from './permissions'
-
-/**
- * Browser action module.
- */
-
-export * from './browserAction'
-
-/**
- * Browser action module.
- */
-
 export * from './runtime'
+export * from './permissions'
+export * from './browserAction'
 
 /**
  * The service provider.
