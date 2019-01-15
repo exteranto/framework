@@ -48,10 +48,9 @@ describe('Router Class should', () => {
   })
 
   it('register routes via provider', () => {
-    const app: App = new App(Script.CONTENT, { providers: [TestProvider] }, {})
+    const app: App = new App(Script.CONTENT, { providers: [TestProvider] }, () => {})
     app.start()
     app.boot()
-
 
     expect(Router.get()).to.have.lengthOf(2)
       .and.to.deep.include({ name: 'test' })

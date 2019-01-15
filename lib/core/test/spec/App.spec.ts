@@ -1,8 +1,9 @@
 import { expect } from 'chai'
 import { App } from '../../src'
 import { Container } from '@exteranto/ioc'
-import { Dispatcher, Listener } from '@exteranto/events'
-import { Browser, Provider, Script } from '@exteranto/support'
+import { Dispatcher, Listener, Event } from '@exteranto/events'
+import { Provider, Script } from '@exteranto/support'
+import { WindowLoadedEvent, AppBootedEvent } from '../../src'
 
 describe('App Class should', () => {
   let dispatcher
@@ -16,7 +17,7 @@ describe('App Class should', () => {
   })
 
   it('register base container parameters', () => {
-    const app: App = new App(Script.BACKGROUND, { providers: [] }, {})
+    const app: App = new App(Script.BACKGROUND, { providers: [] }, () => {})
     app.start()
     app.boot()
 
@@ -25,7 +26,7 @@ describe('App Class should', () => {
   })
 
   it('find providers', () => {
-    const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, {})
+    const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, () => {})
     app.start()
     app.boot()
 
@@ -33,7 +34,7 @@ describe('App Class should', () => {
   })
 
   it('boot providers', () => {
-    const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, {})
+    const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, () => {})
     app.start()
     app.boot()
 
@@ -41,7 +42,7 @@ describe('App Class should', () => {
   })
 
   it('register providers', () => {
-    const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, {})
+    const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, () => {})
     app.start()
     app.boot()
 
@@ -49,7 +50,7 @@ describe('App Class should', () => {
   })
 
   it('register param bindings', () => {
-    const app: App = new App(Script.BACKGROUND, { providers: [], bound: { param: 'exteranto' } }, {})
+    const app: App = new App(Script.BACKGROUND, { providers: [], bound: { param: 'exteranto' } }, () => {})
     app.start()
     app.boot()
 
@@ -57,33 +58,47 @@ describe('App Class should', () => {
   })
 
   it('register events', (done) => {
-    const app: App = new App(Script.BACKGROUND, { providers: [] }, { 'app.test': TestListener })
+    const app: App = new App(
+      Script.BACKGROUND,
+      { providers: [] },
+      touch => touch(<typeof Event> TestEvent).addHook((_: TestEvent) => done())
+    )
+
     app.start()
     app.boot()
 
-    dispatcher.fire('app.test', done)
+    dispatcher.fire(new TestEvent())
   })
 
   it('fire the app booted event', (done) => {
-    const app: App = new App(Script.BACKGROUND, { providers: [] }, { 'app.booted': class implements Listener {
-      handle () : void {
-        done()
-      }
-    } })
+    const app: App = new App(
+      Script.BACKGROUND,
+      { providers: [] },
+      touch => touch(AppBootedEvent).addHook((event: AppBootedEvent) => {
+        try {
+          expect(event).to.be.instanceOf(AppBootedEvent)
+          done()
+        } catch (e) { done(e) }
+      })
+    )
     app.start()
     app.boot()
   })
 
   it('register the window load event', (done) => {
-    const app: App = new App(Script.BACKGROUND, { providers: [] }, { 'window.loaded': class implements Listener {
-      handle () : void {
-        done()
-      }
-    } })
+    const app: App = new App(
+      Script.BACKGROUND,
+      { providers: [] },
+      touch => touch(WindowLoadedEvent).addHook((event: WindowLoadedEvent) => {
+        try {
+          expect(event).to.be.instanceOf(WindowLoadedEvent)
+          done()
+        } catch (e) { done(e) }
+      })
+    )
     app.start()
     app.boot()
   })
-
 })
 
 class TestProvider extends Provider {
@@ -97,9 +112,6 @@ class TestProvider extends Provider {
   }
 }
 
-class TestListener implements Listener {
-
-  handle (payload: any) : void {
-    payload()
-  }
+class TestEvent extends Event {
+  //
 }

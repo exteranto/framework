@@ -1,7 +1,8 @@
-import { Dispatcher } from '@exteranto/events'
+import { Router } from './Router'
 import { Autowired, Container } from '@exteranto/ioc'
 import { Provider, Script, Utils } from '@exteranto/support'
-import { Router } from './Router'
+import { AppBootedEvent, WindowLoadedEvent } from './events'
+import { Dispatcher, Event, ListenerBag } from '@exteranto/events'
 
 export class App {
   /**
@@ -24,12 +25,12 @@ export class App {
    *
    * @param {Script} script
    * @param {any} config
-   * @param {any} events
+   * @param {(touch: (e: typeof Event) => ListenerBag) => void} registerEvents
    */
   constructor (
     private script: Script,
     private config: any,
-    private events: any,
+    private registerEvents: (touch: (e: typeof Event) => ListenerBag) => void,
   ) {
     //
   }
@@ -50,7 +51,7 @@ export class App {
    */
   public boot () : void {
     this.registerProviders()
-    this.registerEvents()
+    this.registerEvents(e => this.dispatcher.touch(e))
     this.fireBootedEvent()
   }
 
@@ -76,7 +77,7 @@ export class App {
    */
   private registerWindowLoadEvent () : void {
     window.addEventListener('load', () => {
-      this.dispatcher.mail('window.loaded')
+      this.dispatcher.mail(new WindowLoadedEvent())
     })
   }
 
@@ -104,26 +105,9 @@ export class App {
   }
 
   /**
-   * Registers all specified events.
-   */
-  private registerEvents () : void {
-    for (const event in this.events) {
-      // If we got only one listener instead of an array, make the listener an
-      // array with one element.
-      if (! (this.events[event] instanceof Array)) {
-        this.events[event] = [this.events[event]]
-      }
-
-      for (const Listener of this.events[event]) {
-        this.dispatcher.touch(event).addListener(new Listener())
-      }
-    }
-  }
-
-  /**
    * Fires the application booted event.
    */
   private fireBootedEvent () : void {
-    this.dispatcher.fire('app.booted')
+    this.dispatcher.fire(new AppBootedEvent())
   }
 }
