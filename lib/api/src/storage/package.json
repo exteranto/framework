@@ -1,0 +1,6 @@
+{
+  "name": "@internal/storage",
+  "scripts": {
+    "test": "mocha test/setup.ts test/**/*.spec.ts -r ts-node/register"
+  }
+}

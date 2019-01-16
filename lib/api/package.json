@@ -1,7 +1,7 @@
 {
-  "name": "@exteranto/core",
+  "name": "@exteranto/api",
   "version": "2.0.0",
-  "description": "The Application Core Functionality for the Exteranto Framework.",
+  "description": "The collection of API Drivers for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
@@ -12,13 +12,14 @@
     "framework",
     "typescript",
     "exteranto",
-    "application",
-    "core"
+    "management",
+    "tabs",
+    "messaging",
+    "storage"
   ],
   "author": {
     "name": "Pavel Koch",
-    "email": "kouks.koch@gmail.com",
-    "url": "https://pavelkoch.io"
+    "email": "kouks.koch@gmail.com"
   },
   "contributors": [
     {
@@ -26,23 +27,28 @@
       "email": "bausanomichal@gmai.com"
     }
   ],
-  "repository": "github:exteranto/core",
+  "repository": "github:exteranto/api",
   "license": "MIT",
   "dependencies": {
+    "@exteranto/core": "^1.1.2",
     "@exteranto/exceptions": "^1.1.2",
-    "typescript": "^2.9.2",
-    "reflect-metadata": "^0.1.12"
+    "@types/chrome": "0.0.65",
+    "typescript": "^2.9.1",
+    "web-ext-types": "^2.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.5",
-    "@types/node": "^10.12.18",
-    "chai": "^4.2.0",
-    "mocha": "^5.1.1",
-    "ts-node": "^6.2.0",
-    "tslint": "^5.11.0",
     "@types/chai-as-promised": "^7.1.0",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.5.5",
+    "@types/sinon": "^4.3.3",
+    "@types/sinon-chrome": "^2.2.4",
+    "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "sinon": "^7.2.2"
+    "mocha": "^5.1.1",
+    "sinon": "^5.1.1",
+    "sinon-chrome": "^2.3.2",
+    "ts-node": "^6.1.0",
+    "tslint": "^5.11.0"
   }
 }
