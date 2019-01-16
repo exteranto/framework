@@ -3,25 +3,25 @@
  *
  */
 
-export * from './management/src'
+export * from './management'
 
 /**
  * Exporting Messaging Driver.
  *
  */
 
-export * from './messaging/src'
+export * from './messaging'
 
 /**
  * Exporting Storage APIs Driver.
  *
  */
 
-export * from './storage/src'
+export * from './storage'
 
 /**
  * Exporting Tabs APIs Driver.
  *
  */
 
-export * from './tabs/src'
+export * from './tabs'

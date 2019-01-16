@@ -10,7 +10,14 @@
     "removeComments": true,
     "sourceMap": true,
     "target": "es6",
-    "typeRoots": ["node_modules/@types", "node_modules/web-ext-types"]
+    "typeRoots": ["node_modules/@types", "node_modules/web-ext-types"],
+    "baseUrl": "src",
+    "paths": {
+      "@internal/management": [ "management" ],
+      "@internal/messaging": [ "messaging" ],
+      "@internal/storage": [ "storage" ],
+      "@internal/tabs": [ "tabs" ]
+    }
   },
   "include": [
     "src/**/*"
