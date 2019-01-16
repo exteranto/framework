@@ -1,8 +1,8 @@
 import { expect } from 'chai'
-import { Cache } from '../../src/Cache'
-import { Cached } from '../../src/Annotations'
+import { Cache } from '../../../src'
+import { Cached } from '../../../src'
 import { Container } from '@exteranto/core'
-import { Storage } from '@exteranto/storage'
+import { Storage } from '@exteranto/api'
 
 describe('Cache Service', () => {
   let cache, store;

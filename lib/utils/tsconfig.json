@@ -9,7 +9,17 @@
     "outDir": "dist",
     "removeComments": true,
     "sourceMap": true,
-    "target": "es6"
+    "target": "es6",
+    "baseUrl": "src",
+    "paths": {
+      "@internal/support": [ "support" ],
+      "@internal/ioc": [ "ioc" ],
+      "@internal/events": [ "events" ],
+      "@internal/app": [ "app" ]
+    },
+    "plugins": [
+      { "transform": "@zerollup/ts-transform-paths" }
+    ]
   },
   "include": [
     "src/**/*"

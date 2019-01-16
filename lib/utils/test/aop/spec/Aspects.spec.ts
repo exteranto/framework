@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { AspectContainer } from '../../src/AspectContainer'
+import { AspectContainer } from '../../../src/aop/AspectContainer'
 
 describe('Aspect Container', () => {
 

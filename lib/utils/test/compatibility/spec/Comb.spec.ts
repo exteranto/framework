@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { Comb } from '../../src/Comb'
+import { Comb } from '../../../src'
 import { Browser } from '@exteranto/core'
 import { Container } from '@exteranto/core'
 

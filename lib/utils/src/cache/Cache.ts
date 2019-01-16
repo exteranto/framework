@@ -1,5 +1,5 @@
 import { Binding, Param, WiredWith } from '@exteranto/core'
-import { Storage } from '@exteranto/storage'
+import { Storage } from '@exteranto/api'
 import { Md5 } from 'md5-typescript'
 
 @Binding
