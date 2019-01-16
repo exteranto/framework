@@ -1,7 +1,7 @@
 import { expect } from 'chai'
-import { App, Router } from '../../src'
-import { Container } from '@exteranto/ioc'
-import { Provider, Script } from '@exteranto/support'
+import { App, Router } from '../../../src/app'
+import { Container } from '../../../src/ioc'
+import { Provider, Script } from '../../../src/support'
 import { InvalidRouteException } from '@exteranto/exceptions'
 
 describe('Router Class should', () => {

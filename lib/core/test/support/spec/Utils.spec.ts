@@ -1,6 +1,5 @@
 import { expect } from 'chai'
-import { Utils } from '../../src/Utils'
-import { Browser } from '../../src/Browser'
+import { Utils, Browser } from '../../../src/support'
 
 describe('Utility Class', () => {
 

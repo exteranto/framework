@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { Dispatcher, Event, Listen, Listener, ListenerBag, Middleware } from '../../src'
+import { Dispatcher, Event, Listener, ListenerBag, Middleware } from '../../../src/events'
 
 describe('Dispatcher', () => {
   let dispatcher

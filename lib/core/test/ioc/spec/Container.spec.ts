@@ -1,6 +1,6 @@
 import { expect } from 'chai'
-import { Container } from '../../src/Container'
-import { Script, Browser } from '@exteranto/support'
+import { Container } from '../../../src/ioc'
+import { Browser } from '../../../src/support'
 
 describe('IOC Container', () => {
 

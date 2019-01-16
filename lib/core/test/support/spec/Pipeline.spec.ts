@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { Pipeline } from '../../src/Pipeline'
+import { Pipeline } from '../../../src/support'
 
 describe('Pipeline Service', () => {
 

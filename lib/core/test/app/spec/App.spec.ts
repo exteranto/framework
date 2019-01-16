@@ -1,9 +1,8 @@
 import { expect } from 'chai'
-import { App } from '../../src'
 import { Container } from '@exteranto/ioc'
-import { Dispatcher, Event } from '@exteranto/events'
-import { Provider, Script } from '@exteranto/support'
-import { WindowLoadedEvent, AppBootedEvent } from '../../src'
+import { Dispatcher, Event } from '../../../src/events'
+import { Provider, Script } from '../../../src/support'
+import { App, WindowLoadedEvent, AppBootedEvent } from '../../../src/app'
 
 describe('App Class should', () => {
   let dispatcher
