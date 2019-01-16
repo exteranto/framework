@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { Container } from '@exteranto/ioc'
+import { Container } from '../../../src/ioc'
 import { Dispatcher, Event } from '../../../src/events'
 import { Provider, Script } from '../../../src/support'
 import { App, WindowLoadedEvent, AppBootedEvent } from '../../../src/app'
