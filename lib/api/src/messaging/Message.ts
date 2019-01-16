@@ -1,4 +1,4 @@
-import { Event } from '@exteranto/events'
+import { Event } from '@exteranto/core'
 
 export class Message extends Event {
   /**

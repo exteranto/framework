@@ -1,7 +1,5 @@
 import { Message } from './Message'
-import { Script } from '@exteranto/support'
-import { Dispatcher } from '@exteranto/events'
-import { Autowired, Param } from '@exteranto/ioc'
+import { Script, Dispatcher,  Autowired, Param } from '@exteranto/core'
 
 export abstract class Messaging {
   /**

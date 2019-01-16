@@ -1,8 +1,7 @@
 import * as sinon from 'sinon'
 import { safari } from '../safari'
-import { Container } from '@exteranto/ioc'
-import { Browser } from '@exteranto/support'
-import { Message, Messaging } from '../../src'
+import { Browser, Container } from '@exteranto/core'
+import { Message, Messaging } from '../../../src'
 
 describe('Messaging API for Safari', () => {
   let messaging

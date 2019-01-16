@@ -12,8 +12,8 @@ import * as browser from 'sinon-chrome/extensions'
 import { safari } from './safari'
 
 import { App } from '@exteranto/core'
-import { Script } from '@exteranto/support'
-import { MessagingProvider } from '../src/MessagingProvider'
+import { Script } from '@exteranto/core'
+import { MessagingProvider } from '../../src'
 
 chai.use(chaiAsPromised);
 

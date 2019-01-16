@@ -1,15 +1,14 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
-import * as chrome from 'sinon-chrome'
-import { Container } from '@exteranto/ioc'
-import { Browser } from '@exteranto/support'
-import { Message, Messaging } from '../../src'
+import { Browser, Container } from '@exteranto/core'
+import { Message, Messaging } from '../../../src'
+import * as browser from 'sinon-chrome/extensions'
 
-describe('Messaging API for Chrome', () => {
+describe('Messaging API for Extensions', () => {
   let messaging
 
   before(() => {
-    Container.bindParam('browser', Browser.CHROME)
+    Container.bindParam('browser', Browser.EXTENSIONS)
 
     messaging = Container.resolve(Messaging)
   })
@@ -17,11 +16,11 @@ describe('Messaging API for Chrome', () => {
   it('boots up a message listener', () => {
     messaging.listen()
 
-    sinon.assert.calledOnce(chrome.runtime.onConnect.addListener)
+    sinon.assert.calledOnce(browser.runtime.onConnect.addListener)
   })
 
   it('sends a message via runtime port', async () => {
-    chrome.runtime.connect.returns({
+    browser.runtime.connect.returns({
       postMessage: m => m,
       onMessage: { addListener: l => l({ ok: true, body: 'resolved' }) }
     })
@@ -29,11 +28,11 @@ describe('Messaging API for Chrome', () => {
     await expect(messaging.send(new TestMessage('test')))
       .to.eventually.equal('resolved')
 
-    sinon.assert.calledOnce(chrome.runtime.connect)
+    sinon.assert.calledOnce(browser.runtime.connect)
   })
 
   it('rejects the promise when error returned', async () => {
-    chrome.runtime.connect.returns({
+    browser.runtime.connect.returns({
       postMessage: m => m,
       onMessage: { addListener: l => l({ ok: false, body: 'error' }) }
     })
@@ -42,7 +41,7 @@ describe('Messaging API for Chrome', () => {
       .to.eventually.be.rejected
       .and.to.equal('error')
 
-    sinon.assert.calledOnce(chrome.runtime.connect)
+    sinon.assert.calledOnce(browser.runtime.connect)
   })
 })
 
