@@ -2,10 +2,10 @@ import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { Tabs } from '../../src/Tabs'
 import * as chrome from 'sinon-chrome'
-import { Container } from '@exteranto/ioc'
+import { Container } from '@exteranto/core'
 import { Tab } from '../../src/chrome/Tab'
-import { Browser } from '@exteranto/support'
-import { Dispatcher } from '@exteranto/events'
+import { Browser } from '@exteranto/core'
+import { Dispatcher } from '@exteranto/core'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 import {
   TabCreatedEvent,

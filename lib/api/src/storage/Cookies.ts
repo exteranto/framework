@@ -1,4 +1,4 @@
-import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
+import { Dispatcher, RegistersNativeEvents } from '@exteranto/core'
 
 export abstract class Cookies implements RegistersNativeEvents {
   /**

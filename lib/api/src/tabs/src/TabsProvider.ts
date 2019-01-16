@@ -1,5 +1,5 @@
-import { Dispatcher } from '@exteranto/events'
-import { Browser, Provider, Script } from '@exteranto/support'
+import { Dispatcher } from '@exteranto/core'
+import { Browser, Provider, Script } from '@exteranto/core'
 import { Tabs as ChromeTabs } from './chrome/Tabs'
 import { Tabs as ExtensionsTabs } from './extensions/Tabs'
 import { Tabs as SafariTabs } from './safari/Tabs'

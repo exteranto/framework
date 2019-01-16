@@ -1,5 +1,5 @@
 import { Tabs } from '../Tabs'
-import { Autowired } from '@exteranto/ioc'
+import { Autowired } from '@exteranto/core'
 import { ResponseHub } from './ResponseHub'
 import { Message } from '@exteranto/messaging'
 import { TabInterface } from '../TabInterface'

@@ -4,8 +4,8 @@ import { tests as ExtensionsTests } from './ExtensionsPermissions.spec'
 import { tests as SafariTests } from './SafariPermissions.spec'
 import { tests as ChromeTests } from './ChromePermissions.spec'
 
-import { Container } from '@exteranto/ioc'
-import { Browser } from '@exteranto/support'
+import { Container } from '@exteranto/core'
+import { Browser } from '@exteranto/core'
 
 import { Permission, PermissionManager } from '../../../src'
 import { TestingPermissionManager } from './TestingPermissionManager'

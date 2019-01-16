@@ -12,9 +12,9 @@ import * as browser from 'sinon-chrome/extensions'
 import { localStorage } from '../../test/mocks/localStorage'
 
 import { App } from '@exteranto/core'
-import { Script } from '@exteranto/support'
-import { StorageProvider } from '../src/StorageProvider'
-import { CookiesProvider } from '../src/CookiesProvider'
+import { Script } from '@exteranto/core'
+import { StorageProvider } from '../../src'
+import { CookiesProvider } from '../../src'
 
 chai.use(chaiAsPromised)
 

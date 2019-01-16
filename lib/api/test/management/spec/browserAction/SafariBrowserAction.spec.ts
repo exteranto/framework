@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 
-import { Container } from '@exteranto/ioc'
-import { Browser } from '@exteranto/support'
+import { Container } from '@exteranto/core'
+import { Browser } from '@exteranto/core'
 
 import { BrowserAction } from '../../../src'
 import { TabIdUnknownException } from '@exteranto/exceptions'

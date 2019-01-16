@@ -1,6 +1,6 @@
 import { CookieChangedEvent } from '../events'
 import { Cookies as AbstractCookies } from '../Cookies'
-import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
+import { Dispatcher, RegistersNativeEvents } from '@exteranto/core'
 import {
   EmptyResponseException,
   InvalidCookieRequestException,

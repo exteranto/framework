@@ -1,5 +1,5 @@
 import { TabInterface } from './TabInterface'
-import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
+import { Dispatcher, RegistersNativeEvents } from '@exteranto/core'
 
 export abstract class Tabs implements RegistersNativeEvents {
 

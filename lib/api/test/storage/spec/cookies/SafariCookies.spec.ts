@@ -1,7 +1,7 @@
 import { expect } from 'chai'
-import { Container } from '@exteranto/ioc'
-import { Cookies } from '../../../src/Cookies'
-import { Browser } from '@exteranto/support'
+import { Container } from '@exteranto/core'
+import { Cookies } from '../../../../src'
+import { Browser } from '@exteranto/core'
 
 export const tests = () => {
   describe('Safari', () => {

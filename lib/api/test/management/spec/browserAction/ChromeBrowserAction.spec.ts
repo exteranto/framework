@@ -1,9 +1,9 @@
 import { expect } from 'chai'
 import * as chrome from 'sinon-chrome'
 
-import { Container } from '@exteranto/ioc'
-import { Browser } from '@exteranto/support'
-import { Dispatcher } from '@exteranto/events'
+import { Container } from '@exteranto/core'
+import { Browser } from '@exteranto/core'
+import { Dispatcher } from '@exteranto/core'
 
 import { BrowserAction } from '../../../src'
 import { BrowserActionClickedEvent } from '../../../src/'

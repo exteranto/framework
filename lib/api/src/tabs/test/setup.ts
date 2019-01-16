@@ -11,7 +11,7 @@ import * as chaiAsPromised from 'chai-as-promised'
 import * as browser from 'sinon-chrome/extensions'
 
 import { App } from '@exteranto/core'
-import { Script } from '@exteranto/support'
+import { Script } from '@exteranto/core'
 import { TabsProvider } from '../src/TabsProvider'
 
 chai.use(chaiAsPromised)

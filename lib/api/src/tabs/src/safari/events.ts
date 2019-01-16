@@ -1,6 +1,6 @@
 import { Tab } from './Tab'
 import { ResponseHub } from './ResponseHub'
-import { Dispatcher } from '@exteranto/events'
+import { Dispatcher } from '@exteranto/core'
 import {
   TabCreatedEvent,
   TabUpdatedEvent,

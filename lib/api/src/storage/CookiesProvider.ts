@@ -1,6 +1,6 @@
 import { Cookies } from './Cookies'
-import { Dispatcher } from '@exteranto/events'
-import { Browser, Provider } from '@exteranto/support'
+import { Dispatcher } from '@exteranto/core'
+import { Browser, Provider } from '@exteranto/core'
 import { NotImplementedException } from '@exteranto/exceptions'
 
 import { Cookies as ChromeCookies } from './chrome/Cookies'

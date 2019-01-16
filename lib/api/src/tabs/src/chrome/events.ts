@@ -1,4 +1,4 @@
-import { Dispatcher } from '@exteranto/events'
+import { Dispatcher } from '@exteranto/core'
 import { Tab } from './Tab'
 import {
   TabCreatedEvent,

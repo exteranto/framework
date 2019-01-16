@@ -2,7 +2,7 @@ import { Tab } from './Tab'
 import { register } from './events'
 import { TabInterface } from '../TabInterface'
 import { Tabs as AbstractTabs } from '../Tabs'
-import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
+import { Dispatcher, RegistersNativeEvents } from '@exteranto/core'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 
 declare var safari: any

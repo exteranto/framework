@@ -1,5 +1,5 @@
 import { TabIdUnknownException } from '@exteranto/exceptions'
-import { Dispatcher, RegistersNativeEvents } from '@exteranto/events'
+import { Dispatcher, RegistersNativeEvents } from '@exteranto/core'
 import { TabInterface } from '../TabInterface'
 import { Tabs as AbstractTabs } from '../Tabs'
 import { register } from './events'

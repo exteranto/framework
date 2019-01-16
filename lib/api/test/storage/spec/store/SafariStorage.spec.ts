@@ -1,8 +1,8 @@
 import { assert, expect } from 'chai'
-import { Container } from '@exteranto/ioc'
-import { Browser } from '@exteranto/support'
-import { Dispatcher } from '@exteranto/events'
-import { StorageChangedEvent, Storage } from '../../../src'
+import { Container } from '@exteranto/core'
+import { Browser } from '@exteranto/core'
+import { Dispatcher } from '@exteranto/core'
+import { StorageChangedEvent, Storage } from '../../../../src'
 
 export const tests = () => {
   describe('Safari', async () => {

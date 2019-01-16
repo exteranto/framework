@@ -1,4 +1,4 @@
-import { Event } from '@exteranto/events'
+import { Event } from '@exteranto/core'
 import { TabInterface } from './TabInterface'
 
 export class TabCreatedEvent extends Event {

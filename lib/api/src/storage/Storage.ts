@@ -1,5 +1,4 @@
-import { Autowired } from '@exteranto/ioc'
-import { Dispatcher } from '@exteranto/events'
+import { Autowired, Dispatcher } from '@exteranto/core'
 
 export abstract class Storage {
   /**

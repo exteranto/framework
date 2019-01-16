@@ -1,5 +1,5 @@
 import { Storage } from './Storage'
-import { Browser, Provider } from '@exteranto/support'
+import { Browser, Provider } from '@exteranto/core'
 
 import { Storage as ChromeStorage } from './chrome/Storage'
 import { Storage as ExtensionsStorage } from './extensions/Storage'
