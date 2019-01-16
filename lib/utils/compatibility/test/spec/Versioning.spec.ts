@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { VersionNotMatchedException } from '@exteranto/exceptions'
-import { Container } from '@exteranto/ioc'
-import { Browser } from '@exteranto/support'
+import { Container } from '@exteranto/core'
+import { Browser } from '@exteranto/core'
 import { Versioning } from '../../src/Versioning'
 
 describe('Versioning Service', () => {

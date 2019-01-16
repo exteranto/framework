@@ -1,6 +1,6 @@
 import * as sinon from 'sinon'
 import { expect } from 'chai'
-import { Tabs } from '../../src/Tabs'
+import { Tabs } from '../../../src'
 import * as chrome from 'sinon-chrome'
 import { Container } from '@exteranto/core'
 import { Browser } from '@exteranto/core'

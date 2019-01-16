@@ -1,7 +1,7 @@
 import { Tabs } from '../Tabs'
 import { Autowired } from '@exteranto/core'
 import { ResponseHub } from './ResponseHub'
-import { Message } from '@exteranto/messaging'
+import { Message } from '@internal/messaging'
 import { TabInterface } from '../TabInterface'
 
 export class Tab implements TabInterface {

@@ -5,8 +5,8 @@ import { Container } from '@exteranto/core'
 import { Browser } from '@exteranto/core'
 import { Dispatcher } from '@exteranto/core'
 
-import { BrowserAction } from '../../../src'
-import { BrowserActionClickedEvent } from '../../../src/'
+import { BrowserAction } from '../../../../src'
+import { BrowserActionClickedEvent } from '../../../../src/'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 
 declare var global: any

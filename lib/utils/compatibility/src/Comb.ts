@@ -1,5 +1,5 @@
-import { Binding, Param } from '@exteranto/ioc'
-import { Browser } from '@exteranto/support'
+import { Binding, Param } from '@exteranto/core'
+import { Browser } from '@exteranto/core'
 
 @Binding
 export class Comb {

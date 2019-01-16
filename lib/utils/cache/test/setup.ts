@@ -6,7 +6,7 @@
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import { App } from '@exteranto/core'
-import { Script } from '@exteranto/support'
+import { Script } from '@exteranto/core'
 
 chai.use(chaiAsPromised);
 

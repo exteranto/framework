@@ -1,4 +1,4 @@
-import { Singleton } from '@exteranto/ioc'
+import { Singleton } from '@exteranto/core'
 
 @Singleton
 export class VersionResolver {

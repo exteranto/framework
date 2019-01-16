@@ -17,7 +17,10 @@
       "@internal/messaging": [ "messaging" ],
       "@internal/storage": [ "storage" ],
       "@internal/tabs": [ "tabs" ]
-    }
+    },
+    "plugins": [
+      { "transform": "@zerollup/ts-transform-paths" }
+    ]
   },
   "include": [
     "src/**/*"

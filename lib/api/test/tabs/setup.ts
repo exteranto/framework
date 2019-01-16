@@ -12,7 +12,7 @@ import * as browser from 'sinon-chrome/extensions'
 
 import { App } from '@exteranto/core'
 import { Script } from '@exteranto/core'
-import { TabsProvider } from '../src/TabsProvider'
+import { TabsProvider } from '../../src'
 
 chai.use(chaiAsPromised)
 

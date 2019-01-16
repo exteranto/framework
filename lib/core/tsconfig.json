@@ -16,7 +16,10 @@
       "@internal/ioc": [ "ioc" ],
       "@internal/events": [ "events" ],
       "@internal/app": [ "app" ]
-    }
+    },
+    "plugins": [
+      { "transform": "@zerollup/ts-transform-paths" }
+    ]
   },
   "include": [
     "src/**/*"

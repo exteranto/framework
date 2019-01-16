@@ -1,4 +1,4 @@
-import { Binding, Param, WiredWith } from '@exteranto/ioc'
+import { Binding, Param, WiredWith } from '@exteranto/core'
 import { Storage } from '@exteranto/storage'
 import { Md5 } from 'md5-typescript'
 

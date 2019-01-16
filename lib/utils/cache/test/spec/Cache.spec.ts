@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { Cache } from '../../src/Cache'
 import { Cached } from '../../src/Annotations'
-import { Container } from '@exteranto/ioc'
+import { Container } from '@exteranto/core'
 import { Storage } from '@exteranto/storage'
 
 describe('Cache Service', () => {

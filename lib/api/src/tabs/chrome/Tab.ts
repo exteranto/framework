@@ -1,6 +1,6 @@
-import { Message } from '@exteranto/messaging'
+import { Message } from '@internal/messaging'
 import { TabInterface } from '../TabInterface'
-import Port = browser.runtime.Port
+import Port = chrome.runtime.Port
 
 export class Tab implements TabInterface {
   /**
@@ -23,7 +23,7 @@ export class Tab implements TabInterface {
    * @inheritdoc
    */
   public async url () : Promise<string> {
-    return browser.tabs.get(this.tab.id)
+    return new Promise(resolve => chrome.tabs.get(this.tab.id, resolve))
       .then(({ url }) => url)
   }
 
@@ -31,38 +31,47 @@ export class Tab implements TabInterface {
    * @inheritdoc
    */
   public close () : Promise<void> {
-    return browser.tabs.remove(this.tab.id)
+    return new Promise((resolve) => {
+      chrome.tabs.remove(this.tab.id, resolve)
+    })
   }
 
   /**
    * @inheritdoc
    */
   public reload () : Promise<TabInterface> {
-    return browser.tabs.reload(this.tab.id)
-      .then(() => this)
+    return new Promise((resolve) => {
+      chrome.tabs.reload(this.tab.id, {}, () => resolve(this))
+    })
   }
 
   /**
    * @inheritdoc
    */
   public duplicate () : Promise<TabInterface> {
-    return browser.tabs.duplicate(this.tab.id)
-      .then(tab => new Tab(tab))
+    return new Promise((resolve) => {
+      chrome.tabs.duplicate(this.tab.id, tab => resolve(new Tab(tab)))
+    })
   }
 
   /**
    * @inheritdoc
    */
   public activate () : Promise<TabInterface> {
-    return browser.tabs.update(this.tab.id, { active: true })
-      .then(() => this)
+    return new Promise(resolve => {
+      chrome.tabs.update(
+        this.tab.id,
+        { active: true },
+        () => resolve(this),
+      )
+    })
   }
 
   /**
    * @inheritdoc
    */
   public send (message: Message) : Promise<any> {
-    const port: Port = browser.tabs.connect(this.tab.id)
+    const port: Port = chrome.tabs.connect(this.tab.id)
 
     port.postMessage({
       event: message.constructor.name,

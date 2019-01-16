@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { Container } from '@exteranto/ioc'
+import { Container } from '@exteranto/core'
 import { VersionResolver } from '../../src/VersionResolver'
 
 describe('VersionResolver Class', () => {

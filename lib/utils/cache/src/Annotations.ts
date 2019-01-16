@@ -1,4 +1,4 @@
-import { Container } from '@exteranto/ioc'
+import { Container } from '@exteranto/core'
 import { Cache } from './Cache'
 
 /**

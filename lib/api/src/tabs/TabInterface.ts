@@ -1,4 +1,4 @@
-import { Message } from '@exteranto/messaging'
+import { Message } from '@internal/messaging'
 
 export interface TabInterface {
 

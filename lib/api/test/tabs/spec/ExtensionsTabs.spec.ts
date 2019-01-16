@@ -1,10 +1,10 @@
-import { expect } from 'chai'
 import * as sinon from 'sinon'
-import { Tabs } from '../../src/Tabs'
-import * as chrome from 'sinon-chrome'
+import { expect } from 'chai'
+import { Tabs } from '../../../src'
 import { Container } from '@exteranto/core'
-import { Tab } from '../../src/chrome/Tab'
 import { Browser } from '@exteranto/core'
+import { Tab } from '../../../src/tabs/extensions/Tab'
+import * as browser from 'sinon-chrome/extensions'
 import { Dispatcher } from '@exteranto/core'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 import {
@@ -12,73 +12,67 @@ import {
   TabUpdatedEvent,
   TabActivatedEvent,
   TabRemovedEvent,
-} from '../../src'
+} from '../../../src'
 
 declare var global: any
 
-export const chromeTests = () => {
-  describe('Chrome', () => {
+export const extensionsTests = () => {
+  describe('Extensions', () => {
     let tabs
 
     before(() => {
-      Container.bindParam('browser', Browser.CHROME)
+      Container.bindParam('browser', Browser.EXTENSIONS)
 
       tabs = Container.resolve(Tabs)
     })
 
-    afterEach(() => {
-      Container.resolve(Dispatcher).events = {}
-      chrome.runtime.lastError = undefined
-    })
-
     it('opens a new tab', async () => {
-      chrome.tabs.create.yields({ id: 1, url: 'http://test.com' })
-      chrome.tabs.get.yields({ url: 'http://test.com' })
+      browser.tabs.create.resolves({ id: 1, url: 'http://test.com' })
+      browser.tabs.get.resolves({ url: 'http://test.com' })
 
       const tab = await tabs.open('http://test.com')
 
       expect(await tab.url()).to.equal('http://test.com')
 
-      sinon.assert.calledOnce(chrome.tabs.get)
-      sinon.assert.calledOnce(chrome.tabs.create)
+      sinon.assert.calledOnce(browser.tabs.get)
+      sinon.assert.calledOnce(browser.tabs.create)
     })
 
     it('closes a tab', async () => {
-      chrome.tabs.remove.yields(undefined)
+      browser.tabs.remove.resolves(undefined)
 
       await expect(new Tab({ id: 1 }).close())
         .to.eventually.be.fulfilled
 
-      sinon.assert.calledOnce(chrome.tabs.remove)
+      sinon.assert.calledOnce(browser.tabs.remove)
     })
 
     it('reloads the tab', async () => {
-      chrome.tabs.reload.yields(undefined)
+      browser.tabs.reload.resolves(undefined)
 
       await expect(new Tab({ id: 1 }).reload().then(tab => (tab as any).tab.id))
         .to.eventually.equal(1)
 
-      sinon.assert.calledOnce(chrome.tabs.reload)
+      sinon.assert.calledOnce(browser.tabs.reload)
     })
 
     it('duplicates the tab', async () => {
-      chrome.tabs.duplicate.yields({ id: 2 })
+      browser.tabs.duplicate.resolves({ id: 2 })
 
       await expect(new Tab({ id: 1 }).duplicate().then(tab => (tab as any).tab.id))
         .to.eventually.equal(2)
 
-      sinon.assert.calledOnce(chrome.tabs.duplicate)
+      sinon.assert.calledOnce(browser.tabs.duplicate)
     })
 
     it('gets a tab by id', async () => {
-      chrome.tabs.get.yields({ id: 2 })
+      browser.tabs.get.resolves({ id: 2 })
 
       await expect(tabs.get(2)).to.eventually.have.property('id')
     })
 
     it('throws an exception if tab does not exist', async () => {
-      chrome.tabs.get.yields()
-      chrome.runtime.lastError = { message: 'Tab ID does not exist' }
+      browser.tabs.get.rejects()
 
       await expect(tabs.get(2)).to.eventually.be.rejectedWith(TabIdUnknownException)
     })
@@ -95,7 +89,7 @@ export const chromeTests = () => {
           } catch (e) { done(e) }
         })
 
-      chrome.tabs.onCreated.trigger({ id: 1 })
+      browser.tabs.onCreated.trigger({ id: 1 })
     })
 
     it('registers tab updated event', (done) => {
@@ -110,7 +104,7 @@ export const chromeTests = () => {
           } catch (e) { done(e) }
         })
 
-      chrome.tabs.onUpdated.trigger(1, 2, { id: 2 })
+      browser.tabs.onUpdated.trigger(1, 2, { id: 2 })
     })
 
     it('registers tab activated event', (done) => {
@@ -125,7 +119,7 @@ export const chromeTests = () => {
           } catch (e) { done(e) }
         })
 
-      chrome.tabs.onActivated.trigger({ tabId: 3 })
+      browser.tabs.onActivated.trigger({ tabId: 3 })
     })
 
     it('registers tab removed event', (done) => {
@@ -140,7 +134,7 @@ export const chromeTests = () => {
           } catch (e) { done(e) }
         })
 
-      chrome.tabs.onRemoved.trigger(4)
+      browser.tabs.onRemoved.trigger(4)
     })
 
   })

@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { Comb } from '../../src/Comb'
-import { Browser } from '@exteranto/support'
-import { Container } from '@exteranto/ioc'
+import { Browser } from '@exteranto/core'
+import { Container } from '@exteranto/core'
 
 describe('Comb Service', () => {
 
