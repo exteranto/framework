@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "declarationDir": "types",
+    "module": "commonjs",
+    "noImplicitThis": true,
+    "outDir": "dist",
+    "removeComments": true,
+    "sourceMap": true,
+    "target": "es6",
+    "baseUrl": "src",
+    "paths": {
+      "@internal/aop": [ "aop" ],
+      "@internal/cache": [ "cache" ],
+      "@internal/compatibility": [ "compatibility" ]
+    },
+    "plugins": [
+      { "transform": "@zerollup/ts-transform-paths" }
+    ]
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
