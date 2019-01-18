@@ -27,7 +27,7 @@ describe('Router Class should', () => {
 
   it('not register routes for different script', () => {
     Container.bindParam('script', Script.CONTENT)
-    Router.add([{ name: 'test' }], Script.POPUP)
+    Router.add([{ name: 'test' }], Script.BACKGROUND)
 
     expect(Router.get()).to.have.lengthOf(0)
   })

@@ -5,5 +5,4 @@
 export enum Script {
   BACKGROUND,
   CONTENT,
-  POPUP,
 }
