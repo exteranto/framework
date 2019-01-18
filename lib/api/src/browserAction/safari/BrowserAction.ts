@@ -114,14 +114,23 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * Refresh the badge based on the meta data stored on tab objects.
+   * Listen from the tab activated event to refresh the badge.
    *
    * @param {TabActivatedEvent} event
    */
   @Listen(TabActivatedEvent)
-  private refreshBadge (event: TabActivatedEvent) : void {
+  private refreshBadgeWhenTabActivated (event: TabActivatedEvent) : void {
+    this.refreshBadge(event.getTabId())
+  }
+
+  /**
+   * Refresh the badge based on the meta data stored on tab objects.
+   *
+   * @param {number} tabId
+   */
+  private refreshBadge (tabId: number) : void {
     this.getAllTabs().forEach((tab) => {
-      if (tab.eid !== event.getTabId()) {
+      if (tab.eid !== tabId) {
         return
       }
 
