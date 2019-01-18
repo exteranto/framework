@@ -1,5 +1,5 @@
 # @exteranto/exceptions
-[![Build Status](https://travis-ci.org/exteranto/exceptions.svg?branch=master)](https://travis-ci.org/exteranto/exceptions)
+[![Build Status](https://travis-ci.org/exteranto/framework.svg?branch=master)](https://travis-ci.org/exteranto/framework)
 
 The Exceptions Package for the Exteranto Framework.
 

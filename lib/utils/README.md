@@ -1,7 +1,7 @@
-# @exteranto/compatibility
-[![Build Status](https://travis-ci.org/exteranto/compatibility.svg?branch=master)](https://travis-ci.org/exteranto/compatibility)
+# @exteranto/utils
+[![Build Status](https://travis-ci.org/exteranto/framework.svg?branch=master)](https://travis-ci.org/exteranto/framework)
 
-The Compatibility Package for the Exteranto Framework.
+The Utilities Package for the Exteranto Framework.
 
 ## About Exteranto
 

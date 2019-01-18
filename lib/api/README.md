@@ -1,7 +1,7 @@
-# @exteranto/management
-[![Build Status](https://travis-ci.org/exteranto/management.svg?branch=master)](https://travis-ci.org/exteranto/management)
+# @exteranto/api
+[![Build Status](https://travis-ci.org/exteranto/framework.svg?branch=master)](https://travis-ci.org/exteranto/framework)
 
-The management API Driver for the Exteranto Framework.
+The Browser API Packages for the Exteranto Framework.
 
 ## About Exteranto
 

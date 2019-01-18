@@ -1,5 +1,5 @@
 # @exteranto/core
-[![Build Status](https://travis-ci.org/exteranto/core.svg?branch=master)](https://travis-ci.org/exteranto/core)
+[![Build Status](https://travis-ci.org/exteranto/framework.svg?branch=master)](https://travis-ci.org/exteranto/framework)
 
 The Application Core Functionality for the Exteranto Framework.
 
