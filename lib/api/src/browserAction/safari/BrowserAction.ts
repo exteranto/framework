@@ -114,7 +114,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * Listen from the tab activated event to refresh the badge.
+   * Listen for the tab activated event to refresh the badge.
    *
    * @param {TabActivatedEvent} event
    */
