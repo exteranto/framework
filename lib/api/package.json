@@ -1,6 +1,6 @@
 {
   "name": "@exteranto/api",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "The collection of API Drivers for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -31,8 +31,8 @@
   "repository": "github:exteranto/api",
   "license": "MIT",
   "dependencies": {
-    "@exteranto/core": "^2.0.0",
-    "@exteranto/exceptions": "^2.0.0",
+    "@exteranto/core": "^2.0.1",
+    "@exteranto/exceptions": "^2.0.1",
     "@types/chrome": "0.0.65",
     "typescript": "^2.9.1",
     "web-ext-types": "^2.1.0"

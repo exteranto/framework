@@ -1,6 +1,6 @@
 {
   "name": "@exteranto/exceptions",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "The Exceptions Package for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",

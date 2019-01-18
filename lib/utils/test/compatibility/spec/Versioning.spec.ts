@@ -21,8 +21,6 @@ describe('Versioning Service', () => {
   it('rejects the method if version is higher while using `.since`', async () => {
     await expect(versioning.since('1.0.1', () => 'test'))
       .to.eventually.be.rejectedWith(VersionNotMatchedException)
-        .that.has.property('name')
-        .that.equals('app.exceptions.compatibility.versionNotMatched')
   })
 
   it('executes a callback until a certain version', async () => {
@@ -34,7 +32,5 @@ describe('Versioning Service', () => {
   it('rejects the method if version is lower while using `.until`', async () => {
     await expect(versioning.until('0.0.9', () => 'test'))
       .to.eventually.be.rejectedWith(VersionNotMatchedException)
-        .that.has.property('name')
-        .that.equals('app.exceptions.compatibility.versionNotMatched')
   })
 })

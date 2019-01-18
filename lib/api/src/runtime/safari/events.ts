@@ -44,8 +44,6 @@ const registerInstallAndUpdateEvents: (dispatcher: Dispatcher) => void = (dispat
     return
   }
 
-  console.log(previousVersion, version)
-
   const event: Event = previousVersion
     ? new ExtensionUpdatedEvent({ previousVersion })
     : new ExtensionInstalledEvent()
