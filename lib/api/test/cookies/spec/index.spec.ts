@@ -6,7 +6,7 @@ import { expect } from 'chai'
 import * as sinon from 'sinon'
 import * as chrome from 'sinon-chrome'
 import { Container } from '@exteranto/core'
-import { Cookies } from '../../../../src'
+import { Cookies } from '../../../src'
 import { Browser } from '@exteranto/core'
 
 describe('Cookies API', () => {

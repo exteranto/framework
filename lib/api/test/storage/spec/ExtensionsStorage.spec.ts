@@ -4,7 +4,7 @@ import { Container } from '@exteranto/core'
 import { Browser } from '@exteranto/core'
 import { Dispatcher } from '@exteranto/core'
 import * as browser from 'sinon-chrome/extensions'
-import { StorageChangedEvent, Storage } from '../../../../src'
+import { StorageChangedEvent, Storage } from '../../../src'
 
 export const tests = () => {
   describe('Extensions', () => {

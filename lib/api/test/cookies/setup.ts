@@ -13,7 +13,7 @@ import { localStorage } from '../../test/mocks/localStorage'
 
 import { App } from '@exteranto/core'
 import { Script } from '@exteranto/core'
-import { StorageProvider } from '../../src'
+import { CookiesProvider } from '../../src'
 
 chai.use(chaiAsPromised)
 
@@ -26,7 +26,7 @@ chai.use(chaiAsPromised)
 }
 
 const app: App = new App(Script.BACKGROUND, {
-  providers: [StorageProvider],
+  providers: [CookiesProvider],
 }, () => {})
 
 app.start()

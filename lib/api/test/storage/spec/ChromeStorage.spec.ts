@@ -4,7 +4,7 @@ import * as chrome from 'sinon-chrome'
 import { Container } from '@exteranto/core'
 import { Browser } from '@exteranto/core'
 import { Dispatcher } from '@exteranto/core'
-import { StorageChangedEvent, Storage } from '../../../../src'
+import { StorageChangedEvent, Storage } from '../../../src'
 
 export const tests = () => {
   describe('Chrome', () => {

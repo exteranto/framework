@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { Container } from '@exteranto/core'
-import { Cookies } from '../../../../src'
+import { Cookies } from '../../../src'
 import { Browser } from '@exteranto/core'
 
 export const tests = () => {
