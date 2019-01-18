@@ -1,9 +1,23 @@
 /**
- * Exporting Management APIs Driver.
+ * Exporting Runttime APIs Driver.
  *
  */
 
-export * from './management'
+export * from './runtime'
+
+/**
+ * Exporting Permissions APIs Driver.
+ *
+ */
+
+export * from './permissions'
+
+/**
+ * Exporting BrowserAction APIs Driver.
+ *
+ */
+
+export * from './browserAction'
 
 /**
  * Exporting Messaging Driver.

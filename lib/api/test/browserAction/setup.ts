@@ -14,7 +14,7 @@ import * as chaiAsPromised from 'chai-as-promised'
 
 import { App, Script } from '@exteranto/core'
 
-import { ManagementProvider } from '../../src'
+import { BrowserActionProvider } from '../../src'
 
 chai.use(chaiAsPromised)
 
@@ -28,7 +28,7 @@ chai.use(chaiAsPromised)
 }
 
 const app: App = new App(Script.BACKGROUND, {
-  providers: [ManagementProvider]
+  providers: [BrowserActionProvider]
 }, () => {})
 
 ;(global as any).app = app

@@ -8,7 +8,7 @@ import {
   WebRequestBeforeRedirectedEvent,
   ExtensionInstalledEvent,
   ExtensionUpdatedEvent,
-} from '../../../../src'
+} from '../../../src'
 
 declare var global: any
 

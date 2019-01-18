@@ -1,6 +1,6 @@
 import * as sinon from 'sinon'
 import { expect } from 'chai'
-import * as chrome from 'sinon-chrome'
+import * as browser from 'sinon-chrome/extensions'
 import { Container, Browser, Dispatcher } from '@exteranto/core'
 import { InvalidUrlFormatException } from '@exteranto/exceptions'
 import {
@@ -9,17 +9,17 @@ import {
   ExtensionUpdatedEvent,
   WebRequestBeforeRedirectedEvent,
   WebRequestCompletedEvent,
-} from '../../../../src'
+} from '../../../src'
 
 declare var global: any
 
 export const tests = () => {
-  describe('Chrome', () => {
+  describe('Extensions', () => {
     let runtime
     let dispatcher
 
     before(() => {
-      Container.bindParam('browser', Browser.CHROME)
+      Container.bindParam('browser', Browser.EXTENSIONS)
 
       runtime = Container.resolve(Runtime)
 
@@ -31,28 +31,29 @@ export const tests = () => {
     })
 
     it('sets uninstall url', () => {
-      (chrome.runtime as any).setUninstallURL.yields('https://test.com')
+      browser.runtime.setUninstallURL.resolves('https://test.com')
 
       runtime.setUninstallUrl('https://test.com')
 
-      sinon.assert.calledOnce((chrome.runtime as any).setUninstallURL)
-      sinon.assert.calledWith((chrome.runtime as any).setUninstallURL, 'https://test.com')
+      sinon.assert.calledOnce(browser.runtime.setUninstallURL)
+      sinon.assert.calledWith(browser.runtime.setUninstallURL, 'https://test.com')
     })
 
-    it('throws an exception if uninstall url is invalid', () => {
-      (chrome.runtime as any).setUninstallURL.yields(undefined)
-      chrome.runtime.lastError = { message: 'Invalid url format' }
+    it('throws an exception if uninstall url is invalid', async () => {
+      browser.runtime.setUninstallURL.rejects()
 
-      return expect(runtime.setUninstallUrl('invalid'))
+      await expect(runtime.setUninstallUrl('invalid'))
         .to.eventually.be.rejectedWith(InvalidUrlFormatException)
+
+      sinon.assert.calledOnce(browser.runtime.setUninstallURL)
     })
 
     it('converts relative path to url', async () => {
-      chrome.runtime.getURL.returns('chrome://extension/abc/path')
+      browser.runtime.getURL.returns('browser://extension/abc/path')
 
       expect(runtime.extensionUrl('path'))
-        .to.equal('chrome://extension/abc/path')
-      expect(chrome.runtime.getURL.calledOnce).to.be.true
+        .to.equal('browser://extension/abc/path')
+      expect(browser.runtime.getURL.calledOnce).to.be.true
     })
 
     it('registers install event', (done) => {
@@ -66,7 +67,7 @@ export const tests = () => {
           } catch (e) { done(e) }
         })
 
-      chrome.runtime.onInstalled.trigger({
+      browser.runtime.onInstalled.trigger({
         reason: 'install'
       })
     })
@@ -83,7 +84,7 @@ export const tests = () => {
           } catch (e) { done(e) }
         })
 
-      chrome.runtime.onInstalled.trigger({
+      browser.runtime.onInstalled.trigger({
         reason: 'update',
         previousVersion: '0.0.0'
       })
@@ -101,7 +102,7 @@ export const tests = () => {
           } catch (e) { done(e) }
         })
 
-      chrome.webRequest.onBeforeRedirect.trigger({
+      browser.webRequest.onBeforeRedirect.trigger({
         tabId: 2
       })
     })
@@ -118,9 +119,10 @@ export const tests = () => {
           } catch (e) { done(e) }
         })
 
-      chrome.webRequest.onCompleted.trigger({
+      browser.webRequest.onCompleted.trigger({
         tabId: 2
       })
     })
+
   })
 }

@@ -1,4 +1,4 @@
-import { PermissionManager as AbstractPermissionManager, HasAccessTo } from '../../../../src'
+import { PermissionManager as AbstractPermissionManager, HasAccessTo } from '../../../src'
 
 export class TestingPermissionManager extends AbstractPermissionManager {
   public expectedResult: boolean = true

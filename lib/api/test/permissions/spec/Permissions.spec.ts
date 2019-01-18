@@ -7,7 +7,7 @@ import { tests as ChromeTests } from './ChromePermissions.spec'
 import { Container } from '@exteranto/core'
 import { Browser } from '@exteranto/core'
 
-import { Permission, PermissionManager } from '../../../../src'
+import { Permission, PermissionManager } from '../../../src'
 import { TestingPermissionManager } from './TestingPermissionManager'
 
 import { PermissionNotGrantedException } from '@exteranto/exceptions'

@@ -3,7 +3,7 @@ import { expect } from 'chai'
 import { Container } from '@exteranto/core'
 import { Browser } from '@exteranto/core'
 
-import { BrowserAction } from '../../../../src'
+import { BrowserAction } from '../../../src'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 
 declare var safari: any

@@ -1,23 +1,23 @@
 import { expect } from 'chai'
-import * as browser from 'sinon-chrome/extensions'
+import * as chrome from 'sinon-chrome'
 
 import { Container } from '@exteranto/core'
 import { Browser } from '@exteranto/core'
 import { Dispatcher } from '@exteranto/core'
 
-import { BrowserAction } from '../../../../src'
-import { BrowserActionClickedEvent } from '../../../../src/'
+import { BrowserAction } from '../../../src'
+import { BrowserActionClickedEvent } from '../../../src/'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 
 declare var global: any
 
 export const tests = () => {
-  describe('Extensions', () => {
+  describe('Chrome', () => {
     let dispatcher
     let browserAction
 
     before(() => {
-      Container.bindParam('browser', Browser.EXTENSIONS)
+      Container.bindParam('browser', Browser.CHROME)
 
       browserAction = Container.resolve(BrowserAction)
 
@@ -29,93 +29,100 @@ export const tests = () => {
     })
 
     it('Sets a badge text.', async () => {
-      browser.browserAction.setBadgeText.resolves(undefined)
+      chrome.browserAction.setBadgeText.yields(undefined)
 
       await expect(browserAction.setBadgeText('test', 1)).to.eventually.be.fulfilled
     })
 
     it('Rejects when trying to set a badge text of an unknown tab.', async () => {
-      browser.browserAction.setBadgeText.rejects(TabIdUnknownException)
+      chrome.runtime.lastError = { message: 'test' };
+      chrome.browserAction.setBadgeText.yields(undefined)
 
       await expect(browserAction.setBadgeText('test', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
     })
 
     it('Gets a badge text.', async () => {
-      browser.browserAction.getBadgeText.resolves('test')
+      chrome.browserAction.getBadgeText.yields('test')
 
       await expect(browserAction.getBadgeText(1)).to.eventually.equal('test')
     })
 
     it('Rejects when trying to get a badge text of an unknown tab.', async () => {
-      browser.browserAction.getBadgeText.rejects(TabIdUnknownException)
+      chrome.runtime.lastError = { message: 'test' };
+      chrome.browserAction.getBadgeText.yields(undefined)
 
       await expect(browserAction.getBadgeText('test', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
     })
 
     it('Sets a badge background color.', async () => {
-      browser.browserAction.setBadgeBackgroundColor.resolves(undefined)
+      chrome.browserAction.setBadgeBackgroundColor.yields(undefined)
 
       await expect(browserAction.setBadgeColor('#000', 1)).to.eventually.be.fulfilled
     })
 
     it('Rejects when trying to set a badge background color of an unknown tab.', async () => {
-      browser.browserAction.setBadgeBackgroundColor.rejects(TabIdUnknownException)
+      chrome.runtime.lastError = { message: '#000' };
+      chrome.browserAction.setBadgeBackgroundColor.yields(undefined)
 
       await expect(browserAction.setBadgeColor('#000', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
     })
 
     it('Gets a badge background color.', async () => {
-      browser.browserAction.getBadgeBackgroundColor.resolves('#000')
+      chrome.browserAction.getBadgeBackgroundColor.yields('#000')
 
       await expect(browserAction.getBadgeColor(1)).to.eventually.equal('#000')
     })
 
     it('Rejects when trying to get a badge background color of an unknown tab.', async () => {
-      browser.browserAction.getBadgeBackgroundColor.rejects(TabIdUnknownException)
+      chrome.runtime.lastError = { message: '#000' };
+      chrome.browserAction.getBadgeBackgroundColor.yields(undefined)
 
       await expect(browserAction.getBadgeColor('#000', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
     })
 
     it('Sets the extension title.', async () => {
-      browser.browserAction.setTitle.resolves(undefined)
+      chrome.browserAction.setTitle.yields(undefined)
       await expect(browserAction.setTitle('test', 1)).to.eventually.be.fulfilled
-      await expect(browser.browserAction.setTitle.calledOnce).to.be.true
+      await expect(chrome.browserAction.setTitle.calledOnce).to.be.true
     })
 
     it('Rejects when trying to set a title text in an unknown tab.', async () => {
-      browser.browserAction.setTitle.throws(TabIdUnknownException)
+      chrome.runtime.lastError = { message: 'test' };
+      chrome.browserAction.setTitle.yields(undefined)
       await expect(browserAction.setTitle('test', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
-      await expect(browser.browserAction.setTitle.calledOnce).to.be.true
+      await expect(chrome.browserAction.setTitle.calledOnce).to.be.true
     })
 
     it('Retruns the extension title.', async () => {
-      browser.browserAction.getTitle.resolves('title')
+      chrome.browserAction.getTitle.yields('title')
       await expect(browserAction.getTitle(1)).to.eventually.equal('title')
-      await expect(browser.browserAction.getTitle.calledOnce).to.be.true
+      await expect(chrome.browserAction.getTitle.calledOnce).to.be.true
     })
 
     it('Rejects when trying to get a title text in an unknown tab.', async () => {
-      browser.browserAction.getTitle.rejects(TabIdUnknownException)
+      chrome.runtime.lastError = { message: 'test' };
+      chrome.browserAction.getTitle.yields('title')
       await expect(browserAction.getTitle(123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
-      await expect(browser.browserAction.getTitle.calledOnce).to.be.true
+      await expect(chrome.browserAction.getTitle.calledOnce).to.be.true
     })
 
     it('Sets the extension icon.', async () => {
-      browser.browserAction.setIcon.resolves(undefined)
+      chrome.browserAction.setIcon.yields(undefined)
       await expect(browserAction.setIcon('test.png', 1)).to.eventually.be.fulfilled
-      await expect(browser.browserAction.setIcon.calledOnce).to.be.true
+      await expect(chrome.browserAction.setIcon.calledOnce).to.be.true
     })
 
     it('Sets the extension icon as an object.', async () => {
-      browser.browserAction.setIcon.resolves(undefined)
+      chrome.browserAction.setIcon.yields(undefined)
       await expect(browserAction.setIcon({ 16: 'test.png' }, 1)).to.eventually.be.fulfilled
-      await expect(browser.browserAction.setIcon.calledOnce).to.be.true
+      await expect(chrome.browserAction.setIcon.calledOnce).to.be.true
     })
 
     it('Rejects when trying to set a icon text in an unknown tab.', async () => {
-      browser.browserAction.setIcon.rejects(TabIdUnknownException)
+      chrome.runtime.lastError = { message: 'test' };
+      chrome.browserAction.setIcon.yields(undefined)
       await expect(browserAction.setIcon('test.png', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
-      await expect(browser.browserAction.setIcon.calledOnce).to.be.true
+      await expect(chrome.browserAction.setIcon.calledOnce).to.be.true
     })
 
     it('Registers badge click event.', (done) => {
@@ -130,9 +137,8 @@ export const tests = () => {
           } catch (e) { done(e) }
         })
 
-      browser.tabs.get.resolves({ id: 2 })
-      browser.browserAction.onClicked.trigger({ id: 2 })
+      chrome.tabs.get.yields({ id: 2 })
+      chrome.browserAction.onClicked.trigger({ id: 2 })
     })
-
   })
 }

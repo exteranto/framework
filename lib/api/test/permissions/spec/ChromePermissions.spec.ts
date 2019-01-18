@@ -4,7 +4,7 @@ import * as chrome from 'sinon-chrome'
 import { Container } from '@exteranto/core'
 import { Browser } from '@exteranto/core'
 
-import { Permission, PermissionManager } from '../../../../src'
+import { Permission, PermissionManager } from '../../../src'
 
 const { ACTIVE_TAB, STORAGE, BOOKMARKS } = Permission
 
