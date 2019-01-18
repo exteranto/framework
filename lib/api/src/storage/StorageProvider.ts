@@ -1,11 +1,21 @@
-import { Storage } from './Storage'
-import { Browser, Provider } from '@exteranto/core'
+import { Browser, Provider, Script } from '@exteranto/core'
 
+import { Storage } from './Storage'
 import { Storage as ChromeStorage } from './chrome/Storage'
 import { Storage as ExtensionsStorage } from './extensions/Storage'
 import { Storage as SafariStorage } from './safari/Storage'
 
 export class StorageProvider extends Provider {
+
+  /**
+   * The scripts that this provider should be registered for.
+   *
+   * @return {Script[]}
+   */
+  public only () : Script[] {
+    return [Script.BACKGROUND]
+  }
+
   /**
    * Boot the provider services.
    */

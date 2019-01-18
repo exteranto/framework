@@ -1,5 +1,5 @@
 import { NotImplementedException } from '@exteranto/exceptions'
-import { Autowired, Dispatcher, Browser, Provider } from '@exteranto/core'
+import { Browser, Dispatcher, Provider, Script } from '@exteranto/core'
 
 import { Runtime } from './Runtime'
 import { Runtime as ChromeRuntime } from './chrome/Runtime'
@@ -9,32 +9,21 @@ import { Runtime as ExtensionsRuntime } from './extensions/Runtime'
 export class RuntimeProvider extends Provider {
 
   /**
-   * Autowires dispatcher
+   * The scripts that this provider should be registered for.
    *
-   * @var {Dispatcher}
+   * @return {Script[]}
    */
-  @Autowired
-  private dispatcher: Dispatcher
+  public only () : Script[] {
+    return [Script.BACKGROUND]
+  }
 
   /**
    * Boot the provider services.
-   *
-   * @param {any} container
    */
   public boot () : void {
-
-    /**
-     * Binding the runtime service to the IOC container.
-     */
-
-    this.container.bind(ChromeRuntime)
-    .to(Runtime).for(Browser.CHROME)
-
-    this.container.bind(ExtensionsRuntime)
-      .to(Runtime).for(Browser.EXTENSIONS)
-
-    this.container.bind(SafariRuntime)
-      .to(Runtime).for(Browser.SAFARI)
+    this.container.bind(ChromeRuntime).to(Runtime).for(Browser.CHROME)
+    this.container.bind(ExtensionsRuntime).to(Runtime).for(Browser.EXTENSIONS)
+    this.container.bind(SafariRuntime).to(Runtime).for(Browser.SAFARI)
 
     if (this.container.resolveParam('browser') === Browser.SAFARI) {
       console.warn(new NotImplementedException(
@@ -47,7 +36,8 @@ export class RuntimeProvider extends Provider {
    * Register the provider services.
    */
   public register () : void {
-    this.container.resolve(Runtime)
-      .registerEvents(this.dispatcher)
+    this.container.resolve(Runtime).registerEvents(
+      this.container.resolve(Dispatcher),
+    )
   }
 }

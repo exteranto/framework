@@ -1,10 +1,12 @@
 import { Browser, Provider } from '@exteranto/core'
+
+import { Messaging } from './Messaging'
 import { Messaging as ChromeMessaging } from './chrome/Messaging'
 import { Messaging as ExtensionsMessaging } from './extensions/Messaging'
-import { Messaging } from './Messaging'
 import { Messaging as SafariMessaging } from './safari/Messaging'
 
 export class MessagingProvider extends Provider {
+
   /**
    * Boot the provider services.
    */
