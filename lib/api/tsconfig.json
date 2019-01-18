@@ -13,10 +13,10 @@
     "typeRoots": ["node_modules/@types", "node_modules/web-ext-types"],
     "baseUrl": "src",
     "paths": {
-      "@internal/management": [ "management" ],
-      "@internal/messaging": [ "messaging" ],
-      "@internal/storage": [ "storage" ],
-      "@internal/tabs": [ "tabs" ]
+      "@internal/management": ["management"],
+      "@internal/messaging": ["messaging"],
+      "@internal/storage": ["storage"],
+      "@internal/tabs": ["tabs"]
     },
     "plugins": [
       { "transform": "@zerollup/ts-transform-paths" }
