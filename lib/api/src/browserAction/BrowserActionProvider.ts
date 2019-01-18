@@ -1,4 +1,4 @@
-import { Autowired, Dispatcher, Browser, Provider } from '@exteranto/core'
+import { Browser, Dispatcher, Provider, Script } from '@exteranto/core'
 
 import { BrowserAction } from './BrowserAction'
 import { BrowserAction as ChromeBrowserAction } from './chrome/BrowserAction'
@@ -8,39 +8,29 @@ import { BrowserAction as ExtensionsBrowserAction } from './extensions/BrowserAc
 export class BrowserActionProvider extends Provider {
 
   /**
-   * Autowires dispatcher
+   * The scripts that this provider should be registered for.
    *
-   * @var {Dispatcher}
+   * @return {Script[]}
    */
-  @Autowired
-  private dispatcher: Dispatcher
+  public only () : Script[] {
+    return [Script.BACKGROUND]
+  }
 
   /**
    * Boot the provider services.
-   *
-   * @param {any} container
    */
   public boot () : void {
-
-    /**
-     * Binding the browser action service to the IOC container.
-     */
-
-    this.container.bind(ChromeBrowserAction)
-      .to(BrowserAction).for(Browser.CHROME)
-
-    this.container.bind(ExtensionsBrowserAction)
-      .to(BrowserAction).for(Browser.EXTENSIONS)
-
-    this.container.bind(SafariBrowserAction)
-      .to(BrowserAction).for(Browser.SAFARI)
+    this.container.bind(ChromeBrowserAction).to(BrowserAction).for(Browser.CHROME)
+    this.container.bind(ExtensionsBrowserAction).to(BrowserAction).for(Browser.EXTENSIONS)
+    this.container.bind(SafariBrowserAction).to(BrowserAction).for(Browser.SAFARI)
   }
 
   /**
    * Register the provider services.
    */
   public register () : void {
-    this.container.resolve(BrowserAction)
-      .registerEvents(this.dispatcher)
+    this.container.resolve(BrowserAction).registerEvents(
+      this.container.resolve(Dispatcher),
+    )
   }
 }
