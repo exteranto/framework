@@ -12,9 +12,9 @@
     "target": "es6",
     "baseUrl": "src",
     "paths": {
-      "@internal/aop": [ "aop" ],
-      "@internal/cache": [ "cache" ],
-      "@internal/compatibility": [ "compatibility" ]
+      "@internal/aop": ["aop"],
+      "@internal/cache": ["cache"],
+      "@internal/compatibility": ["compatibility"]
     },
     "plugins": [
       { "transform": "@zerollup/ts-transform-paths" }

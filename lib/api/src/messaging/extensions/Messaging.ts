@@ -11,7 +11,7 @@ export class Messaging extends AbstractMessaging {
       port.onMessage.addListener((request) => {
         const respond: (body: any) => any = (body) => {
           port.postMessage({
-            body: { name: body.name, message: body.message },
+            body: (body instanceof Error) ? { name: body.name, message: body.message } : body,
             ok: !(body instanceof Error),
           })
         }
@@ -19,7 +19,7 @@ export class Messaging extends AbstractMessaging {
         this.dispatch(
           (request as any).event,
           (request as any).payload,
-          { tabId: port.sender.tab.id },
+          port.sender.tab ? { tabId: port.sender.tab.id } : {},
           respond,
         )
       })

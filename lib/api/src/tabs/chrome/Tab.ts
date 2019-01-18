@@ -78,9 +78,11 @@ export class Tab implements TabInterface {
       payload: message.payload,
     })
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
+      const respond: (response: any) => any = response => response.ok ? resolve(response.body) : reject(response.body)
+
       // This is triggered upon receiving a response from the listener.
-      port.onMessage.addListener(resolve)
+      port.onMessage.addListener(respond)
     })
   }
 

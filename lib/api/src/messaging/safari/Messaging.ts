@@ -31,7 +31,7 @@ export class Messaging extends AbstractMessaging {
           event: event.message.event,
           id: event.message.id,
           payload: {
-            body: { name: response.name, message: response.message },
+            body: (response instanceof Error) ? { name: response.name, message: response.message } : response,
             ok: !(response instanceof Error),
           },
         })
@@ -40,7 +40,7 @@ export class Messaging extends AbstractMessaging {
       this.dispatch(
         event.message.event,
         event.message.payload,
-        { tabId: event.target.eid },
+        event.target.eid ? { tabId: event.target.eid } : {},
         respond,
       )
     }, false)
