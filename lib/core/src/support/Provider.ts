@@ -19,7 +19,7 @@ export abstract class Provider {
    * @return {Script[]}
    */
   public only () : Script[] {
-    return [Script.BACKGROUND, Script.CONTENT, Script.POPUP]
+    return [Script.BACKGROUND, Script.CONTENT]
   }
 
   /**
