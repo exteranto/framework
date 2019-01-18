@@ -12,10 +12,10 @@
     "target": "es6",
     "baseUrl": "src",
     "paths": {
-      "@internal/support": [ "support" ],
-      "@internal/ioc": [ "ioc" ],
-      "@internal/events": [ "events" ],
-      "@internal/app": [ "app" ]
+      "@internal/support": ["support"],
+      "@internal/ioc": ["ioc"],
+      "@internal/events": ["events"],
+      "@internal/app": ["app"]
     },
     "plugins": [
       { "transform": "@zerollup/ts-transform-paths" }
