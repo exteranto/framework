@@ -1,18 +1,37 @@
 #!/bin/bash
 
-cd lib
+## Login to the NPM registry.
+echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
 
-for lib in exceptions core api utils
-do
-  cd ${lib}
-  # Start commands, use ${lib} to refer to the current package.
+### @exteranto/exceptions ###
+cd lib/exceptions
 
-  ## Login to the NPM registry.
-  echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
+npm version ${TRAVIS_TAG/v/} --allow-same-version --no-git-tag-version
+npm publish --access public
 
-  ## Publish.
-  npm publish --access public
+sleep 5
+### @exteranto/core ###
+cd ../core
 
-  # End commands.
-  cd ..
-done
+npm version ${TRAVIS_TAG/v/} --allow-same-version --no-git-tag-version
+npm i @exteranto/exceptions@${TRAVIS_TAG/v/}
+npm run build
+npm publish --access public
+
+sleep 5
+### @exteranto/api ###
+cd ../api
+
+npm version ${TRAVIS_TAG/v/} --allow-same-version --no-git-tag-version
+npm i @exteranto/exceptions@${TRAVIS_TAG/v/} @exteranto/core@${TRAVIS_TAG/v/}
+npm run build
+npm publish --access public
+
+sleep 5
+### @exteranto/utils ###
+cd ../utils
+
+npm version ${TRAVIS_TAG/v/} --allow-same-version --no-git-tag-version
+npm i @exteranto/exceptions@${TRAVIS_TAG/v/} @exteranto/core@${TRAVIS_TAG/v/} @exteranto/api@${TRAVIS_TAG/v/}
+npm run build
+npm publish --access public

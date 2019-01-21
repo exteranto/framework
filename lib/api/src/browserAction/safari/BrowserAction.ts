@@ -1,6 +1,6 @@
+import { Dispatcher } from '@exteranto/core'
 import { TabActivatedEvent } from '@internal/tabs'
 import { BrowserActionClickedEvent } from '../events'
-import { Listen, Dispatcher } from '@exteranto/core'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 import { BrowserAction as AbstractBrowserAction } from '../BrowserAction'
 
@@ -102,6 +102,10 @@ export class BrowserAction extends AbstractBrowserAction {
    * @inheritdoc
    */
   public registerEvents (dispatcher: Dispatcher) : void {
+    dispatcher
+      .touch(TabActivatedEvent)
+      .addHook((event: TabActivatedEvent) => this.refreshBadge(event.getTabId()))
+
     safari.application.addEventListener('command', ({ command }) => {
       if (command !== 'openOverlay') {
         return
@@ -111,16 +115,6 @@ export class BrowserAction extends AbstractBrowserAction {
         id: safari.application.activeBrowserWindow.activeTab.eid,
       }))
     }, false)
-  }
-
-  /**
-   * Listen for the tab activated event to refresh the badge.
-   *
-   * @param {TabActivatedEvent} event
-   */
-  @Listen(TabActivatedEvent)
-  private refreshBadgeWhenTabActivated (event: TabActivatedEvent) : void {
-    this.refreshBadge(event.getTabId())
   }
 
   /**
