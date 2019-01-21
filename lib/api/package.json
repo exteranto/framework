@@ -1,12 +1,12 @@
 {
   "name": "@exteranto/api",
-  "version": "2.0.1",
+  "version": "2.1.1",
   "description": "The collection of API Drivers for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
     "build": "tslint --config ../../tslint.json --project tsconfig.json && ttsc",
-    "test": "for d in test/*/; do mocha ${d}/setup.ts ${d}/**/*.spec.ts -r ts-node/register -r tsconfig-paths/register; done"
+    "test": "for d in test/*/; do mocha -b ${d}/setup.ts ${d}/**/*.spec.ts -r ts-node/register -r tsconfig-paths/register || exit 1; done"
   },
   "keywords": [
     "extension",
@@ -31,8 +31,8 @@
   "repository": "github:exteranto/api",
   "license": "MIT",
   "dependencies": {
-    "@exteranto/core": "^2.0.1",
-    "@exteranto/exceptions": "^2.0.1",
+    "@exteranto/core": "^2.1.1",
+    "@exteranto/exceptions": "^2.1.1",
     "@types/chrome": "0.0.65",
     "typescript": "^2.9.1",
     "web-ext-types": "^2.1.0"

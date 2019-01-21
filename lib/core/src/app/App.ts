@@ -25,12 +25,12 @@ export class App {
    *
    * @param {Script} script
    * @param {any} config
-   * @param {(touch: (e: typeof Event) => ListenerBag) => void} registerEvents
+   * @param {(touch: (e: new (..._: any[]) => Event) => ListenerBag) => void} registerEvents
    */
   constructor (
     private script: Script,
     private config: any,
-    private registerEvents: (touch: (e: typeof Event) => ListenerBag) => void,
+    private registerEvents: (touch: (e: new (..._: any[]) => Event) => ListenerBag) => void,
   ) {
     //
   }

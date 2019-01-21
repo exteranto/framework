@@ -1,12 +1,12 @@
 {
   "name": "@exteranto/core",
-  "version": "2.0.1",
+  "version": "2.1.1",
   "description": "The Application Core Functionality for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
     "build": "tslint --config ../../tslint.json --project tsconfig.json && ttsc",
-    "test": "for d in test/*/; do mocha ${d}/setup.ts ${d}/**/*.spec.ts -r ts-node/register -r tsconfig-paths/register; done"
+    "test": "for d in test/*/; do mocha -b ${d}/setup.ts ${d}/**/*.spec.ts -r ts-node/register -r tsconfig-paths/register || exit 1; done"
   },
   "keywords": [
     "extension",
@@ -30,7 +30,7 @@
   "repository": "github:exteranto/core",
   "license": "MIT",
   "dependencies": {
-    "@exteranto/exceptions": "^2.0.1",
+    "@exteranto/exceptions": "^2.1.1",
     "reflect-metadata": "^0.1.12",
     "typescript": "^2.9.2"
   },
@@ -43,7 +43,7 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "mocha": "^5.1.1",
-    "sinon": "^7.2.2",
+    "sinon": "^7.2.3",
     "ts-node": "^6.2.0",
     "tsconfig-paths": "^3.7.0",
     "tslint": "^5.11.0",

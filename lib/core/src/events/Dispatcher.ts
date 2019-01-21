@@ -15,27 +15,27 @@ export class Dispatcher {
   /**
    * Map of event names to their respective types.
    *
-   * @var {Map<string, typeof Event>} types
+   * @var {Map<string, new (..._: any[]) => Event>} types
    */
-  private types: Map<string, typeof Event> = new Map()
+  private types: Map<string, new (..._: any[]) => Event> = new Map()
 
   /**
    * Return the type associated with the event name.
    *
    * @param {string} name
-   * @return {typeof Event}
+   * @return {new (..._: any[]) => Event}
    */
-  public type (name: string) : typeof Event {
+  public type (name: string) : new (..._: any[]) => Event {
     return this.types.get(name)
   }
 
   /**
    * Return the listener bag assigned to the specified event.
    *
-   * @param {typeof Event} event
+   * @param {new (..._: any[]) => Event} event
    * @return {ListenerBag}
    */
-  public touch (event: typeof Event) : ListenerBag {
+  public touch (event: new (..._: any[]) => Event) : ListenerBag {
     // Add the types to the event map.
     this.types.set(event.name, event)
 
@@ -81,7 +81,7 @@ export class Dispatcher {
       return this.fire(event)
     }
 
-    this.touch(event.constructor as typeof Event).mailbox
+    this.touch(event.constructor as new (..._: any[]) => Event).mailbox
       .push(() => this.fire(event))
   }
 }

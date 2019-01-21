@@ -1,4 +1,4 @@
-import { Browser, Provider } from '@exteranto/core'
+import { Browser, Provider, Script } from '@exteranto/core'
 
 import { PermissionManager } from './PermissionManager'
 import { PermissionManager as ChromePermissionManager } from './chrome/PermissionManager'
@@ -6,6 +6,15 @@ import { PermissionManager as SafariPermissionManager } from './safari/Permissio
 import { PermissionManager as ExtensionsPermissionManager } from './extensions/PermissionManager'
 
 export class PermissionManagerProvider extends Provider {
+
+  /**
+   * The scripts that this provider should be registered for.
+   *
+   * @return {Script[]}
+   */
+  public only () : Script[] {
+    return [Script.BACKGROUND]
+  }
 
   /**
    * Boot the provider services.
