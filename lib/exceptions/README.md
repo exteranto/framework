@@ -1,5 +1,5 @@
 # @exteranto/exceptions
-[![Build Status](https://travis-ci.org/exteranto/exceptions.svg?branch=master)](https://travis-ci.org/exteranto/exceptions)
+[![Build Status](https://travis-ci.org/exteranto/framework.svg?branch=master)](https://travis-ci.org/exteranto/framework)
 
 The Exceptions Package for the Exteranto Framework.
 
@@ -10,7 +10,7 @@ The Exceptions Package for the Exteranto Framework.
 > [this repo](https://github.com/exteranto/exteranto).
 
 Exteranto is a browser extension framework that aims to unify various browser
-APIs. It also provides an object-oriented and strictly-type sctructure to your
+APIs. It also provides an object-oriented and strictly-typed sctructure to your
 extension.
 
 For installation manual and other documentation, visit the

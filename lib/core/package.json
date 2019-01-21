@@ -1,12 +1,12 @@
 {
   "name": "@exteranto/core",
-  "version": "1.1.2",
+  "version": "2.0.1",
   "description": "The Application Core Functionality for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "build": "tslint --config ../../tslint.json --project tsconfig.json && tsc",
-    "test": "mocha test/setup.ts test/**/*.spec.ts -r ts-node/register"
+    "build": "tslint --config ../../tslint.json --project tsconfig.json && ttsc",
+    "test": "for d in test/*/; do mocha ${d}/setup.ts ${d}/**/*.spec.ts -r ts-node/register -r tsconfig-paths/register; done"
   },
   "keywords": [
     "extension",
@@ -21,22 +21,32 @@
     "email": "kouks.koch@gmail.com",
     "url": "https://pavelkoch.io"
   },
+  "contributors": [
+    {
+      "name": "Michael Bausano",
+      "email": "bausanomichal@gmai.com"
+    }
+  ],
   "repository": "github:exteranto/core",
   "license": "MIT",
   "dependencies": {
-    "@exteranto/events": "^1.1.1",
-    "@exteranto/exceptions": "^1.1.1",
-    "@exteranto/ioc": "^1.1.1",
-    "@exteranto/support": "^1.1.1",
+    "@exteranto/exceptions": "^2.0.1",
+    "reflect-metadata": "^0.1.12",
     "typescript": "^2.9.2"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
+    "@types/chai-as-promised": "^7.1.0",
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.12.18",
+    "@zerollup/ts-transform-paths": "^1.6.5",
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "mocha": "^5.1.1",
+    "sinon": "^7.2.2",
     "ts-node": "^6.2.0",
-    "tslint": "^5.11.0"
+    "tsconfig-paths": "^3.7.0",
+    "tslint": "^5.11.0",
+    "ttypescript": "^1.5.5"
   }
 }

@@ -1,2 +1,4 @@
-export { App } from './App'
-export { Router } from './Router'
+export * from './app'
+export * from './events'
+export * from './ioc'
+export * from './support'
