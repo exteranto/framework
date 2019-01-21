@@ -6,7 +6,7 @@ for lib in exceptions core api utils
 do
   cd ${lib}
   # Start commands, use ${lib} to refer to the current package.
-    if ! npm i || ! npm up
+    if ! npm i
     then
       exit 1
     fi
