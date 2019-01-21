@@ -2,28 +2,34 @@
 
 cd lib
 
-for lib in support ioc aop events exceptions core storage messaging tabs cache compatibility management
+for lib in exceptions core api utils
 do
   cd ${lib}
   # Start commands, use ${lib} to refer to the current package.
-    # Links the package for local development.
-    npm link
-
-    if ! npm i || ! npm run build || ! npm run test
+    if ! npm i || ! npm up
     then
       exit 1
     fi
+
+    # Links the package for local development.
+    npm link
 
     # Linking depencendies.
     for package in $(grep -Po '@exteranto\/[a-z]+' package.json);
     do
       if [[ $package == *"$lib"* ]]
       then
+        echo ${lib}
         continue
       fi
 
       npm link ${package}
     done
+
+    if ! npm run build || ! npm run test
+    then
+      exit 1
+    fi
 
   # End commands.
   cd ..

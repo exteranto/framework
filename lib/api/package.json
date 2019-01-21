@@ -1,0 +1,58 @@
+{
+  "name": "@exteranto/api",
+  "version": "2.0.1",
+  "description": "The collection of API Drivers for the Exteranto Framework.",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "build": "tslint --config ../../tslint.json --project tsconfig.json && ttsc",
+    "test": "for d in test/*/; do mocha ${d}/setup.ts ${d}/**/*.spec.ts -r ts-node/register -r tsconfig-paths/register; done"
+  },
+  "keywords": [
+    "extension",
+    "framework",
+    "typescript",
+    "exteranto",
+    "management",
+    "tabs",
+    "messaging",
+    "storage"
+  ],
+  "author": {
+    "name": "Pavel Koch",
+    "email": "kouks.koch@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Michael Bausano",
+      "email": "bausanomichal@gmai.com"
+    }
+  ],
+  "repository": "github:exteranto/api",
+  "license": "MIT",
+  "dependencies": {
+    "@exteranto/core": "^2.0.1",
+    "@exteranto/exceptions": "^2.0.1",
+    "@types/chrome": "0.0.65",
+    "typescript": "^2.9.1",
+    "web-ext-types": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/chai-as-promised": "^7.1.0",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.5.5",
+    "@types/sinon": "^4.3.3",
+    "@types/sinon-chrome": "^2.2.4",
+    "@zerollup/ts-transform-paths": "^1.6.5",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^5.1.1",
+    "sinon": "^5.1.1",
+    "sinon-chrome": "^2.3.2",
+    "ts-node": "^6.1.0",
+    "tsconfig-paths": "^3.7.0",
+    "tslint": "^5.11.0",
+    "ttypescript": "^1.5.5"
+  }
+}
