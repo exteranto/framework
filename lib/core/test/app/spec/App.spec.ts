@@ -60,7 +60,7 @@ describe('App Class should', () => {
     const app: App = new App(
       Script.BACKGROUND,
       { providers: [] },
-      touch => touch(<typeof Event> TestEvent).addHook((_: TestEvent) => done())
+      touch => touch(TestEvent).addHook((_: TestEvent) => done())
     )
 
     app.start()
