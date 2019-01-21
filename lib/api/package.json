@@ -6,7 +6,7 @@
   "types": "types/index.d.ts",
   "scripts": {
     "build": "tslint --config ../../tslint.json --project tsconfig.json && ttsc",
-    "test": "for d in test/*/; do mocha ${d}/setup.ts ${d}/**/*.spec.ts -r ts-node/register -r tsconfig-paths/register; done"
+    "test": "for d in test/*/; do mocha -b ${d}/setup.ts ${d}/**/*.spec.ts -r ts-node/register -r tsconfig-paths/register || exit 1; done"
   },
   "keywords": [
     "extension",
