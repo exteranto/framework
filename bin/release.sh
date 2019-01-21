@@ -3,7 +3,6 @@
 ## Login to the NPM registry.
 echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
 
-
 ### @exteranto/exceptions ###
 cd lib/exceptions
 
