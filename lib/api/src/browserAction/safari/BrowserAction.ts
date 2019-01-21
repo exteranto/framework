@@ -103,7 +103,7 @@ export class BrowserAction extends AbstractBrowserAction {
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     dispatcher
-      .touch(TabActivatedEvent as any)
+      .touch(TabActivatedEvent)
       .addHook((event: TabActivatedEvent) => this.refreshBadge(event.getTabId()))
 
     safari.application.addEventListener('command', ({ command }) => {
