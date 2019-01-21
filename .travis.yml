@@ -1,4 +1,3 @@
-install: sudo apt-get install sed
 
 script: "./bin/install.sh"
 
