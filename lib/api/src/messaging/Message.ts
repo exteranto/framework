@@ -18,7 +18,7 @@ export class Message extends Event {
   /**
    * @param {payload} payload
    */
-  constructor (public payload: any) {
+  constructor (public payload?: any) {
     super()
   }
 }

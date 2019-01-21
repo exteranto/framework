@@ -1,3 +1,4 @@
+import { TabActivatedEvent } from '@internal/tabs'
 import { BrowserActionClickedEvent } from '../events'
 import { Listen, Dispatcher } from '@exteranto/core'
 import { TabIdUnknownException } from '@exteranto/exceptions'
@@ -113,11 +114,20 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
+   * Listen for the tab activated event to refresh the badge.
+   *
+   * @param {TabActivatedEvent} event
+   */
+  @Listen(TabActivatedEvent)
+  private refreshBadgeWhenTabActivated (event: TabActivatedEvent) : void {
+    this.refreshBadge(event.getTabId())
+  }
+
+  /**
    * Refresh the badge based on the meta data stored on tab objects.
    *
    * @param {number} tabId
    */
-  @Listen('app.tabs.activated')
   private refreshBadge (tabId: number) : void {
     this.getAllTabs().forEach((tab) => {
       if (tab.eid !== tabId) {
