@@ -34,7 +34,7 @@ export class None<T> implements Optional<T> {
   /**
    * @inheritdoc
    */
-  public map (_: Optional<any>, _p: (t: T, u: any) => Optional<any>) : Optional<any> {
+  public map (_: Optional<any>, predicate: (t: T, u: any) => Optional<any>) : Optional<any> {
     return new None()
   }
 
