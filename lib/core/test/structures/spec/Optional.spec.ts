@@ -63,4 +63,18 @@ describe('Optional Interface', () => {
 
     expect(none.unwrapOrElse(() => 2)).to.equal(2)
   })
+
+  it('matches the correct callback', () => {
+    expect(some.match(
+      (some) => some + 1
+    )).to.equal(2)
+
+    expect(none.match(
+      (some) => some + 1
+    )).to.equal(undefined)
+    expect(none.match(
+      (some) => some + 1,
+      () => 3
+    )).to.equal(3)
+  })
 })
