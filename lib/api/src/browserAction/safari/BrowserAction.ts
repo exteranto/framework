@@ -4,8 +4,6 @@ import { BrowserActionClickedEvent } from '../events'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 import { BrowserAction as AbstractBrowserAction } from '../BrowserAction'
 
-declare var safari: any
-
 export class BrowserAction extends AbstractBrowserAction {
   /**
    * @inheritdoc

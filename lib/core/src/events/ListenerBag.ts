@@ -1,6 +1,6 @@
 import { Listener } from './Listener'
 import { Middleware } from './Middleware'
-import { Pipeline } from '@internal/support'
+import { Pipeline } from '@internal/structures'
 
 export class ListenerBag {
   /**

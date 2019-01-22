@@ -50,6 +50,11 @@ export abstract class Messaging {
   ) : void {
     // Get and instantiate the desired message event model.
     const Constructor: any = this.dispatcher.type(name)
+
+    if (Constructor === undefined) {
+      return
+    }
+
     const event: Message = new Constructor(payload)
 
     // Assign important data to the model.

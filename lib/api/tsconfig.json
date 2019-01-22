@@ -13,8 +13,12 @@
     "typeRoots": ["node_modules/@types", "node_modules/web-ext-types"],
     "baseUrl": "src",
     "paths": {
-      "@internal/management": ["management"],
+      "@internal/browserAction": ["browserAction"],
+      "@internal/cookies": ["cookies"],
+      "@internal/extension": ["extension"],
       "@internal/messaging": ["messaging"],
+      "@internal/permissions": ["permissions"],
+      "@internal/runtime": ["runtime"],
       "@internal/storage": ["storage"],
       "@internal/tabs": ["tabs"]
     },
