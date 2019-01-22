@@ -1,3 +1,5 @@
+/// <reference types="mocha" />
+
 import { expect } from 'chai'
 import { Element } from './Element'
 import { PriorityQueue } from '../../../src'
@@ -17,7 +19,7 @@ describe('PriorityQueue', () => {
 
     queue.push(new Element(1, 'hey'))
 
-    expect(queue.pop()).to.have.property('value').that.equals('hey')
+    expect(queue.pop().unwrap()).to.have.property('value').that.equals('hey')
   })
 
   it('honours the priority', () => {
@@ -29,7 +31,7 @@ describe('PriorityQueue', () => {
 
     queue.push(new Element(1, 'stranger'))
 
-    expect(queue.pop()).to.have.property('value').that.equals('there')
+    expect(queue.pop().unwrap()).to.have.property('value').that.equals('there')
   })
 
   it('honours the queue max size', () => {
@@ -59,7 +61,7 @@ describe('PriorityQueue', () => {
 
     queue.push(new Element(1, 'there'))
 
-    expect(queue.pop()).to.have.property('value').that.equals('hey')
+    expect(queue.pop().unwrap()).to.have.property('value').that.equals('hey')
   })
 })
 

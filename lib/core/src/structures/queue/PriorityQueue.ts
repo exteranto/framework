@@ -1,5 +1,6 @@
 import { Queue } from './Queue'
 import { Sortable } from './Sortable'
+import { Optional, None, Some } from '@internal/structures'
 
 export class PriorityQueue<T extends Sortable> extends Queue {
   /**
@@ -12,8 +13,10 @@ export class PriorityQueue<T extends Sortable> extends Queue {
   /**
    * @inheritdoc
    */
-  public pop () : T {
-    return this.els.pop()
+  public pop () : Optional<T> {
+    const el: T = this.els.pop()
+
+    return el === undefined ? new None() : new Some(el)
   }
 
   /**

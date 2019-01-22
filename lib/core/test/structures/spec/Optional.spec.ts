@@ -20,7 +20,7 @@ describe('Optional Interface', () => {
   it('unwraps a value', () => {
     expect(some.unwrap()).to.be.equal(1)
 
-    expect(none.unwrap).to.throw(OptionIsNoneException)
+    expect(() => none.unwrap()).to.throw(OptionIsNoneException)
   })
 
   it('filters the option', () => {
