@@ -48,14 +48,6 @@ export const tests = () => {
       sinon.assert.calledOnce(browser.runtime.setUninstallURL)
     })
 
-    it('converts relative path to url', async () => {
-      browser.runtime.getURL.returns('browser://extension/abc/path')
-
-      expect(runtime.extensionUrl('path'))
-        .to.equal('browser://extension/abc/path')
-      expect(browser.runtime.getURL.calledOnce).to.be.true
-    })
-
     it('registers install event', (done) => {
       global.app.boot()
 

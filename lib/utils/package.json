@@ -1,6 +1,6 @@
 {
   "name": "@exteranto/utils",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "The Utils for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -30,9 +30,9 @@
   "repository": "github:exteranto/utils",
   "license": "MIT",
   "dependencies": {
-    "@exteranto/api": "^2.1.1",
-    "@exteranto/core": "^2.1.1",
-    "@exteranto/exceptions": "^2.1.1",
+    "@exteranto/api": "^2.1.2",
+    "@exteranto/core": "^2.1.2",
+    "@exteranto/exceptions": "^2.1.2",
     "md5-typescript": "^1.0.5",
     "typescript": "^2.9.2"
   },
@@ -49,6 +49,6 @@
     "ts-node": "^6.2.0",
     "tsconfig-paths": "^3.7.0",
     "tslint": "^5.11.0",
-    "ttypescript": "^1.5.5"
+    "ttypescript": "^1.5.6"
   }
 }
