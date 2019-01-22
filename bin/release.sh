@@ -48,3 +48,5 @@ git add lib/**/*.json
 git commit -m "$TRAVIS_TAG"
 git push token-remote HEAD:master
 git push token-remote HEAD:develop
+git push token-remote HEAD:$TRAVIS_TAG
+

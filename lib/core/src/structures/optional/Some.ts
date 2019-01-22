@@ -4,6 +4,15 @@ import { Optional } from './Optional'
 export class Some<T> implements Optional<T> {
 
   /**
+   * @constructor
+   *
+   * @param {T} value
+   */
+  constructor (private value: T) {
+    //
+  }
+
+  /**
    * @inheritdoc
    */
   public unwrap () : T {
@@ -64,12 +73,10 @@ export class Some<T> implements Optional<T> {
   }
 
   /**
-   * @constructor
-   *
-   * @param {T} value
+   * @inheritdoc
    */
-  constructor (private value: T) {
-    //
+  public match (some: (t: T) => any, _?: () => any) : any {
+    return some(this.value)
   }
 
 }
