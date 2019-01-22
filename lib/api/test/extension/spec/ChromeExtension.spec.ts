@@ -14,13 +14,11 @@ export const tests = () => {
     })
 
     it('converts relative path to url', () => {
-      chrome.extension.getURL.returns('chrome://extension/abc/path')
-
-      console.log(chrome.extension.getURL())
+      chrome.runtime.getURL.returns('chrome://extension/abc/path')
 
       expect(extension.getUrl('path'))
         .to.equal('chrome://extension/abc/path')
-      expect(chrome.extension.getURL.calledOnce).to.be.true
+      expect(chrome.runtime.getURL.calledOnce).to.be.true
     })
   })
 }

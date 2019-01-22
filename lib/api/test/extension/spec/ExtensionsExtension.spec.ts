@@ -16,11 +16,11 @@ export const tests = () => {
     })
 
     it('converts relative path to url', () => {
-      browser.extension.getURL.returns('extensions://extension/abc/path')
+      browser.runtime.getURL.returns('extensions://extension/abc/path')
 
       expect(extension.getUrl('path'))
         .to.equal('extensions://extension/abc/path')
-      expect(browser.extension.getURL.calledOnce).to.be.true
+      expect(browser.runtime.getURL.calledOnce).to.be.true
     })
   })
 }
