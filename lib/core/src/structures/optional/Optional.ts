@@ -69,4 +69,14 @@ export interface Optional<T> {
    */
   unwrapOrElse (closure: () => any) : any
 
+  /**
+   * If option is None, matches second callback,
+   * otherwise passes option value to the first callback.
+   *
+   * @param {(t: T) => any} some
+   * @param {none?: () => any} none
+   * @return {any}
+   */
+  match (some: (t: T) => any, none?: () => any) : any
+
 }
