@@ -5,8 +5,6 @@ import { Tabs as AbstractTabs } from '../Tabs'
 import { Dispatcher, RegistersNativeEvents } from '@exteranto/core'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 
-declare var safari: any
-
 export class Tabs extends AbstractTabs implements RegistersNativeEvents {
 
   /**

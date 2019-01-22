@@ -1,5 +1,6 @@
 export * from './browserAction'
 export * from './cookies'
+export * from './extension'
 export * from './messaging'
 export * from './permissions'
 export * from './runtime'
