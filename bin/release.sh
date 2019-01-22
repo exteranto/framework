@@ -38,7 +38,9 @@ npm publish --access public
 
 # Push back to the repository
 
+cd ../..
 echo $GITHUB_KEY >> github_key
+eval `ssh-agent -s`
 ssh-add github_key
 
 git config --global user.email "travis@travis-ci.org"
