@@ -59,4 +59,11 @@ export class None<T> implements Optional<T> {
     return closure()
   }
 
+  /**
+   * @inheritdoc
+   */
+  public match (_: (t: T) => any, none?: () => any) : any {
+    return none && none()
+  }
+
 }
