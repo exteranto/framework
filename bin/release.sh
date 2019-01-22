@@ -38,11 +38,11 @@ npm publish --access public
 
 # Push back to the repository
 
-cd ../..
-echo "$GITHUB_KEY" >> github_key
-chmod 600 github_key
-eval `ssh-agent -s`
-ssh-add github_key
+# cd ../..
+# echo "$GITHUB_KEY" >> github_key
+# chmod 600 github_key
+# eval `ssh-agent -s`
+# ssh-add github_key
 
 git config --global user.email "travis@travis-ci.org"
 git config --global user.name "Travis CI"
