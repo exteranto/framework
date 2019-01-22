@@ -11,14 +11,6 @@ export abstract class Runtime implements RegistersNativeEvents {
   public abstract setUninstallUrl (url: string) : Promise<void>
 
   /**
-   * Converts a relative path within extension file tree to a URL.
-   *
-   * @param {string} path
-   */
-  // TODO: Make sure the url points to the same directory in all browsers.
-  public abstract extensionUrl (path?: string) : string
-
-  /**
    * Register all native events on the given module.
    *
    * @param {Dispatcher} dispatcher

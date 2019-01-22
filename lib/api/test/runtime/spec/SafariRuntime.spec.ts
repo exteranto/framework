@@ -36,11 +36,6 @@ export const tests = () => {
         .to.eventually.be.rejectedWith(NotImplementedException)
     })
 
-    it('converts relative path to url', async () => {
-      expect(runtime.extensionUrl('path'))
-        .to.equal('safari-extension://abc/path')
-    })
-
     it('registers install event', (done) => {
       global.app.boot()
 

@@ -7,8 +7,6 @@ import {
   ExtensionInstalledEvent,
 } from '../events'
 
-declare var safari: any
-
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   safari.application.addEventListener('beforeNavigate', (event) => {
     dispatcher.fire(new WebRequestBeforeRedirectedEvent({

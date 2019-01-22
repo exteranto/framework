@@ -47,14 +47,6 @@ export const tests = () => {
         .to.eventually.be.rejectedWith(InvalidUrlFormatException)
     })
 
-    it('converts relative path to url', async () => {
-      chrome.runtime.getURL.returns('chrome://extension/abc/path')
-
-      expect(runtime.extensionUrl('path'))
-        .to.equal('chrome://extension/abc/path')
-      expect(chrome.runtime.getURL.calledOnce).to.be.true
-    })
-
     it('registers install event', (done) => {
       global.app.boot()
 

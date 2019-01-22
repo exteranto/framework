@@ -22,13 +22,6 @@ export class Runtime extends AbstractRuntime {
   /**
    * @inheritdoc
    */
-  public extensionUrl (path: string = '') : string {
-    return chrome.runtime.getURL(path)
-  }
-
-  /**
-   * @inheritdoc
-   */
   public registerEvents (dispatcher: Dispatcher) : void {
     register(dispatcher)
   }
