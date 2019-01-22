@@ -28,7 +28,9 @@ export class PriorityQueue extends Queue {
     this.els.splice(index, 0, el)
 
     // Honours queue limit.
-    if (this.els.length > this.maxSize) this.els.shift()
+    if (this.els.length > this.maxSize) {
+      this.els.shift()
+    }
   }
 
   /**

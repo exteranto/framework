@@ -8,5 +8,5 @@ export interface Sortable {
    *
    * @param {Sortable} a
    */
-  comp (a: Sortable): number
+  comp (a: Sortable) : number
 }
