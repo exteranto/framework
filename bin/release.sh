@@ -38,16 +38,12 @@ npm publish --access public
 
 # Push back to the repository
 
-echo $GITHUB_KEY >> github_key
-ssh-add github_key
+cd ../..
 
 git config --global user.email "travis@travis-ci.org"
 git config --global user.name "Travis CI"
 
-git checkout master
+git remote add token-remote https://${GITHUB_TOKEN}@github.com/exteranto/framework.git
 git add lib/**/*.json
 git commit -m "$TRAVIS_TAG"
-git remote add origin git@github.com:exteranto/framework.git
-git push --quiet
-git checkout develop
-git merge master
+git push token-remote HEAD:master
