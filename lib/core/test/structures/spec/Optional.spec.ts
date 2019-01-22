@@ -30,6 +30,22 @@ describe('Optional Interface', () => {
     expect(none.filter(it => true).isNone()).to.be.ok
   })
 
+  it('maps the option', () => {
+    expect(some
+      .map(new None(), (t: number, u: any) => new Some(t + u))
+      .isNone()
+    ).to.be.ok
+    expect(some
+      .map(new Some(2), (t: number, u: any) => new Some(t + u))
+      .unwrap()
+    ).to.equal(3)
+
+    expect(none
+      .map(new Some(2), (t: number, u: any) => new Some(t + u))
+      .isNone()
+    ).to.be.ok
+  })
+
   it('throws custom error with expect', () => {
     expect(some.expect(new Error('error'))).to.equal(1)
 

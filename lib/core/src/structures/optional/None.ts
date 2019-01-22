@@ -28,7 +28,14 @@ export class None<T> implements Optional<T> {
    * @inheritdoc
    */
   public filter (_: (t: T) => boolean) : Optional<T> {
-    return this
+    return new None()
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public map (_: Optional<any>, _p: (t: T, u: any) => Optional<any>) : Optional<any> {
+    return new None()
   }
 
   /**

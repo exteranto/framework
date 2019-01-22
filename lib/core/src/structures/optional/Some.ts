@@ -34,6 +34,17 @@ export class Some<T> implements Optional<T> {
   /**
    * @inheritdoc
    */
+  public map (u: Optional<any>, predicate: (t: T, u: any) => Optional<any>) : Optional<any> {
+    if (u.isNone()) {
+      return new None()
+    }
+
+    return predicate(this.value, u.unwrap())
+  }
+
+  /**
+   * @inheritdoc
+   */
   public expect (_: any) : T {
     return this.value
   }

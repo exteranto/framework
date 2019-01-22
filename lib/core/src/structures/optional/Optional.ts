@@ -34,6 +34,15 @@ export interface Optional<T> {
   filter (predicate: (t: T) => boolean) : Optional<T>
 
   /**
+   * Maps this optional to the other one.
+   * If either option is None, returns none as well.
+   *
+   * @param {Optional<any>} u
+   * @param {(t: T, u: any) => Optional<any>} predicate
+   */
+  map (u: Optional<any>, predicate: (t: T, u: any) => Optional<any>) : Optional<any>
+
+  /**
    * If the option is Some, unwrap it.
    * Otherwise throw an error.
    *
