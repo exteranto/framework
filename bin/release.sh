@@ -48,6 +48,6 @@ git checkout master
 git add lib/**/*.json
 git commit -m "$TRAVIS_TAG"
 git remote add origin git@github.com:exteranto/framework.git
-git push
+git push --quiet
 git checkout develop
 git merge master
