@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { Element } from './Element'
-import { PriorityQueue } from '../../../src/queue'
+import { PriorityQueue } from '../../../src'
 
 describe('PriorityQueue', () => {
 

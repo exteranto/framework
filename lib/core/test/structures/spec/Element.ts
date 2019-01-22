@@ -1,4 +1,4 @@
-import { Sortable } from '../../../src/queue'
+import { Sortable } from '../../../src'
 
 export class Element implements Sortable {
   constructor (public priority, public value) {
