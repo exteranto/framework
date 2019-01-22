@@ -16,9 +16,9 @@
       "@internal/browserAction": ["browserAction"],
       "@internal/cookies": ["cookies"],
       "@internal/extension": ["extension"],
-      "@internal/messaging": ["management"],
-      "@internal/permissions": ["management"],
-      "@internal/runtime": ["messaging"],
+      "@internal/messaging": ["messaging"],
+      "@internal/permissions": ["permissions"],
+      "@internal/runtime": ["runtime"],
       "@internal/storage": ["storage"],
       "@internal/tabs": ["tabs"]
     },
