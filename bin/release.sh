@@ -46,4 +46,4 @@ git config --global user.name "Travis CI"
 git remote add token-remote https://${GITHUB_TOKEN}@github.com/exteranto/framework.git
 git add lib/**/*.json
 git commit -m "$TRAVIS_TAG"
-git push token-remote HEAD
+git push token-remote master
