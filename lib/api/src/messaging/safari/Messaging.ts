@@ -1,8 +1,6 @@
 import { Message } from '../Message'
 import { Messaging as AbstractMessaging } from '../Messaging'
 
-declare var safari: any
-
 export class Messaging extends AbstractMessaging {
   /**
    * The object that contains promises to be resolved upon receiving a response.

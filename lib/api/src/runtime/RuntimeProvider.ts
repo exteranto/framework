@@ -9,6 +9,15 @@ import { Runtime as ExtensionsRuntime } from './extensions/Runtime'
 export class RuntimeProvider extends Provider {
 
   /**
+   * The scripts that this provider should be registered for.
+   *
+   * @return {Script[]}
+   */
+  public only () : Script[] {
+    return [Script.BACKGROUND]
+  }
+
+  /**
    * Boot the provider services.
    */
   public boot () : void {
