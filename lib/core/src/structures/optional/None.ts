@@ -48,14 +48,14 @@ export class None<T> implements Optional<T> {
   /**
    * @inheritdoc
    */
-  public unwrapOr (def: any) : any {
+  public unwrapOr (def: T) : T {
     return def
   }
 
   /**
    * @inheritdoc
    */
-  public unwrapOrElse (closure: () => any) : any {
+  public unwrapOrElse (closure: () => T) : T {
     return closure()
   }
 

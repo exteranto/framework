@@ -61,14 +61,14 @@ export class Some<T> implements Optional<T> {
   /**
    * @inheritdoc
    */
-  public unwrapOr (_: any) : any {
+  public unwrapOr (_: T) : T {
     return this.value
   }
 
   /**
    * @inheritdoc
    */
-  public unwrapOrElse (_: () => any) : any {
+  public unwrapOrElse (_: () => T) : T {
     return this.value
   }
 

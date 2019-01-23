@@ -55,19 +55,19 @@ export interface Optional<T> {
    * If the option is Some, returns the value,
    * otherwise return the default.
    *
-   * @param {any} def
-   * @return {any}
+   * @param {T} def
+   * @return {T}
    */
-  unwrapOr (def: any) : any
+  unwrapOr (def: T) : T
 
   /**
    * If the option is Some, returns the value,
    * otherwise computes the closure and returns the result.
    *
-   * @param {any} def
-   * @return {any}
+   * @param {T} def
+   * @return {T}
    */
-  unwrapOrElse (closure: () => any) : any
+  unwrapOrElse (closure: () => T) : T
 
   /**
    * If option is None, matches second callback,

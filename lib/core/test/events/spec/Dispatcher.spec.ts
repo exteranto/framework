@@ -158,6 +158,31 @@ describe('Dispatcher', () => {
     const Constructor = dispatcher.type('TestEvent')
     expect(new Constructor).to.be.instanceOf(TestEvent)
   })
+
+  it('fires parent listeners', (done) => {
+    dispatcher.touch(TestEvent).addHook((event: TestEvent) => {
+      try {
+        expect(event).to.be.instanceOf(ChildTestEvent)
+          .and.to.satisfy(e => e.getText() === 'hook')
+          .and.to.satisfy(e => (e as ChildTestEvent).sayHello() === 'hello')
+        done()
+      } catch (e) { done(e) }
+    })
+
+    dispatcher.fire(new ChildTestEvent({ text: 'hook' }))
+  })
+
+  it('can register listeners to all events', (done) => {
+    dispatcher.touch(Event).addHook((event: Event) => {
+      try {
+        expect(event).to.be.instanceOf(ChildTestEvent)
+          .and.to.satisfy(e => (e as ChildTestEvent).sayHello() === 'hello')
+        done()
+      } catch (e) { done(e) }
+    })
+
+    dispatcher.fire(new ChildTestEvent)
+  })
 })
 
 class TestException extends Error {
@@ -175,5 +200,12 @@ class TestEvent extends Event {
 
   public setText (text: string) : void {
     this.data.text = text
+  }
+}
+
+class ChildTestEvent extends TestEvent {
+
+  public sayHello () : string {
+    return 'hello'
   }
 }
