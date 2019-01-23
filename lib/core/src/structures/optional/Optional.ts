@@ -49,28 +49,25 @@ export interface Optional<T> {
    * @param {any} e
    * @return {T}
    */
-  // ASK: Should this be Error for type scrictness?
   expect (e: any) : T
 
   /**
    * If the option is Some, returns the value,
    * otherwise return the default.
    *
-   * @param {any} def
-   * @return {any}
+   * @param {T} def
+   * @return {T}
    */
-  // ASK: Should this be T for type scrictness?
-  unwrapOr (def: any) : any
+  unwrapOr (def: T) : T
 
   /**
    * If the option is Some, returns the value,
    * otherwise computes the closure and returns the result.
    *
-   * @param {any} def
-   * @return {any}
+   * @param {T} def
+   * @return {T}
    */
-  // ASK: Should this be T for type scrictness?
-  unwrapOrElse (closure: () => any) : any
+  unwrapOrElse (closure: () => T) : T
 
   /**
    * If option is None, matches second callback,
@@ -80,7 +77,6 @@ export interface Optional<T> {
    * @param {none?: () => any} none
    * @return {any}
    */
-  // ASK: Should this be T for type scrictness?
   match (some: (t: T) => any, none?: () => any) : any
 
 }
