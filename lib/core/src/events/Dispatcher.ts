@@ -51,22 +51,11 @@ export class Dispatcher {
    * @param {Event} event
    */
   public fire (event: Event) : void {
-    if (this.events[event.constructor.name] === undefined) {
-      return
-    }
-
-    this.events[event.constructor.name].dispatch(event)
-      .catch((e) => {
-        if (e.constructor && this.events[e.constructor.name]) {
-          return this.events[e.constructor.name].dispatch(e)
-        }
-
-        if (this.events[Exception.name]) {
-          return this.events[Exception.name].dispatch(e)
-        }
-
-        throw e
-      })
+    // Search suitable events in the inheritance tree.
+    Array.from(this.types.values())
+      .filter(type => type.name === event.constructor.name || type.isPrototypeOf(event.constructor))
+      .filter(type => this.events[type.name] !== undefined)
+      .forEach(type => this.triggerListenerBag(type.name, event))
   }
 
   /**
@@ -83,5 +72,26 @@ export class Dispatcher {
 
     this.touch(event.constructor as new (..._: any[]) => Event).mailbox
       .push(() => this.fire(event))
+  }
+
+  /**
+   * Triggers the specified listener bag.
+   *
+   * @param {string} name
+   * @param {Event} event
+   */
+  private triggerListenerBag (name: string, event: Event) : void {
+    this.events[name].dispatch(event)
+      .catch((e: Error) => {
+        if (e.constructor && this.events[e.constructor.name]) {
+          return this.events[e.constructor.name].dispatch(e)
+        }
+
+        if (this.events[Exception.name]) {
+          return this.events[Exception.name].dispatch(e)
+        }
+
+        throw e
+      })
   }
 }
