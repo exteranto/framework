@@ -109,9 +109,9 @@ export class BrowserAction extends AbstractBrowserAction {
         return
       }
 
-      dispatcher.fire(new BrowserActionClickedEvent({
-        id: safari.application.activeBrowserWindow.activeTab.eid,
-      }))
+      dispatcher.fire(new BrowserActionClickedEvent(
+        safari.application.activeBrowserWindow.activeTab.eid,
+      ))
     }, false)
   }
 

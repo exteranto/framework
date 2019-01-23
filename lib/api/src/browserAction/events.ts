@@ -4,7 +4,7 @@ export class BrowserActionClickedEvent extends Event {
   /**
    * @inheritdoc
    */
-  constructor (private data?: any) {
+  constructor (private tabId: number) {
     super()
   }
 
@@ -13,7 +13,7 @@ export class BrowserActionClickedEvent extends Event {
    *
    * @return {number}
    */
-  public tabId () : number {
-    return this.data.id
+  public getTabId () : number {
+    return this.tabId
   }
 }
