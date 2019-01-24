@@ -1,13 +1,10 @@
 import { expect } from 'chai'
-import * as sinon from 'sinon'
 import { mock, instance, verify, deepEqual, anything } from 'ts-mockito'
 
 import {
   Runtime,
   ExtensionInstalledEvent,
   ExtensionUpdatedEvent,
-  WebRequestBeforeRedirectedEvent,
-  WebRequestCompletedEvent,
 } from '@internal/runtime'
 
 import { Container, Dispatcher } from '@exteranto/core'

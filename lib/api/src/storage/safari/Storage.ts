@@ -3,10 +3,7 @@ import { Storage as AbstractStorage } from '../Storage'
 
 export class Storage extends AbstractStorage {
   /**
-   * Retrieves a value or multiple values from the storage.
-   *
-   * @param {any} key
-   * @return {Promise<any>}
+   * @inheritdoc
    */
   public get (key: any) : Promise<any> {
     return new Promise((resolve, reject) => {
@@ -37,10 +34,7 @@ export class Storage extends AbstractStorage {
   }
 
   /**
-   * Returns all keys in the storage.
-   *
-   * @override
-   * @return {Promise<any>}
+   * @inheritdoc
    */
   public all () : Promise<any> {
     return new Promise((resolve) => {
@@ -62,11 +56,7 @@ export class Storage extends AbstractStorage {
   }
 
   /**
-   * Saves a value in the storage.
-   *
-   * @param {any} key
-   * @param {any} value
-   * @return {Promise<any>}
+   * @inheritdoc
    */
   public set (key: any, value?: any) : Promise<any> {
     return new Promise((resolve) => {
@@ -85,10 +75,7 @@ export class Storage extends AbstractStorage {
   }
 
   /**
-   * Removes a value or multiple values from the storage.
-   *
-   * @param {any} key
-   * @return {Promise<void>}
+   * @inheritdoc
    */
   public remove (key: any) : Promise<void> {
     return new Promise((resolve) => {
@@ -103,9 +90,7 @@ export class Storage extends AbstractStorage {
   }
 
   /**
-   * Clears the whole storage.
-   *
-   * @return {Promise<void>}
+   * @inheritdoc
    */
   public clear () : Promise<void> {
     return this.all()
@@ -114,9 +99,7 @@ export class Storage extends AbstractStorage {
   }
 
   /**
-   * Returns the storage content size in bytes.
-   *
-   * @return {Promise<number>}
+   * @inheritdoc
    */
   public size () : Promise<number> {
     return this.all().then(data => JSON.stringify(data).length)
