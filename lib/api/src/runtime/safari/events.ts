@@ -43,7 +43,7 @@ const registerInstallAndUpdateEvents: (dispatcher: Dispatcher) => void = (dispat
   }
 
   const event: Event = previousVersion
-    ? new ExtensionUpdatedEvent({ previousVersion })
+    ? new ExtensionUpdatedEvent(previousVersion)
     : new ExtensionInstalledEvent()
 
   dispatcher.mail(event)

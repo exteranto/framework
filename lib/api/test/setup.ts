@@ -22,4 +22,5 @@ chai.use(chaiAsPromised)
 beforeEach(() => {
   chrome.flush()
   browser.flush()
+  safari.flush()
 })

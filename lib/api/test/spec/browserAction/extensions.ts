@@ -1,6 +1,7 @@
 import { expect } from 'chai'
-import { Dispatcher } from '@exteranto/core'
 import { mock, instance, verify, deepEqual } from 'ts-mockito'
+
+import { Dispatcher } from '@exteranto/core'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 import { BrowserAction, BrowserActionClickedEvent } from '@internal/browserAction'
 import { BrowserAction as ExtensionsBrowserAction } from '@internal/browserAction/extensions/BrowserAction'
@@ -9,7 +10,7 @@ export default ({ browser }) => {
   let browserAction: BrowserAction
   let dispatcher: Dispatcher
 
-  before(() => {
+  beforeEach(() => {
     dispatcher = mock(Dispatcher)
     browserAction = new ExtensionsBrowserAction
   })

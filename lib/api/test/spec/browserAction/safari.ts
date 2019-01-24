@@ -1,7 +1,8 @@
 import { expect } from 'chai'
 import { Dispatcher } from '@exteranto/core'
-import { TabIdUnknownException } from '@exteranto/exceptions'
 import { mock, instance, verify, deepEqual, when, anything } from 'ts-mockito'
+
+import { TabIdUnknownException } from '@exteranto/exceptions'
 import { BrowserAction, BrowserActionClickedEvent } from '@internal/browserAction'
 import { BrowserAction as SafariBrowserAction } from '@internal/browserAction/safari/BrowserAction'
 
@@ -9,7 +10,7 @@ export default ({ safari }) => {
   let browserAction: BrowserAction
   let dispatcher: Dispatcher
 
-  before(() => {
+  beforeEach(() => {
     dispatcher = mock(Dispatcher)
     browserAction = new SafariBrowserAction
   })
@@ -182,11 +183,12 @@ export default ({ safari }) => {
 
   it('registers badge click event.', () => {
     safari.application.activeBrowserWindow.activeTab = { eid: 2 },
-    safari.application.addEventListener = (_, l) => l({ command: 'openOverlay' })
 
     when(dispatcher.touch(anything())).thenReturn({ addHook: () => {} } as any)
 
     browserAction.registerEvents(instance(dispatcher))
+
+    safari.application.trigger('command', { command: 'openOverlay' })
 
     verify(dispatcher.fire(deepEqual(new BrowserActionClickedEvent(2)))).once()
   })
