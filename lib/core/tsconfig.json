@@ -12,17 +12,14 @@
     "target": "es6",
     "baseUrl": "src",
     "paths": {
-      "@internal/support": ["support"],
-      "@internal/structures": ["structures"],
-      "@internal/ioc": ["ioc"],
-      "@internal/events": ["events"],
-      "@internal/app": ["app"]
+      "@internal/*": ["*"]
     },
     "plugins": [
       { "transform": "@zerollup/ts-transform-paths" }
     ]
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test/**/*"
   ]
 }

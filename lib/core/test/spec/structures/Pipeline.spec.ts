@@ -1,8 +1,8 @@
 import { expect } from 'chai'
-import { Pipeline } from '../../../src'
+
+import { Pipeline } from '@internal/structures'
 
 describe('Pipeline Service', () => {
-
   it('modifies a value in the pipes', async () => {
     await expect(new Pipeline()
       .send('test')

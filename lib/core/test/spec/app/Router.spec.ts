@@ -1,16 +1,17 @@
 import { expect } from 'chai'
-import { App, Router } from '../../../src/app'
-import { Container } from '../../../src/ioc'
-import { Provider, Script } from '../../../src/support'
+
+import { Container } from '@internal/ioc'
+import { App, Router } from '@internal/app'
+import { Provider, Script } from '@internal/support'
 import { InvalidRouteException } from '@exteranto/exceptions'
 
-describe('Router Class should', () => {
+describe('Router', () => {
 
   afterEach(() => {
     (Router as any).routes = {}
   })
 
-  it('register global routes for a given script', () => {
+  it('registers global routes for a given script', () => {
     Container.bindParam('script', Script.CONTENT)
     Router.add([{ name: 'test' }], Script.CONTENT)
 
@@ -18,21 +19,21 @@ describe('Router Class should', () => {
       .and.to.deep.include({ name: 'test' })
   })
 
-  it('not register routes without a name', () => {
+  it('does not register routes without a name', () => {
     Container.bindParam('script', Script.CONTENT)
 
     expect(() => Router.add(['test'], Script.CONTENT)).to.throw(InvalidRouteException)
   })
 
 
-  it('not register routes for different script', () => {
+  it('does not register routes for different script', () => {
     Container.bindParam('script', Script.CONTENT)
     Router.add([{ name: 'test' }], Script.BACKGROUND)
 
     expect(Router.get()).to.have.lengthOf(0)
   })
 
-  it('register routes to a default script', () => {
+  it('registers routes to a default script', () => {
     Container.bindParam('script', Script.CONTENT)
     Router.add([{ name: 'test' }])
 
@@ -40,14 +41,14 @@ describe('Router Class should', () => {
       .and.to.deep.include({ name: 'test' })
   })
 
-  it('chain', () => {
+  it('chains', () => {
     Container.bindParam('script', Script.CONTENT)
 
     expect(Router.add([{ name: 'test' }]).get()).to.have.lengthOf(1)
       .and.to.deep.include({ name: 'test' })
   })
 
-  it('register routes via provider', () => {
+  it('registers routes via provider', () => {
     const app: App = new App(Script.CONTENT, { providers: [TestProvider] }, () => {})
     app.start()
     app.boot()
@@ -57,7 +58,7 @@ describe('Router Class should', () => {
       .and.to.deep.include({ name: 'test2' })
   })
 
-  it('edit a route', () => {
+  it('edits a route', () => {
     Container.bindParam('script', Script.CONTENT)
 
     Router.add([{ name: 'test' }])
@@ -70,7 +71,7 @@ describe('Router Class should', () => {
       .and.to.deep.include({ name: 'test', meta: { title: 'title' } })
   })
 
-  it('edit a route before its creation', () => {
+  it('edits a route before its creation', () => {
     Container.bindParam('script', Script.CONTENT)
 
     Router.edit('test', (r) => {

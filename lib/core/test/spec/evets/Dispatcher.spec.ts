@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { Dispatcher, Event, Listener, ListenerBag, Middleware } from '../../../src/events'
+import { Dispatcher, Event, Listener, ListenerBag, Middleware } from '@internal/events'
 
 describe('Dispatcher', () => {
   let dispatcher

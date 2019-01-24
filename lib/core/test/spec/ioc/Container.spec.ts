@@ -1,26 +1,26 @@
 import { expect } from 'chai'
-import { Container } from '../../../src/ioc'
-import { Browser } from '../../../src/support'
+import { Container } from '@internal/ioc'
+import { Browser } from '@internal/support'
 
-describe('IOC Container', () => {
+describe('Container', () => {
 
   beforeEach(() => {
     Container.reset()
   })
 
-  it('should bind a simple dependency', () => {
+  it('binds a simple dependency', () => {
     Container.bind(ChildDependency).toSelf()
 
     expect(Container.resolve(ChildDependency)).to.be.instanceof(ChildDependency)
   })
 
-  it('should bind a simple dependency with constructor args', () => {
+  it('binds a simple dependency with constructor args', () => {
     Container.bind(ChildDependency).toSelf()
 
     expect(Container.resolve(ChildDependency, ['arg']).type).to.equal('arg')
   })
 
-  it('should bind a singleton', () => {
+  it('binds a singleton', () => {
     const dep = Container.bind(ChildDependency).toSelf().singleton(true)
     const resolved = Container.resolve(ChildDependency, ['arg'])
 
@@ -29,13 +29,13 @@ describe('IOC Container', () => {
     expect(Container.resolve(ChildDependency, ['another']).type).to.equal('changed')
   })
 
-  it('should bind a dependency to an abstract type', () => {
+  it('binds a dependency to an abstract type', () => {
     Container.bind(ChildDependency).to(Abstract)
 
     expect(Container.resolve(Abstract)).to.be.instanceof(ChildDependency)
   })
 
-  it('should bind a dependency to an abstract type with a browser specified', () => {
+  it('binds a dependency to an abstract type with a browser specified', () => {
     Container.bindParam('browser', Browser.CHROME)
     Container.bind(ChromeDependency).to(Abstract).for(Browser.CHROME)
     Container.bind(ExtensionsDependency).to(Abstract).for(Browser.EXTENSIONS)
@@ -49,19 +49,19 @@ describe('IOC Container', () => {
       .and.not.be.instanceof(ChromeDependency)
   })
 
-  it('should bind a simple parameter', () => {
+  it('binds a simple parameter', () => {
     Container.bindParam('param', 1)
 
     expect(Container.resolveParam('param')).to.equal(1)
   })
 
-  it('should bind an object parameter', () => {
+  it('binds an object parameter', () => {
     Container.bindParam('param', { test: 'test' })
 
     expect(Container.resolveParam('param')).to.deep.equal({ test: 'test' })
   })
 
-  it('should resolve an object parameter using the dot notation', () => {
+  it('resolves an object parameter using the dot notation', () => {
     Container.bindParam('param', { test: 'test' })
     Container.bindParam('param2', { test: { test: 'test' } })
 

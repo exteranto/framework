@@ -1,12 +1,10 @@
-/// <reference types="mocha" />
-
 import { expect } from 'chai'
-import { Optional, Some, None } from '../../../src'
+
+import { Optional, Some, None } from '@internal/structures'
 import { OptionIsNoneException } from '@exteranto/exceptions'
 
-describe('Optional Interface', () => {
+describe('Optional', () => {
   const some: Optional<number> = new Some(1)
-
   const none: Optional<number> = new None()
 
   it('inits a new instance', () => {
