@@ -1,8 +1,8 @@
 import { expect } from 'chai'
-import { AspectContainer } from '../../../src/aop/AspectContainer'
 
-describe('Aspect Container', () => {
+import { AspectContainer } from '@internal/aop/AspectContainer'
 
+describe('AspectContainer', () => {
   it('registers and fires the before aspect', (done) => {
     const aspect = {
       before: p => expect(p[0]).to.equal('test-before') && done()
@@ -20,5 +20,4 @@ describe('Aspect Container', () => {
     AspectContainer.bind('test-pointcut', 'after', aspect, 'after')
     AspectContainer.after('test-pointcut', ['test-after'])
   })
-
 })

@@ -1,12 +1,12 @@
 {
   "name": "@exteranto/utils",
   "version": "2.3.0",
-  "description": "The Utils for the Exteranto Framework.",
+  "description": "The utils for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "build": "tslint --config ../../tslint.json --project tsconfig.json && ttsc",
-    "test": "for d in test/*/; do mocha -b ${d}/setup.ts ${d}/**/*.spec.ts -r ts-node/register -r tsconfig-paths/register || exit 1; done"
+    "build": "tslint --project tsconfig.json -c ../../tslint.json && ttsc",
+    "test": "mocha test/setup.ts test/**/*.spec.ts -r ts-node/register -r tsconfig-paths/register"
   },
   "keywords": [
     "extension",
@@ -33,22 +33,24 @@
     "@exteranto/api": "^2.3.0",
     "@exteranto/core": "^2.3.0",
     "@exteranto/exceptions": "^2.3.0",
-    "md5-typescript": "^1.0.5",
-    "typescript": "^2.9.2"
+    "md5-typescript": "^1.0.5"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7.1.0",
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.12.18",
+    "@types/sinon": "^7.0.4",
     "@zerollup/ts-transform-paths": "^1.6.5",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "mocha": "^5.1.1",
     "sinon": "^7.2.3",
-    "ts-node": "^6.2.0",
+    "ts-mockito": "^2.3.1",
+    "ts-node": "^8.0.1",
     "tsconfig-paths": "^3.7.0",
     "tslint": "^5.11.0",
-    "ttypescript": "^1.5.6"
+    "ttypescript": "^1.5.6",
+    "typescript": "^2.9.2"
   }
 }

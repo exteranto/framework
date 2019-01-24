@@ -1,12 +1,12 @@
 import { expect } from 'chai'
-import { Container } from '@exteranto/core'
-import { VersionResolver } from '../../../src'
 
-describe('VersionResolver Class', () => {
+import { VersionResolver } from '@internal/compatibility'
+
+describe('VersionResolver', () => {
   let versionResolver
 
-  before(() => {
-    versionResolver = Container.resolve(VersionResolver)
+  beforeEach(() => {
+    versionResolver = new VersionResolver()
   })
 
   it('compares a lower version', () => {
@@ -42,5 +42,4 @@ describe('VersionResolver Class', () => {
     expect(versionResolver.equal('1.0.1', '1.0.0')).to.be.false
     expect(versionResolver.equal('1.0.0', '1.0.0')).to.be.true
   })
-
 })

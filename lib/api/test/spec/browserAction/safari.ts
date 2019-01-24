@@ -1,7 +1,7 @@
 import { expect } from 'chai'
-import { Dispatcher } from '@exteranto/core'
 import { mock, instance, verify, deepEqual, when, anything } from 'ts-mockito'
 
+import { Dispatcher } from '@exteranto/core'
 import { TabIdUnknownException } from '@exteranto/exceptions'
 import { BrowserAction, BrowserActionClickedEvent } from '@internal/browserAction'
 import { BrowserAction as SafariBrowserAction } from '@internal/browserAction/safari/BrowserAction'

@@ -20,8 +20,8 @@ export default ({ localStorage }) => {
     runtime = new SafariRuntime
   })
 
-  it('sets uninstall url', () => {
-    expect(runtime.setUninstallUrl('https://test.com'))
+  it('sets uninstall url', async () => {
+    await expect(runtime.setUninstallUrl('https://test.com'))
       .to.eventually.be.rejectedWith(NotImplementedException)
   })
 

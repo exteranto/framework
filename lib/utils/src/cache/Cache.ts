@@ -13,6 +13,13 @@ export class Cache {
   private driver: Storage
 
   /**
+   * The hasher instance.
+   *
+   * @var {any}
+   */
+  private hasher: any = Md5
+
+  /**
    * The cache config.
    *
    * @var {any}
@@ -37,7 +44,7 @@ export class Cache {
     key = this.createHash(key)
 
     return this.driver.get(key)
-      .then(value => this.isExpired(value) ? Promise.reject(null) : value)
+      .then(value => this.isExpired(value) ? Promise.reject() : value)
       .catch(() => this.createCache(key, cacheable, timeout))
       .then(({ data }) => data)
   }
@@ -96,6 +103,6 @@ export class Cache {
    * @return {string}
    */
   private createHash (value: string) : string {
-    return 'cache__' + Md5.init(value)
+    return 'cache__' + this.hasher.init(value)
   }
 }

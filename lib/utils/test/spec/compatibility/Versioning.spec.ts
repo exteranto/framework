@@ -1,15 +1,16 @@
 import { expect } from 'chai'
-import { VersionNotMatchedException } from '@exteranto/exceptions'
+
 import { Container } from '@exteranto/core'
-import { Versioning } from '../../../src'
+import { Versioning } from '@internal/compatibility'
+import { VersionNotMatchedException } from '@exteranto/exceptions'
 
-describe('Versioning Service', () => {
-  let versioning
+describe('Versioning', () => {
+  let versioning: Versioning
 
-  before(() => {
+  beforeEach(() => {
     Container.bindParam('app', { version: '1.0.0' })
 
-    versioning = Container.resolve(Versioning)
+    versioning = new Versioning
   })
 
   it('executes a callback since a certain version', async () => {

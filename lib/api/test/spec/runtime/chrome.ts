@@ -23,10 +23,10 @@ export default ({ chrome }) => {
     runtime = new ChromeRuntime
   })
 
-  it('sets uninstall url', () => {
+  it('sets uninstall url', async () => {
     chrome.runtime.setUninstallURL.yields('https://test.com')
 
-    runtime.setUninstallUrl('https://test.com')
+    await runtime.setUninstallUrl('https://test.com')
 
     sinon.assert.calledOnce(chrome.runtime.setUninstallURL)
     sinon.assert.calledWith(chrome.runtime.setUninstallURL, 'https://test.com')

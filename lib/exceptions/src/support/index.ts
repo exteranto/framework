@@ -1,1 +1,4 @@
-export * from './structures'
+
+export class OptionIsNoneException extends Error {
+  //
+}

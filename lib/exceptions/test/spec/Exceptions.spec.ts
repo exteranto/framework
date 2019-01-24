@@ -3,7 +3,6 @@ import { expect } from 'chai'
 import * as e from '../../src'
 
 describe('Exceptions package', () => {
-
   it('exports global/Exception', () => expect(e.Exception).to.be.ok)
   it('exports global/EmptyResponseException', () => expect(e.EmptyResponseException).to.be.ok)
   it('exports global/NotImplementedException', () => expect(e.NotImplementedException).to.be.ok)
@@ -14,5 +13,4 @@ describe('Exceptions package', () => {
   it('exports cookies/InvalidCookieRequestException', () => expect(e.InvalidCookieRequestException).to.be.ok)
   it('exports tabs/TabIdUnknownException', () => expect(e.TabIdUnknownException).to.be.ok)
   it('exports tabs/OptionIsNoneException', () => expect(e.OptionIsNoneException).to.be.ok)
-
 })

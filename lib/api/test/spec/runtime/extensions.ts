@@ -23,10 +23,10 @@ export default ({ browser }) => {
     runtime = new ExtensionsRuntime
   })
 
-  it('sets uninstall url', () => {
+  it('sets uninstall url', async () => {
     browser.runtime.setUninstallURL.resolves('https://test.com')
 
-    runtime.setUninstallUrl('https://test.com')
+    await runtime.setUninstallUrl('https://test.com')
 
     sinon.assert.calledOnce(browser.runtime.setUninstallURL)
     sinon.assert.calledWith(browser.runtime.setUninstallURL, 'https://test.com')
