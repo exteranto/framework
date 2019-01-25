@@ -5,8 +5,9 @@
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "build": "tslint --config ../../tslint.json --project tsconfig.json && tsc",
-    "test": "mocha test/setup.ts test/**/*.spec.ts -r ts-node/register"
+    "build": "tslint -p tsconfig.dist.json -c ../../tslint.json && tsc -p tsconfig.dist.json",
+    "test": "mocha test/setup.ts test/**/*.spec.ts -r ts-node/register",
+    "coverage": "nyc npm run test"
   },
   "keywords": [
     "extension",
@@ -20,17 +21,34 @@
     "email": "kouks.koch@gmail.com",
     "url": "https://pavelkoch.io"
   },
+  "contributors": [
+    {
+      "name": "Michael Bausano",
+      "email": "bausanomichal@gmai.com"
+    }
+  ],
   "repository": "github:exteranto/exceptions",
   "license": "MIT",
-  "dependencies": {
-    "typescript": "^2.9.2"
-  },
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.5",
     "chai": "^4.2.0",
     "mocha": "^5.1.1",
-    "ts-node": "^6.2.0",
-    "tslint": "^5.11.0"
+    "nyc": "^13.1.0",
+    "ts-node": "^8.0.1",
+    "tslint": "^5.11.0",
+    "typescript": "^2.9.2"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "src/**/*.ts"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "all": true
   }
 }

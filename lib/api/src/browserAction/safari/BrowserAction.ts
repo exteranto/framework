@@ -102,16 +102,16 @@ export class BrowserAction extends AbstractBrowserAction {
   public registerEvents (dispatcher: Dispatcher) : void {
     dispatcher
       .touch(TabActivatedEvent)
-      .addHook((event: TabActivatedEvent) => this.refreshBadge(event.getTabId()))
+      .addHook((event: TabActivatedEvent) => this.refreshBadge(event.tabId))
 
     safari.application.addEventListener('command', ({ command }) => {
       if (command !== 'openOverlay') {
         return
       }
 
-      dispatcher.fire(new BrowserActionClickedEvent({
-        id: safari.application.activeBrowserWindow.activeTab.eid,
-      }))
+      dispatcher.fire(new BrowserActionClickedEvent(
+        safari.application.activeBrowserWindow.activeTab.eid,
+      ))
     }, false)
   }
 

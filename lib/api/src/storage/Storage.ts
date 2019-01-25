@@ -70,11 +70,11 @@ export abstract class Storage {
   /**
    * Saves a value in the storage.
    *
-   * @param {string} key
+   * @param {any} key
    * @param {any} value
    * @return {Promise<any>}
    */
-  public abstract set (key: string, value?: any) : Promise<any>
+  public abstract set (key: any, value?: any) : Promise<any>
 
   /**
    * Removes a value or multiple values from the storage.

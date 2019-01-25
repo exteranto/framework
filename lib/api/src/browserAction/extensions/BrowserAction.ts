@@ -68,7 +68,7 @@ export class BrowserAction extends AbstractBrowserAction {
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     browser.browserAction.onClicked.addListener(({ id }) => {
-      dispatcher.fire(new BrowserActionClickedEvent({ id }))
+      dispatcher.fire(new BrowserActionClickedEvent(id))
     })
   }
 }

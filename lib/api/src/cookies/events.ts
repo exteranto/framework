@@ -4,16 +4,7 @@ export class CookieChangedEvent extends Event {
   /**
    * @param {any} cookie
    */
-  constructor (private cookie: any) {
+  constructor (public cookie: any) {
     super()
-  }
-
-  /**
-   * Cookie getter.
-   *
-   * @return {any}
-   */
-  public getCookie () : any {
-    return this.cookie
   }
 }

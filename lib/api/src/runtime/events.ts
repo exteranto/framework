@@ -2,18 +2,11 @@ import { Event } from '@exteranto/core'
 
 class WebRequestEvent extends Event {
   /**
-   * @inheritdoc
-   */
-  constructor (public data?: any) {
-    super()
-  }
-
-  /**
    * Tab id this event is bound to.
    *
    * @return {number}
    */
-  public tabId () : number {
+  public get tabId () : number {
     return this.data.tabId
   }
 
@@ -22,8 +15,17 @@ class WebRequestEvent extends Event {
    *
    * @return {number}
    */
-  public timestamp () : number {
+  public get timestamp () : number {
     return this.data.timeStamp
+  }
+
+  /**
+   * Class constructor.
+   *
+   * @param {any} data
+   */
+  constructor (public data: any) {
+    super()
   }
 }
 
@@ -33,7 +35,7 @@ export class WebRequestBeforeRedirectedEvent extends WebRequestEvent {
    *
    * @return {string}
    */
-  public urlFrom () : string {
+  public get urlFrom () : string {
     return this.data.url
   }
 
@@ -42,7 +44,7 @@ export class WebRequestBeforeRedirectedEvent extends WebRequestEvent {
    *
    * @return {string}
    */
-  public urlTo () : string {
+  public get urlTo () : string {
     return this.data.redirectUrl
   }
 }
@@ -53,26 +55,19 @@ export class WebRequestCompletedEvent extends WebRequestEvent {
    *
    * @return {string}
    */
-  public url () : string {
+  public get url () : string {
     return this.data.url
   }
 }
 
 export class ExtensionUpdatedEvent extends Event {
   /**
-   * @inheritdoc
-   */
-  constructor (protected data?: any) {
-    super()
-  }
-
-  /**
-   * Version of the extension before it was updated
+   * Class constructor.
    *
-   * @return {string}
+   * @param {string} previousVersion
    */
-  public previousVersion () : string {
-    return this.data.previousVersion
+  constructor (public previousVersion: string) {
+    super()
   }
 }
 
