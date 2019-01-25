@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "build": "tslint --project tsconfig.json -c ../../tslint.json && tsc",
+    "build": "tslint -p tsconfig.dist.json -c ../../tslint.json && tsc -p tsconfig.dist.json",
     "test": "mocha test/setup.ts test/**/*.spec.ts -r ts-node/register"
   },
   "keywords": [
