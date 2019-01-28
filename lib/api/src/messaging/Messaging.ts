@@ -1,7 +1,8 @@
 import { Message } from './Message'
-import { Script, Dispatcher,  Autowired, Param } from '@exteranto/core'
+import { Script, Dispatcher, Autowired, Param } from '@exteranto/core'
 
 export abstract class Messaging {
+
   /**
    * Event dispatcher implementation.
    */
@@ -25,7 +26,7 @@ export abstract class Messaging {
    * @param message Message event
    * @return Response body
    */
-  public abstract send (message: Message) : Promise<any>
+  public abstract async send (message: Message) : Promise<any>
 
   /**
    * Dispatches the received message via the dispatcher dependency.
@@ -58,4 +59,5 @@ export abstract class Messaging {
     // listener.
     this.dispatcher.fire(event)
   }
+
 }

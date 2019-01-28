@@ -1,6 +1,7 @@
 import { Event } from '@exteranto/core'
 
 export class Message extends Event {
+
   /**
    * The context the message was sent from.
    */
@@ -17,4 +18,5 @@ export class Message extends Event {
   constructor (public payload?: any) {
     super()
   }
+
 }

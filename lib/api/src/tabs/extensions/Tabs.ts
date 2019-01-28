@@ -10,7 +10,7 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   /**
    * @inheritdoc
    */
-  protected filter (query: any = {}) : Promise<TabInterface[]> {
+  protected async filter (query: any = {}) : Promise<TabInterface[]> {
     return browser.tabs.query(query)
       .then(tabs => tabs.map(tab => new Tab(tab)))
   }
@@ -18,7 +18,7 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   /**
    * @inheritdoc
    */
-  public open (url: string, active: boolean = false) : Promise<TabInterface> {
+  public async open (url: string, active: boolean = false) : Promise<TabInterface> {
     return browser.tabs.create({ url, active })
       .then(tab => new Tab(tab))
   }
@@ -38,4 +38,5 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   public registerEvents (dispatcher: Dispatcher) : void {
     register(dispatcher)
   }
+
 }

@@ -33,4 +33,5 @@ export class BrowserActionProvider extends Provider {
       this.container.resolve(Dispatcher),
     )
   }
+
 }

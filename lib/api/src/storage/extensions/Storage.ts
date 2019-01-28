@@ -3,6 +3,7 @@ import { Storage as AbstractStorage } from '../Storage'
 import { StorageKeyNotFoundException } from '@exteranto/exceptions'
 
 export class Storage extends AbstractStorage {
+
   /**
    * @inheritdoc
    */
@@ -66,4 +67,5 @@ export class Storage extends AbstractStorage {
       return this.all().then(data => JSON.stringify(data).length)
     })
   }
+
 }

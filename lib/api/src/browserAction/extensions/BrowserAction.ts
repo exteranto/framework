@@ -4,6 +4,7 @@ import { TabIdUnknownException } from '@exteranto/exceptions'
 import { BrowserAction as AbstractBrowserAction } from '../BrowserAction'
 
 export class BrowserAction extends AbstractBrowserAction {
+
   /**
    * @inheritdoc
    */
@@ -71,4 +72,5 @@ export class BrowserAction extends AbstractBrowserAction {
       dispatcher.fire(new BrowserActionClickedEvent(id))
     })
   }
+
 }

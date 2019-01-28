@@ -3,6 +3,7 @@ import { Storage as AbstractStorage } from '../Storage'
 import { StorageKeyNotFoundException } from '@exteranto/exceptions'
 
 export class Storage extends AbstractStorage {
+
   /**
    * @inheritdoc
    */
@@ -58,4 +59,5 @@ export class Storage extends AbstractStorage {
       chrome.storage[this.type].getBytesInUse(null, resolve)
     })
   }
+
 }

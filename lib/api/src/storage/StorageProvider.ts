@@ -31,4 +31,5 @@ export class StorageProvider extends Provider {
   public register () : void {
     //
   }
+
 }

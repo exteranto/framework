@@ -3,6 +3,7 @@ import { Storage as AbstractStorage } from '../Storage'
 import { StorageKeyNotFoundException } from '@exteranto/exceptions'
 
 export class Storage extends AbstractStorage {
+
   /**
    * @inheritdoc
    */
@@ -114,4 +115,5 @@ export class Storage extends AbstractStorage {
   private prefix () : string {
     return '_' + this.type + '_'
   }
+
 }

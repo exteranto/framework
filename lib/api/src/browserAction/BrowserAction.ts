@@ -7,7 +7,7 @@ export abstract class BrowserAction implements RegistersNativeEvents {
    *
    * @param tabId Id of the target tab
    * @return Resolves with badge string
-   * @throws {TabIdUnknownException} No tab with given id
+   * @throws {TabIdUnknownException}
    */
   public abstract async getBadgeText (tabId: number) : Promise<string>
 
@@ -16,7 +16,7 @@ export abstract class BrowserAction implements RegistersNativeEvents {
    *
    * @param text Text to be assigned to the tab badge
    * @param tabId Id of the target tab
-   * @throws {TabIdUnknownException} No tab with given id
+   * @throws {TabIdUnknownException}
    */
   public abstract async setBadgeText (text: string, tabId: number) : Promise<void>
 

@@ -31,4 +31,5 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
   public registerEvents () : void {
     //
   }
+
 }
