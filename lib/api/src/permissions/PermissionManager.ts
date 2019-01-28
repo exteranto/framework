@@ -4,25 +4,23 @@ import { PermissionNotGrantedException } from '@exteranto/exceptions'
 export abstract class PermissionManager {
   /**
    * Reference to permissions enum.
-   *
-   * @var {any} Permission Enum with permissions.
    */
-  public static Permission: any = Permission
+  public static Permission: typeof Permission = Permission
 
   /**
    * Resolves with true if requested permission is granted.
    *
-   * @return {Promise<boolean>}
+   * @param needle Single or array of permissions
+   * @return Whether the extension has a permission
    */
-  public abstract contains (needle: string|string[]) : Promise<boolean>
+  public abstract contains (needle: Permission|Permission[]) : Promise<boolean>
 
   /**
    * If requested permission is not granted, returns rejected promise.
    *
    * @throws {PermissionNotGrantedException}
-   * @return {Promise<void>}
    */
-  public async assume (permission: string|string[]) : Promise<void> {
+  public async assume (permission: Permission|Permission[]) : Promise<void> {
     if (!await this.contains(permission)) {
       throw new PermissionNotGrantedException(permission.toString())
     }

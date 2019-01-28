@@ -1,3 +1,4 @@
+import { Permission } from './Permission'
 import { Container } from '@exteranto/core'
 import { PermissionManager } from './PermissionManager'
 
@@ -5,14 +6,14 @@ import { PermissionManager } from './PermissionManager'
  * The @HasAccessTo annotation resolves if an extension
  * has permissions to access certain APIs.
  *
- * @param {string[]|string} permissions
+ * @param needle Single or array of permissions
+ * @return Function that returns a proxy
  */
-export function HasAccessTo (permissions: string[]|string) : any {
+export function HasAccessTo (permissions: Permission[]|Permission) : any {
   return (target, method, descriptor) => {
     descriptor.value = new Proxy(target[method], {
       /**
        * @throws {PermissionNotGrantedException}
-       * @return {Promise<any>}
        */
       apply: async (callable, scope, args) => {
         await Container.resolve(PermissionManager).assume(permissions)
