@@ -45,7 +45,7 @@ export abstract class BrowserAction implements RegistersNativeEvents {
    * Get the title at a specified tab.
    *
    * @param tabId Id of the target tab
-   * @return Resolves with current webpage title
+   * @return Resolves with current browser action title
    * @throws {TabIdUnknownException}
    */
   public abstract async getTitle (tabId: number) : Promise<string>
@@ -53,7 +53,7 @@ export abstract class BrowserAction implements RegistersNativeEvents {
   /**
    * Set the title at a specified tab.
    *
-   * @param title Current webpage title
+   * @param title Current browser action title
    * @param tabId Id of the target tab
    * @throws {TabIdUnknownException}
    */

@@ -18,6 +18,7 @@ export abstract class PermissionManager {
   /**
    * If requested permission is not granted, returns rejected promise.
    *
+   * @param permission Single or array of permissions
    * @throws {PermissionNotGrantedException}
    */
   public async assume (permission: Permission|Permission[]) : Promise<void> {

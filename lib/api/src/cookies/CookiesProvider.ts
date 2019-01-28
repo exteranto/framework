@@ -3,6 +3,7 @@ import { Browser, Dispatcher, Provider, Script } from '@exteranto/core'
 
 import { Cookies } from './Cookies'
 import { Cookies as ChromeCookies } from './chrome/Cookies'
+import { Cookies as SafariCookies } from './safari/Cookies'
 import { Cookies as ExtensionsCookies } from './extensions/Cookies'
 
 export class CookiesProvider extends Provider {
@@ -22,6 +23,7 @@ export class CookiesProvider extends Provider {
   public boot () : void {
     this.container.bind(ChromeCookies).to(Cookies).for(Browser.CHROME)
     this.container.bind(ExtensionsCookies).to(Cookies).for(Browser.EXTENSIONS)
+    this.container.bind(SafariCookies).to(Cookies).for(Browser.SAFARI)
 
     if (this.container.resolveParam('browser') === Browser.SAFARI) {
       return console.warn(new NotImplementedException('@exteranto/api', 'Cookies'))
