@@ -3,57 +3,31 @@ import { Autowired, Dispatcher } from '@exteranto/core'
 export abstract class Storage {
   /**
    * The dispatcher implementation.
-   *
-   * @var {Dispatcher}
    */
   @Autowired
   protected dispatcher: Dispatcher
 
   /**
-   * Class constructor.
-   *
-   * @param {string} type
+   * @param type Storage can be either local or sync
    */
   constructor (protected type: string) {
     //
   }
 
   /**
-   * Alias for storage set method.
-   *
-   * @param {string} key
-   * @param {any} value
-   * @return {Promise<void>}
-   */
-  public put (key: string, value?: any) : Promise<void> {
-    return this.set(key, value)
-  }
-
-  /**
    * If and only if the key is not set, it is populated.
    *
-   * @param {string} key
-   * @param {any} value
-   * @return {Promise<void>}
+   * @param key Storage key to retrieve
+   * @param value Value to set the key to
    */
   public populate (key: string, value: any) : Promise<void> {
     return this.get(key).catch(() => this.set(key, value))
   }
 
   /**
-   * Alias for storage get method.
-   *
-   * @param {any} key
-   * @return {Promise<any>}
-   */
-  public collect (key: any = null) : Promise<any> {
-    return this.get(key)
-  }
-
-  /**
    * Returns all keys in the storage.
    *
-   * @return {Promise<any>}
+   * @return Key value storage object
    */
   public all () : Promise<any> {
     return this.get(null)
@@ -62,39 +36,35 @@ export abstract class Storage {
   /**
    * Retrieves a value or multiple values from the storage.
    *
-   * @param {any} key
-   * @return {Promise<any>}
+   * @param key Storage key to retrieve
+   * @return Associated value in storage
    */
-  public abstract get (key: any) : Promise<any>
+  public abstract get (key: string|string[]) : Promise<any>
 
   /**
    * Saves a value in the storage.
    *
-   * @param {any} key
-   * @param {any} value
-   * @return {Promise<any>}
+   * @param key Storage key to set or key value object to store
+   * @param value Value to set the key to
    */
-  public abstract set (key: any, value?: any) : Promise<any>
+  public abstract set (key: any, value?: any) : Promise<void>
 
   /**
    * Removes a value or multiple values from the storage.
    *
-   * @param {any} key
-   * @return {Promise<void>}
+   * @param key Storage key to remove
    */
-  public abstract remove (key: any) : Promise<void>
+  public abstract remove (key: string|string[]) : Promise<void>
 
   /**
    * Clears the whole storage.
-   *
-   * @return {Promise<void>}
    */
   public abstract clear () : Promise<void>
 
   /**
    * Returns the storage content size in bytes.
    *
-   * @return {Promise<number>}
+   * @return Number of bytes used by the storage
    */
   public abstract size () : Promise<number>
 }

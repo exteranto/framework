@@ -58,7 +58,7 @@ export class Storage extends AbstractStorage {
   /**
    * @inheritdoc
    */
-  public set (key: any, value?: any) : Promise<any> {
+  public set (key: any, value?: any) : Promise<void> {
     return new Promise((resolve) => {
       const storable: any = value ? { [key]: value } : key
 
