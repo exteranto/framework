@@ -22,4 +22,5 @@ export class ExtensionProvider extends Provider {
   public register () : void {
     //
   }
+
 }

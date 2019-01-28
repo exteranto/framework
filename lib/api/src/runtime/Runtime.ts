@@ -7,7 +7,7 @@ export abstract class Runtime implements RegistersNativeEvents {
    *
    * @param url A valid url
    */
-  public abstract setUninstallUrl (url: string) : Promise<void>
+  public abstract async setUninstallUrl (url: string) : Promise<void>
 
   /**
    * Register all native events on the given module.

@@ -82,7 +82,7 @@ export abstract class Tabs implements RegistersNativeEvents {
    *
    * @return Tab instance
    */
-  public abstract get (id: number) : Promise<TabInterface>
+  public abstract async get (id: number) : Promise<TabInterface>
 
   /**
    * Returns all tabs that match the provided query.
@@ -90,7 +90,7 @@ export abstract class Tabs implements RegistersNativeEvents {
    * @param query Query object
    * @return Array of tab instances
    */
-  protected abstract filter (query: any) : Promise<TabInterface[]>
+  protected abstract async filter (query: any) : Promise<TabInterface[]>
 
   /**
    * Opens a brand new tab with specified parameters.
@@ -99,7 +99,7 @@ export abstract class Tabs implements RegistersNativeEvents {
    * @param active Whether the tab should be activate
    * @return Tab instance
    */
-  public abstract open (url: string, active?: boolean) : Promise<TabInterface>
+  public abstract async open (url: string, active?: boolean) : Promise<TabInterface>
 
   /**
    * Register all native events on the given module.

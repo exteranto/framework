@@ -3,6 +3,7 @@ import { TabInterface } from '../TabInterface'
 import Port = browser.runtime.Port
 
 export class Tab implements TabInterface {
+
   /**
    * Class constructor.
    *
@@ -30,14 +31,14 @@ export class Tab implements TabInterface {
   /**
    * @inheritdoc
    */
-  public close () : Promise<void> {
+  public async close () : Promise<void> {
     return browser.tabs.remove(this.tab.id)
   }
 
   /**
    * @inheritdoc
    */
-  public reload () : Promise<TabInterface> {
+  public async reload () : Promise<TabInterface> {
     return browser.tabs.reload(this.tab.id)
       .then(() => this)
   }
@@ -45,7 +46,7 @@ export class Tab implements TabInterface {
   /**
    * @inheritdoc
    */
-  public duplicate () : Promise<TabInterface> {
+  public async duplicate () : Promise<TabInterface> {
     return browser.tabs.duplicate(this.tab.id)
       .then(tab => new Tab(tab))
   }
@@ -53,7 +54,7 @@ export class Tab implements TabInterface {
   /**
    * @inheritdoc
    */
-  public activate () : Promise<TabInterface> {
+  public async activate () : Promise<TabInterface> {
     return browser.tabs.update(this.tab.id, { active: true })
       .then(() => this)
   }
@@ -61,7 +62,7 @@ export class Tab implements TabInterface {
   /**
    * @inheritdoc
    */
-  public send (message: Message) : Promise<any> {
+  public async send (message: Message) : Promise<any> {
     const port: Port = browser.tabs.connect(this.tab.id)
 
     port.postMessage({
@@ -83,4 +84,5 @@ export class Tab implements TabInterface {
   public raw (key: string) : any {
     return this.tab[key]
   }
+
 }

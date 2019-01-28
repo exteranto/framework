@@ -22,18 +22,16 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   /**
    * @inheritdoc
    */
-  public open (url: string, active: boolean = false) : Promise<TabInterface> {
-    return new Promise((resolve) => {
-      const tab: any = safari.application.activeBrowserWindow.openTab()
+  public async open (url: string, active: boolean = false) : Promise<TabInterface> {
+    const tab: any = safari.application.activeBrowserWindow.openTab()
 
-      tab.url = url
+    tab.url = url
 
-      if (active) {
-        tab.activate()
-      }
+    if (active) {
+      tab.activate()
+    }
 
-      resolve(new Tab(tab))
-    })
+    return new Tab(tab)
   }
 
   /**
@@ -74,4 +72,5 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
       return [...tabs, ...window.tabs]
     }, []).map(tab => new Tab(tab))
   }
+
 }

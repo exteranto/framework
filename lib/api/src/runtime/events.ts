@@ -1,6 +1,10 @@
 import { Event } from '@exteranto/core'
 
+/**
+ * Parent event for all web request events.
+ */
 export class WebRequestEvent extends Event {
+
   /**
    * Tab id this event is bound to.
    *
@@ -25,9 +29,14 @@ export class WebRequestEvent extends Event {
   constructor (public data: any) {
     super()
   }
+
 }
 
+/**
+ * Event fired before browser redirect.
+ */
 export class WebRequestBeforeRedirectedEvent extends WebRequestEvent {
+
   /**
    * Initial url.
    *
@@ -45,9 +54,14 @@ export class WebRequestBeforeRedirectedEvent extends WebRequestEvent {
   public get urlTo () : string {
     return this.data.redirectUrl
   }
+
 }
 
+/**
+ * Event fired after completing a browser redirect.
+ */
 export class WebRequestCompletedEvent extends WebRequestEvent {
+
   /**
    * Current tab url.
    *
@@ -56,17 +70,26 @@ export class WebRequestCompletedEvent extends WebRequestEvent {
   public get url () : string {
     return this.data.url
   }
+
 }
 
+/**
+ * Event upon updating the exetension.
+ */
 export class ExtensionUpdatedEvent extends Event {
+
   /**
    * @param previousVersion The previous semantic version
    */
   constructor (public previousVersion: string) {
     super()
   }
+
 }
 
+/**
+ * Event upon installing the extension.
+ */
 export class ExtensionInstalledEvent extends Event {
   //
 }

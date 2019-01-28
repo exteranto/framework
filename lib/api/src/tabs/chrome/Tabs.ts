@@ -28,19 +28,14 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   /**
    * @inheritdoc
    */
-  public async get (id: number) : Promise<TabInterface> {
-    const { error, tab }: any = await new Promise((resolve) => {
-      chrome.tabs.get(id, (data) => resolve({
-        error: chrome.runtime.lastError,
-        tab: data,
-      }))
+  public get (id: number) : Promise<TabInterface> {
+    return new Promise((resolve, reject) => {
+      chrome.tabs.get(id, (tab) => {
+        chrome.runtime.lastError
+          ? reject(new TabIdUnknownException())
+          : resolve(new Tab(tab))
+      })
     })
-
-    if (error) {
-      throw new TabIdUnknownException()
-    }
-
-    return new Tab(tab)
   }
 
   /**
@@ -49,4 +44,5 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   public registerEvents (dispatcher: Dispatcher) : void {
     register(dispatcher)
   }
+
 }

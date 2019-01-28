@@ -31,4 +31,5 @@ export class PermissionManagerProvider extends Provider {
   public register () : void {
     //
   }
+
 }

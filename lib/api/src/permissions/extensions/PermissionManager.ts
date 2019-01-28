@@ -2,6 +2,7 @@ import { Permission } from '../Permission'
 import { PermissionManager as AbstractPermissionManager } from '../PermissionManager'
 
 export class PermissionManager extends AbstractPermissionManager {
+
   /**
    * @inheritdoc
    */
@@ -20,4 +21,5 @@ export class PermissionManager extends AbstractPermissionManager {
       return permissions.includes(permission)
     })
   }
+
 }

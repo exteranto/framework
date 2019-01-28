@@ -38,4 +38,5 @@ export class CookiesProvider extends Provider {
       this.container.resolve(Dispatcher),
     )
   }
+
 }

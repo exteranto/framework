@@ -4,6 +4,7 @@ import { Runtime as AbstractRuntime } from '../Runtime'
 import { InvalidUrlFormatException } from '@exteranto/exceptions'
 
 export class Runtime extends AbstractRuntime {
+
   /**
    * @inheritdoc
    */
@@ -25,4 +26,5 @@ export class Runtime extends AbstractRuntime {
   public registerEvents (dispatcher: Dispatcher) : void {
     register(dispatcher)
   }
+
 }

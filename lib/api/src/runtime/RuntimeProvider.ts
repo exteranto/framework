@@ -40,4 +40,5 @@ export class RuntimeProvider extends Provider {
       this.container.resolve(Dispatcher),
     )
   }
+
 }

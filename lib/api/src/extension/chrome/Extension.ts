@@ -8,4 +8,5 @@ export class Extension extends AbstractExtension {
   public getUrl (path: string = '') : string {
     return chrome.runtime.getURL(path)
   }
+
 }

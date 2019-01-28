@@ -22,4 +22,5 @@ export class MessagingProvider extends Provider {
   public register () : void {
     //
   }
+
 }

@@ -1,6 +1,7 @@
 import { Dispatcher, RegistersNativeEvents } from '@exteranto/core'
 
 export abstract class Cookies implements RegistersNativeEvents {
+
   /**
    * Creates a cookies unless it already exists.
    *
@@ -28,7 +29,7 @@ export abstract class Cookies implements RegistersNativeEvents {
    * @throws {EmptyResponseException}
    * @throws {NotImplementedException}
    */
-  public abstract get (url: string, name: string) : Promise<any>
+  public abstract async get (url: string, name: string) : Promise<any>
 
   /**
    * Filters through all cookies.
@@ -40,7 +41,7 @@ export abstract class Cookies implements RegistersNativeEvents {
    * @throws {InvalidCookieRequestException}
    * @throws {NotImplementedException}
    */
-  public abstract getAll (params?: any) : Promise<any[]>
+  public abstract async getAll (params?: any) : Promise<any[]>
 
   /**
    * Creates or updates a cookie.
@@ -51,7 +52,7 @@ export abstract class Cookies implements RegistersNativeEvents {
    * @throws {InvalidCookieRequestException}
    * @throws {NotImplementedException}
    */
-  public abstract set (params?: any) : Promise<void>
+  public abstract async set (params?: any) : Promise<void>
 
   /**
    * Register all native events on the given module.
