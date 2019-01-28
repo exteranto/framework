@@ -39,9 +39,7 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
   }
 
   /**
-   * Register all native events on the given module.
-   *
-   * @param {Dispatcher} dispatcher
+   * @inheritdoc
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     browser.cookies.onChanged.addListener((cookie) => {

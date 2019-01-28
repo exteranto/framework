@@ -31,7 +31,7 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
 /**
  * Registers safari mocks of install and update events.
  *
- * @param {Dispatcher} dispatcher
+ * @param dispatcher The dispatched implementation
  */
 const registerInstallAndUpdateEvents: (dispatcher: Dispatcher) => void = (dispatcher) => {
   const exteranto: any = getExterantoInfo()
@@ -54,7 +54,7 @@ const registerInstallAndUpdateEvents: (dispatcher: Dispatcher) => void = (dispat
 /**
  * Gets exteranto internal info from local storage.
  *
- * @return {any}
+ * @return Exteranto info from local storage
  */
 const getExterantoInfo: () => any = () => {
   try {

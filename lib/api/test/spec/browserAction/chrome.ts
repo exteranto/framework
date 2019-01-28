@@ -35,7 +35,7 @@ export default ({ chrome }) => {
   })
 
   it('rejects when trying to get a badge text of an unknown tab.', async () => {
-    chrome.runtime.lastError = { message: 'test' };
+    chrome.runtime.lastError = { message: 'test' }
     chrome.browserAction.getBadgeText.yields(undefined)
 
     await expect(browserAction.getBadgeText(123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
@@ -44,24 +44,24 @@ export default ({ chrome }) => {
   it('sets a badge background color.', async () => {
     chrome.browserAction.setBadgeBackgroundColor.yields(undefined)
 
-    await expect(browserAction.setBadgeColor('#000', 1)).to.eventually.be.fulfilled
+    await expect(browserAction.setBadgeColor([255, 0, 0, 0], 1)).to.eventually.be.fulfilled
   })
 
   it('rejects when trying to set a badge background color of an unknown tab.', async () => {
-    chrome.runtime.lastError = { message: '#000' };
+    chrome.runtime.lastError = { message: [255, 0, 0, 0] }
     chrome.browserAction.setBadgeBackgroundColor.yields(undefined)
 
-    await expect(browserAction.setBadgeColor('#000', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(browserAction.setBadgeColor([255, 0, 0, 0], 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
   })
 
   it('gets a badge background color.', async () => {
-    chrome.browserAction.getBadgeBackgroundColor.yields('#000')
+    chrome.browserAction.getBadgeBackgroundColor.yields([255, 0, 0, 0])
 
-    await expect(browserAction.getBadgeColor(1)).to.eventually.equal('#000')
+    await expect(browserAction.getBadgeColor(1)).to.eventually.deep.equal([255, 0, 0, 0])
   })
 
   it('rejects when trying to get a badge background color of an unknown tab.', async () => {
-    chrome.runtime.lastError = { message: '#000' };
+    chrome.runtime.lastError = { message: [255, 0, 0, 0] }
     chrome.browserAction.getBadgeBackgroundColor.yields(undefined)
 
     await expect(browserAction.getBadgeColor(123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
@@ -74,7 +74,7 @@ export default ({ chrome }) => {
   })
 
   it('rejects when trying to set a title text in an unknown tab.', async () => {
-    chrome.runtime.lastError = { message: 'test' };
+    chrome.runtime.lastError = { message: 'test' }
     chrome.browserAction.setTitle.yields(undefined)
     await expect(browserAction.setTitle('test', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
     await expect(chrome.browserAction.setTitle.calledOnce).to.be.true
@@ -87,7 +87,7 @@ export default ({ chrome }) => {
   })
 
   it('rejects when trying to get a title text in an unknown tab.', async () => {
-    chrome.runtime.lastError = { message: 'test' };
+    chrome.runtime.lastError = { message: 'test' }
     chrome.browserAction.getTitle.yields('title')
     await expect(browserAction.getTitle(123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
     await expect(chrome.browserAction.getTitle.calledOnce).to.be.true
@@ -106,7 +106,7 @@ export default ({ chrome }) => {
   })
 
   it('rejects when trying to set a icon text in an unknown tab.', async () => {
-    chrome.runtime.lastError = { message: 'test' };
+    chrome.runtime.lastError = { message: 'test' }
     chrome.browserAction.setIcon.yields(undefined)
     await expect(browserAction.setIcon('test.png', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
     await expect(chrome.browserAction.setIcon.calledOnce).to.be.true

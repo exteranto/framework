@@ -11,8 +11,6 @@ export default () => {
   })
 
   it('always returns true', async () => {
-    await expect(manager.contains('activeTab'))
-      .to.eventually.be.true
     await expect(manager.contains(Permission.STORAGE))
       .to.eventually.be.true
     await expect(manager.contains(undefined))

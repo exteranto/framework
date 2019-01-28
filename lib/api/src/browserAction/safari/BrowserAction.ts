@@ -8,7 +8,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * @inheritdoc
    */
-  public async getBadgeText (tabId: number) : Promise<any> {
+  public async getBadgeText (tabId: number) : Promise<string> {
     const tab: any = this.getAllTabs().find(t => t.eid === tabId)
 
     if (!tab) {
@@ -21,7 +21,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * @inheritdoc
    */
-  public async setBadgeText (text: string, tabId: number) : Promise<any> {
+  public async setBadgeText (text: string, tabId: number) : Promise<void> {
     const tab: any = this.getAllTabs().find(t => t.eid === tabId)
 
     if (!tab) {
@@ -36,7 +36,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * @inheritdoc
    */
-  public async getBadgeColor (tabId?: number) : Promise<any> {
+  public async getBadgeColor (_: number) : Promise<any> {
     // Safari does not provide us with APIs to change the badge background color
     // or retrieve it. It's always red. To be in sync with the other APIs, we'll
     // just hardcode red.
@@ -46,7 +46,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * @inheritdoc
    */
-  public async setBadgeColor (color: string, tabId?: number) : Promise<any> {
+  public async setBadgeColor () : Promise<any> {
     // Safari does not provide us with APIs to change the badge background color
     // or retrieve it. It's always red. To be in sync with the other APIs, we'll
     // just resolve the promise.
@@ -56,7 +56,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * @inheritdoc
    */
-  public async getTitle (tabId: number) : Promise<any> {
+  public async getTitle (tabId: number) : Promise<string> {
     const tab: any = this.getAllTabs().find(t => t.eid === tabId)
 
     if (!tab) {
@@ -69,7 +69,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * @inheritdoc
    */
-  public async setTitle (title: string, tabId: number) : Promise<any> {
+  public async setTitle (title: string, tabId: number) : Promise<void> {
     const tab: any = this.getAllTabs().find(t => t.eid === tabId)
 
     if (!tab) {
@@ -84,7 +84,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * @inheritdoc
    */
-  public async setIcon (path: string | object, tabId: number) : Promise<any> {
+  public async setIcon (path: string | object, tabId: number) : Promise<void> {
     const tab: any = this.getAllTabs().find(t => t.eid === tabId)
 
     if (!tab) {
@@ -118,7 +118,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * Refresh the badge based on the meta data stored on tab objects.
    *
-   * @param {number} tabId
+   * @param tabId Id of the target tab
    */
   private refreshBadge (tabId: number) : void {
     this.getAllTabs().forEach((tab) => {
@@ -141,7 +141,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * Return all currently open tabs.
    *
-   * @return {any[]}
+   * @return Array of tab objects
    */
   private getAllTabs () : any[] {
     return safari.application.browserWindows.reduce((carry, item) => {

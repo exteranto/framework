@@ -7,8 +7,6 @@ import { TabInterface } from '../TabInterface'
 export class Tab implements TabInterface {
   /**
    * Tabs manager instance.
-   *
-   * @var {Tabs} tabs
    */
   @Autowired
   private tabs: Tabs
@@ -16,7 +14,7 @@ export class Tab implements TabInterface {
   /**
    * Class constructor.
    *
-   * @param {any} tab
+   * @param tab Tab info object
    */
   constructor (private tab: any) {
     //

@@ -11,7 +11,7 @@ export class RuntimeProvider extends Provider {
   /**
    * The scripts that this provider should be registered for.
    *
-   * @return {Script[]}
+   * @return Array of Script enums that this provider should be registered for
    */
   public only () : Script[] {
     return [Script.BACKGROUND]
@@ -27,7 +27,7 @@ export class RuntimeProvider extends Provider {
 
     if (this.container.resolveParam('browser') === Browser.SAFARI) {
       console.warn(new NotImplementedException(
-        '@exteranto/runtime', 'setUninstallUrl',
+        '@exteranto/api', 'Runtime', 'setUninstallUrl',
       ))
     }
   }

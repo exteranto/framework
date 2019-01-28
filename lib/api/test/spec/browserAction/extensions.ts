@@ -42,19 +42,19 @@ export default ({ browser }) => {
   it('sets a badge background color.', async () => {
     browser.browserAction.setBadgeBackgroundColor.resolves(undefined)
 
-    await expect(browserAction.setBadgeColor('#000', 1)).to.eventually.be.fulfilled
+    await expect(browserAction.setBadgeColor([255, 0, 0, 0], 1)).to.eventually.be.fulfilled
   })
 
   it('rejects when trying to set a badge background color of an unknown tab.', async () => {
     browser.browserAction.setBadgeBackgroundColor.rejects(TabIdUnknownException)
 
-    await expect(browserAction.setBadgeColor('#000', 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(browserAction.setBadgeColor([255, 0, 0, 0], 123123)).to.eventually.be.rejectedWith(TabIdUnknownException)
   })
 
   it('gets a badge background color.', async () => {
-    browser.browserAction.getBadgeBackgroundColor.resolves('#000')
+    browser.browserAction.getBadgeBackgroundColor.resolves([255, 0, 0, 0])
 
-    await expect(browserAction.getBadgeColor(1)).to.eventually.equal('#000')
+    await expect(browserAction.getBadgeColor(1)).to.eventually.deep.equal([255, 0, 0, 0])
   })
 
   it('rejects when trying to get a badge background color of an unknown tab.', async () => {
