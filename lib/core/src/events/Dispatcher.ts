@@ -5,6 +5,7 @@ import { ListenerBag } from './ListenerBag'
 
 @Singleton
 export class Dispatcher {
+
   /**
    * All application events are stored in this object as a key-value pair.
    */
@@ -90,4 +91,5 @@ export class Dispatcher {
         throw e
       })
   }
+
 }

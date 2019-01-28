@@ -1,6 +1,7 @@
 import { Browser } from './Browser'
 
 export class Utils {
+
   /**
    * Determine what browser are we in at the moment.
    *
@@ -16,4 +17,5 @@ export class Utils {
       : Browser.SAFARI
       : Browser.CHROME
   }
+
 }

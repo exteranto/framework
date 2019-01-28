@@ -3,6 +3,7 @@ import { Router } from '@internal/app'
 import { Container } from '@internal/ioc'
 
 export abstract class Provider {
+
   /**
    * @param container The current container instance
    * @param router The global router instance

@@ -1,5 +1,6 @@
 
 export class Pipeline {
+
   /**
    * The object passed through the pipe.
    */
@@ -59,4 +60,5 @@ export class Pipeline {
         : await pipe[this.method](res)
     }
   }
+
 }

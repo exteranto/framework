@@ -1,6 +1,7 @@
 import { Browser } from '@internal/support'
 
 export class Dependency {
+
   /**
    * The abstract version of the dependency.
    */
@@ -103,4 +104,5 @@ export class Dependency {
     // variable.
     return this.instance = new this.concrete(...args)
   }
+
 }

@@ -2,6 +2,7 @@ import { Browser } from '@internal/support'
 import { Dependency } from './Dependency'
 
 export class Container {
+
   /**
    * The container bindings.
    */
@@ -103,4 +104,5 @@ export class Container {
     this.bindings = []
     this.params = {}
   }
+
 }

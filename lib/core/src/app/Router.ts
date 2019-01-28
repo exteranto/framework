@@ -3,6 +3,7 @@ import { Script } from '@internal/support'
 import { InvalidRouteException } from '@exteranto/exceptions'
 
 export class Router {
+
   /**
    * The current script.
    */
@@ -71,4 +72,5 @@ export class Router {
 
     return Object.keys(this.routes).map(key => this.routes[key])
   }
+
 }

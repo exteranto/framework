@@ -5,6 +5,7 @@ import { AppBootedEvent, WindowLoadedEvent } from './events'
 import { Dispatcher, Event, ListenerBag } from '@internal/events'
 
 export class App {
+
   /**
    * The event dispatcher implementation.
    */
@@ -106,4 +107,5 @@ export class App {
   private fireBootedEvent () : void {
     this.dispatcher.fire(new AppBootedEvent())
   }
+
 }

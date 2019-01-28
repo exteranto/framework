@@ -1,6 +1,7 @@
 import { Event } from './Event'
 
 export interface Listener {
+
   /**
    * Handle the fired event.
    *

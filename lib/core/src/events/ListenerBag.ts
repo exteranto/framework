@@ -4,6 +4,7 @@ import { Middleware } from './Middleware'
 import { Pipeline } from '@internal/structures'
 
 export class ListenerBag {
+
   /**
    * Events that are waiting to be read.
    */
@@ -87,4 +88,5 @@ export class ListenerBag {
 
     this.mailbox = []
   }
+
 }

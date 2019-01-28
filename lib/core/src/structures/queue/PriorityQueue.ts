@@ -2,6 +2,7 @@ import { Sortable } from './Sortable'
 import { Optional, None, Some } from '@internal/structures'
 
 export class PriorityQueue<T extends Sortable> {
+
   /**
    * Queue elements.
    */
@@ -57,4 +58,5 @@ export class PriorityQueue<T extends Sortable> {
   public size () : number {
     return this.els.length
   }
+
 }
