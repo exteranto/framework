@@ -1,19 +1,18 @@
 
 export class AspectContainer {
+
   /**
-   * All aspect are stored in this container.
-   *
-   * @var {any}
+   * All aspects are stored in this container.
    */
   private static aspects: any = {}
 
   /**
    * Bind an aspect to provided method on an aspect class.
    *
-   * @param {string} pointcut
-   * @param {string} when
-   * @param {any} target
-   * @param {string} method
+   * @param pointcut The pointcut name
+   * @param when Either 'before' or 'after'
+   * @param target The target scope to assign the aspect too
+   * @param method The method name to wrap
    */
   public static bind (
     pointcut: string,
@@ -33,8 +32,8 @@ export class AspectContainer {
   /**
    * Fire the before aspects for the provided pointcut.
    *
-   * @param {string} pointcut
-   * @param {any[]} payload
+   * @param pointcut The pointcut name
+   * @param payload The arguments to be passed to the aspect
    */
   public static before (pointcut: string, payload: any[]) : void {
     if (this.aspects[pointcut] && this.aspects[pointcut].before) {
@@ -45,8 +44,8 @@ export class AspectContainer {
   /**
    * Fire the after aspects for the provided pointcut.
    *
-   * @param {string} pointcut
-   * @param {any[]} payload
+   * @param pointcut The pointcut name
+   * @param payload The arguments to be passed to the aspect
    */
   public static after (pointcut: string, payload: any[]) : void {
     if (this.aspects[pointcut] && this.aspects[pointcut].after) {
@@ -57,12 +56,13 @@ export class AspectContainer {
   /**
    * Fire the all passed aspects with the payload.
    *
-   * @param {any[]} aspects
-   * @param {any[]} payload
+   * @param aspects The array of aspects to be triggered
+   * @param payload The arguments to be passed to the aspect
    */
   private static fire (aspects: any[], payload: any[]) : void {
     aspects.forEach((aspect) => {
       aspect.target[aspect.method](payload)
     })
   }
+
 }

@@ -1,10 +1,11 @@
 import { Browser } from './Browser'
 
 export class Utils {
+
   /**
    * Determine what browser are we in at the moment.
    *
-   * @return {Browser}
+   * @return The current browser
    */
   public static currentBrowser () : Browser {
     if (typeof window === 'undefined') {
@@ -16,4 +17,5 @@ export class Utils {
       : Browser.SAFARI
       : Browser.CHROME
   }
+
 }

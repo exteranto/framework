@@ -1,6 +1,5 @@
 import { expect } from 'chai'
 
-import { Container } from '@internal/ioc'
 import { App, Router } from '@internal/app'
 import { Provider, Script } from '@internal/support'
 import { InvalidRouteException } from '@exteranto/exceptions'
@@ -12,29 +11,30 @@ describe('Router', () => {
   })
 
   it('registers global routes for a given script', () => {
-    Container.bindParam('script', Script.CONTENT)
-    Router.add([{ name: 'test' }], Script.CONTENT)
+    ;(Router as any).script = Script.CONTENT
+    Router.add([{ name: 'test' }])
 
     expect(Router.get()).to.have.lengthOf(1)
       .and.to.deep.include({ name: 'test' })
   })
 
   it('does not register routes without a name', () => {
-    Container.bindParam('script', Script.CONTENT)
+    ;(Router as any).script = Script.CONTENT
 
-    expect(() => Router.add(['test'], Script.CONTENT)).to.throw(InvalidRouteException)
+    expect(() => Router.add(['test'])).to.throw(InvalidRouteException)
   })
 
 
-  it('does not register routes for different script', () => {
-    Container.bindParam('script', Script.CONTENT)
-    Router.add([{ name: 'test' }], Script.BACKGROUND)
+  it('does not register routes for the backgrounnd script', () => {
+    ;(Router as any).script = Script.BACKGROUND
+
+    Router.add([{ name: 'test' }])
 
     expect(Router.get()).to.have.lengthOf(0)
   })
 
   it('registers routes to a default script', () => {
-    Container.bindParam('script', Script.CONTENT)
+    ;(Router as any).script = Script.CONTENT
     Router.add([{ name: 'test' }])
 
     expect(Router.get()).to.have.lengthOf(1)
@@ -42,7 +42,7 @@ describe('Router', () => {
   })
 
   it('chains', () => {
-    Container.bindParam('script', Script.CONTENT)
+    ;(Router as any).script = Script.CONTENT
 
     expect(Router.add([{ name: 'test' }]).get()).to.have.lengthOf(1)
       .and.to.deep.include({ name: 'test' })
@@ -59,7 +59,7 @@ describe('Router', () => {
   })
 
   it('edits a route', () => {
-    Container.bindParam('script', Script.CONTENT)
+    ;(Router as any).script = Script.CONTENT
 
     Router.add([{ name: 'test' }])
     Router.edit('test', (r) => {
@@ -72,7 +72,7 @@ describe('Router', () => {
   })
 
   it('edits a route before its creation', () => {
-    Container.bindParam('script', Script.CONTENT)
+    ;(Router as any).script = Script.CONTENT
 
     Router.edit('test', (r) => {
       r.meta = { title: 'title' }

@@ -1,17 +1,24 @@
-import { Queue } from './Queue'
 import { Sortable } from './Sortable'
 import { Optional, None, Some } from '@internal/structures'
 
-export class PriorityQueue<T extends Sortable> extends Queue {
+export class PriorityQueue<T extends Sortable> {
+
   /**
    * Queue elements.
-   *
-   * @var {T[]}
    */
   protected els: T[] = []
 
   /**
-   * @inheritdoc
+   * @param maxSize Maximum queue length
+   */
+  constructor (private maxSize: number) {
+    //
+  }
+
+  /**
+   * Retrives element from queue.
+   *
+   * @return The head of the queue is returned and removed
    */
   public pop () : Optional<T> {
     const el: T = this.els.pop()
@@ -22,7 +29,7 @@ export class PriorityQueue<T extends Sortable> extends Queue {
   /**
    * Pushes new element into an array.
    *
-   * @param {T} el
+   * @param el The element to be added to the queue
    */
   public push (el: T) : void {
     // Finds an element with highest priority that is lower than that of el.
@@ -37,16 +44,19 @@ export class PriorityQueue<T extends Sortable> extends Queue {
   }
 
   /**
-   * @inheritdoc
+   * Clears the queue.
    */
   public clear () : void {
     this.els = []
   }
 
   /**
-   * @inheritdoc
+   * Returns the number of elements in the queue.
+   *
+   * @return The current queue size
    */
   public size () : number {
     return this.els.length
   }
+
 }

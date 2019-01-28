@@ -1,12 +1,14 @@
 {
   "extends": "tslint:recommended",
   "rules": {
-    "max-classes-per-file": false,
     "arrow-parens": [2, "as-needed", { "requireForBlockBody": true }],
     "completed-docs": [true, "enums", "functions", "methods", "properties"],
+    "eofline": true,
     "forin": false,
+    "indent": [true, "spaces", 2],
     "interface-name": [true, "never-prefix"],
     "jsdoc-format": [true, "check-multiline-start"],
+    "max-classes-per-file": false,
     "max-line-length": { "options": [120] },
     "member-ordering": false,
     "no-bitwise": false,

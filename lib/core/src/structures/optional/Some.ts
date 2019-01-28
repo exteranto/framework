@@ -4,9 +4,7 @@ import { Optional } from './Optional'
 export class Some<T> implements Optional<T> {
 
   /**
-   * @constructor
-   *
-   * @param {T} value
+   * @param value The value to be wrapped in the option
    */
   constructor (private value: T) {
     //
@@ -43,7 +41,7 @@ export class Some<T> implements Optional<T> {
   /**
    * @inheritdoc
    */
-  public map (u: Optional<any>, predicate: (t: T, u: any) => Optional<any>) : Optional<any> {
+  public map<U, V> (u: Optional<U>, predicate: (t: T, u: U) => Optional<V>) : Optional<V> {
     if (u.isNone()) {
       return new None()
     }
@@ -54,28 +52,28 @@ export class Some<T> implements Optional<T> {
   /**
    * @inheritdoc
    */
-  public expect (_: any) : T {
+  public expect () : T {
     return this.value
   }
 
   /**
    * @inheritdoc
    */
-  public unwrapOr (_: T) : T {
+  public unwrapOr () : T {
     return this.value
   }
 
   /**
    * @inheritdoc
    */
-  public unwrapOrElse (_: () => T) : T {
+  public unwrapOrElse () : T {
     return this.value
   }
 
   /**
    * @inheritdoc
    */
-  public match (some: (t: T) => any, _?: () => any) : any {
+  public match<U> (some: (t: T) => U) : U {
     return some(this.value)
   }
 

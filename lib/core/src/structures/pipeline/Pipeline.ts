@@ -1,24 +1,21 @@
 
 export class Pipeline {
+
   /**
    * The object passed through the pipe.
-   *
-   * @var {any}
    */
   private passable: any
 
   /**
    * The method name to be used on the pipes.
-   *
-   * @var {string}
    */
   private method: string
 
   /**
-   * The object to be sent through the pipeline.
+   * Assignt data to be sent throught the pipeline.
    *
-   * @param {any} passable
-   * @return {Pipeline}
+   * @param passable The data to be sent via the pipeline
+   * @return This pipeline instance for chaining
    */
   public send (passable: any) : Pipeline {
     this.passable = passable
@@ -29,8 +26,8 @@ export class Pipeline {
   /**
    * If specified, this method on the pipe object is going to be used.
    *
-   * @param {string} method
-   * @return {Pipeline}
+   * @param method The method name to be used
+   * @return This pipeline instance for chaining
    */
   public via (method: string) : Pipeline {
     this.method = method
@@ -41,8 +38,8 @@ export class Pipeline {
   /**
    * The array of pipes to be invoked.
    *
-   * @param {any[]} pipes
-   * @return {Promise<any>}
+   * @param pipes The pipes to pass the data through
+   * @return A promise resolved with the transformed object
    */
   public through (pipes: any[]) : Promise<any> {
     return pipes.reduce((carry, pipe) => {
@@ -53,8 +50,8 @@ export class Pipeline {
   /**
    * Executes pipe.
    *
-   * @param {any} pipe
-   * @return {(res: any) => Promise<any>}
+   * @param pipe The pipe to be executed
+   * @return The chained callback
    */
   private callPipe (pipe: any) : (res: any) => Promise<any> {
     return async (res) => {
@@ -63,4 +60,5 @@ export class Pipeline {
         : await pipe[this.method](res)
     }
   }
+
 }

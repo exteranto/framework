@@ -2,25 +2,22 @@ import { Browser } from '@internal/support'
 import { Dependency } from './Dependency'
 
 export class Container {
+
   /**
    * The container bindings.
-   *
-   * @var {object}
    */
   private static bindings: Dependency[] = []
 
   /**
    * The container params.
-   *
-   * @var {object}
    */
   private static params: any = {}
 
   /**
    * Binds a dependency to the application container.
    *
-   * @param {any} concrete
-   * @return {Dependency}
+   * @param concrete The concrete type constructor to be bound
+   * @return The dependency class instance for further configuration
    */
   public static bind (concrete: any) : Dependency {
     const dependency: Dependency = new Dependency(concrete)
@@ -33,8 +30,8 @@ export class Container {
   /**
    * Binds a param to the application container.
    *
-   * @param {string} name
-   * @param {any} param
+   * @param name The parameter name
+   * @param param The parameter value to be bound
    */
   public static bindParam (name: string, param: any) : void {
     this.params[name] = param
@@ -43,9 +40,9 @@ export class Container {
   /**
    * Resolves a dependency from the container.
    *
-   * @param {string} abstract
-   * @param {any[]} args
-   * @return {any}
+   * @param abstract The abstract type to be resolved
+   * @param args Arguments that are provided to the type constructor
+   * @return The resolved dependency instance
    */
   public static resolve (abstract: any, args: any[] = []) : any {
     const browser: Browser = this.resolveParam('browser')
@@ -62,8 +59,8 @@ export class Container {
   /**
    * Resolves a param from the container.
    *
-   * @param {string} name
-   * @return {any}
+   * @param name The parameter name
+   * @return The value of the parameter or null
    */
   public static resolveParam (name: string) : any {
     const path: string[] = name.split('.')
@@ -81,8 +78,8 @@ export class Container {
    * Parses the argument array, replacing wildcards with dependencies from the
    * container.
    *
-   * @param {any[]} args
-   * @return {any}
+   * @param args Arguments to be parsed
+   * @return Parsed arguments
    */
   private static parseArgs (args: any[]) : any {
     return args.map((arg) => {
@@ -94,8 +91,6 @@ export class Container {
 
   /**
    * Dumps all the contents of the application container.
-   *
-   * @return {void}
    */
   public static dump () : void {
     console.log(this.bindings, this.params)
@@ -109,4 +104,5 @@ export class Container {
     this.bindings = []
     this.params = {}
   }
+
 }
