@@ -1,34 +1,30 @@
+import { Event } from './Event'
 import { Listener } from './Listener'
 import { Middleware } from './Middleware'
 import { Pipeline } from '@internal/structures'
 
 export class ListenerBag {
+
   /**
    * Events that are waiting to be read.
-   *
-   * @var {any[]} mailbox
    */
   public mailbox: any[] = []
 
   /**
    * Listeners assigned to this instance.
-   *
-   * @type {Listener[]}
    */
   private listeners: Listener[] = []
 
   /**
    * Middleware assigned to this instance.
-   *
-   * @type {Middleware[]}
    */
   private middleware: Middleware[] = []
 
   /**
-   * Adds a listener to this instance.
+   * Adds a listener to this listener bag instance.
    *
-   * @param {Listener} listener
-   * @return {ListenerBag}
+   * @param listener The listener to be added
+   * @return This instance for chaining
    */
   public addListener (listener: Listener) : ListenerBag {
     this.listeners.push(listener)
@@ -39,10 +35,10 @@ export class ListenerBag {
   }
 
   /**
-   * Adds a hook to this instance.
+   * Adds a hook to this listener bag instance.
    *
-   * @param {(payload: any) => void} handle
-   * @return {ListenerBag}
+   * @param handle The callback hook to be added
+   * @return This instance for chaining
    */
   public addHook (handle: (payload: any) => void) : ListenerBag {
     this.addListener({ handle })
@@ -50,10 +46,10 @@ export class ListenerBag {
     return this
   }
   /**
-   * Adds a middlware to this instance.
+   * Adds a middlware to this listener bag instance.
    *
-   * @param {Middleware} middleware
-   * @return {ListenerBag}
+   * @param handle The middleware to be added
+   * @return This instance for chaining
    */
   public addMiddleware (middleware: Middleware) : ListenerBag {
     this.middleware.push(middleware)
@@ -62,24 +58,23 @@ export class ListenerBag {
   }
 
   /**
-   * Dispatch all listeners on this instance with provided payload. Trigger
-   * all middleware in the process.
+   * Dispatch all listeners on this instance with provided event payload.
+   * Trigger all middleware in the process.
    *
-   * @param {any} payload
-   * @param {Promise<void>}
+   * @param event The event to be passed to the listeners
    */
-  public async dispatch (payload: any) : Promise<void> {
+  public async dispatch (event: Event) : Promise<void> {
     return new Pipeline()
-      .send(payload)
+      .send(event)
       .via('handle')
       .through(this.middleware)
       .then(result => this.listeners.forEach(listener => listener.handle(result)))
   }
 
   /**
-   * Checks if event has a listener assigned.
+   * Checks if this listener bag instance has at least one listener assigned.
    *
-   * @return {boolean}
+   * @return Whether this instance has at least one listener
    */
   public hasListeners () : boolean {
     return this.listeners.length !== 0
@@ -87,12 +82,11 @@ export class ListenerBag {
 
   /**
    * Delivers all events in the mailbox.
-   *
-   * @return {void}
    */
   private deliverMail () : void {
     this.mailbox.forEach(deliver => deliver())
 
     this.mailbox = []
   }
+
 }

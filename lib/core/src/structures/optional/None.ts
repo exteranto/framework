@@ -27,21 +27,21 @@ export class None<T> implements Optional<T> {
   /**
    * @inheritdoc
    */
-  public filter (_: (t: T) => boolean) : Optional<T> {
-    return new None()
+  public filter () : Optional<T> {
+    return new None<T>()
   }
 
   /**
    * @inheritdoc
    */
-  public map (_: Optional<any>, predicate: (t: T, u: any) => Optional<any>) : Optional<any> {
-    return new None()
+  public map<_, V> () : Optional<V> {
+    return new None<V>()
   }
 
   /**
    * @inheritdoc
    */
-  public expect (e: any) : T {
+  public expect (e: Error) : T {
     throw e
   }
 
@@ -62,7 +62,7 @@ export class None<T> implements Optional<T> {
   /**
    * @inheritdoc
    */
-  public match (_: (t: T) => any, none?: () => any) : any {
+  public match<U> (_: (t: T) => U, none?: () => U) : U {
     return none && none()
   }
 

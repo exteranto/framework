@@ -5,27 +5,22 @@ import { AppBootedEvent, WindowLoadedEvent } from './events'
 import { Dispatcher, Event, ListenerBag } from '@internal/events'
 
 export class App {
+
   /**
    * The event dispatcher implementation.
-   *
-   * @var {Dispatcher} dispatcher
    */
   @Autowired
   private dispatcher: Dispatcher
 
   /**
    * The provider instances.
-   *
-   * @var {Provider[]} providers
    */
   private providers: Provider[]
 
   /**
-   * Class constructor.
-   *
-   * @param {Script} script
-   * @param {any} config
-   * @param {(touch: (e: new (..._: any[]) => Event) => ListenerBag) => void} registerEvents
+   * @param script The script the application is being booted in
+   * @param config The configuration object
+   * @param registerEvents Callback containing all user defined events from the event router
    */
   constructor (
     private script: Script,
@@ -36,7 +31,8 @@ export class App {
   }
 
   /**
-   * Starts the whole application.
+   * Starts the application by registering base params and bindins and booting
+   * providers.
    */
   public start () : void {
     this.registerBaseParams()
@@ -47,7 +43,8 @@ export class App {
   }
 
   /**
-   * Boots the whole application.
+   * Boots the application by registering providers, registering events from the
+   * event router and firing the application booted event.
    */
   public boot () : void {
     this.registerProviders()
@@ -110,4 +107,5 @@ export class App {
   private fireBootedEvent () : void {
     this.dispatcher.fire(new AppBootedEvent())
   }
+
 }

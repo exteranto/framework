@@ -4,8 +4,8 @@ import { Optional, Some, None } from '@internal/structures'
 import { OptionIsNoneException } from '@exteranto/exceptions'
 
 describe('Optional', () => {
-  const some: Optional<number> = new Some(1)
-  const none: Optional<number> = new None()
+  const some: Optional<number> = new Some<number>(1)
+  const none: Optional<number> = new None<number>()
 
   it('inits a new instance', () => {
     expect(some.isSome()).to.be.ok
@@ -30,16 +30,16 @@ describe('Optional', () => {
 
   it('maps the option', () => {
     expect(some
-      .map(new None(), (t: number, u: any) => new Some(t + u))
+      .map<number, number>(new None<number>(), (t: number, u: number) => new Some<number>(t + u))
       .isNone()
     ).to.be.ok
     expect(some
-      .map(new Some(2), (t: number, u: any) => new Some(t + u))
+      .map<number, number>(new Some<number>(2), (t: number, u: number) => new Some<number>(t + u))
       .unwrap()
     ).to.equal(3)
 
     expect(none
-      .map(new Some(2), (t: number, u: any) => new Some(t + u))
+      .map<number, number>(new Some<number>(2), (t: number, u: number) => new Some<number>(t + u))
       .isNone()
     ).to.be.ok
   })
@@ -63,14 +63,15 @@ describe('Optional', () => {
   })
 
   it('matches the correct callback', () => {
-    expect(some.match(
+    expect(some.match<number>(
       (some) => some + 1
     )).to.equal(2)
 
-    expect(none.match(
+    expect(none.match<number>(
       (some) => some + 1
     )).to.equal(undefined)
-    expect(none.match(
+
+    expect(none.match<number>(
       (some) => some + 1,
       () => 3
     )).to.equal(3)

@@ -3,37 +3,32 @@ import { Script } from '@internal/support'
 import { InvalidRouteException } from '@exteranto/exceptions'
 
 export class Router {
+
   /**
    * The current script.
-   *
-   * @var {string}
    */
   @Param('script')
   private static script: Script
 
   /**
    * The routes to be added.
-   *
-   * @var {any}
    */
   private static routes: any = {}
 
   /**
    * The edit actions to be performed.
-   *
-   * @var {any[]}
    */
   private static actions: any = []
 
   /**
    * Add routes to the global collection.
    *
-   * @param {any[]} routes
-   * @param {Script} script
-   * @return {typeof Router}
+   * @param routes The routes to be added to the global collection
+   * @return The router object for chaining
+   * @throws {InvalidRouteException}
    */
-  public static add (routes: any[], script?: Script) : typeof Router {
-    if (script !== undefined && script !== this.script) {
+  public static add (routes: any[]) : typeof Router {
+    if (this.script !== Script.CONTENT) {
       return this
     }
 
@@ -49,11 +44,12 @@ export class Router {
   }
 
   /**
-   * Stage editing of a route.
+   * Stage editing of a route by providing a callback that returns a modified
+   * route.
    *
-   * @param {string} name
-   * @param {(current: any) => any} action
-   * @return {typeof Router}
+   * @param name The name of the route to be edited
+   * @param action The callback that modifies the route
+   * @return The router object for chaining
    */
   public static edit (name: string, action: (current: any) => any) : typeof Router {
     this.actions.push({ name, action })
@@ -64,7 +60,7 @@ export class Router {
   /**
    * Return all routes from the global collection.
    *
-   * @return {any[]}
+   * @return All the routes added to the global collection
    */
   public static get () : any[] {
     // Perform all edit actions.
@@ -76,4 +72,5 @@ export class Router {
 
     return Object.keys(this.routes).map(key => this.routes[key])
   }
+
 }
