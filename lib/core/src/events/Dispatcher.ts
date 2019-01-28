@@ -6,24 +6,20 @@ import { ListenerBag } from './ListenerBag'
 @Singleton
 export class Dispatcher {
   /**
-   * All application events are stored here.
-   *
-   * @var {object} events
+   * All application events are stored in this object as a key-value pair.
    */
   private events: object = {}
 
   /**
    * Map of event names to their respective types.
-   *
-   * @var {Map<string, new (..._: any[]) => Event>} types
    */
   private types: Map<string, new (..._: any[]) => Event> = new Map()
 
   /**
    * Return the type associated with the event name.
    *
-   * @param {string} name
-   * @return {new (..._: any[]) => Event}
+   * @param name The name to look for
+   * @return The event type constructor if found or null
    */
   public type (name: string) : new (..._: any[]) => Event {
     return this.types.get(name)
@@ -32,8 +28,8 @@ export class Dispatcher {
   /**
    * Return the listener bag assigned to the specified event.
    *
-   * @param {new (..._: any[]) => Event} event
-   * @return {ListenerBag}
+   * @param event The event type constructor to modify
+   * @return The corresponding listener bag
    */
   public touch (event: new (..._: any[]) => Event) : ListenerBag {
     // Add the types to the event map.
@@ -48,7 +44,7 @@ export class Dispatcher {
    * Fires the event. Catches any exceptions and passes them to the exception
    * handling event listeners.
    *
-   * @param {Event} event
+   * @param event The event to be fired
    */
   public fire (event: Event) : void {
     // Search suitable events in the inheritance tree.
@@ -61,7 +57,7 @@ export class Dispatcher {
   /**
    * Puts an event into a mailbox for future listeners to read it.
    *
-   * @param {Event} event
+   * @param event The event to be mailed
    */
   public mail (event: Event) : void {
     const bag: ListenerBag = this.events[event.constructor.name]
@@ -77,8 +73,8 @@ export class Dispatcher {
   /**
    * Triggers the specified listener bag.
    *
-   * @param {string} name
-   * @param {Event} event
+   * @param name The name of the event to be fired
+   * @param event The event instance to be passed to the listeners
    */
   private triggerListenerBag (name: string, event: Event) : void {
     this.events[name].dispatch(event)

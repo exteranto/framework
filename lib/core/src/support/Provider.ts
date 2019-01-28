@@ -1,14 +1,15 @@
 import { Script } from './Script'
+import { Router } from '@internal/app'
+import { Container } from '@internal/ioc'
 
 export abstract class Provider {
   /**
-   * Class constructor.
-   *
-   * @param {any} container
+   * @param container The current container instance
+   * @param router The global router instance
    */
   constructor (
-    protected container: any,
-    protected router: any,
+    protected container: typeof Container,
+    protected router: typeof Router,
   ) {
     //
   }
@@ -16,7 +17,7 @@ export abstract class Provider {
   /**
    * The scripts that this provider should be registered for.
    *
-   * @return {Script[]}
+   * @return The array of accepted scripts
    */
   public only () : Script[] {
     return [Script.BACKGROUND, Script.CONTENT]

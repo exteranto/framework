@@ -3,36 +3,26 @@ import { Browser } from '@internal/support'
 export class Dependency {
   /**
    * The abstract version of the dependency.
-   *
-   * @var {any}
    */
   private abstract: any
 
   /**
    * The browser this dependency is assigned for.
-   *
-   * @var {Browser}
    */
   private browser: Browser
 
   /**
    * The instance of the dependency, if any.
-   *
-   * @var {any}
    */
   private instance: any
 
   /**
    * If the dependency is a singleton.
-   *
-   * @var {boolean}
    */
   private isSingleton: boolean = false
 
   /**
-   * Class constructor.
-   *
-   * @param {any} concrete
+   * @param concrete The binding constructor type
    */
   constructor (private concrete: any) {
     //
@@ -41,8 +31,8 @@ export class Dependency {
   /**
    * Define the abstract version of the dependency.
    *
-   * @param {any} abstract
-   * @return {Dependency}
+   * @param abstract The abstract constructor type
+   * @return This class instance for chaining
    */
   public to (abstract: any) : Dependency {
     this.abstract = abstract
@@ -53,17 +43,18 @@ export class Dependency {
   /**
    * Bind the concrete dependency to self.
    *
-   * @return {Dependency}
+   * @return This class instance for chaining
    */
   public toSelf () : Dependency {
     return this.to(this.concrete)
   }
 
   /**
-   * Specify the browser this dependency should be bound for.
+   * Specify the browser this dependency should be bound for. If none provided,
+   * the dependency is bound for all browsers.
    *
-   * @param {Browser} browser
-   * @return {Dependency}
+   * @param browser The browser this dependency should only be bound for
+   * @return This class instance for chaining
    */
   public for (browser: Browser) : Dependency {
     this.browser = browser
@@ -74,8 +65,8 @@ export class Dependency {
   /**
    * Specify if the dependency should be a singleton.
    *
-   * @param {boolean} isSingleton
-   * @return {Dependency}
+   * @param isSingleton Whether the dependency should be a singleton
+   * @return This class instance for chaining
    */
   public singleton (isSingleton: boolean) : Dependency {
     this.isSingleton = isSingleton
@@ -86,19 +77,20 @@ export class Dependency {
   /**
    * Check if the dependency is suitable for the provided abstract on browser.
    *
-   * @param {any} abstract
-   * @param {Browser} browser
-   * @return {boolean}
+   * @param abstract The abstract type constructor to check for
+   * @param browser The browser to check for
+   * @return Whether the dependency is suitable to be resolved for the provided abstract type
    */
   public isSuitableFor (abstract: any, browser: Browser) : boolean {
     return (this.abstract === abstract) && (this.browser === undefined || this.browser === browser)
   }
 
   /**
-   * Resolve the dependency.
+   * Resolve the dependency. Store the instance if the dependency is
+   * a singleton.
    *
-   * @param {any[]} args
-   * @return {any}
+   * @param args The constructor arguments
+   * @return The dependency instance
    */
   public resolve (args: any[]) : any {
     // If this dependency is a singleton and we do have a saved instance, return

@@ -4,7 +4,7 @@ export interface RegistersNativeEvents {
   /**
    * Register all native events on the given module.
    *
-   * @param {Dispatcher} dispatcher
+   * @param dispatcher The event dispatcher implementation
    */
   registerEvents (dispatcher: Dispatcher) : void
 }
