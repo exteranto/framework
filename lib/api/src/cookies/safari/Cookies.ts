@@ -7,22 +7,22 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
   /**
    * @inheritdoc
    */
-  public async get (_url: string, _name: string) : Promise<any> {
-    throw new NotImplementedException
+  public async get () : Promise<any> {
+    throw new NotImplementedException()
   }
 
   /**
    * @inheritdoc
    */
-  public async getAll (_?: any) : Promise<any[]> {
-    throw new NotImplementedException
+  public async getAll () : Promise<any[]> {
+    throw new NotImplementedException()
   }
 
   /**
    * @inheritdoc
    */
-  public async set (_?: any) : Promise<void> {
-    throw new NotImplementedException
+  public async set () : Promise<void> {
+    throw new NotImplementedException()
   }
 
   /**
