@@ -13,4 +13,5 @@ describe('Exceptions package', () => {
   it('exports cookies/InvalidCookieRequestException', () => expect(e.InvalidCookieRequestException).to.be.ok)
   it('exports tabs/TabIdUnknownException', () => expect(e.TabIdUnknownException).to.be.ok)
   it('exports tabs/OptionIsNoneException', () => expect(e.OptionIsNoneException).to.be.ok)
+  it('exports tabs/StorageKeyNotFoundException', () => expect(e.StorageKeyNotFoundException).to.be.ok)
 })
