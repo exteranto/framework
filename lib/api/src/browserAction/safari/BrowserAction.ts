@@ -46,7 +46,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * @inheritdoc
    */
-  public async setBadgeColor (_color: number[], _tabId: number) : Promise<any> {
+  public async setBadgeColor () : Promise<any> {
     // Safari does not provide us with APIs to change the badge background color
     // or retrieve it. It's always red. To be in sync with the other APIs, we'll
     // just resolve the promise.

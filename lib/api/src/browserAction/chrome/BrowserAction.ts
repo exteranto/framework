@@ -23,7 +23,7 @@ export class BrowserAction extends AbstractBrowserAction {
       (chrome as any).browserAction.setBadgeText({ text, tabId }, () => {
         chrome.runtime.lastError ? reject(new TabIdUnknownException()) : resolve()
       })
-    }).then(v => void v)
+    }).then(() => undefined)
   }
 
   /**
@@ -45,7 +45,7 @@ export class BrowserAction extends AbstractBrowserAction {
       (chrome as any).browserAction.setBadgeBackgroundColor({ color, tabId }, () => {
         chrome.runtime.lastError ? reject(new TabIdUnknownException()) : resolve()
       })
-    }).then(v => void v)
+    }).then(() => undefined)
   }
 
   /**
@@ -67,7 +67,7 @@ export class BrowserAction extends AbstractBrowserAction {
       (chrome as any).browserAction.setTitle({ title, tabId }, () => {
         chrome.runtime.lastError ? reject(new TabIdUnknownException()) : resolve()
       })
-    }).then(v => void v)
+    }).then(() => undefined)
   }
 
   /**
@@ -78,7 +78,7 @@ export class BrowserAction extends AbstractBrowserAction {
       (chrome as any).browserAction.setIcon({ path, tabId }, () => {
         chrome.runtime.lastError ? reject(new TabIdUnknownException()) : resolve()
       })
-    }).then(v => void v)
+    }).then(() => undefined)
   }
 
   /**
