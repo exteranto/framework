@@ -12,9 +12,9 @@ export default () => {
   })
 
   it('throws exception for all methods', async () => {
-    expect(cookies.get('url', 'cookie')).to.eventually.be.rejectedWith(NotImplementedException)
-    expect(cookies.getAll({})).to.eventually.be.rejectedWith(NotImplementedException)
-    expect(cookies.set({})).to.eventually.be.rejectedWith(NotImplementedException)
-    expect(cookies.populate({})).to.eventually.be.rejectedWith(NotImplementedException)
+    await expect(cookies.get('url', 'cookie')).to.eventually.be.rejectedWith(NotImplementedException)
+    await expect(cookies.getAll({})).to.eventually.be.rejectedWith(NotImplementedException)
+    await expect(cookies.set({})).to.eventually.be.rejectedWith(NotImplementedException)
+    await expect(cookies.populate({})).to.eventually.be.rejectedWith(NotImplementedException)
   })
 }
