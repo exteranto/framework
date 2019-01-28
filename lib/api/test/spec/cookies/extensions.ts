@@ -85,4 +85,23 @@ export default ({ browser }) => {
 
     verify(dispatcher.fire(deepEqual(new CookieChangedEvent('cookie')))).once()
   })
+
+  it('populates does not override existing cookie', async () => {
+    browser.cookies.getAll.resolves([1])
+
+    await cookies.populate({})
+
+    sinon.assert.calledOnce(browser.cookies.getAll)
+    sinon.assert.notCalled(browser.cookies.set)
+  })
+
+  it('populates sets new cookie if it doesn\'t exist', async () => {
+    browser.cookies.getAll.resolves([])
+    browser.cookies.set.resolves()
+
+    await cookies.populate({})
+
+    sinon.assert.calledOnce(browser.cookies.getAll)
+    sinon.assert.calledOnce(browser.cookies.set)
+  })
 }

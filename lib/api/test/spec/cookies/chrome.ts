@@ -92,4 +92,22 @@ export default ({ chrome }) => {
 
     verify(dispatcher.fire(deepEqual(new CookieChangedEvent('cookie')))).once()
   })
+
+  it('populates does not override existing cookie', async () => {
+    chrome.cookies.getAll.yields([1])
+
+    await cookies.populate({})
+
+    sinon.assert.calledOnce(chrome.cookies.getAll)
+    sinon.assert.notCalled(chrome.cookies.set)
+  })
+
+  it('populates sets new cookie if it doesn\'t exist', async () => {
+    chrome.cookies.getAll.yields([])
+
+    await cookies.populate({})
+
+    sinon.assert.calledOnce(chrome.cookies.getAll)
+    sinon.assert.calledOnce(chrome.cookies.set)
+  })
 }

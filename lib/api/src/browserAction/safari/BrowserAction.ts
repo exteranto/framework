@@ -118,7 +118,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * Refresh the badge based on the meta data stored on tab objects.
    *
-   * @param {number} tabId
+   * @param tabId Id of the target tab
    */
   private refreshBadge (tabId: number) : void {
     this.getAllTabs().forEach((tab) => {
@@ -141,7 +141,7 @@ export class BrowserAction extends AbstractBrowserAction {
   /**
    * Return all currently open tabs.
    *
-   * @return {any[]}
+   * @return Array of tab objects
    */
   private getAllTabs () : any[] {
     return safari.application.browserWindows.reduce((carry, item) => {
