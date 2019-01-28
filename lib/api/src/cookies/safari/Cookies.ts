@@ -28,7 +28,7 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
   /**
    * @inheritdoc
    */
-  public registerEvents (_: Dispatcher) : void {
+  public registerEvents () : void {
     //
   }
 }
