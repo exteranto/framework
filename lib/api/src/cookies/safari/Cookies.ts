@@ -1,5 +1,5 @@
 import { Cookies as AbstractCookies } from '../Cookies'
-import { Dispatcher, RegistersNativeEvents } from '@exteranto/core'
+import { RegistersNativeEvents } from '@exteranto/core'
 import { NotImplementedException } from '@exteranto/exceptions'
 
 export class Cookies extends AbstractCookies implements RegistersNativeEvents {
