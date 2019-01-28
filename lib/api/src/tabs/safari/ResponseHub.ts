@@ -1,23 +1,18 @@
 /**
  * Holds Safari message promises that are resolved with payload when
  * the script receives a response from another script.
- *
- * @param {any}
  */
 export const ResponseHub: any = {
 
   /**
    * Key value store.
-   *
-   * @param {any}
    */
   resolvables: {},
 
   /**
    * Creates a new promise.
    *
-   * @param {string} key
-   * @return {any}
+   * @return Object that has a promise and an identificator
    */
   createResolvable () : any {
     const id: string = this.getUniqueId()
@@ -32,9 +27,8 @@ export const ResponseHub: any = {
   /**
    * Resolves a promise with payload.
    *
-   * @param {string} key
-   * @param {any} payload
-   * @return {void}
+   * @param key Hash of promise to resolve
+   * @param payload Payload to resolve the promise with
    */
   resolve (key: string, payload?: any) : void {
     if (this.resolvables[key] === undefined) {
@@ -52,7 +46,7 @@ export const ResponseHub: any = {
   /**
    * Returns an id that has not been used yet.
    *
-   * @return {string}
+   * @return Unique string key
    */
   getUniqueId () : string {
     const id: string = Math.random().toString(16)

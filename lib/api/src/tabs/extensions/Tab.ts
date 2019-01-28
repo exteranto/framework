@@ -6,7 +6,7 @@ export class Tab implements TabInterface {
   /**
    * Class constructor.
    *
-   * @param {any} tab
+   * @param tab Tab info object
    */
   constructor (private tab: any) {
     //

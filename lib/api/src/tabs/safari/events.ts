@@ -11,8 +11,8 @@ import {
 /**
  * Checks whether target is a tab or window.
  *
- * @param {any} target
- * @return {boolean}
+ * @param target Tab or window object
+ * @return Whether target is a tab
  */
 const isTab: (target: any) => boolean = (target) => {
   return target.url !== undefined
@@ -21,7 +21,7 @@ const isTab: (target: any) => boolean = (target) => {
 /**
  * Gets all opened tabs.
  *
- * @return {any[]}
+ * @return Array of tab info objects
  */
 const getAllTabs: () => any[] = () => safari.application
   .browserWindows
@@ -32,7 +32,7 @@ const getAllTabs: () => any[] = () => safari.application
 /**
  * Puts ids of all objects in safari (windows and tabs) into one array.
  *
- * @return {number[]}
+ * @return Array of ids
  */
 const getAllIds: () => number[] = () => getAllTabs().map(({ eid }) => eid)
 
@@ -53,7 +53,7 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
 /**
  * Registers native tab events.
  *
- * @param {Dispatcher} dispatcher
+ * @param dispatcher Dispatcher resolved from container
  */
 const nativeTabListeners: (dispatcher: Dispatcher) => void = (dispatcher) => {
   safari.application.addEventListener('open', ({ target }) => {
@@ -65,9 +65,8 @@ const nativeTabListeners: (dispatcher: Dispatcher) => void = (dispatcher) => {
  * Does all necessary preprocesses for tab/window so that
  * it can be used by the framework.
  *
- * @param {any} target
- * @param {Dispatcher} dispatcher
- * @return {void}
+ * @param target A tab or window object
+ * @param dispatcher Dispatcher resolved from container
  */
 const introduceToEcosystem: (target: any, dispatcher: Dispatcher) => void = (target, dispatcher) => {
   if (target.eid) {
