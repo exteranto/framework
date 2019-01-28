@@ -1,5 +1,6 @@
 import { StorageChangedEvent } from '../events'
 import { Storage as AbstractStorage } from '../Storage'
+import { StorageKeyNotFoundException } from '@exteranto/exceptions'
 
 export class Storage extends AbstractStorage {
   /**
@@ -14,7 +15,7 @@ export class Storage extends AbstractStorage {
         // Else if a string key exist, resolve with the value.
         // Else resolve with the val object (fallback for an array key).
         isKeyString && val[key] === undefined
-          ? reject()
+          ? reject(new StorageKeyNotFoundException(key))
           : resolve(isKeyString ? val[key] : val)
       })
     })

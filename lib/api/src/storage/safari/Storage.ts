@@ -1,5 +1,6 @@
 import { StorageChangedEvent } from '../events'
 import { Storage as AbstractStorage } from '../Storage'
+import { StorageKeyNotFoundException } from '@exteranto/exceptions'
 
 export class Storage extends AbstractStorage {
   /**
@@ -10,7 +11,7 @@ export class Storage extends AbstractStorage {
       if (typeof key === 'string') {
         const item: any = localStorage.getItem(this.prefix() + key)
 
-        item ? resolve(JSON.parse(item)) : reject()
+        item ? resolve(JSON.parse(item)) : reject(new StorageKeyNotFoundException(key))
 
         return
       }
@@ -108,7 +109,7 @@ export class Storage extends AbstractStorage {
   /**
    * Builds up the safari prefix to distinguish between local and sync storage.
    *
-   * @return {string}
+   * @return Encoded storage type
    */
   private prefix () : string {
     return '_' + this.type + '_'
