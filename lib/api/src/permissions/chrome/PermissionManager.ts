@@ -10,9 +10,6 @@ export class PermissionManager extends AbstractPermissionManager {
       needle = [needle]
     }
 
-    /**
-     * @var {string[]} permissions
-     */
     const { permissions }: any = await new Promise(
       resolve => chrome.permissions.getAll(resolve),
     )
