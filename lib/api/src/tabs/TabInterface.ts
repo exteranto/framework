@@ -5,50 +5,48 @@ export interface TabInterface {
   /**
    * Retrieves the tab id.
    *
-   * @return {number}
+   * @return Tab id to use for APIs interaction
    */
   id () : number
 
   /**
    * Retrieves the tab url.
    *
-   * @return {Promise<string>}
+   * @return Resolves with current url
    */
   url () : Promise<string>
 
   /**
    * Closes the tab.
-   *
-   * @return {Promise<void>}
    */
   close () : Promise<void>
 
   /**
    * Reloads the tab.
    *
-   * @return {Promise<Tab>}
+   * @return Resolves with itself
    */
   reload () : Promise<TabInterface>
 
   /**
    * Duplicates the tab.
    *
-   * @return {Promise<Tab>}
+   * @return Resolves with new tab instance
    */
   duplicate () : Promise<TabInterface>
 
   /**
    * Marks tab as active.
    *
-   * @return {Promise<Tab>}
+   * @return Resolves with itself
    */
   activate () : Promise<TabInterface>
 
   /**
    * Sends a message to the tab.
    *
-   * @param {Message} message
-   * @return {Promise<any>}
+   * @param message Message with payload
+   * @return Resolves with response data
    */
   send (message: Message) : Promise<any>
 
@@ -56,8 +54,8 @@ export interface TabInterface {
    * Resolves a value from the original cached tab object. Note that values on
    * this object might not be cross-browser compatible.
    *
-   * @param {string} key
-   * @return {any}
+   * @param key Key in the tab information object
+   * @return Associated value if any
    */
   raw (key: string) : any
 }

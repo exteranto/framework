@@ -8,10 +8,7 @@ import { TabIdUnknownException } from '@exteranto/exceptions'
 export class Tabs extends AbstractTabs implements RegistersNativeEvents {
 
   /**
-   * Returns all tabs that match the provided query.
-   *
-   * @param {any} query
-   * @return {Promise<TabInterface[]>}
+   * @inheritdoc
    */
   protected async filter (query: any = {}) : Promise<TabInterface[]> {
     return ['active', 'currentWindow', 'title', 'index', 'windowId']
@@ -23,11 +20,7 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   }
 
   /**
-   * Opens a brand new tab with specified parameters.
-   *
-   * @param {string} url
-   * @param {boolean} active
-   * @return {Promise<TabInterface>}
+   * @inheritdoc
    */
   public open (url: string, active: boolean = false) : Promise<TabInterface> {
     return new Promise((resolve) => {
@@ -57,9 +50,7 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   }
 
   /**
-   * Register all native events on the given module.
-   *
-   * @param {Dispatcher} dispatcher
+   * @inheritdoc
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     register(dispatcher)
@@ -69,7 +60,7 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
    * Collects all safari tabs into one array with
    * additional informationabout the tab.
    *
-   * @return {Tab[]}
+   * @return Array of tab instances
    */
   private getAllTabs () : Tab[] {
     return safari.application.browserWindows.reduce((tabs, window) => {
