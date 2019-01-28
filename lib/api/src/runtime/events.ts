@@ -1,6 +1,6 @@
 import { Event } from '@exteranto/core'
 
-class WebRequestEvent extends Event {
+export class WebRequestEvent extends Event {
   /**
    * Tab id this event is bound to.
    *
