@@ -22,16 +22,16 @@ export class CookiesProvider extends Provider {
   public boot () : void {
     this.container.bind(ChromeCookies).to(Cookies).for(Browser.CHROME)
     this.container.bind(ExtensionsCookies).to(Cookies).for(Browser.EXTENSIONS)
+
+    if (this.container.resolveParam('browser') === Browser.SAFARI) {
+      return console.warn(new NotImplementedException('@exteranto/api', 'Cookies'))
+    }
   }
 
   /**
    * Register the provider services.
    */
   public register () : void {
-    if (this.container.resolveParam('browser') === Browser.SAFARI) {
-      return console.warn(new NotImplementedException('@exteranto/cookies'))
-    }
-
     this.container.resolve(Cookies).registerEvents(
       this.container.resolve(Dispatcher),
     )
