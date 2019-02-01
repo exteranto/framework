@@ -38,7 +38,7 @@ export class Messaging extends AbstractMessaging {
 
       port.postMessage({
         event: message.constructor.name,
-        request: message.payload,
+        payload: message.payload,
       })
 
       // This is triggered upon receiving a response from the listener.

@@ -19,7 +19,14 @@ export default ({ chrome }) => {
 
   it('sends a message via runtime port', async () => {
     chrome.runtime.connect.returns({
-      postMessage: m => m,
+      postMessage: (message) => {
+        expect(message).to.deep.equal({
+          event: 'TestMessage',
+          payload: 'test'
+        })
+
+        return message
+      },
       onMessage: { addListener: l => l({ ok: true, body: 'resolved' }) }
     })
 
