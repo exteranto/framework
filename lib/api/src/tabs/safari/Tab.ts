@@ -5,10 +5,9 @@ import { Message } from '@internal/messaging'
 import { TabInterface } from '../TabInterface'
 
 export class Tab implements TabInterface {
+
   /**
    * Tabs manager instance.
-   *
-   * @var {Tabs} tabs
    */
   @Autowired
   private tabs: Tabs
@@ -16,7 +15,7 @@ export class Tab implements TabInterface {
   /**
    * Class constructor.
    *
-   * @param {any} tab
+   * @param tab Tab info object
    */
   constructor (private tab: any) {
     //
@@ -55,7 +54,7 @@ export class Tab implements TabInterface {
   /**
    * @inheritdoc
    */
-  public duplicate () : Promise<TabInterface> {
+  public async duplicate () : Promise<TabInterface> {
     return this.tabs.open(this.tab, true)
   }
 
@@ -71,7 +70,7 @@ export class Tab implements TabInterface {
   /**
    * @inheritdoc
    */
-  public send (message: Message) : Promise<any>  {
+  public async send (message: Message) : Promise<any>  {
     const { resolvable, id }: any = ResponseHub
 
     this.tab.dispatchMessage('_', {
@@ -89,4 +88,5 @@ export class Tab implements TabInterface {
   public raw (key: string) : any {
     return this.tab[key]
   }
+
 }

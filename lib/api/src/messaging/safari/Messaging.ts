@@ -2,10 +2,9 @@ import { Message } from '../Message'
 import { Messaging as AbstractMessaging } from '../Messaging'
 
 export class Messaging extends AbstractMessaging {
+
   /**
    * The object that contains promises to be resolved upon receiving a response.
-   *
-   * @var {any}
    */
   private promises: any = {}
 
@@ -47,7 +46,7 @@ export class Messaging extends AbstractMessaging {
   /**
    * @inheritdoc
    */
-  public send (message: Message) : Promise<any> {
+  public async send (message: Message) : Promise<any> {
     return new Promise((resolve, reject) => {
       const respond: (response: any) => any = response => response.ok ? resolve(response.body) : reject(response.body)
 
@@ -66,11 +65,12 @@ export class Messaging extends AbstractMessaging {
   /**
    * Returns an id that has not been used yet.
    *
-   * @return {string}
+   * @return Unique promise id
    */
   private getUniqueId () : string {
     const id: string = Math.random().toString(16)
 
     return this.promises[id] === undefined ? id : this.getUniqueId()
   }
+
 }

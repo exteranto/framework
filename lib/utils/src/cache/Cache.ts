@@ -4,18 +4,20 @@ import { Md5 } from 'md5-typescript'
 
 @Binding
 export class Cache {
+
   /**
    * The cache driver to be used.
-   *
-   * @var {Storage}
    */
   @WiredWith(['%cache.driver%'])
   private driver: Storage
 
   /**
+   * The hasher instance.
+   */
+  private hasher: any = Md5
+
+  /**
    * The cache config.
-   *
-   * @var {any}
    */
   @Param('cache')
   private config: any
@@ -23,12 +25,12 @@ export class Cache {
   /**
    * Stores the cacheable object to the specified cache driver.
    *
-   * @param {string} key
-   * @param {() => any} cacheable
-   * @param {number} timeout
-   * @return {Promise<any>}
+   * @param key The cache key to be used
+   * @param cacheable The callback whose return value is cached
+   * @param timeout Optional cache timeout in seconds, falls back to global cache config
+   * @return The desired value cached
    */
-  public store (key: string, cacheable: () => any, timeout?: number) : Promise<any> {
+  public async store (key: string, cacheable: () => any, timeout?: number) : Promise<any> {
     // Cache can be forfeited on certain enviroments.
     if (this.config.forfeit) {
       return cacheable()
@@ -37,17 +39,15 @@ export class Cache {
     key = this.createHash(key)
 
     return this.driver.get(key)
-      .then(value => this.isExpired(value) ? Promise.reject(null) : value)
+      .then(value => this.isExpired(value) ? Promise.reject() : value)
       .catch(() => this.createCache(key, cacheable, timeout))
       .then(({ data }) => data)
   }
 
   /**
-   * Clears the cache.
-   *
-   * @return {Promise<any>}
+   * Clears all keys stored in the cache.
    */
-  public clear () : Promise<any> {
+  public async clear () : Promise<void> {
     return this.driver.all()
       .then(data => Object.keys(data).filter(item => item.match(/^cache__/)))
       .then(filtered => filtered.forEach(key => this.driver.remove(key)))
@@ -56,8 +56,8 @@ export class Cache {
   /**
    * Checks whether the cached value is expired.
    *
-   * @param {any} value
-   * @return {boolean}
+   * @param value The cached object
+   * @return Whether the value is expired
    */
   private isExpired (value: any) : boolean {
     return value.expiresAt < Date.now()
@@ -67,10 +67,10 @@ export class Cache {
    * If the value is not yet stored, it is now physically stored in the cache
    * driver.
    *
-   * @param {string} key
-   * @param {() => any} cacheable
-   * @param {number} timeout
-   * @return {Promise<any>}
+   * @param key The cache key to be used
+   * @param cacheable The callback whose return value is cached
+   * @param timeout The cache timeout in seconds
+   * @return The desired value stored using the storage driver
    */
   private async createCache (key: string, cacheable: () => any, timeout?: number) : Promise<any> {
     return this.driver.set(key, {
@@ -82,8 +82,8 @@ export class Cache {
   /**
    * Calculates the expiration time with a given timeout.
    *
-   * @param {number} timeout
-   * @return {number}
+   * @param timeout Cache timeout in seconds
+   * @return Unix timestamp of cache expiration
    */
   private getExpiration (timeout: number) : number {
     return Date.now() + timeout * 1000
@@ -92,10 +92,11 @@ export class Cache {
   /**
    * Creates a hash from the provided string.
    *
-   * @param {string} value
-   * @return {string}
+   * @param value The value to be hashed
+   * @return The resulting hash
    */
   private createHash (value: string) : string {
-    return 'cache__' + Md5.init(value)
+    return 'cache__' + this.hasher.init(value)
   }
+
 }

@@ -5,8 +5,9 @@
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "build": "tslint --config ../../tslint.json --project tsconfig.json && ttsc",
-    "test": "for d in test/*/; do mocha -b ${d}/setup.ts ${d}/**/*.spec.ts -r ts-node/register -r tsconfig-paths/register || exit 1; done"
+    "build": "tslint -p tsconfig.dist.json -c ../../tslint.json && ttsc -p tsconfig.dist.json",
+    "test": "mocha test/setup.ts test/**/*.spec.ts -r ts-node/register -r tsconfig-paths/register",
+    "coverage": "nyc npm run test"
   },
   "keywords": [
     "extension",
@@ -31,8 +32,7 @@
   "license": "MIT",
   "dependencies": {
     "@exteranto/exceptions": "^2.3.1",
-    "reflect-metadata": "^0.1.12",
-    "typescript": "^2.9.2"
+    "reflect-metadata": "^0.1.12"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
@@ -43,10 +43,25 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "mocha": "^5.1.1",
+    "nyc": "^13.1.0",
     "sinon": "^7.2.3",
-    "ts-node": "^6.2.0",
+    "ts-mockito": "^2.3.1",
+    "ts-node": "^8.0.1",
     "tsconfig-paths": "^3.7.0",
     "tslint": "^5.11.0",
-    "ttypescript": "^1.5.6"
+    "ttypescript": "^1.5.6",
+    "typescript": "^2.9.2"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "src/**/*.ts"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "all": true
   }
 }

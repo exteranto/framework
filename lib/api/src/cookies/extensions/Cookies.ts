@@ -11,7 +11,7 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
   /**
    * @inheritdoc
    */
-  public get (url: string, name: string) : Promise<any> {
+  public async get (url: string, name: string) : Promise<any> {
     return browser.cookies.get({ url, name })
       .catch(e => Promise.reject(new InvalidCookieRequestException(e)))
       .then((cookie: any) => {
@@ -24,7 +24,7 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
   /**
    * @inheritdoc
    */
-  public getAll (params?: any) : Promise<any[]> {
+  public async getAll (params?: any) : Promise<any[]> {
     return browser.cookies.getAll(params)
       .catch(e => Promise.reject(new InvalidCookieRequestException(e)))
   }
@@ -32,20 +32,19 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
   /**
    * @inheritdoc
    */
-  public set (params?: any) : Promise<void> {
+  public async set (params?: any) : Promise<void> {
     return browser.cookies.set(params)
       .then(() => undefined)
       .catch(e => Promise.reject(new InvalidCookieRequestException(e)))
   }
 
   /**
-   * Register all native events on the given module.
-   *
-   * @param {Dispatcher} dispatcher
+   * @inheritdoc
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     browser.cookies.onChanged.addListener((cookie) => {
       dispatcher.fire(new CookieChangedEvent(cookie))
     })
   }
+
 }

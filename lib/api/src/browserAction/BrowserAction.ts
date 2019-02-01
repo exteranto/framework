@@ -5,67 +5,73 @@ export abstract class BrowserAction implements RegistersNativeEvents {
   /**
    * Getter for the badge text.
    *
-   * @param {number} tabId
-   * @return {Promise<string>}
+   * @param tabId Id of the target tab
+   * @return Resolves with badge string
+   * @throws {TabIdUnknownException}
    */
   public abstract async getBadgeText (tabId: number) : Promise<string>
 
   /**
    * Setter for the badge text.
    *
-   * @param {string} text
-   * @param {number} tabId
-   * @return {Promise<void>}
+   * @param text Text to be assigned to the tab badge
+   * @param tabId Id of the target tab
+   * @throws {TabIdUnknownException}
    */
   public abstract async setBadgeText (text: string, tabId: number) : Promise<void>
 
   /**
    * Getter for the badge color.
    *
-   * @param {number} tabId
-   * @return {Promise<string>}
+   * @safari This is just a placeholder as there are no badge colours.
+   *
+   * @param tabId Id of the target tab
+   * @return Resolves with number array in format [R, G, B, A]
    */
-  public abstract async getBadgeColor (tabId?: number) : Promise<string>
+  public abstract async getBadgeColor (tabId: number) : Promise<number[]>
 
   /**
    * Setter for the badge color.
    *
-   * @param {string} color
-   * @param {number} tabId
-   * @return {Promise<void>}
+   * @safari This is just a placeholder as there are no badge colours.
+   *
+   * @param color Number array in format [R, G, B, A]
+   * @param tabId Id of the target tab
+   * @throws {TabIdUnknownException}
    */
-  public abstract async setBadgeColor (color: string, tabId?: number) : Promise<void>
+  public abstract async setBadgeColor (color: number[], tabId: number) : Promise<void>
 
   /**
    * Get the title at a specified tab.
    *
-   * @param {number} tabId
-   * @return {Promise<any>}
+   * @param tabId Id of the target tab
+   * @return Resolves with current browser action title
+   * @throws {TabIdUnknownException}
    */
-  public abstract async getTitle (tabId: number) : Promise<any>
+  public abstract async getTitle (tabId: number) : Promise<string>
 
   /**
    * Set the title at a specified tab.
    *
-   * @param {string} title
-   * @param {number} tabId
-   * @return {Promise<any>}
+   * @param title Current browser action title
+   * @param tabId Id of the target tab
+   * @throws {TabIdUnknownException}
    */
-  public abstract async setTitle (title: string, tabId: number) : Promise<any>
+  public abstract async setTitle (title: string, tabId: number) : Promise<void>
 
   /**
    * Set the icon at a specified tab.
    *
-   * @param {string | object} path
-   * @param {number} tabId
-   * @return {Promise<any>}
+   * @param path A relative path or ImageData object of paths
+   * @param tabId Id of the target tab
+   * @throws {TabIdUnknownException}
    */
-  public abstract async setIcon (path: string | object, tabId: number) : Promise<any>
+  public abstract async setIcon (path: string | object, tabId: number) : Promise<void>
 
   /**
    * Register all native events on the given module.
    *
-   * @param {Dispatcher} dispatcher
+   * @param dispatcher Dispatcher resolved from container
    */
   public abstract registerEvents (dispatcher: Dispatcher) : void
 }

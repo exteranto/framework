@@ -6,25 +6,19 @@ import { register } from './events'
 import { Tab } from './Tab'
 
 export class Tabs extends AbstractTabs implements RegistersNativeEvents {
+
   /**
-   * Returns all tabs that match the provided query.
-   *
-   * @param {any} query
-   * @return {Promise<TabInterface[]>}
+   * @inheritdoc
    */
-  protected filter (query: any = {}) : Promise<TabInterface[]> {
+  protected async filter (query: any = {}) : Promise<TabInterface[]> {
     return browser.tabs.query(query)
       .then(tabs => tabs.map(tab => new Tab(tab)))
   }
 
   /**
-   * Opens a brand new tab with specified parameters.
-   *
-   * @param {string} url
-   * @param {boolean} active
-   * @return {Promise<TabInterface>}
+   * @inheritdoc
    */
-  public open (url: string, active: boolean = false) : Promise<TabInterface> {
+  public async open (url: string, active: boolean = false) : Promise<TabInterface> {
     return browser.tabs.create({ url, active })
       .then(tab => new Tab(tab))
   }
@@ -39,11 +33,10 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   }
 
   /**
-   * Register all native events on the given module.
-   *
-   * @param {Dispatcher} dispatcher
+   * @inheritdoc
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     register(dispatcher)
   }
+
 }

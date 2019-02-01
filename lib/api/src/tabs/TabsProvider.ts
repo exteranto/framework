@@ -10,7 +10,7 @@ export class TabsProvider extends Provider {
   /**
    * The scripts that this provider should be registered for.
    *
-   * @return {Script[]}
+   * @return Array of Script enums that this provider should be registered for
    */
   public only () : Script[] {
     return [Script.BACKGROUND]
@@ -33,4 +33,5 @@ export class TabsProvider extends Provider {
       this.container.resolve(Dispatcher),
     )
   }
+
 }

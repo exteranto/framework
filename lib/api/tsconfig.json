@@ -13,20 +13,14 @@
     "typeRoots": ["node_modules/@types", "node_modules/web-ext-types"],
     "baseUrl": "src",
     "paths": {
-      "@internal/browserAction": ["browserAction"],
-      "@internal/cookies": ["cookies"],
-      "@internal/extension": ["extension"],
-      "@internal/messaging": ["messaging"],
-      "@internal/permissions": ["permissions"],
-      "@internal/runtime": ["runtime"],
-      "@internal/storage": ["storage"],
-      "@internal/tabs": ["tabs"]
+      "@internal/*": ["*"]
     },
     "plugins": [
       { "transform": "@zerollup/ts-transform-paths" }
     ]
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test/**/*"
   ]
 }

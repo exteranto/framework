@@ -1,29 +1,16 @@
 import { Event } from '@exteranto/core'
 
+/**
+ * Fired upon changing a value in the storage.
+ */
 export class StorageChangedEvent extends Event {
+
   /**
-   * @param {string} type
-   * @param {any} storable
+   * @param type Whether it was sync or local
+   * @param storable What has chagend
    */
-  constructor (private type: string, private storable: any) {
+  constructor (public type: string, public storable: any) {
     super()
   }
 
-  /**
-   * Type getter.
-   *
-   * @return {string}
-   */
-  public getType () : string {
-    return this.type
-  }
-
-  /**
-   * Storable getter.
-   *
-   * @return {any}
-   */
-  public getStorable () : any {
-    return this.storable
-  }
 }

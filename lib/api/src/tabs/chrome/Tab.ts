@@ -3,10 +3,9 @@ import { TabInterface } from '../TabInterface'
 import Port = chrome.runtime.Port
 
 export class Tab implements TabInterface {
+
   /**
-   * Class constructor.
-   *
-   * @param {any} tab
+   * @param tab Tab info object
    */
   constructor (private tab: any) {
     //
@@ -22,7 +21,7 @@ export class Tab implements TabInterface {
   /**
    * @inheritdoc
    */
-  public async url () : Promise<string> {
+  public url () : Promise<string> {
     return new Promise(resolve => chrome.tabs.get(this.tab.id, resolve))
       .then(({ url }) => url)
   }
@@ -92,4 +91,5 @@ export class Tab implements TabInterface {
   public raw (key: string) : any {
     return this.tab[key]
   }
+
 }

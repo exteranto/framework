@@ -3,27 +3,24 @@ import { Browser } from '@exteranto/core'
 
 @Binding
 export class Comb {
+
   /**
    * The current browser.
-   *
-   * @var {Browser}
    */
   @Param('browser')
   private browser: Browser
 
   /**
    * The result passed to the last method in the chain.
-   *
-   * @var {any}
    */
   private result: any
 
   /**
    * Performs an action only on a specific set of browsers.
    *
-   * @param {Browser[]} browsers
-   * @param {() => any} callback
-   * @return {Comb}
+   * @param browsers The constraining browser array
+   * @param callback The callback to be invoked when constraints pass
+   * @return This class instance for chaining
    */
   public only (browsers: Browser[], callback: () => any) : Comb {
     if (browsers.filter(i => i === this.browser).length === 1) {
@@ -36,9 +33,9 @@ export class Comb {
   /**
    * Method this.only alias.
    *
-   * @param {Browser[]} browsers
-   * @param {() => any} callback
-   * @return {Comb}
+   * @param browsers The constraining browser array
+   * @param callback The callback to be invoked when constraints pass
+   * @return This class instance for chaining
    */
   public thenOnly (browsers: Browser[], callback: () => any) : Comb {
     return this.only(browsers, callback)
@@ -47,9 +44,9 @@ export class Comb {
   /**
    * Performs an action on all browsers but the specified ones.
    *
-   * @param {Browser[]} browsers
-   * @param {() => any} callback
-   * @return {Comb}
+   * @param browsers The constraining browser array
+   * @param callback The callback to be invoked when constraints pass
+   * @return This class instance for chaining
    */
   public except (browsers: Browser[], callback: () => any) : Comb {
     if (browsers.filter(i => i === this.browser).length === 0) {
@@ -62,9 +59,9 @@ export class Comb {
   /**
    * Method this.except alias.
    *
-   * @param {Browser[]} browsers
-   * @param {() => any} callback
-   * @return {Comb}
+   * @param browsers The constraining browser array
+   * @param callback The callback to be invoked when constraints pass
+   * @return This class instance for chaining
    */
   public thenExcept (browsers: Browser[], callback: () => any) : Comb {
     return this.except(browsers, callback)
@@ -73,10 +70,11 @@ export class Comb {
   /**
    * Finishing method that contains the result.
    *
-   * @param {(result: any) => any} callback
-   * @return {Comb}
+   * @param callback The callback to be invoked with the result
+   * @return This class instance for chaining
    */
   public async then (callback: (result: any) => any) : Promise<any> {
     return callback(this.result)
   }
+
 }

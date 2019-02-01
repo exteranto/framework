@@ -10,7 +10,7 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   chrome.runtime.onInstalled.addListener((event) => {
     const message: () => Event = {
       install: () => new ExtensionInstalledEvent(),
-      update: () => new ExtensionUpdatedEvent(event),
+      update: () => new ExtensionUpdatedEvent(event.previousVersion),
     }[event.reason]
 
     if (!message) {

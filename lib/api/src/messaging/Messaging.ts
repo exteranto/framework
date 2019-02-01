@@ -1,46 +1,40 @@
 import { Message } from './Message'
-import { Script, Dispatcher,  Autowired, Param } from '@exteranto/core'
+import { Script, Dispatcher, Autowired, Param } from '@exteranto/core'
 
 export abstract class Messaging {
+
   /**
    * Event dispatcher implementation.
-   *
-   * @var {Dispatcher}
    */
   @Autowired
   private dispatcher: Dispatcher
 
   /**
    * The current script.
-   *
-   * @var {Script}
    */
   @Param('script')
   protected script: Script
 
   /**
    * Establish a listener server.
-   *
-   * @return {void}
    */
   public abstract listen () : void
 
   /**
    * Sends a message across scripts.
    *
-   * @param {Message} message
-   * @return {Promise<any>}
+   * @param message Message event
+   * @return Response body
    */
-  public abstract send (message: Message) : Promise<any>
+  public abstract async send (message: Message) : Promise<any>
 
   /**
    * Dispatches the received message via the dispatcher dependency.
    *
-   * @param {string} event
-   * @param {any} payload
-   * @param {any} context
-   * @param {(response: any) => any} respond
-   * @return {void}
+   * @param name Used to construct new event instance
+   * @param payload Event payload that is sent to receiver
+   * @param context Data such as tab id
+   * @param respond Calling this function resolves the promise
    */
   protected dispatch (
     name: string,
@@ -65,4 +59,5 @@ export abstract class Messaging {
     // listener.
     this.dispatcher.fire(event)
   }
+
 }

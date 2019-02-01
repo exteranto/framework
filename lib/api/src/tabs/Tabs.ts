@@ -4,11 +4,11 @@ import { Dispatcher, RegistersNativeEvents } from '@exteranto/core'
 export abstract class Tabs implements RegistersNativeEvents {
 
   /**
-   * Returns the active tab object.
+   * Returns the active tab instance.
    *
-   * @return {Promise<Tab>}
+   * @return Tab instance
    */
-  public active () : Promise<TabInterface> {
+  public async active () : Promise<TabInterface> {
     return this.query({ active: true, currentWindow: true })
       .then(tabs => tabs.pop())
   }
@@ -16,46 +16,47 @@ export abstract class Tabs implements RegistersNativeEvents {
   /**
    * Returns all the tabs that are open at the moment.
    *
-   * @return {Promise<TabInterface[]>}
+   * @return Array of tab instances
    */
-  public all () : Promise<TabInterface[]> {
+  public async all () : Promise<TabInterface[]> {
     return this.query({})
   }
 
   /**
    * Returns all the tabs that are open at the moment in the current window.
    *
-   * @return {Promise<TabInterface[]>}
+   * @return Array of tab instances
    */
-  public allInCurrentWindow () : Promise<TabInterface[]> {
+  public async allInCurrentWindow () : Promise<TabInterface[]> {
     return this.query({ currentWindow: true })
   }
 
   /**
    * Returns all the tabs that are pinned.
    *
-   * @return {Promise<TabInterface[]>}
+   * @return Array of tab instances
    */
-  public pinned () : Promise<TabInterface[]> {
+  public async pinned () : Promise<TabInterface[]> {
     return this.query({ pinned: true })
   }
 
   /**
    * Returns all tabs that match the provided url.
    *
-   * @param {RegExp|string} url
-   * @return {Promise<TabInterface[]>}
+   * @param url Exact match or pattern to match
+   * @return Array of tab instances
    */
-  public withUrl (url: RegExp|string) : Promise<TabInterface[]> {
+  public async withUrl (url: RegExp|string) : Promise<TabInterface[]> {
     return this.query({ url })
   }
 
   /**
    * Returns all tabs that match the provided query
    * and filters url via regex rather than match pattern.
+   * Queries standard parameters on tab instance.
    *
-   * @param {any} query
-   * @return {Promise<TabInterface[]>}
+   * @param query Query object
+   * @return Array of tab instances
    */
   public async query (query: any) : Promise<TabInterface[]> {
     const url: any = query.url
@@ -79,31 +80,31 @@ export abstract class Tabs implements RegistersNativeEvents {
   /**
    * Gets tab by id.
    *
-   * @return {Promise<Tab>}
+   * @return Tab instance
    */
-  public abstract get (id: number) : Promise<TabInterface>
+  public abstract async get (id: number) : Promise<TabInterface>
 
   /**
    * Returns all tabs that match the provided query.
    *
-   * @param {any} query
-   * @return {Promise<TabInterface[]>}
+   * @param query Query object
+   * @return Array of tab instances
    */
-  protected abstract filter (query: any) : Promise<TabInterface[]>
+  protected abstract async filter (query: any) : Promise<TabInterface[]>
 
   /**
    * Opens a brand new tab with specified parameters.
    *
-   * @param {string} url
-   * @param {boolean} active
-   * @return {Promise<TabInterface>}
+   * @param url Valid url
+   * @param active Whether the tab should be activate
+   * @return Tab instance
    */
-  public abstract open (url: string, active?: boolean) : Promise<TabInterface>
+  public abstract async open (url: string, active?: boolean) : Promise<TabInterface>
 
   /**
    * Register all native events on the given module.
    *
-   * @param {Dispatcher} dispatcher
+   * @param dispatcher Dispatcher resolved from container
    */
   public abstract registerEvents (dispatcher: Dispatcher) : void
 }

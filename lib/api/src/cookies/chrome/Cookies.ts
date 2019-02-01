@@ -35,9 +35,9 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
       chrome.cookies.getAll(params, (cookies) => {
         const error: any = chrome.runtime.lastError
 
-        !error
-          ? resolve(cookies)
-          : reject(new InvalidCookieRequestException(error.message))
+        error
+          ? reject(new InvalidCookieRequestException(error.message))
+          : resolve(cookies)
       })
     })
   }
@@ -50,21 +50,20 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
       chrome.cookies.set(params, () => {
         const error: any = chrome.runtime.lastError
 
-        !error
-          ? resolve()
-          : reject(new InvalidCookieRequestException(error.message))
+        error
+          ? reject(new InvalidCookieRequestException(error.message))
+          : resolve()
       })
     })
   }
 
   /**
-   * Register all native events on the given module.
-   *
-   * @param {Dispatcher} dispatcher
+   * @inheritdoc
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     chrome.cookies.onChanged.addListener((cookie) => {
       dispatcher.fire(new CookieChangedEvent(cookie))
     })
   }
+
 }

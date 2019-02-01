@@ -3,8 +3,7 @@ import { AspectContainer } from './AspectContainer'
 /**
  * The @After annotation for the aspect method.
  *
- * @param {string} pointcut
- * @return {(target: any, method: string) => void}
+ * @param pointcut The name of the pointcut to assign the aspect to
  */
 export function After (pointcut: string) : (target: any, method: string) => void {
   return (target: any, method: string) : void => {
@@ -15,8 +14,7 @@ export function After (pointcut: string) : (target: any, method: string) => void
 /**
  * The @Before annotation for the aspect method.
  *
- * @param {string} pointcut
- * @return {(target: any, method: string) => void}
+ * @param pointcut The name of the pointcut to assign the aspect to
  */
 export function Before (pointcut: string) : (target: any, method: string) => void {
   return (target: any, method: string) : void => {
@@ -27,8 +25,7 @@ export function Before (pointcut: string) : (target: any, method: string) => voi
 /**
  * The @Pointcut annotation. Creates a pointcut at provided method.
  *
- * @param {string} pointcut
- * @return {(target: any, method: string, descriptor: any) => void}
+ * @param pointcut The name of the pointcut to assign the aspect to
  */
 export function Pointcut (pointcut: string) : (target: any, method: string, descriptor: any) => void {
   return (target: any, method: string, descriptor: any) : void => {

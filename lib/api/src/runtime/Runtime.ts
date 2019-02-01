@@ -5,15 +5,14 @@ export abstract class Runtime implements RegistersNativeEvents {
   /**
    * Sets the link that is opened once the extension is uninstalled.
    *
-   * @param {string} url
-   * @return {Promise<void>}
+   * @param url A valid url
    */
-  public abstract setUninstallUrl (url: string) : Promise<void>
+  public abstract async setUninstallUrl (url: string) : Promise<void>
 
   /**
    * Register all native events on the given module.
    *
-   * @param {Dispatcher} dispatcher
+   * @param dispatcher Dispatcher resolved from container
    */
   public abstract registerEvents (dispatcher: Dispatcher) : void
 }

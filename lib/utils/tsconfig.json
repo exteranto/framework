@@ -12,15 +12,14 @@
     "target": "es6",
     "baseUrl": "src",
     "paths": {
-      "@internal/aop": ["aop"],
-      "@internal/cache": ["cache"],
-      "@internal/compatibility": ["compatibility"]
+      "@internal/*": ["*"]
     },
     "plugins": [
       { "transform": "@zerollup/ts-transform-paths" }
     ]
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test/**/*"
   ]
 }

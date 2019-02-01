@@ -1,74 +1,67 @@
 import { Event } from '@exteranto/core'
 import { TabInterface } from './TabInterface'
 
-export class TabCreatedEvent extends Event {
-  /**
-   * @param {TabInterface} tab
-   */
-  constructor (private tab: TabInterface) {
-    super()
-  }
-
- /**
-  * Tab getter.
-  *
-  * @return {TabInterface}
-  */
-  public getTab () : TabInterface {
-    return this.tab
-  }
+/**
+ * Parent event for all tab events.
+ */
+export class TabEvent extends Event {
+  //
 }
 
-export class TabUpdatedEvent extends Event {
+/**
+ * Fires everytime new tab is created.
+ */
+export class TabCreatedEvent extends TabEvent {
+
   /**
-   * @param {TabInterface} tab
+   * @param tab Tab instace that was created
    */
-  constructor (private tab: TabInterface) {
+  constructor (public tab: TabInterface) {
     super()
+
   }
 
- /**
-  * Tab getter.
-  *
-  * @return {TabInterface}
-  */
-  public getTab () : TabInterface {
-    return this.tab
-  }
 }
 
-export class TabActivatedEvent extends Event {
+/**
+ * Fires everytime any parameter of a tab is updated,
+ * most common is loading new url.
+ */
+export class TabUpdatedEvent extends TabEvent {
+
   /**
-   * @param {number} tabId
+   * @param tab Tab instace that was updated
    */
-  constructor (private tabId: number) {
+  constructor (public tab: TabInterface) {
     super()
   }
 
- /**
-  * Tab id getter.
-  *
-  * @return {number}
-  */
-  public getTabId () : number {
-    return this.tabId
-  }
 }
 
-export class TabRemovedEvent extends Event {
+/**
+ * Fires when another tab gets focused.
+ */
+export class TabActivatedEvent extends TabEvent {
+
   /**
-   * @param {number} tabId
+   * @param tabId Id of tab that was activated
    */
-  constructor (private tabId: number) {
+  constructor (public tabId: number) {
     super()
   }
 
- /**
-  * Tab id getter.
-  *
-  * @return {number}
-  */
-  public getTabId () : number {
-    return this.tabId
+}
+
+/**
+ * Fires when a tab is closed.
+ */
+export class TabRemovedEvent extends TabEvent {
+
+  /**
+   * @param tabId Id of tab that was removed
+   */
+  constructor (public tabId: number) {
+    super()
   }
+
 }

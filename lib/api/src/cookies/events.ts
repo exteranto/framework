@@ -1,19 +1,15 @@
 import { Event } from '@exteranto/core'
 
+/**
+ * This event is fired whenever a cookie is changed in the background script.
+ */
 export class CookieChangedEvent extends Event {
+
   /**
-   * @param {any} cookie
+   * @param cookie Cookie data object
    */
-  constructor (private cookie: any) {
+  constructor (public cookie: any) {
     super()
   }
 
-  /**
-   * Cookie getter.
-   *
-   * @return {any}
-   */
-  public getCookie () : any {
-    return this.cookie
-  }
 }

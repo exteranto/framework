@@ -1,19 +1,18 @@
 import { StorageChangedEvent } from '../events'
 import { Storage as AbstractStorage } from '../Storage'
+import { StorageKeyNotFoundException } from '@exteranto/exceptions'
 
 export class Storage extends AbstractStorage {
+
   /**
-   * Retrieves a value or multiple values from the storage.
-   *
-   * @param {any} key
-   * @return {Promise<any>}
+   * @inheritdoc
    */
   public get (key: any) : Promise<any> {
     return new Promise((resolve, reject) => {
       if (typeof key === 'string') {
         const item: any = localStorage.getItem(this.prefix() + key)
 
-        item ? resolve(JSON.parse(item)) : reject()
+        item ? resolve(JSON.parse(item)) : reject(new StorageKeyNotFoundException(key))
 
         return
       }
@@ -37,10 +36,7 @@ export class Storage extends AbstractStorage {
   }
 
   /**
-   * Returns all keys in the storage.
-   *
-   * @override
-   * @return {Promise<any>}
+   * @inheritdoc
    */
   public all () : Promise<any> {
     return new Promise((resolve) => {
@@ -62,13 +58,9 @@ export class Storage extends AbstractStorage {
   }
 
   /**
-   * Saves a value in the storage.
-   *
-   * @param {any} key
-   * @param {any} value
-   * @return {Promise<any>}
+   * @inheritdoc
    */
-  public set (key: any, value?: any) : Promise<any> {
+  public set (key: any, value?: any) : Promise<void> {
     return new Promise((resolve) => {
       const storable: any = value ? { [key]: value } : key
 
@@ -85,10 +77,7 @@ export class Storage extends AbstractStorage {
   }
 
   /**
-   * Removes a value or multiple values from the storage.
-   *
-   * @param {any} key
-   * @return {Promise<void>}
+   * @inheritdoc
    */
   public remove (key: any) : Promise<void> {
     return new Promise((resolve) => {
@@ -103,9 +92,7 @@ export class Storage extends AbstractStorage {
   }
 
   /**
-   * Clears the whole storage.
-   *
-   * @return {Promise<void>}
+   * @inheritdoc
    */
   public clear () : Promise<void> {
     return this.all()
@@ -114,9 +101,7 @@ export class Storage extends AbstractStorage {
   }
 
   /**
-   * Returns the storage content size in bytes.
-   *
-   * @return {Promise<number>}
+   * @inheritdoc
    */
   public size () : Promise<number> {
     return this.all().then(data => JSON.stringify(data).length)
@@ -125,9 +110,10 @@ export class Storage extends AbstractStorage {
   /**
    * Builds up the safari prefix to distinguish between local and sync storage.
    *
-   * @return {string}
+   * @return Encoded storage type
    */
   private prefix () : string {
     return '_' + this.type + '_'
   }
+
 }

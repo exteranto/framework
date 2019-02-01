@@ -3,6 +3,7 @@ import { Messaging as AbstractMessaging } from '../Messaging'
 import Port = browser.runtime.Port
 
 export class Messaging extends AbstractMessaging {
+
   /**
    * @inheritdoc
    */
@@ -29,7 +30,7 @@ export class Messaging extends AbstractMessaging {
   /**
    * @inheritdoc
    */
-  public send (message: Message) : Promise<any> {
+  public async send (message: Message) : Promise<any> {
     return new Promise((resolve, reject) => {
       const respond: (response: any) => any = response => response.ok ? resolve(response.body) : reject(response.body)
 
@@ -37,11 +38,12 @@ export class Messaging extends AbstractMessaging {
 
       port.postMessage({
         event: message.constructor.name,
-        request: message.payload,
+        payload: message.payload,
       })
 
       // This is triggered upon receiving a response from the listener.
       port.onMessage.addListener(respond)
     })
   }
+
 }

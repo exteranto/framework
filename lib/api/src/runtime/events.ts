@@ -1,81 +1,95 @@
 import { Event } from '@exteranto/core'
 
-class WebRequestEvent extends Event {
-  /**
-   * @inheritdoc
-   */
-  constructor (public data?: any) {
-    super()
-  }
+/**
+ * Parent event for all web request events.
+ */
+export class WebRequestEvent extends Event {
 
   /**
    * Tab id this event is bound to.
    *
-   * @return {number}
+   * @return Id of tab
    */
-  public tabId () : number {
+  public get tabId () : number {
     return this.data.tabId
   }
 
   /**
    * The unix time of when the event has been triggered.
    *
-   * @return {number}
+   * @return Time of event
    */
-  public timestamp () : number {
+  public get timestamp () : number {
     return this.data.timeStamp
   }
+
+  /**
+   * @param data Event information
+   */
+  constructor (public data: any) {
+    super()
+  }
+
 }
 
+/**
+ * Event fired before browser redirect.
+ */
 export class WebRequestBeforeRedirectedEvent extends WebRequestEvent {
+
   /**
    * Initial url.
    *
-   * @return {string}
+   * @return Valid url string
    */
-  public urlFrom () : string {
+  public get urlFrom () : string {
     return this.data.url
   }
 
   /**
    * Requested url.
    *
-   * @return {string}
+   * @return Valid url string
    */
-  public urlTo () : string {
+  public get urlTo () : string {
     return this.data.redirectUrl
   }
+
 }
 
+/**
+ * Event fired after completing a browser redirect.
+ */
 export class WebRequestCompletedEvent extends WebRequestEvent {
+
   /**
    * Current tab url.
    *
-   * @return {string}
+   * @return Valid url string
    */
-  public url () : string {
+  public get url () : string {
     return this.data.url
   }
+
 }
 
+/**
+ * Event upon updating the exetension.
+ */
 export class ExtensionUpdatedEvent extends Event {
+
   /**
-   * @inheritdoc
+   * @param previousVersion The previous semantic version
    */
-  constructor (protected data?: any) {
+  constructor (public previousVersion: string) {
     super()
   }
 
-  /**
-   * Version of the extension before it was updated
-   *
-   * @return {string}
-   */
-  public previousVersion () : string {
-    return this.data.previousVersion
-  }
 }
 
+/**
+ * Event upon installing the extension.
+ */
 export class ExtensionInstalledEvent extends Event {
   //
 }
