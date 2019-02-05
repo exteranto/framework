@@ -43,6 +43,21 @@ export interface TabInterface {
   activate () : Promise<TabInterface>
 
   /**
+   * Pins a tab.
+   *
+   * @param pinned Whether this tab should be pinned (default true)
+   * @return Resolves with itself
+   */
+  pin (pinned?: boolean) : Promise<TabInterface>
+
+  /**
+   * Unpins a tab.
+   *
+   * @return Resolves with itself
+   */
+  unpin () : Promise<TabInterface>
+
+  /**
    * Sends a message to the tab.
    *
    * @param message Message with payload

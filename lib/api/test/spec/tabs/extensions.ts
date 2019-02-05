@@ -63,6 +63,33 @@ export default ({ browser }) => {
     sinon.assert.calledOnce(browser.tabs.duplicate)
   })
 
+  it('activates a tab', async () => {
+    browser.tabs.update.resolves({ id: 2 })
+
+    await expect(new Tab({ id: 1 }).activate())
+      .to.eventually.be.instanceOf(Tab)
+
+    sinon.assert.calledOnce(browser.tabs.update)
+  })
+
+  it('pins a tab', async () => {
+    browser.tabs.update.resolves({ id: 2 })
+
+    await expect(new Tab({ id: 1 }).pin())
+      .to.eventually.be.instanceOf(Tab)
+
+    sinon.assert.calledOnce(browser.tabs.update)
+  })
+
+  it('unpins a tab', async () => {
+    browser.tabs.update.resolves({ id: 2 })
+
+    await expect(new Tab({ id: 1 }).unpin())
+      .to.eventually.be.instanceOf(Tab)
+
+    sinon.assert.calledOnce(browser.tabs.update)
+  })
+
   it('gets a tab by id', async () => {
     browser.tabs.get.resolves({ id: 2 })
 
