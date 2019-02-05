@@ -62,6 +62,21 @@ export class Tab implements TabInterface {
   /**
    * @inheritdoc
    */
+  public async pin (pinned: boolean = true) : Promise<TabInterface> {
+    return browser.tabs.update(this.tab.id, { pinned })
+      .then(() => this)
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public unpin () : Promise<TabInterface> {
+    return this.pin(false)
+  }
+
+  /**
+   * @inheritdoc
+   */
   public async send (message: Message) : Promise<any> {
     const port: Port = browser.tabs.connect(this.tab.id)
 
