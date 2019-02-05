@@ -61,6 +61,16 @@ export default ({ safari }) => {
     verify(tabs.open((tab as any).tab, true)).once()
   })
 
+  it('pins a tab', async () => {
+    await expect(new Tab({ url: 'test' }).pin())
+      .to.eventually.be.instanceOf(Tab)
+  })
+
+  it('unpins a tab', async () => {
+    await expect(new Tab({ url: 'test' }).unpin())
+      .to.eventually.be.instanceOf(Tab)
+  })
+
   it('gets a tab by id', async () => {
     const browserWindow = {
       tabs: [

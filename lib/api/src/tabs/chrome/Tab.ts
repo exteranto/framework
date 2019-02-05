@@ -69,6 +69,26 @@ export class Tab implements TabInterface {
   /**
    * @inheritdoc
    */
+  public pin (pinned: boolean = true) : Promise<TabInterface> {
+    return new Promise(resolve => {
+      chrome.tabs.update(
+        this.tab.id,
+        { pinned },
+        () => resolve(this),
+      )
+    })
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public unpin () : Promise<TabInterface> {
+    return this.pin(false)
+  }
+
+  /**
+   * @inheritdoc
+   */
   public send (message: Message) : Promise<any> {
     const port: Port = chrome.tabs.connect(this.tab.id)
 

@@ -70,6 +70,20 @@ export class Tab implements TabInterface {
   /**
    * @inheritdoc
    */
+  public async pin () : Promise<TabInterface> {
+    return this
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public async unpin () : Promise<TabInterface> {
+    return this
+  }
+
+  /**
+   * @inheritdoc
+   */
   public async send (message: Message) : Promise<any>  {
     const { resolvable, id }: any = ResponseHub
 

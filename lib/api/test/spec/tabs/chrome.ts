@@ -63,6 +63,33 @@ export default ({ chrome }) => {
     sinon.assert.calledOnce(chrome.tabs.duplicate)
   })
 
+  it('activates a tab', async () => {
+    chrome.tabs.update.yields(undefined)
+
+    await expect(new Tab({ id: 1 }).activate())
+      .to.eventually.be.instanceOf(Tab)
+
+    sinon.assert.calledOnce(chrome.tabs.update)
+  })
+
+  it('pins a tab', async () => {
+    chrome.tabs.update.yields(undefined)
+
+    await expect(new Tab({ id: 1 }).pin())
+      .to.eventually.be.instanceOf(Tab)
+
+    sinon.assert.calledOnce(chrome.tabs.update)
+  })
+
+  it('unpins a tab', async () => {
+    chrome.tabs.update.yields(undefined)
+
+    await expect(new Tab({ id: 1 }).unpin())
+      .to.eventually.be.instanceOf(Tab)
+
+    sinon.assert.calledOnce(chrome.tabs.update)
+  })
+
   it('gets a tab by id', async () => {
     chrome.tabs.get.yields({ id: 2 })
 
