@@ -38,12 +38,12 @@ export class WebRequestEvent extends Event {
 export class WebRequestBeforeRedirectedEvent extends WebRequestEvent {
 
   /**
-   * Initial url.
+   * Redirect url.
    *
    * @return Valid url string
    */
   public get urlFrom () : string {
-    return this.data.url
+    return this.data.redirectUrl
   }
 
   /**
@@ -52,7 +52,7 @@ export class WebRequestBeforeRedirectedEvent extends WebRequestEvent {
    * @return Valid url string
    */
   public get urlTo () : string {
-    return this.data.redirectUrl
+    return this.data.url
   }
 
 }
