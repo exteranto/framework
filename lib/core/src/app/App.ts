@@ -7,6 +7,12 @@ import { Dispatcher, Event, ListenerBag } from '@internal/events'
 export class App {
 
   /**
+   * The current container instance.
+   */
+  // @Container
+  private container: Container
+
+  /**
    * The event dispatcher implementation.
    */
   @Autowired
@@ -27,7 +33,8 @@ export class App {
     private config: any,
     private registerEvents: (touch: (e: new (..._: any[]) => Event) => ListenerBag) => void,
   ) {
-    //
+    // TODO: Move.
+    this.container = Container.getInstance()
   }
 
   /**
@@ -56,8 +63,8 @@ export class App {
    * Registers crucial params in the container.
    */
   private registerBaseParams () : void {
-    Container.bindParam('script', this.script)
-    Container.bindParam('browser', Utils.currentBrowser())
+    this.container.bindParam('script', this.script)
+    this.container.bindParam('browser', Utils.currentBrowser())
   }
 
   /**
@@ -65,7 +72,7 @@ export class App {
    */
   private registerParamBindings () : void {
     for (const key in this.config.bound || []) {
-      Container.bindParam(key, this.config.bound[key])
+      this.container.bindParam(key, this.config.bound[key])
     }
   }
 
@@ -83,7 +90,7 @@ export class App {
    */
   private findProviders () : void {
     this.providers = this.config.providers
-      .map(Constructor => new Constructor(Container, Router))
+      .map(Constructor => new Constructor(this.container))
       .filter(provider => provider.only().indexOf(this.script) !== -1)
   }
 

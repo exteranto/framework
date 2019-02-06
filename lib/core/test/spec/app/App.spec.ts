@@ -7,10 +7,12 @@ import { Provider, Script } from '@internal/support'
 import { App, WindowLoadedEvent, AppBootedEvent } from '@internal/app'
 
 describe('App', () => {
+  let container: Container
   let dispatcher: Dispatcher
 
   beforeEach(() => {
     dispatcher = mock(Dispatcher)
+    container = Container.getInstance()
 
     when(dispatcher.touch(anything())).thenReturn({
       addHook: () => {},
@@ -24,8 +26,8 @@ describe('App', () => {
     app.start()
     app.boot()
 
-    expect(Container.resolveParam('browser')).to.be.ok
-    expect(Container.resolveParam('script')).to.equal(Script.BACKGROUND)
+    expect(container.resolveParam('browser')).to.be.ok
+    expect(container.resolveParam('script')).to.equal(Script.BACKGROUND)
   })
 
   it('finds providers', () => {
@@ -41,7 +43,7 @@ describe('App', () => {
     app.start()
     app.boot()
 
-    expect(Container.resolveParam('test')).to.equal('test')
+    expect(container.resolveParam('test')).to.equal('test')
   })
 
   it('registers providers', () => {
@@ -49,7 +51,7 @@ describe('App', () => {
     app.start()
     app.boot()
 
-    expect(Container.resolveParam('test2')).to.equal('test2')
+    expect(container.resolveParam('test2')).to.equal('test2')
   })
 
   it('registers param bindings', () => {
@@ -57,7 +59,7 @@ describe('App', () => {
     app.start()
     app.boot()
 
-    expect(Container.resolveParam('param')).to.equal('exteranto')
+    expect(container.resolveParam('param')).to.equal('exteranto')
   })
 
   it('registers events', () => {

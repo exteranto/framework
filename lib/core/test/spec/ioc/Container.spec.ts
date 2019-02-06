@@ -1,72 +1,109 @@
 import { expect } from 'chai'
 import { Container } from '@internal/ioc'
 import { Browser } from '@internal/support'
+import { Some, None } from '@internal/structures'
 
 describe('Container', () => {
+  let container: Container
 
   beforeEach(() => {
     Container.reset()
+    container = Container.getInstance()
+    container.bindParam('browser', Browser.CHROME)
   })
 
   it('binds a simple dependency', () => {
-    Container.bind(ChildDependency).toSelf()
+    container.bind<ChildDependency>(ChildDependency).toSelf()
 
-    expect(Container.resolve(ChildDependency)).to.be.instanceof(ChildDependency)
+    expect(container.resolve<ChildDependency>(ChildDependency)).to.be.instanceof(ChildDependency)
   })
 
   it('binds a simple dependency with constructor args', () => {
-    Container.bind(ChildDependency).toSelf()
+    container.bind<ChildDependency>(ChildDependency).toSelf()
 
-    expect(Container.resolve(ChildDependency, ['arg']).type).to.equal('arg')
+    expect(container.resolve<ChildDependency>(ChildDependency, ['arg']).type).to.equal('arg')
   })
 
   it('binds a singleton', () => {
-    const dep = Container.bind(ChildDependency).toSelf().singleton(true)
-    const resolved = Container.resolve(ChildDependency, ['arg'])
+    const dep = container.bind<ChildDependency>(ChildDependency).toSelf().asSingleton()
+    const resolved = container.resolve<ChildDependency>(ChildDependency, ['arg'])
 
     expect(resolved.type).to.equal('arg')
     resolved.type = 'changed'
-    expect(Container.resolve(ChildDependency, ['another']).type).to.equal('changed')
+    expect(container.resolve<ChildDependency>(ChildDependency, ['another']).type).to.equal('changed')
   })
 
   it('binds a dependency to an abstract type', () => {
-    Container.bind(ChildDependency).to(Abstract)
+    container.bind<ChildDependency>(ChildDependency).to(Abstract)
 
-    expect(Container.resolve(Abstract)).to.be.instanceof(ChildDependency)
+    expect(container.resolve<Abstract>(Abstract)).to.be.instanceof(ChildDependency)
   })
 
   it('binds a dependency to an abstract type with a browser specified', () => {
-    Container.bindParam('browser', Browser.CHROME)
-    Container.bind(ChromeDependency).to(Abstract).for(Browser.CHROME)
-    Container.bind(ExtensionsDependency).to(Abstract).for(Browser.EXTENSIONS)
+    container.bind<ChromeDependency>(ChromeDependency).to(Abstract).for(Browser.CHROME)
+    container.bind<ExtensionsDependency>(ExtensionsDependency).to(Abstract).for(Browser.EXTENSIONS)
 
-    expect(Container.resolve(Abstract)).to.be.instanceof(ChromeDependency)
+    expect(container.resolve<Abstract>(Abstract)).to.be.instanceof(ChromeDependency)
       .and.not.be.instanceof(ExtensionsDependency)
 
-    Container.bindParam('browser', Browser.EXTENSIONS)
+    container.bindParam('browser', Browser.EXTENSIONS)
 
-    expect(Container.resolve(Abstract)).to.be.instanceof(ExtensionsDependency)
+    expect(container.resolve<Abstract>(Abstract)).to.be.instanceof(ExtensionsDependency)
       .and.not.be.instanceof(ChromeDependency)
   })
 
   it('binds a simple parameter', () => {
-    Container.bindParam('param', 1)
+    container.bindParam('param', 1)
 
-    expect(Container.resolveParam('param')).to.equal(1)
+    expect(container.resolveParam('param')).to.equal(1)
   })
 
   it('binds an object parameter', () => {
-    Container.bindParam('param', { test: 'test' })
+    container.bindParam('param', { test: 'test' })
 
-    expect(Container.resolveParam('param')).to.deep.equal({ test: 'test' })
+    expect(container.resolveParam('param')).to.deep.equal({ test: 'test' })
   })
 
   it('resolves an object parameter using the dot notation', () => {
-    Container.bindParam('param', { test: 'test' })
-    Container.bindParam('param2', { test: { test: 'test' } })
+    container.bindParam('param', { test: 'test' })
+    container.bindParam('param2', { test: { test: 'test' } })
 
-    expect(Container.resolveParam('param.test')).to.deep.equal('test')
-    expect(Container.resolveParam('param2.test.test')).to.deep.equal('test')
+    expect(container.resolveParam('param.test')).to.deep.equal('test')
+    expect(container.resolveParam('param2.test.test')).to.deep.equal('test')
+  })
+
+  it('throws an exception if dependency was not found', () => {
+    expect(() => container.resolve<Abstract>(Abstract))
+      // TODO Change.
+      .to.throw(Error)
+  })
+
+  it('throws an exception if param was not found', () => {
+    expect(() => container.resolveParam('invalid'))
+      // TODO Change.
+      .to.throw(Error)
+  })
+
+  it('resolves a dependency as an optional', () => {
+    expect(container.resolveOptional<Abstract>(Abstract))
+      .to.be.an.instanceOf(None)
+
+    container.bind<ChildDependency>(ChildDependency).to(Abstract)
+
+    expect(container.resolveOptional<Abstract>(Abstract))
+      .to.be.an.instanceOf(Some)
+      .and.to.satisfy(o => o.unwrap() instanceof Abstract)
+  })
+
+  it('resolves a parameter as an optional', () => {
+    expect(container.resolveOptional<Abstract>(Abstract))
+      .to.be.an.instanceOf(None)
+
+    container.bind<ChildDependency>(ChildDependency).to(Abstract)
+
+    expect(container.resolveOptional<Abstract>(Abstract))
+      .to.be.an.instanceOf(Some)
+      .and.to.satisfy(o => o.unwrap() instanceof Abstract)
   })
 })
 
@@ -87,4 +124,3 @@ class ChromeDependency extends Abstract {
 class ExtensionsDependency extends Abstract {
   //
 }
-

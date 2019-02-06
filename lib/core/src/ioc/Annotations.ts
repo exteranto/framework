@@ -1,14 +1,12 @@
 import 'reflect-metadata'
-import { Container } from './Container'
+// import { Container } from './Container'
 
 /**
  * The @Autowired annotation. Automatically resolves a dependency from the
  * container when assigned to a class property.
  */
 export function Autowired (target: any, property: string) : void {
-  const type: any = Reflect.getMetadata('design:type', target, property)
-
-  inject(target, property, 'resolve', [type])
+  //
 }
 
 /**
@@ -18,9 +16,7 @@ export function Autowired (target: any, property: string) : void {
  * @param Constructor The type constructor to be bound to the container
  */
 export function Binding (Constructor: any) : any {
-  Container.bind(Constructor).toSelf()
-
-  return Constructor
+  //
 }
 
 /**
@@ -31,7 +27,7 @@ export function Binding (Constructor: any) : any {
  */
 export function Param (param: string) : (target: any, property: string) => void {
   return (target: any, property: string) : void => {
-    inject(target, property, 'resolveParam', [param])
+    //
   }
 }
 
@@ -41,9 +37,7 @@ export function Param (param: string) : (target: any, property: string) => void 
  * @param Constructor The type constructor to be bound to the container
  */
 export function Singleton (Constructor: any) : any {
-  Container.bind(Constructor).toSelf().singleton(true)
-
-  return Constructor
+  //
 }
 
 /**
@@ -55,9 +49,7 @@ export function Singleton (Constructor: any) : any {
  */
 export function WiredWith (args: any[]) : (target: any, property: any) => void {
   return (target: any, property: string) : void => {
-    const type: any = Reflect.getMetadata('design:type', target, property)
-
-    inject(target, property, 'resolve', [type, args])
+    //
   }
 }
 
@@ -69,16 +61,16 @@ export function WiredWith (args: any[]) : (target: any, property: any) => void {
  * @param method The container method to be used
  * @param args The container method arguments
  */
-function inject (target: any, property: any, method: any, args: any[]) : void {
-  const key: string = `__${property}`
+// function inject (target: any, property: any, method: any, args: any[]) : void {
+  // const key: string = `__${property}`
 
-  Object.defineProperty(target, property, {
-    get () : any {
-      return target[key] === undefined ? target[key] = Container[method](...args) : target[key]
-    },
+  // Object.defineProperty(target, property, {
+  //   get () : any {
+  //     return target[key] === undefined ? target[key] = Container[method](...args) : target[key]
+  //   },
 
-    set (value: any) : void {
-      target[key] = value
-    },
-  })
-}
+  //   set (value: any) : void {
+  //     target[key] = value
+  //   },
+  // })
+// }
