@@ -1,7 +1,8 @@
 import { expect } from 'chai'
-import { Container } from '@internal/ioc'
+
 import { Browser } from '@internal/support'
-import { Some, None } from '@internal/structures'
+import { Container, Inject } from '@internal/ioc'
+import { Optional, Some, None } from '@internal/structures'
 
 describe('Container', () => {
   let container: Container
@@ -105,6 +106,27 @@ describe('Container', () => {
       .to.be.an.instanceOf(Some)
       .and.to.satisfy(o => o.unwrap() instanceof Abstract)
   })
+
+  it('has an inject annotation that works with no args', () => {
+    container.bind<ChildDependency>(ChildDependency).to(Abstract)
+
+    expect(new Annotated().test)
+      .to.be.an.instanceOf(Abstract)
+  })
+
+  it('has an inject annotation that works with type specified', () => {
+    container.bind<ChildDependency>(ChildDependency).to(Abstract)
+
+    expect(new Annotated().test2)
+      .to.be.an.instanceOf(Abstract)
+  })
+
+  it('has an inject annotation that resolves an optional', () => {
+    container.bind<ChildDependency>(ChildDependency).to(Abstract)
+
+    expect(new Annotated().test3)
+      .to.be.an.instanceOf(Some)
+  })
 })
 
 abstract class Abstract {
@@ -123,4 +145,16 @@ class ChromeDependency extends Abstract {
 
 class ExtensionsDependency extends Abstract {
   //
+}
+
+class Annotated {
+
+  @Inject()
+  public test: Abstract
+
+  @Inject({ type: Abstract })
+  public test2: ChildDependency
+
+  @Inject({ type: Abstract, optional: true })
+  public test3: Optional<Abstract>
 }
