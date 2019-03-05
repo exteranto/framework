@@ -1,7 +1,12 @@
 import { Abstract, Class } from './types'
 import { Dependency } from './Dependency'
 import { Browser } from '@internal/support'
-import { Optional, Some, None } from '@internal/structures'
+import { Optional, Some, None } from '@bausano/data-structures'
+
+import {
+  ParameterNotFoundException,
+  DependencyNotFoundException,
+} from './exceptions'
 
 export class Container {
 
@@ -13,7 +18,7 @@ export class Container {
   /**
    * The bound container dependencies.
    */
-  private dependencies: Dependency<any, any>[] = []
+  private dependencies: Array<Dependency<any, any>> = []
 
   /**
    * The bound container dependencies.
@@ -65,34 +70,39 @@ export class Container {
    *
    * @param abstract The abstract type to be resolved
    * @param args Arguments that are provided to the constructor
+   * @param tags The tags to resolve by.
    * @return The resolved dependency instance
-   * // TODO Throws
+   * @throws {DependencyNotFoundException} If the dependency does not exist in
+   * the container
    */
-  public resolve<A> (abstract: Abstract<A>, args: any[] = []) : A {
+  public resolve<A> (
+    abstract: Abstract<A>,
+    args: any[] = [],
+    tags: { [key: string]: string } = {}
+  ) : A {
     const browser: Browser = this.resolveParam('browser')
 
-    for (const dependency of this.dependencies) {
-      if (dependency.isSuitableFor(abstract, browser)) {
-        return dependency.resolve(args)
+    for (const dependency of this.dependencies.reverse()) {
+      if (dependency.isSuitableFor(abstract, browser, tags)) {
+        return dependency.resolve(this.parseArguments(args))
       }
     }
 
-    // TODO: Throw.
-    throw new Error('no dep.')
+    throw new DependencyNotFoundException(String(abstract))
   }
 
   /**
    * Resolves a param from the container.
    *
    * @param name The parameter name
-   * @return The value of the parameter or null
-   * // TODO Throws
+   * @return The value of the parameter
+   * @throws {ParameterNotFoundException} If the parameter was not found in the
+   * container
    */
-  public resolveParam (name: string) : any {
+  public resolveParam<T> (name: string) : T {
     return name.split('.').reduce((carry, fragment) => {
       if (carry[fragment] === undefined) {
-        // TODO Throw.
-        throw new Error('no param')
+        throw new ParameterNotFoundException(name)
       }
 
       return carry[fragment]
@@ -112,6 +122,23 @@ export class Container {
     } catch {
       return new None()
     }
+  }
+
+  /**
+   * Parses the argument array, replacing wildcards with dependencies from the
+   * container.
+   *
+   * @param args Arguments to be parsed
+   * @return Parsed arguments
+   * @throws {ParameterNotFoundException} If the parameter was not found in the
+   * container
+   */
+  private parseArguments (args: any[]) : any {
+    return args.map((arg) => {
+      const matches: any[] = arg.match(/%([\w.-]+)%/)
+
+      return matches === null ? arg : this.resolveParam(matches[1])
+    })
   }
 
 }

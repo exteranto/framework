@@ -3,8 +3,8 @@
  * Export package services.
  */
 
-export * from './Container'
-export * from './Dependency'
+export { Container } from './Container'
+export { Dependency } from './Dependency'
 
 /**
  * Export package annotations.

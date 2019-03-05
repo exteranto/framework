@@ -19,6 +19,11 @@ export class Dependency<A, C extends A> {
   private browser: Browser
 
   /**
+   * The dependency tags.
+   */
+  private tags: { [key: string]: string } = {}
+
+  /**
    * The instance of the dependency, if any.
    */
   private instance: C
@@ -76,13 +81,31 @@ export class Dependency<A, C extends A> {
   }
 
   /**
+   * Assign a tag to the dependency.
+   *
+   * @param name The tag name
+   * @param value The tag value
+   * @return This class instance for chaining
+   */
+  public tag (name: string, value: string) : Dependency<A, C> {
+    this.tags[name] = value
+
+    return this
+  }
+
+  /**
    * Check if the dependency is suitable for the provided abstract on browser.
    *
    * @param abstract The abstract type constructor to check for
    * @param browser The browser to check for
+   * @param tags The required tags
    * @return Whether the dependency is suitable to be resolved for the provided abstract type
    */
-  public isSuitableFor (abstract: Abstract<A>, browser: Browser) : boolean {
+  public isSuitableFor (abstract: Abstract<A>, browser: Browser, tags: { [key: string]: string }) : boolean {
+    if (Object.keys(tags).filter(n => tags[n] !== this.tags[n]).length > 0) {
+      return false
+    }
+
     return (this.abstract === abstract) && (this.browser === undefined || this.browser === browser)
   }
 

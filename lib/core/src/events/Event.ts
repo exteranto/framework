@@ -1,4 +1,4 @@
 
-export abstract class Event {
+export class Event {
   //
 }

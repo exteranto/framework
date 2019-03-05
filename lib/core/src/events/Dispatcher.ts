@@ -1,7 +1,7 @@
-import { Singleton } from '@internal/ioc'
-import { Exception } from '@exteranto/exceptions'
 import { Event } from './Event'
+import { Singleton } from '@internal/ioc'
 import { ListenerBag } from './ListenerBag'
+import { Exception } from '@internal/Exception'
 
 @Singleton
 export class Dispatcher {

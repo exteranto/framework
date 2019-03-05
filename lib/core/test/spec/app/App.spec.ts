@@ -23,8 +23,7 @@ describe('App', () => {
 
   it('registers base container parameters', () => {
     const app: App = new App(Script.BACKGROUND, { providers: [] }, () => {})
-    app.start()
-    app.boot()
+    app.bootstrap()
 
     expect(container.resolveParam('browser')).to.be.ok
     expect(container.resolveParam('script')).to.equal(Script.BACKGROUND)
@@ -32,32 +31,28 @@ describe('App', () => {
 
   it('finds providers', () => {
     const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, () => {})
-    app.start()
-    app.boot()
+    app.bootstrap()
 
     expect((app as any).providers).to.have.lengthOf(1)
   })
 
   it('boots providers', () => {
     const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, () => {})
-    app.start()
-    app.boot()
+    app.bootstrap()
 
     expect(container.resolveParam('test')).to.equal('test')
   })
 
   it('registers providers', () => {
     const app: App = new App(Script.BACKGROUND, { providers: [TestProvider] }, () => {})
-    app.start()
-    app.boot()
+    app.bootstrap()
 
     expect(container.resolveParam('test2')).to.equal('test2')
   })
 
   it('registers param bindings', () => {
     const app: App = new App(Script.BACKGROUND, { providers: [], bound: { param: 'exteranto' } }, () => {})
-    app.start()
-    app.boot()
+    app.bootstrap()
 
     expect(container.resolveParam('param')).to.equal('exteranto')
   })
@@ -69,8 +64,7 @@ describe('App', () => {
 
     ;(app as any).dispatcher = instance(dispatcher)
 
-    app.start()
-    app.boot()
+    app.bootstrap()
 
     verify(dispatcher.touch(TestEvent)).once()
   })
@@ -80,8 +74,7 @@ describe('App', () => {
 
     ;(app as any).dispatcher = instance(dispatcher)
 
-    app.start()
-    app.boot()
+    app.bootstrap()
 
     verify(dispatcher.fire(deepEqual(new AppBootedEvent))).once()
   })
@@ -91,8 +84,7 @@ describe('App', () => {
 
     ;(app as any).dispatcher = instance(dispatcher)
 
-    app.start()
-    app.boot()
+    app.bootstrap()
 
     verify(dispatcher.mail(deepEqual(new WindowLoadedEvent))).once()
   })

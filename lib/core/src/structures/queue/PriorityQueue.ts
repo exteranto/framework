@@ -1,5 +1,5 @@
 import { Sortable } from './Sortable'
-import { Optional, None, Some } from '@internal/structures'
+import { Optional, None, Some } from '@bausano/data-structures'
 
 export class PriorityQueue<T extends Sortable> {
 
