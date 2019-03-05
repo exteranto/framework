@@ -15,17 +15,6 @@ export class DependencyNotFoundException extends IocException {
 
 }
 
-export class MoreDependenciesMatchedException extends IocException {
-
-  /**
-   * @param name The dependency name
-   */
-  constructor (name: string) {
-    super(`The abstract [${name}] has more than one fitting concretes bound. Consider tagging the concretes.`)
-  }
-
-}
-
 export class ParameterNotFoundException extends IocException {
 
   /**

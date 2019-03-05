@@ -10,7 +10,6 @@ import {
   Optionally,
   ParameterNotFoundException,
   DependencyNotFoundException,
-  MoreDependenciesMatchedException,
 } from '@internal/ioc'
 
 import { Browser } from '@internal/support'
@@ -77,6 +76,15 @@ describe('Container', () => {
     expect(container.resolve<Abstract>(Abstract))
       .to.be.instanceof(ExtensionsDependency)
       .and.not.be.instanceof(ChromeDependency)
+  })
+
+  it('resolves dependencies in reverse order', () => {
+    container.bind<ExtensionsDependency>(ExtensionsDependency).to(Abstract)
+    container.bind<ChromeDependency>(ChromeDependency).to(Abstract)
+
+    expect(container.resolve<Abstract>(Abstract))
+      .to.be.instanceof(ChromeDependency)
+      .and.not.be.instanceof(ExtensionsDependency)
   })
 
   it('does not resolve a dependency with mismatching tags', () => {
@@ -152,14 +160,6 @@ describe('Container', () => {
   it('throws an exception if param was not found', () => {
     expect(() => container.resolveParam('invalid'))
       .to.throw(ParameterNotFoundException)
-  })
-
-  it('thrrows an exception if more dependencies matched', () => {
-    container.bind<ExtensionsDependency>(ExtensionsDependency).to(Abstract)
-    container.bind<ChromeDependency>(ChromeDependency).to(Abstract)
-
-    expect(() => container.resolve<Abstract>(Abstract))
-      .to.throw(MoreDependenciesMatchedException)
   })
 
   it('resolves a dependency as an optional', () => {
@@ -259,7 +259,7 @@ class ExtensionsDependency extends Abstract {
 
 class Annotated {
 
-  @Autowired<Abstract>()
+  @Autowired
   public testAutowired: Abstract
 
   @Inject<Abstract>({ type: Abstract })
@@ -280,7 +280,7 @@ class Annotated {
   @Tagged<Abstract>({ type: '%browser%' })
   public testTaggedParam: Abstract
 
-  @Self()
+  @Self
   public container: Container
 
 }

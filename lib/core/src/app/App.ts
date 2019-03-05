@@ -8,13 +8,13 @@ export class App {
   /**
    * The current container instance.
    */
-  @Self()
+  @Self
   private container: Container
 
   /**
    * The event dispatcher implementation.
    */
-  @Autowired<Dispatcher>()
+  @Autowired
   private dispatcher: Dispatcher
 
   /**

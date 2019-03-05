@@ -36,11 +36,10 @@ export function Inject<T> (options: InjectOptions<T> = {}) : PropertyAnnotation<
  * The @Autowired annotation. Automatically resolves a dependency from the
  * container when assigned to a class property.
  */
-export function Autowired<T> () : PropertyAnnotation<any> {
-  return (target: any, property: string) : void => {
-    Inject<T>()(target, property)
-  }
+export function Autowired<T>  (target: any, property: string) : void {
+  Inject<T>()(target, property)
 }
+
 
 /**
  * The @Optionally annotation. Resolves a dependency from the container as an
@@ -74,20 +73,18 @@ export function Tagged<T> (tags: { [key: string]: string }) : PropertyAnnotation
 /**
  * The @Self annotation. Assigns a container instance to the property.
  */
-export function Self () : PropertyAnnotation<any> {
-  return (target: any, property: string) : void => {
-    Object.defineProperty(target, property, {
-      get () : Container {
-        return target.__container === undefined
-          ? target.__container = Container.getInstance()
-          : target.__container
-      },
+export function Self (target: any, property: string) : void {
+  Object.defineProperty(target, property, {
+    get () : Container {
+      return target.__container === undefined
+        ? target.__container = Container.getInstance()
+        : target.__container
+    },
 
-      set (value: Container) : void {
-        target.__container = value
-      },
-    })
-  }
+    set (value: Container) : void {
+      target.__container = value
+    },
+  })
 }
 
 /**
