@@ -6,6 +6,7 @@ import { Optional, Some, None } from '@bausano/data-structures'
 import {
   ParameterNotFoundException,
   DependencyNotFoundException,
+  MoreDependenciesMatchedException,
 } from './exceptions'
 
 export class Container {
@@ -89,15 +90,19 @@ export class Container {
     // Parse arguments if they contain references to container params.
     args = args.map(arg => this.parseArgument(arg))
 
-    // Find the dependency.
-    const dependency: Dependency<A, any> | undefined = this.dependencies.reverse()
-      .find(dep => dep.isSuitableFor(abstract, browser, tags))
+    // Find matching dependencies.
+    const matches: Array<Dependency<A, any>> = this.dependencies
+      .filter(dep => dep.isSuitableFor(abstract, browser, tags))
 
-    if (dependency === undefined) {
+    if (matches.length === 0) {
       throw new DependencyNotFoundException(String(abstract))
     }
 
-    return dependency.resolve(args)
+    if (matches.length > 1) {
+      throw new MoreDependenciesMatchedException(String(abstract))
+    }
+
+    return matches.pop().resolve(args)
   }
 
   /**
