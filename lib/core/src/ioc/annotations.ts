@@ -40,7 +40,6 @@ export function Autowired<T>  (target: any, property: string) : void {
   Inject<T>()(target, property)
 }
 
-
 /**
  * The @Optionally annotation. Resolves a dependency from the container as an
  * optional, if not present, returns None.
