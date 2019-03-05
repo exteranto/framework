@@ -3,7 +3,7 @@
  * Export package services.
  */
 
-export * from './App'
+export { App } from './App'
 
 /**
  * Export package events.
