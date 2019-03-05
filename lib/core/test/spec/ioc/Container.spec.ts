@@ -268,16 +268,16 @@ class Annotated {
   @Optionally<Abstract>(Abstract)
   public testOptional: Optional<Abstract>
 
-  @With(['arg'])
+  @With<Abstract>(['arg'])
   public testWith: Abstract
 
-  @With(['%test%'])
+  @With<Abstract>(['%test%'])
   public testWithParam: Abstract
 
-  @Tagged({ type: 'extensions' })
+  @Tagged<Abstract>({ type: 'extensions' })
   public testTagged: Abstract
 
-  @Tagged({ type: '%browser%' })
+  @Tagged<Abstract>({ type: '%browser%' })
   public testTaggedParam: Abstract
 
   @Self()
