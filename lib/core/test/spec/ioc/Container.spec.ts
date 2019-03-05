@@ -43,6 +43,12 @@ describe('Container', () => {
     expect(container.resolve<ChildDependency>(ChildDependency, ['%test%']).type).to.equal('arg')
   })
 
+  it('binds a simple dependency with constructor args that are not string', () => {
+    container.bind<ChildDependency>(ChildDependency).toSelf()
+
+    expect(container.resolve<ChildDependency>(ChildDependency, [false]).type).to.equal(false)
+  })
+
   it('binds a singleton', () => {
     container.bind<ChildDependency>(ChildDependency).toSelf().asSingleton()
     const resolved = container.resolve<ChildDependency>(ChildDependency, ['arg'])
@@ -115,6 +121,17 @@ describe('Container', () => {
       .and.not.be.instanceof(ChromeDependency)
   })
 
+  it('chooses the correct dependency based on tags as params', () => {
+    container.bind<ChromeDependency>(ChromeDependency).to(Abstract)
+      .tag('type', 'chrome')
+    container.bind<ExtensionsDependency>(ExtensionsDependency).to(Abstract)
+      .tag('type', 'extensions')
+
+    expect(container.resolve<Abstract>(Abstract, [], { type: '%browser%' }))
+      .to.be.instanceof(ChromeDependency)
+      .and.not.be.instanceof(ExtensionsDependency)
+  })
+
   it('binds a simple parameter', () => {
     container.bindParam('param', 1)
 
@@ -159,21 +176,21 @@ describe('Container', () => {
   it('has an annotation that works with no args', () => {
     container.bind<ChildDependency>(ChildDependency).to(Abstract)
 
-    expect(new Annotated().test)
+    expect(new Annotated().testAutowired)
       .to.be.an.instanceOf(Abstract)
   })
 
   it('has an annotation that works with type specified', () => {
     container.bind<ChildDependency>(ChildDependency).to(Abstract)
 
-    expect(new Annotated().test2)
+    expect(new Annotated().testType)
       .to.be.an.instanceOf(Abstract)
   })
 
   it('has an annotation that resolves a dependency with constructor arguments', () => {
     container.bind<ChildDependency>(ChildDependency).to(Abstract)
 
-    expect(new Annotated().test4)
+    expect(new Annotated().testWith)
       .to.be.an.instanceOf(Abstract)
       .and.to.have.property('type').that.equals('arg')
   })
@@ -182,7 +199,7 @@ describe('Container', () => {
     container.bindParam('test', 'arg')
     container.bind<ChildDependency>(ChildDependency).to(Abstract)
 
-    expect(new Annotated().test5)
+    expect(new Annotated().testWithParam)
       .to.be.an.instanceOf(Abstract)
       .and.to.have.property('type').that.equals('arg')
   })
@@ -190,14 +207,36 @@ describe('Container', () => {
   it('has an annotation that resolves an optional', () => {
     container.bind<ChildDependency>(ChildDependency).to(Abstract)
 
-    expect(new Annotated().test3)
+    expect(new Annotated().testOptional)
       .to.be.an.instanceOf(Some)
   })
 
   it('has an annotation that resolves the container instance', () => {
     expect(new Annotated().container)
-      .to.be.deep.equal(container)
+      .to.deep.equal(container)
   })
+
+  it('has an annotation that resolves tagged dependencies', () => {
+    container.bind<ExtensionsDependency>(ExtensionsDependency).to(Abstract)
+      .tag('type', 'extensions')
+    container.bind<ChromeDependency>(ChromeDependency).to(Abstract)
+      .tag('type', 'chrome')
+
+    expect(new Annotated().testTagged)
+      .to.be.instanceOf(ExtensionsDependency)
+  })
+
+  it('has an annotation that resolves tagged dependencies with tags as params', () => {
+    container.bind<ChromeDependency>(ChromeDependency).to(Abstract)
+      .tag('type', 'chrome')
+    container.bind<ExtensionsDependency>(ExtensionsDependency).to(Abstract)
+      .tag('type', 'extensions')
+
+    expect(new Annotated().testTaggedParam)
+      .to.be.instanceof(ChromeDependency)
+      .and.not.be.instanceof(ExtensionsDependency)
+  })
+
 })
 
 abstract class Abstract {
@@ -221,25 +260,25 @@ class ExtensionsDependency extends Abstract {
 class Annotated {
 
   @Autowired<Abstract>()
-  public test: Abstract
+  public testAutowired: Abstract
 
   @Inject<Abstract>({ type: Abstract })
-  public test2: ChildDependency
+  public testType: ChildDependency
 
   @Optionally<Abstract>(Abstract)
-  public test3: Optional<Abstract>
+  public testOptional: Optional<Abstract>
 
   @With(['arg'])
-  public test4: Abstract
+  public testWith: Abstract
 
   @With(['%test%'])
-  public test5: Abstract
+  public testWithParam: Abstract
 
-  @Tagged({ type: 'sync' })
-  public test6: Abstract
+  @Tagged({ type: 'extensions' })
+  public testTagged: Abstract
 
-  @Tagged({ type: '%cache.driver%' })
-  public test7: Abstract
+  @Tagged({ type: '%browser%' })
+  public testTaggedParam: Abstract
 
   @Self()
   public container: Container

@@ -82,22 +82,22 @@ export class App {
    */
   private findProviders () : void {
     this.providers = this.config.providers
-      .map(Constructor => new Constructor(this.container))
-      .filter(provider => provider.only().indexOf(this.script) !== -1)
+      .map((Constructor: Class<Provider>) => new Constructor(this.container))
+      .filter((provider: Provider) => provider.only().indexOf(this.script) !== -1)
   }
 
   /**
    * Boot specified service providers.
    */
   private bootProviders () : void {
-    this.providers.forEach(provider => provider.boot())
+    this.providers.forEach((provider: Provider) => provider.boot())
   }
 
   /**
    * Register specified service providers.
    */
   private registerProviders () : void {
-    this.providers.forEach(provider => provider.register())
+    this.providers.forEach((provider: Provider) => provider.register())
   }
 
   /**

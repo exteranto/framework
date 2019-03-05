@@ -78,17 +78,26 @@ export class Container {
   public resolve<A> (
     abstract: Abstract<A>,
     args: any[] = [],
-    tags: { [key: string]: string } = {}
+    tags: { [key: string]: string } = {},
   ) : A {
     const browser: Browser = this.resolveParam('browser')
 
-    for (const dependency of this.dependencies.reverse()) {
-      if (dependency.isSuitableFor(abstract, browser, tags)) {
-        return dependency.resolve(this.parseArguments(args))
-      }
+    // Parse tags if they contain references to container params.
+    Object.keys(tags)
+      .forEach(key => tags[key] = this.parseArgument(tags[key]))
+
+    // Parse arguments if they contain references to container params.
+    args = args.map(arg => this.parseArgument(arg))
+
+    // Find the dependency.
+    const dependency: Dependency<A, any> | undefined = this.dependencies.reverse()
+      .find(dep => dep.isSuitableFor(abstract, browser, tags))
+
+    if (dependency === undefined) {
+      throw new DependencyNotFoundException(String(abstract))
     }
 
-    throw new DependencyNotFoundException(String(abstract))
+    return dependency.resolve(args)
   }
 
   /**
@@ -128,17 +137,19 @@ export class Container {
    * Parses the argument array, replacing wildcards with dependencies from the
    * container.
    *
-   * @param args Arguments to be parsed
-   * @return Parsed arguments
+   * @param arg The argument to be parsed
+   * @return The parsed argument
    * @throws {ParameterNotFoundException} If the parameter was not found in the
    * container
    */
-  private parseArguments (args: any[]) : any {
-    return args.map((arg) => {
-      const matches: any[] = arg.match(/%([\w.-]+)%/)
+  private parseArgument (arg: any) : any {
+    if (typeof arg !== 'string') {
+      return arg
+    }
 
-      return matches === null ? arg : this.resolveParam(matches[1])
-    })
+    const matches: any[] = arg.match(/%([\w.-]+)%/)
+
+    return matches === null ? arg : this.resolveParam(matches[1])
   }
 
 }

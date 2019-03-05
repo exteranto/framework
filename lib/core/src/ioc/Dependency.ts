@@ -102,7 +102,7 @@ export class Dependency<A, C extends A> {
    * @return Whether the dependency is suitable to be resolved for the provided abstract type
    */
   public isSuitableFor (abstract: Abstract<A>, browser: Browser, tags: { [key: string]: string }) : boolean {
-    if (Object.keys(tags).filter(n => tags[n] !== this.tags[n]).length > 0) {
+    if (Object.keys(tags).filter(key => tags[key] !== this.tags[key]).length > 0) {
       return false
     }
 
