@@ -1,4 +1,12 @@
+
+/**
+ * Export package services.
+ */
+
 export { App } from './App'
-export { Router } from './Router'
+
+/**
+ * Export package events.
+ */
 
 export * from './events'

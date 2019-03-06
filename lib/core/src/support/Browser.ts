@@ -3,8 +3,8 @@
  * The browser type enumeration.
  */
 export enum Browser {
-  CHROME,
-  EXTENSIONS,
-  SAFARI,
-  TESTING,
+  CHROME = 'chrome',
+  EXTENSIONS = 'extensions',
+  SAFARI = 'safari',
+  TESTING = 'testing',
 }
