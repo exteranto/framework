@@ -1,7 +1,7 @@
-import { Singleton } from '@internal/ioc'
-import { Exception } from '@exteranto/exceptions'
 import { Event } from './Event'
 import { ListenerBag } from './ListenerBag'
+import { Exception } from '@internal/Exception'
+import { Singleton, Class } from '@internal/ioc'
 
 @Singleton
 export class Dispatcher {
@@ -14,7 +14,7 @@ export class Dispatcher {
   /**
    * Map of event names to their respective types.
    */
-  private types: Map<string, new (..._: any[]) => Event> = new Map()
+  private types: Map<string, Class<Event>> = new Map()
 
   /**
    * Return the type associated with the event name.
@@ -22,7 +22,7 @@ export class Dispatcher {
    * @param name The name to look for
    * @return The event type constructor if found or null
    */
-  public type (name: string) : new (..._: any[]) => Event {
+  public type (name: string) : Class<Event> {
     return this.types.get(name)
   }
 
@@ -32,7 +32,7 @@ export class Dispatcher {
    * @param event The event type constructor to modify
    * @return The corresponding listener bag
    */
-  public touch (event: new (..._: any[]) => Event) : ListenerBag {
+  public touch (event: Class<Event>) : ListenerBag {
     // Add the types to the event map.
     this.types.set(event.name, event)
 
@@ -67,7 +67,7 @@ export class Dispatcher {
       return this.fire(event)
     }
 
-    this.touch(event.constructor as new (..._: any[]) => Event).mailbox
+    this.touch(event.constructor as Class<Event>).mailbox
       .push(() => this.fire(event))
   }
 
