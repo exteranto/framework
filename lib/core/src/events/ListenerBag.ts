@@ -1,7 +1,7 @@
 import { Event } from './Event'
 import { Listener } from './Listener'
 import { Middleware } from './Middleware'
-import { Pipeline } from '@internal/structures'
+import { HandlePipeline } from '@bausano/data-structures'
 
 export class ListenerBag {
 
@@ -64,10 +64,8 @@ export class ListenerBag {
    * @param event The event to be passed to the listeners
    */
   public async dispatch (event: Event) : Promise<void> {
-    return new Pipeline()
-      .send(event)
-      .via('handle')
-      .through(this.middleware)
+    return new HandlePipeline<Event>()
+      .feed(event, this.middleware)
       .then(result => this.listeners.forEach(listener => listener.handle(result)))
   }
 
