@@ -1,6 +1,6 @@
 {
   "name": "@exteranto/core",
-  "version": "2.5.0",
+  "version": "3.0.0",
   "description": "The Application Core Functionality for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -31,7 +31,7 @@
   "repository": "github:exteranto/core",
   "license": "MIT",
   "dependencies": {
-    "@bausano/data-structures": "^1.0.1",
+    "@bausano/data-structures": "^1.0.3",
     "reflect-metadata": "^0.1.12"
   },
   "devDependencies": {
