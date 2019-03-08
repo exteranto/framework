@@ -18,7 +18,7 @@ export class Container {
   /**
    * The bound container dependencies.
    */
-  private dependencies: Array<Dependency<any, any>> = []
+  private dependencies: Array<Dependency<any>> = []
 
   /**
    * The bound container dependencies.
@@ -47,8 +47,8 @@ export class Container {
    * @param concrete The concrete type constructor to be bound
    * @return The dependency class instance for further configuration
    */
-  public bind<C> (concrete: Class<C>) : Dependency<any, C> {
-    const dependency: Dependency<any, C> = new Dependency(concrete)
+  public bind<T> (concrete: Class<T>) : Dependency<T> {
+    const dependency: Dependency<T> = new Dependency(concrete)
 
     this.dependencies.push(dependency)
 
@@ -75,11 +75,11 @@ export class Container {
    * @throws {DependencyNotFoundException} If the dependency does not exist in
    * the container
    */
-  public resolve<A> (
-    abstract: Abstract<A>,
+  public resolve<T> (
+    abstract: Abstract<T>,
     args: any[] = [],
     tags: { [key: string]: string } = {},
-  ) : A {
+  ) : T {
     const browser: Browser = this.resolveParam('browser')
 
     // Parse tags if they contain references to container params.
@@ -90,7 +90,7 @@ export class Container {
     args = args.map(arg => this.parseArgument(arg))
 
     // Find the dependency.
-    const dependency: Dependency<A, any> | undefined = this.dependencies.reverse()
+    const dependency: Dependency<T> | undefined = this.dependencies.reverse()
       .find(dep => dep.isSuitableFor(abstract, browser, tags))
 
     if (dependency === undefined) {
@@ -125,9 +125,9 @@ export class Container {
    * @param args Arguments that are provided to the constructor
    * @return The resolved dependency instance, wrapped in an optional
    */
-  public resolveOptional<A> (abstract: Abstract<A>, args: any[] = []) : Optional<A> {
+  public resolveOptional<T> (abstract: Abstract<T>, args: any[] = []) : Optional<T> {
     try {
-      return new Some(this.resolve<A>(abstract, args))
+      return new Some(this.resolve<T>(abstract, args))
     } catch {
       return new None()
     }
