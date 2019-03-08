@@ -5,7 +5,7 @@ import Port = browser.runtime.Port
 export class Messaging extends AbstractMessaging {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public listen () : void {
     browser.runtime.onConnect.addListener((port) => {
@@ -28,7 +28,7 @@ export class Messaging extends AbstractMessaging {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async send (message: Message) : Promise<any> {
     return new Promise((resolve, reject) => {

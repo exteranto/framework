@@ -1,23 +1,21 @@
-import { Container } from '@exteranto/core'
 import { Cache } from './Cache'
+import { Container } from '@exteranto/core'
 
 /**
  * The @Cached annotation. Automatically caches a method return value. Note that
  * any annotated method is automatically transformed to have a return type of
  * Promise<T>.
  *
- * @param params The parameters for the annotation, accepts 'key' and 'timeout' keys
+ * @param params The parameters for the annotation
  */
-export function Cached (params: any = {}) : any {
-  return (target, method, descriptor) => {
-    const cache: Cache = Container.resolve(Cache)
-
+export function Cached (params: { key?: string, timeout?: number } = {}) : any {
+  return (target: any, method: string, descriptor: any) => {
     descriptor.value = new Proxy(target[method], {
       apply: (callable, scope, args) => {
         const timeout: number = resolveTimeout(params.timeout)
         const key: string = params.key || `${scope.constructor.name}.${method}.${JSON.stringify(args)}`
 
-        return cache.store(key, () => {
+        return Container.getInstance().resolve(Cache).store(key, () => {
           return Reflect.apply(callable, scope, args)
         }, timeout)
       },
@@ -40,5 +38,5 @@ function resolveTimeout (timeout: any) : number {
 
   const matches: any[] = timeout.match(/%([\w.-]+)%/)
 
-  return matches === null ? timeout : Container.resolveParam(matches[1])
+  return matches === null ? timeout : Container.getInstance().resolveParam(matches[1])
 }

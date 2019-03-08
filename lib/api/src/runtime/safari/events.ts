@@ -7,6 +7,8 @@ import {
   ExtensionInstalledEvent,
 } from '../events'
 
+declare var safari: any
+
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   safari.application.addEventListener('beforeNavigate', (event) => {
     dispatcher.fire(new WebRequestBeforeRedirectedEvent({
@@ -36,7 +38,7 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
 const registerInstallAndUpdateEvents: (dispatcher: Dispatcher) => void = (dispatcher) => {
   const exteranto: any = getExterantoInfo()
   const previousVersion: string = exteranto.version
-  const version: string = Container.resolveParam('app.version')
+  const version: string = Container.getInstance().resolveParam<string>('app.version')
 
   if (previousVersion === version) {
     return

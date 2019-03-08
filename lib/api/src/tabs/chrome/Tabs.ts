@@ -1,14 +1,14 @@
-import { TabIdUnknownException } from '@exteranto/exceptions'
-import { Dispatcher, RegistersNativeEvents } from '@exteranto/core'
-import { TabInterface } from '../TabInterface'
-import { Tabs as AbstractTabs } from '../Tabs'
-import { register } from './events'
 import { Tab } from './Tab'
+import { register } from './events'
+import { Tabs as AbstractTabs } from '../Tabs'
+import { TabInterface } from '../TabInterface'
+import { TabIdUnknownException } from '@internal/tabs/exceptions'
+import { Dispatcher, RegistersNativeEvents } from '@exteranto/core'
 
 export class Tabs extends AbstractTabs implements RegistersNativeEvents {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   protected filter (query: any = {}) : Promise<TabInterface[]> {
     return new Promise(resolve => chrome.tabs.query(query, (tabs) => {
@@ -17,7 +17,7 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public open (url: string, active: boolean = false) : Promise<TabInterface> {
     return new Promise((resolve) => {
@@ -26,7 +26,7 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public get (id: number) : Promise<TabInterface> {
     return new Promise((resolve, reject) => {
@@ -39,7 +39,7 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     register(dispatcher)

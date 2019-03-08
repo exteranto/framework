@@ -14,6 +14,8 @@ export default ({ localStorage }) => {
     dispatcher = mock(Dispatcher)
     local = new SafariStorage('local')
     sync = new SafariStorage('sync')
+    ;(local as any).dispatcher = instance(dispatcher)
+    ;(sync as any).dispatcher = instance(dispatcher)
   })
 
   afterEach(async () => {
@@ -98,8 +100,6 @@ export default ({ localStorage }) => {
   })
 
   it('registers the correct listener', async () => {
-    (local as any).dispatcher = instance(dispatcher)
-
     await local.set('key', 'value')
 
     verify(dispatcher.fire(deepEqual(new StorageChangedEvent('local', { key: 'value' }))))

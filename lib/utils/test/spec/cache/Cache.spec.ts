@@ -4,6 +4,7 @@ import { mock, instance, verify, deepEqual, when, anything } from 'ts-mockito'
 
 import { Storage } from '@exteranto/api'
 import { Cache, Cached } from '@internal/cache'
+import { Container, Browser } from '@exteranto/core'
 
 describe('Cache', () => {
   let cache: Cache
@@ -11,6 +12,8 @@ describe('Cache', () => {
   let hasher
 
   beforeEach(() => {
+    Container.getInstance().bindParam('browser', Browser.TESTING)
+
     storage = mock(StorageImplementation)
     cache = new Cache
     hasher = { init: sinon.stub().returnsArg(0) }

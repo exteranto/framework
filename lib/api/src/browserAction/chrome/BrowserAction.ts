@@ -1,12 +1,12 @@
 import { Dispatcher } from '@exteranto/core'
 import { BrowserActionClickedEvent } from '../events'
-import { TabIdUnknownException } from '@exteranto/exceptions'
+import { TabIdUnknownException } from '@internal/tabs/exceptions'
 import { BrowserAction as AbstractBrowserAction } from '../BrowserAction'
 
 export class BrowserAction extends AbstractBrowserAction {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public getBadgeText (tabId: number) : Promise<string> {
     return new Promise((resolve, reject) => {
@@ -17,7 +17,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public setBadgeText (text: string, tabId: number) : Promise<void> {
     return new Promise((resolve, reject) => {
@@ -28,7 +28,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public getBadgeColor (tabId: number) : Promise<number[]> {
     return new Promise((resolve, reject) => {
@@ -39,7 +39,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public setBadgeColor (color: number[], tabId: number) : Promise<void> {
     return new Promise((resolve, reject) => {
@@ -50,7 +50,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public getTitle (tabId: number) : Promise<string> {
     return new Promise((resolve, reject) => {
@@ -61,7 +61,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public setTitle (title: string, tabId: number) : Promise<void> {
     return new Promise((resolve, reject) => {
@@ -72,7 +72,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public setIcon (path: string | object, tabId: number) : Promise<void> {
     return new Promise((resolve, reject) => {
@@ -83,7 +83,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     chrome.browserAction.onClicked.addListener(({ id }) => {

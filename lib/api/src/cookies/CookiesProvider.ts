@@ -1,4 +1,4 @@
-import { NotImplementedException } from '@exteranto/exceptions'
+import { NotImplementedException } from '@internal/exceptions'
 import { Browser, Dispatcher, Provider, Script } from '@exteranto/core'
 
 import { Cookies } from './Cookies'

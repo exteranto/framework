@@ -12,14 +12,14 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public id () : number {
     return this.tab.id
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public url () : Promise<string> {
     return new Promise(resolve => chrome.tabs.get(this.tab.id, resolve))
@@ -27,7 +27,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public close () : Promise<void> {
     return new Promise((resolve) => {
@@ -36,7 +36,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public reload () : Promise<TabInterface> {
     return new Promise((resolve) => {
@@ -45,7 +45,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public duplicate () : Promise<TabInterface> {
     return new Promise((resolve) => {
@@ -54,7 +54,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public activate () : Promise<TabInterface> {
     return new Promise(resolve => {
@@ -67,7 +67,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public pin (pinned: boolean = true) : Promise<TabInterface> {
     return new Promise(resolve => {
@@ -80,14 +80,14 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public unpin () : Promise<TabInterface> {
     return this.pin(false)
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public send (message: Message) : Promise<any> {
     const port: Port = chrome.tabs.connect(this.tab.id)
@@ -106,7 +106,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public raw (key: string) : any {
     return this.tab[key]

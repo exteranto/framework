@@ -1,6 +1,8 @@
 import { Message } from '../Message'
 import { Messaging as AbstractMessaging } from '../Messaging'
 
+declare var safari: any
+
 export class Messaging extends AbstractMessaging {
 
   /**
@@ -9,7 +11,7 @@ export class Messaging extends AbstractMessaging {
   private promises: any = {}
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public listen () : void {
     safari.application.addEventListener('message', (event) => {
@@ -44,7 +46,7 @@ export class Messaging extends AbstractMessaging {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async send (message: Message) : Promise<any> {
     return new Promise((resolve, reject) => {

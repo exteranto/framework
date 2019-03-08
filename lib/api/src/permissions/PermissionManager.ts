@@ -1,5 +1,5 @@
 import { Permission } from './Permission'
-import { PermissionNotGrantedException } from '@exteranto/exceptions'
+import { PermissionNotGrantedException } from '@internal/permissions/exceptions'
 
 export abstract class PermissionManager {
 

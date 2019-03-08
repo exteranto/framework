@@ -1,15 +1,13 @@
 import { CookieChangedEvent } from '../events'
 import { Cookies as AbstractCookies } from '../Cookies'
+import { EmptyResponseException } from '@internal/exceptions'
 import { Dispatcher, RegistersNativeEvents } from '@exteranto/core'
-import {
-  EmptyResponseException,
-  InvalidCookieRequestException,
-} from '@exteranto/exceptions'
+import { InvalidCookieRequestException } from '@internal/cookies/exceptions'
 
 export class Cookies extends AbstractCookies implements RegistersNativeEvents {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async get (url: string, name: string) : Promise<any> {
     return browser.cookies.get({ url, name })
@@ -22,7 +20,7 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async getAll (params?: any) : Promise<any[]> {
     return browser.cookies.getAll(params)
@@ -30,7 +28,7 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async set (params?: any) : Promise<void> {
     return browser.cookies.set(params)
@@ -39,7 +37,7 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     browser.cookies.onChanged.addListener((cookie) => {

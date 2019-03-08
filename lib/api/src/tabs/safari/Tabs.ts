@@ -2,13 +2,15 @@ import { Tab } from './Tab'
 import { register } from './events'
 import { TabInterface } from '../TabInterface'
 import { Tabs as AbstractTabs } from '../Tabs'
+import { TabIdUnknownException } from '@internal/tabs/exceptions'
 import { Dispatcher, RegistersNativeEvents } from '@exteranto/core'
-import { TabIdUnknownException } from '@exteranto/exceptions'
+
+declare var safari: any
 
 export class Tabs extends AbstractTabs implements RegistersNativeEvents {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   protected async filter (query: any = {}) : Promise<TabInterface[]> {
     return ['active', 'currentWindow', 'title', 'index', 'windowId']
@@ -20,7 +22,7 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async open (url: string, active: boolean = false) : Promise<TabInterface> {
     const tab: any = safari.application.activeBrowserWindow.openTab()
@@ -35,7 +37,7 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async get (id: number) : Promise<TabInterface> {
     const tab: TabInterface = this.getAllTabs().find(t => t.id() === id)
@@ -48,7 +50,7 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     register(dispatcher)

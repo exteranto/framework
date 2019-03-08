@@ -13,6 +13,7 @@ export default ({ browser }) => {
   beforeEach(() => {
     dispatcher = mock(Dispatcher)
     storage = new ExtensionsStorage('local')
+    ;(storage as any).dispatcher = instance(dispatcher)
   })
 
   it('populates a value', async () => {
@@ -95,7 +96,6 @@ export default ({ browser }) => {
   })
 
   it('registers the correct listener', async () => {
-    (storage as any).dispatcher = instance(dispatcher)
     browser.storage.local.set.yields(undefined)
 
     await storage.set('key', 'value')
