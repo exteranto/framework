@@ -107,4 +107,5 @@ export abstract class Tabs implements RegistersNativeEvents {
    * @param dispatcher Dispatcher resolved from container
    */
   public abstract registerEvents (dispatcher: Dispatcher) : void
+
 }
