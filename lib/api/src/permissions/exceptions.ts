@@ -1,4 +1,9 @@
+import { Exception } from '@exteranto/core'
 
-export class PermissionNotGrantedException extends Error {
+export class PermissionsExcetion extends Exception {
+  //
+}
+
+export class PermissionNotGrantedException extends PermissionsExcetion {
   //
 }

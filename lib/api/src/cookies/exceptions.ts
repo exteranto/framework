@@ -1,4 +1,9 @@
+import { Exception } from '@exteranto/core'
 
-export class InvalidCookieRequestException extends Error {
+export class CookiesException extends Exception {
+  //
+}
+
+export class InvalidCookieRequestException extends CookiesException {
   //
 }

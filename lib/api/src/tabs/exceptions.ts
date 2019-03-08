@@ -1,4 +1,9 @@
+import { Exception } from '@exteranto/core'
 
-export class TabIdUnknownException extends Error {
+export class TabsException extends Exception {
+  //
+}
+
+export class TabIdUnknownException extends TabsException {
   //
 }

@@ -20,9 +20,9 @@ export class StorageProvider extends Provider {
    * Boot the provider services.
    */
   public boot () : void {
-    this.container.bind(ChromeStorage).to(Storage).for(Browser.CHROME)
-    this.container.bind(ExtensionsStorage).to(Storage).for(Browser.EXTENSIONS)
-    this.container.bind(SafariStorage).to(Storage).for(Browser.SAFARI)
+    this.container.bind<Storage>(ChromeStorage).to(Storage).for(Browser.CHROME)
+    this.container.bind<Storage>(ExtensionsStorage).to(Storage).for(Browser.EXTENSIONS)
+    this.container.bind<Storage>(SafariStorage).to(Storage).for(Browser.SAFARI)
   }
 
   /**

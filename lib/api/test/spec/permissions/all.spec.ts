@@ -19,7 +19,7 @@ describe('Permissions', () => {
 
   beforeEach(() => {
     Container.getInstance().bindParam('browser', Browser.CHROME)
-    Container.getInstance().bind<TestingPermissionManager>(TestingPermissionManager).to(PermissionManager)
+    Container.getInstance().bind<PermissionManager>(TestingPermissionManager).to(PermissionManager)
     manager = new TestingPermissionManager
   })
 

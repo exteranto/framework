@@ -21,11 +21,11 @@ export class RuntimeProvider extends Provider {
    * Boot the provider services.
    */
   public boot () : void {
-    this.container.bind(ChromeRuntime).to(Runtime).for(Browser.CHROME)
-    this.container.bind(ExtensionsRuntime).to(Runtime).for(Browser.EXTENSIONS)
-    this.container.bind(SafariRuntime).to(Runtime).for(Browser.SAFARI)
+    this.container.bind<Runtime>(ChromeRuntime).to(Runtime).for(Browser.CHROME)
+    this.container.bind<Runtime>(ExtensionsRuntime).to(Runtime).for(Browser.EXTENSIONS)
+    this.container.bind<Runtime>(SafariRuntime).to(Runtime).for(Browser.SAFARI)
 
-    if (this.container.resolveParam('browser') === Browser.SAFARI) {
+    if (this.container.resolveParam<Browser>('browser') === Browser.SAFARI) {
       console.warn(new NotImplementedException(
         '@exteranto/api', 'Runtime', 'setUninstallUrl',
       ))
@@ -36,8 +36,8 @@ export class RuntimeProvider extends Provider {
    * Register the provider services.
    */
   public register () : void {
-    this.container.resolve(Runtime).registerEvents(
-      this.container.resolve(Dispatcher),
+    this.container.resolve<Runtime>(Runtime).registerEvents(
+      this.container.resolve<Dispatcher>(Dispatcher),
     )
   }
 

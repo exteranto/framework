@@ -1,13 +1,10 @@
+import { Exception } from '@exteranto/core'
 
-export class Exception extends Error {
+export class EmptyResponseException extends Exception {
   //
 }
 
-export class EmptyResponseException extends Error {
-  //
-}
-
-export class NotImplementedException extends Error {
+export class NotImplementedException extends Exception {
 
   /**
    * @param args The exception arguments
@@ -18,6 +15,6 @@ export class NotImplementedException extends Error {
 
 }
 
-export class InvalidUrlFormatException extends Error {
+export class InvalidUrlFormatException extends Exception {
   //
 }

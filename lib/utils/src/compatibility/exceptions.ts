@@ -1,4 +1,9 @@
+import { Exception } from '@exteranto/core'
 
-export class VersionNotMatchedException extends Error {
+export class CompatibilityException extends Exception {
+  //
+}
+
+export class VersionNotMatchedException extends CompatibilityException {
   //
 }

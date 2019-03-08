@@ -15,7 +15,7 @@ export function Cached (params: { key?: string, timeout?: number } = {}) : any {
         const timeout: number = resolveTimeout(params.timeout)
         const key: string = params.key || `${scope.constructor.name}.${method}.${JSON.stringify(args)}`
 
-        return Container.getInstance().resolve(Cache).store(key, () => {
+        return Container.getInstance().resolve<Cache>(Cache).store(key, () => {
           return Reflect.apply(callable, scope, args)
         }, timeout)
       },
@@ -38,5 +38,5 @@ function resolveTimeout (timeout: any) : number {
 
   const matches: any[] = timeout.match(/%([\w.-]+)%/)
 
-  return matches === null ? timeout : Container.getInstance().resolveParam(matches[1])
+  return matches === null ? timeout : Container.getInstance().resolveParam<number>(matches[1])
 }
