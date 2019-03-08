@@ -1,5 +1,6 @@
 import { Message } from '@internal/messaging'
 import { TabInterface } from '../TabInterface'
+
 import Port = chrome.runtime.Port
 
 export class Tab implements TabInterface {
@@ -98,7 +99,7 @@ export class Tab implements TabInterface {
     })
 
     return new Promise((resolve, reject) => {
-      const respond: (response: any) => any = response => response.ok ? resolve(response.body) : reject(response.body)
+      const respond: (response: any) => void = response => response.ok ? resolve(response.body) : reject(response.body)
 
       // This is triggered upon receiving a response from the listener.
       port.onMessage.addListener(respond)

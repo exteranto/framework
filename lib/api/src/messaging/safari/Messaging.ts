@@ -21,7 +21,7 @@ export class Messaging extends AbstractMessaging {
         return this.promises[event.message.id](event.message.payload)
       }
 
-      const respond: (response: any) => any = (response) => {
+      const respond: (response: any) => void = (response) => {
         // Safari does not support ports, so we need to send a message back
         // specifying that it is a response in the name. The response object is
         // also carrying the event id, so we can find the promise to be
@@ -50,7 +50,7 @@ export class Messaging extends AbstractMessaging {
    */
   public async send (message: Message) : Promise<any> {
     return new Promise((resolve, reject) => {
-      const respond: (response: any) => any = response => response.ok ? resolve(response.body) : reject(response.body)
+      const respond: (response: any) => void = response => response.ok ? resolve(response.body) : reject(response.body)
 
       const id: string = this.getUniqueId()
 
