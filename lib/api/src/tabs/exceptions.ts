@@ -11,3 +11,7 @@ export class TabIdUnknownException extends TabsException {
 export class NoActiveTabException extends TabsException {
   //
 }
+
+export class TabHasNoFaviconException extends TabsException {
+  //
+}

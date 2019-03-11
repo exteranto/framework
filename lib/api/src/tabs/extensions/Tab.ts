@@ -1,7 +1,7 @@
 import { Message } from '@internal/messaging'
 import { TabInterface } from '../TabInterface'
-import { TabIdUnknownException } from '../exceptions'
 import { ConnectionRefusedException } from '@internal/messaging/exceptions'
+import { TabIdUnknownException, TabHasNoFaviconException } from '../exceptions'
 
 import Port = browser.runtime.Port
 
@@ -27,9 +27,7 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public async url () : Promise<string> {
-    return browser.tabs.get(this.tab.id)
-      .then(({ url }) => url)
-      .catch(() => Promise.reject(new TabIdUnknownException()))
+    return this.info().then(tab => tab.url)
   }
 
   /**
@@ -86,6 +84,26 @@ export class Tab implements TabInterface {
   /**
    * {@inheritdoc}
    */
+  public async favicon () : Promise<string> {
+    return this.info().then((tab) => {
+      if (!tab.favIconUrl) {
+        throw new TabHasNoFaviconException()
+      }
+
+      return tab.favIconUrl
+    })
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public async title () : Promise<string> {
+    return this.info().then((tab) => tab.title)
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public async send (message: Message) : Promise<any> {
     const port: Port = browser.tabs.connect(this.tab.id)
 
@@ -109,6 +127,17 @@ export class Tab implements TabInterface {
    */
   public raw (key: string) : any {
     return this.tab[key]
+  }
+
+  /**
+   * Calls the browser tab APIs to get information about current tab.
+   *
+   * @return Resolves with browser tab data object
+   * @throws {TabIdUnknownException}
+   */
+  private async info () : Promise<browser.tabs.Tab> {
+    return browser.tabs.get(this.tab.id)
+      .catch(() => Promise.reject(new TabIdUnknownException()))
   }
 
 }
