@@ -64,6 +64,15 @@ export interface TabInterface {
   unpin () : Promise<TabInterface>
 
   /**
+   * Returns favicon url.
+   *
+   * @return Favicon url path of a tab
+   * @throws {TabIdUnknownException}
+   * @throws {TabHasNoFaviconException}
+   */
+  favicon () : Promise<string>
+
+  /**
    * Sends a message to the tab.
    *
    * @param message Message with payload
