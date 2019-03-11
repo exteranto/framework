@@ -32,6 +32,8 @@ export abstract class Storage {
    *
    * @param key Storage key to retrieve
    * @return Associated value in storage
+   * @throws {StorageKeyNotFoundException} If the key does not exist in the
+   * storage
    */
   public abstract async get (key: string|string[]) : Promise<any>
 
