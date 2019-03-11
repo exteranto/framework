@@ -1,12 +1,12 @@
 import { register } from './events'
 import { Dispatcher } from '@exteranto/core'
 import { Runtime as AbstractRuntime } from '../Runtime'
-import { InvalidUrlFormatException } from '@exteranto/exceptions'
+import { InvalidUrlFormatException } from '@internal/exceptions'
 
 export class Runtime extends AbstractRuntime {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async setUninstallUrl (url: string) : Promise<void> {
     return browser.runtime.setUninstallURL(url)
@@ -14,7 +14,7 @@ export class Runtime extends AbstractRuntime {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     register(dispatcher)

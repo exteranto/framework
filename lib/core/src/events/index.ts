@@ -1,3 +1,8 @@
+
+/**
+ * Export package services.
+ */
+
 export { Event } from './Event'
 export { Listener } from './Listener'
 export { Dispatcher } from './Dispatcher'

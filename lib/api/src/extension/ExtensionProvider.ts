@@ -11,9 +11,9 @@ export class ExtensionProvider extends Provider {
    * Boot the provider services.
    */
   public boot () : void {
-    this.container.bind(ChromeExtension).to(Extension).for(Browser.CHROME)
-    this.container.bind(ExtensionsExtension).to(Extension).for(Browser.EXTENSIONS)
-    this.container.bind(SafariExtension).to(Extension).for(Browser.SAFARI)
+    this.container.bind<Extension>(ChromeExtension).to(Extension).for(Browser.CHROME)
+    this.container.bind<Extension>(ExtensionsExtension).to(Extension).for(Browser.EXTENSIONS)
+    this.container.bind<Extension>(SafariExtension).to(Extension).for(Browser.SAFARI)
   }
 
   /**

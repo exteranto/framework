@@ -22,28 +22,28 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public id () : number {
     return this.tab.eid
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async url () : Promise<string> {
     return this.tab.url
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async close () : Promise<void> {
     this.tab.close()
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async reload () : Promise<TabInterface> {
     this.tab.url = this.tab.url
@@ -52,14 +52,14 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async duplicate () : Promise<TabInterface> {
     return this.tabs.open(this.tab, true)
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async activate () : Promise<TabInterface> {
     this.tab.activate()
@@ -68,21 +68,21 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async pin () : Promise<TabInterface> {
     return this
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async unpin () : Promise<TabInterface> {
     return this
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async send (message: Message) : Promise<any>  {
     const { resolvable, id }: any = ResponseHub
@@ -97,7 +97,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public raw (key: string) : any {
     return this.tab[key]

@@ -9,4 +9,5 @@ export abstract class Extension {
    */
   // TODO: Make sure the url points to the same directory in all browsers.
   public abstract getUrl (path?: string) : string
+
 }

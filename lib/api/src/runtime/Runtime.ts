@@ -15,4 +15,5 @@ export abstract class Runtime implements RegistersNativeEvents {
    * @param dispatcher Dispatcher resolved from container
    */
   public abstract registerEvents (dispatcher: Dispatcher) : void
+
 }

@@ -1,7 +1,0 @@
-node_modules
-test
-tsconfig.json
-tsconfig.dist.json
-tslint.json
-.editorconfig
-.travis.yml

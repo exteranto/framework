@@ -20,17 +20,17 @@ export class TabsProvider extends Provider {
    * Boot the provider services.
    */
   public boot () : void {
-    this.container.bind(ChromeTabs).to(Tabs).for(Browser.CHROME)
-    this.container.bind(ExtensionsTabs).to(Tabs).for(Browser.EXTENSIONS)
-    this.container.bind(SafariTabs).to(Tabs).for(Browser.SAFARI)
+    this.container.bind<Tabs>(ChromeTabs).to(Tabs).for(Browser.CHROME)
+    this.container.bind<Tabs>(ExtensionsTabs).to(Tabs).for(Browser.EXTENSIONS)
+    this.container.bind<Tabs>(SafariTabs).to(Tabs).for(Browser.SAFARI)
   }
 
   /**
    * Register the provider services.
    */
   public register () : void {
-    this.container.resolve(Tabs).registerEvents(
-      this.container.resolve(Dispatcher),
+    this.container.resolve<Tabs>(Tabs).registerEvents(
+      this.container.resolve<Dispatcher>(Dispatcher),
     )
   }
 

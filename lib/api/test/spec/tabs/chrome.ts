@@ -12,8 +12,8 @@ import {
 
 import { Dispatcher } from '@exteranto/core'
 import { Tab } from '@internal/tabs/chrome/Tab'
-import { TabIdUnknownException } from '@exteranto/exceptions'
 import { Tabs as ChromeTabs } from '@internal/tabs/chrome/Tabs'
+import { TabIdUnknownException } from '@internal/tabs/exceptions'
 
 export default ({ chrome }) => {
   let tabs: Tabs

@@ -3,7 +3,7 @@ import { PermissionManager as AbstractPermissionManager } from '../PermissionMan
 export class PermissionManager extends AbstractPermissionManager {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async contains () : Promise<boolean> {
     return true

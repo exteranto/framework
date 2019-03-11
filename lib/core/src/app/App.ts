@@ -1,10 +1,15 @@
-import { Router } from './Router'
-import { Autowired, Container } from '@internal/ioc'
 import { Provider, Script, Utils } from '@internal/support'
 import { AppBootedEvent, WindowLoadedEvent } from './events'
+import { Autowired, Container, Self, Class } from '@internal/ioc'
 import { Dispatcher, Event, ListenerBag } from '@internal/events'
 
 export class App {
+
+  /**
+   * The current container instance.
+   */
+  @Self
+  private container: Container
 
   /**
    * The event dispatcher implementation.
@@ -25,28 +30,22 @@ export class App {
   constructor (
     private script: Script,
     private config: any,
-    private registerEvents: (touch: (e: new (..._: any[]) => Event) => ListenerBag) => void,
+    private registerEvents: (touch: (e: Class<Event>) => ListenerBag) => void,
   ) {
     //
   }
 
   /**
-   * Starts the application by registering base params and bindins and booting
-   * providers.
+   * Boots the application by registering base params and bindins and booting
+   * providers, registering providers, registering events from the event router
+   * and firing the application booted event.
    */
-  public start () : void {
+  public bootstrap () : void {
     this.registerBaseParams()
     this.registerParamBindings()
     this.registerWindowLoadEvent()
     this.findProviders()
     this.bootProviders()
-  }
-
-  /**
-   * Boots the application by registering providers, registering events from the
-   * event router and firing the application booted event.
-   */
-  public boot () : void {
     this.registerProviders()
     this.registerEvents(e => this.dispatcher.touch(e))
     this.fireBootedEvent()
@@ -56,8 +55,8 @@ export class App {
    * Registers crucial params in the container.
    */
   private registerBaseParams () : void {
-    Container.bindParam('script', this.script)
-    Container.bindParam('browser', Utils.currentBrowser())
+    this.container.bindParam('script', this.script)
+    this.container.bindParam('browser', Utils.currentBrowser())
   }
 
   /**
@@ -65,7 +64,7 @@ export class App {
    */
   private registerParamBindings () : void {
     for (const key in this.config.bound || []) {
-      Container.bindParam(key, this.config.bound[key])
+      this.container.bindParam(key, this.config.bound[key])
     }
   }
 
@@ -83,22 +82,22 @@ export class App {
    */
   private findProviders () : void {
     this.providers = this.config.providers
-      .map(Constructor => new Constructor(Container, Router))
-      .filter(provider => provider.only().indexOf(this.script) !== -1)
+      .map((Constructor: Class<Provider>) => new Constructor(this.container))
+      .filter((provider: Provider) => provider.only().indexOf(this.script) !== -1)
   }
 
   /**
    * Boot specified service providers.
    */
   private bootProviders () : void {
-    this.providers.forEach(provider => provider.boot())
+    this.providers.forEach((provider: Provider) => provider.boot())
   }
 
   /**
    * Register specified service providers.
    */
   private registerProviders () : void {
-    this.providers.forEach(provider => provider.register())
+    this.providers.forEach((provider: Provider) => provider.register())
   }
 
   /**

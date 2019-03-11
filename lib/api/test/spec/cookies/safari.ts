@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { Cookies } from '@internal/cookies'
 
-import { NotImplementedException } from '@exteranto/exceptions'
+import { NotImplementedException } from '@internal/exceptions'
 import { Cookies as SafariCookies } from '@internal/cookies/safari/Cookies'
 
 export default () => {

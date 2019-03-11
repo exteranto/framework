@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { mock, instance, verify, deepEqual } from 'ts-mockito'
 
 import { Dispatcher } from '@exteranto/core'
-import { TabIdUnknownException } from '@exteranto/exceptions'
+import { TabIdUnknownException } from '@internal/tabs/exceptions'
 import { BrowserAction, BrowserActionClickedEvent } from '@internal/browserAction'
 import { BrowserAction as ChromeBrowserAction } from '@internal/browserAction/chrome/BrowserAction'
 

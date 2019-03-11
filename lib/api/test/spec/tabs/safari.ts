@@ -12,8 +12,8 @@ import {
 
 import { Dispatcher } from '@exteranto/core'
 import { Tab } from '@internal/tabs/safari/Tab'
-import { TabIdUnknownException } from '@exteranto/exceptions'
 import { Tabs as SafariTabs } from '@internal/tabs/safari/Tabs'
+import { TabIdUnknownException } from '@internal/tabs/exceptions'
 
 export default ({ safari }) => {
   let tabs: Tabs

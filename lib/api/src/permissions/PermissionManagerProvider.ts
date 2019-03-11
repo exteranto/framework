@@ -20,9 +20,9 @@ export class PermissionManagerProvider extends Provider {
    * Boot the provider services.
    */
   public boot () : void {
-    this.container.bind(ChromePermissionManager).to(PermissionManager).for(Browser.CHROME)
-    this.container.bind(ExtensionsPermissionManager).to(PermissionManager).for(Browser.EXTENSIONS)
-    this.container.bind(SafariPermissionManager).to(PermissionManager).for(Browser.SAFARI)
+    this.container.bind<PermissionManager>(ChromePermissionManager).to(PermissionManager).for(Browser.CHROME)
+    this.container.bind<PermissionManager>(ExtensionsPermissionManager).to(PermissionManager).for(Browser.EXTENSIONS)
+    this.container.bind<PermissionManager>(SafariPermissionManager).to(PermissionManager).for(Browser.SAFARI)
   }
 
   /**

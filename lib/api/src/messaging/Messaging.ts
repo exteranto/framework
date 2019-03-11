@@ -1,5 +1,5 @@
 import { Message } from './Message'
-import { Script, Dispatcher, Autowired, Param } from '@exteranto/core'
+import { Script, Dispatcher, Autowired, Param, Class, Event } from '@exteranto/core'
 
 export abstract class Messaging {
 
@@ -39,11 +39,11 @@ export abstract class Messaging {
   protected dispatch (
     name: string,
     payload: any,
-    context: any,
-    respond: (response: any) => any,
+    context: { tabId?: number },
+    respond: (response: any) => void,
   ) : void {
     // Get and instantiate the desired message event model.
-    const Constructor: any = this.dispatcher.type(name)
+    const Constructor: Class<Message> | undefined = this.dispatcher.type(name) as Class<Message>
 
     if (Constructor === undefined) {
       return
