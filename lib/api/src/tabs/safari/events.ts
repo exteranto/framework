@@ -8,6 +8,8 @@ import {
   TabRemovedEvent,
 } from '../events'
 
+declare var safari: any
+
 /**
  * Checks whether target is a tab or window.
  *

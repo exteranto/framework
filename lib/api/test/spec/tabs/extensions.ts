@@ -12,7 +12,7 @@ import {
 
 import { Dispatcher } from '@exteranto/core'
 import { Tab } from '@internal/tabs/extensions/Tab'
-import { TabIdUnknownException } from '@exteranto/exceptions'
+import { TabIdUnknownException } from '@internal/tabs/exceptions'
 import { Tabs as ExtensionsTabs } from '@internal/tabs/extensions/Tabs'
 
 export default ({ browser }) => {

@@ -13,6 +13,7 @@ export default ({ chrome }) => {
   beforeEach(() => {
     dispatcher = mock(Dispatcher)
     storage = new ChromeStorage('local')
+    ;(storage as any).dispatcher = instance(dispatcher)
   })
 
   it('populates a value', async () => {
@@ -95,7 +96,6 @@ export default ({ chrome }) => {
   })
 
   it('registers the correct listener', async () => {
-    (storage as any).dispatcher = instance(dispatcher)
     chrome.storage.local.set.yields(undefined)
 
     await storage.set('key', 'value')

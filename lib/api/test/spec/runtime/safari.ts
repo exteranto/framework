@@ -8,7 +8,7 @@ import {
 } from '@internal/runtime'
 
 import { Container, Dispatcher } from '@exteranto/core'
-import { NotImplementedException } from '@exteranto/exceptions'
+import { NotImplementedException } from '@internal/exceptions'
 import { Runtime as SafariRuntime } from '@internal/runtime/safari/Runtime'
 
 export default ({ localStorage }) => {
@@ -26,7 +26,7 @@ export default ({ localStorage }) => {
   })
 
   it('registers install event', () => {
-    Container.bindParam('app', { version: '1.0.0' })
+    Container.getInstance().bindParam('app', { version: '1.0.0' })
     runtime.registerEvents(instance(dispatcher))
 
     expect(localStorage.getItem('@exteranto'))
@@ -38,7 +38,7 @@ export default ({ localStorage }) => {
 
   it('registers update event', () => {
     localStorage.setItem('@exteranto', '{"version":"1.0.0"}')
-    Container.bindParam('app', { version: '1.0.1' })
+    Container.getInstance().bindParam('app', { version: '1.0.1' })
     runtime.registerEvents(instance(dispatcher))
 
     expect(localStorage.getItem('@exteranto'))
@@ -50,7 +50,7 @@ export default ({ localStorage }) => {
 
   it('does not trigger update if versions match', () => {
     localStorage.setItem('@exteranto', '{"version":"1.0.0"}')
-    Container.bindParam('app', { version: '1.0.0' })
+    Container.getInstance().bindParam('app', { version: '1.0.0' })
     runtime.registerEvents(instance(dispatcher))
 
     verify(dispatcher.mail(anything()))

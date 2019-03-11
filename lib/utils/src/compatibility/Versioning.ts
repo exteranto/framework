@@ -1,6 +1,6 @@
-import { VersionNotMatchedException } from '@exteranto/exceptions'
-import { Autowired, Binding, Param } from '@exteranto/core'
 import { VersionResolver } from './VersionResolver'
+import { Autowired, Binding, Param } from '@exteranto/core'
+import { VersionNotMatchedException } from '@internal/compatibility/exceptions'
 
 @Binding
 export class Versioning {

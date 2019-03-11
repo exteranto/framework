@@ -4,15 +4,15 @@ import { PermissionManager as AbstractPermissionManager } from '../PermissionMan
 export class PermissionManager extends AbstractPermissionManager {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async contains (needle: Permission|Permission[]) : Promise<boolean> {
     if (!Array.isArray(needle)) {
       needle = [needle]
     }
 
-    const { permissions }: any = await new Promise(
-      resolve => chrome.permissions.getAll(resolve),
+    const permissions: string[] = await new Promise<string[]>(
+      resolve => chrome.permissions.getAll(response => resolve(response.permissions)),
     )
 
     return needle.every((permission) => {
@@ -20,7 +20,7 @@ export class PermissionManager extends AbstractPermissionManager {
         return false
       }
 
-      return permissions.includes(permission)
+      return permissions.find(p => p === permission) !== undefined
     })
   }
 

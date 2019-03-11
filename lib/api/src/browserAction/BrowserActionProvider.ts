@@ -20,17 +20,17 @@ export class BrowserActionProvider extends Provider {
    * Boot the provider services.
    */
   public boot () : void {
-    this.container.bind(ChromeBrowserAction).to(BrowserAction).for(Browser.CHROME)
-    this.container.bind(ExtensionsBrowserAction).to(BrowserAction).for(Browser.EXTENSIONS)
-    this.container.bind(SafariBrowserAction).to(BrowserAction).for(Browser.SAFARI)
+    this.container.bind<BrowserAction>(ChromeBrowserAction).to(BrowserAction).for(Browser.CHROME)
+    this.container.bind<BrowserAction>(ExtensionsBrowserAction).to(BrowserAction).for(Browser.EXTENSIONS)
+    this.container.bind<BrowserAction>(SafariBrowserAction).to(BrowserAction).for(Browser.SAFARI)
   }
 
   /**
    * Register the provider services.
    */
   public register () : void {
-    this.container.resolve(BrowserAction).registerEvents(
-      this.container.resolve(Dispatcher),
+    this.container.resolve<BrowserAction>(BrowserAction).registerEvents(
+      this.container.resolve<Dispatcher>(Dispatcher),
     )
   }
 

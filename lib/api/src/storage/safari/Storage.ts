@@ -1,11 +1,11 @@
 import { StorageChangedEvent } from '../events'
 import { Storage as AbstractStorage } from '../Storage'
-import { StorageKeyNotFoundException } from '@exteranto/exceptions'
+import { StorageKeyNotFoundException } from '@internal/storage/exceptions'
 
 export class Storage extends AbstractStorage {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public get (key: any) : Promise<any> {
     return new Promise((resolve, reject) => {
@@ -36,7 +36,7 @@ export class Storage extends AbstractStorage {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public all () : Promise<any> {
     return new Promise((resolve) => {
@@ -58,7 +58,7 @@ export class Storage extends AbstractStorage {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public set (key: any, value?: any) : Promise<void> {
     return new Promise((resolve) => {
@@ -77,7 +77,7 @@ export class Storage extends AbstractStorage {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public remove (key: any) : Promise<void> {
     return new Promise((resolve) => {
@@ -92,7 +92,7 @@ export class Storage extends AbstractStorage {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public clear () : Promise<void> {
     return this.all()
@@ -101,7 +101,7 @@ export class Storage extends AbstractStorage {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public size () : Promise<number> {
     return this.all().then(data => JSON.stringify(data).length)

@@ -11,7 +11,7 @@ import {
 } from '@internal/runtime'
 
 import { Dispatcher } from '@exteranto/core'
-import { InvalidUrlFormatException } from '@exteranto/exceptions'
+import { InvalidUrlFormatException } from '@internal/exceptions'
 import { Runtime as ChromeRuntime } from '@internal/runtime/chrome/Runtime'
 
 export default ({ chrome }) => {

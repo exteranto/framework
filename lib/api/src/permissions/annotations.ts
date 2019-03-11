@@ -10,13 +10,13 @@ import { PermissionManager } from './PermissionManager'
  * @return Function that returns a proxy
  */
 export function HasAccessTo (needle: Permission|Permission[]) : any {
-  return (target, method, descriptor) => {
-    descriptor.value = new Proxy(target[method], {
+  return (target: any, property: string, descriptor: any) : void => {
+    descriptor.value = new Proxy(target[property], {
       /**
        * @throws {PermissionNotGrantedException}
        */
       apply: async (callable, scope, args) => {
-        await Container.resolve(PermissionManager).assume(needle)
+        await Container.getInstance().resolve<PermissionManager>(PermissionManager).assume(needle)
 
         return Reflect.apply(callable, scope, args)
       },

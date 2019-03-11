@@ -33,7 +33,6 @@
   "dependencies": {
     "@exteranto/api": "^2.5.0",
     "@exteranto/core": "^2.5.0",
-    "@exteranto/exceptions": "^2.5.0",
     "md5-typescript": "^1.0.5"
   },
   "devDependencies": {

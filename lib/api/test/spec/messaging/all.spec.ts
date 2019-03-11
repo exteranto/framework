@@ -18,11 +18,11 @@ describe('Messaging', () => {
 
     when(dispatcher.type('TestMessage')).thenReturn(TestMessage)
 
-    ;(messaging as any).dispatch('TestMessage', 'hello', 1, null)
+    ;(messaging as any).dispatch('TestMessage', 'hello', { tabId: 1 }, null)
 
     let message = new TestMessage('hello')
 
-    message.context = 1
+    message.context = { tabId: 1 }
     message.respond = null
 
     verify(dispatcher.fire(deepEqual(message))).once()

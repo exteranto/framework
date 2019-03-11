@@ -1,7 +1,7 @@
 import { Abstract, Class } from './types'
 import { Browser } from '@internal/support'
 
-export class Dependency<A, C extends A> {
+export class Dependency<T> {
 
   /**
    * Whether the dependency is a singleton.
@@ -11,7 +11,7 @@ export class Dependency<A, C extends A> {
   /**
    * The abstract version of the dependency.
    */
-  private abstract: Abstract<A>
+  private abstract: Abstract<T>
 
   /**
    * The browser this dependency is assigned for.
@@ -26,12 +26,12 @@ export class Dependency<A, C extends A> {
   /**
    * The instance of the dependency, if any.
    */
-  private instance: C
+  private instance: T
 
   /**
    * @param concrete The binding constructor type
    */
-  constructor (private concrete: Class<C>) {
+  constructor (private concrete: Class<T>) {
     this.abstract = this.concrete
   }
 
@@ -41,7 +41,7 @@ export class Dependency<A, C extends A> {
    * @param abstract The abstract constructor type
    * @return This class instance for chaining
    */
-  public to (abstract: Abstract<A>) : Dependency<A, C> {
+  public to (abstract: Abstract<T>) : Dependency<T> {
     this.abstract = abstract
 
     return this
@@ -52,7 +52,7 @@ export class Dependency<A, C extends A> {
    *
    * @return This class instance for chaining
    */
-  public toSelf () : Dependency<A, C> {
+  public toSelf () : Dependency<T> {
     return this.to(this.concrete)
   }
 
@@ -63,7 +63,7 @@ export class Dependency<A, C extends A> {
    * @param browser The browser this dependency should only be bound for
    * @return This class instance for chaining
    */
-  public for (browser: Browser) : Dependency<A, C> {
+  public for (browser: Browser) : Dependency<T> {
     this.browser = browser
 
     return this
@@ -74,7 +74,7 @@ export class Dependency<A, C extends A> {
    *
    * @return This class instance for chaining
    */
-  public asSingleton () : Dependency<A, C> {
+  public asSingleton () : Dependency<T> {
     this.singleton = true
 
     return this
@@ -87,7 +87,7 @@ export class Dependency<A, C extends A> {
    * @param value The tag value
    * @return This class instance for chaining
    */
-  public tag (name: string, value: string) : Dependency<A, C> {
+  public tag (name: string, value: string) : Dependency<T> {
     this.tags[name] = value
 
     return this
@@ -101,7 +101,7 @@ export class Dependency<A, C extends A> {
    * @param tags The required tags
    * @return Whether the dependency is suitable to be resolved for the provided abstract type
    */
-  public isSuitableFor (abstract: Abstract<A>, browser: Browser, tags: { [key: string]: string }) : boolean {
+  public isSuitableFor (abstract: Abstract<T>, browser: Browser, tags: { [key: string]: string }) : boolean {
     if (Object.keys(tags).filter(key => tags[key] !== this.tags[key]).length > 0) {
       return false
     }
@@ -116,7 +116,7 @@ export class Dependency<A, C extends A> {
    * @param args The constructor arguments
    * @return The dependency instance
    */
-  public resolve (args: any[]) : C {
+  public resolve (args: any[]) : T {
     // If this dependency is a singleton and we do have a saved instance, return
     // the instance.
     if (this.singleton && this.instance !== undefined) {

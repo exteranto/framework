@@ -1,4 +1,4 @@
-import { Exception } from '@internal/Exception'
+import { Exception } from '@internal/exceptions'
 
 export class IocException extends Exception {
   //

@@ -1,6 +1,6 @@
-import { Binding, Param, WiredWith } from '@exteranto/core'
-import { Storage } from '@exteranto/api'
 import { Md5 } from 'md5-typescript'
+import { Storage } from '@exteranto/api'
+import { Binding, Param, With } from '@exteranto/core'
 
 @Binding
 export class Cache {
@@ -8,7 +8,7 @@ export class Cache {
   /**
    * The cache driver to be used.
    */
-  @WiredWith(['%cache.driver%'])
+  @With<Storage>(['%cache.driver%'])
   private driver: Storage
 
   /**

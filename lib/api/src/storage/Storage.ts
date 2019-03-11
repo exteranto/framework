@@ -68,4 +68,5 @@ export abstract class Storage {
    * @return Number of bytes used by the storage
    */
   public abstract async size () : Promise<number>
+
 }

@@ -14,14 +14,14 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public id () : number {
     return this.tab.id
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async url () : Promise<string> {
     return browser.tabs.get(this.tab.id)
@@ -29,14 +29,14 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async close () : Promise<void> {
     return browser.tabs.remove(this.tab.id)
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async reload () : Promise<TabInterface> {
     return browser.tabs.reload(this.tab.id)
@@ -44,7 +44,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async duplicate () : Promise<TabInterface> {
     return browser.tabs.duplicate(this.tab.id)
@@ -52,7 +52,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async activate () : Promise<TabInterface> {
     return browser.tabs.update(this.tab.id, { active: true })
@@ -60,7 +60,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async pin (pinned: boolean = true) : Promise<TabInterface> {
     return browser.tabs.update(this.tab.id, { pinned })
@@ -68,14 +68,14 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public unpin () : Promise<TabInterface> {
     return this.pin(false)
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async send (message: Message) : Promise<any> {
     const port: Port = browser.tabs.connect(this.tab.id)
@@ -86,7 +86,7 @@ export class Tab implements TabInterface {
     })
 
     return new Promise((resolve, reject) => {
-      const respond: (response: any) => any = response => response.ok ? resolve(response.body) : reject(response.body)
+      const respond: (response: any) => void = response => response.ok ? resolve(response.body) : reject(response.body)
 
       // This is triggered upon receiving a response from the listener.
       port.onMessage.addListener(respond)
@@ -94,7 +94,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public raw (key: string) : any {
     return this.tab[key]

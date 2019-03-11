@@ -1,6 +1,6 @@
 import { Event } from './Event'
 import { ListenerBag } from './ListenerBag'
-import { Exception } from '@internal/Exception'
+import { Exception } from '@internal/exceptions'
 import { Singleton, Class } from '@internal/ioc'
 
 @Singleton

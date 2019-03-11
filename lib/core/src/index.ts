@@ -7,21 +7,15 @@ export * from './app'
 export * from './ioc'
 export * from './events'
 export * from './support'
-export * from './structures'
 
 /**
  * Generic exteranto exception.
  */
 
-export * from './Exception'
+export * from './exceptions'
 
 /**
  * Export bausano's data structures.
  */
 
-export {
-  None,
-  Some,
-  Optional,
-  OptionIsNoneException,
-} from '@bausano/data-structures'
+export * from '@bausano/data-structures'

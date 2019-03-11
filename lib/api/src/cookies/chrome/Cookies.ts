@@ -1,20 +1,20 @@
 import { CookieChangedEvent } from '../events'
 import { Cookies as AbstractCookies } from '../Cookies'
+import { EmptyResponseException } from '@internal/exceptions'
 import { Dispatcher, RegistersNativeEvents } from '@exteranto/core'
-import {
-  EmptyResponseException,
-  InvalidCookieRequestException,
-} from '@exteranto/exceptions'
+import { InvalidCookieRequestException } from '@internal/cookies/exceptions'
+
+import LastError = chrome.runtime.LastError
 
 export class Cookies extends AbstractCookies implements RegistersNativeEvents {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public get (url: string, name: string) : Promise<any> {
     return new Promise((resolve, reject) => {
       chrome.cookies.get({ url, name }, (cookie) => {
-        const error: any = chrome.runtime.lastError
+        const error: LastError = chrome.runtime.lastError
 
         if (error) {
           return reject(new InvalidCookieRequestException(error.message))
@@ -28,12 +28,12 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public getAll (params?: any) : Promise<any[]> {
     return new Promise((resolve, reject) => {
       chrome.cookies.getAll(params, (cookies) => {
-        const error: any = chrome.runtime.lastError
+        const error: LastError = chrome.runtime.lastError
 
         error
           ? reject(new InvalidCookieRequestException(error.message))
@@ -43,12 +43,12 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public set (params?: any) : Promise<void> {
     return new Promise((resolve, reject) => {
       chrome.cookies.set(params, () => {
-        const error: any = chrome.runtime.lastError
+        const error: LastError = chrome.runtime.lastError
 
         error
           ? reject(new InvalidCookieRequestException(error.message))
@@ -58,7 +58,7 @@ export class Cookies extends AbstractCookies implements RegistersNativeEvents {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     chrome.cookies.onChanged.addListener((cookie) => {
