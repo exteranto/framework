@@ -3,8 +3,8 @@ import * as sinon from 'sinon'
 import { mock, instance, verify, deepEqual } from 'ts-mockito'
 
 import { Dispatcher } from '@exteranto/core'
-import { Storage, StorageChangedEvent } from '@internal/storage'
-import { Storage as ChromeStorage } from '@internal/storage/chrome/Storage'
+import { Storage, StorageChangedEvent, StorageType } from '@internal/storage'
+import { LocalStorage as ChromeLocalStorage } from '@internal/storage/chrome/LocalStorage'
 
 export default ({ chrome }) => {
   let storage: Storage
@@ -12,7 +12,7 @@ export default ({ chrome }) => {
 
   beforeEach(() => {
     dispatcher = mock(Dispatcher)
-    storage = new ChromeStorage('local')
+    storage = new ChromeLocalStorage
     ;(storage as any).dispatcher = instance(dispatcher)
   })
 
@@ -100,7 +100,7 @@ export default ({ chrome }) => {
 
     await storage.set('key', 'value')
 
-    verify(dispatcher.fire(deepEqual(new StorageChangedEvent('local', { key: 'value' }))))
+    verify(dispatcher.fire(deepEqual(new StorageChangedEvent(StorageType.LOCAL, { key: 'value' }))))
       .once()
   })
 }

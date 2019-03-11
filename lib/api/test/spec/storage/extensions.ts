@@ -3,8 +3,8 @@ import * as sinon from 'sinon'
 import { mock, instance, verify, deepEqual } from 'ts-mockito'
 
 import { Dispatcher } from '@exteranto/core'
-import { Storage, StorageChangedEvent } from '@internal/storage'
-import { Storage as ExtensionsStorage } from '@internal/storage/extensions/Storage'
+import { Storage, StorageChangedEvent, StorageType } from '@internal/storage'
+import { LocalStorage as ExtensionsLocalStorage } from '@internal/storage/extensions/LocalStorage'
 
 export default ({ browser }) => {
   let storage: Storage
@@ -12,7 +12,7 @@ export default ({ browser }) => {
 
   beforeEach(() => {
     dispatcher = mock(Dispatcher)
-    storage = new ExtensionsStorage('local')
+    storage = new ExtensionsLocalStorage
     ;(storage as any).dispatcher = instance(dispatcher)
   })
 
@@ -100,7 +100,7 @@ export default ({ browser }) => {
 
     await storage.set('key', 'value')
 
-    verify(dispatcher.fire(deepEqual(new StorageChangedEvent('local', { key: 'value' }))))
+    verify(dispatcher.fire(deepEqual(new StorageChangedEvent(StorageType.LOCAL, { key: 'value' }))))
       .once()
   })
 }
