@@ -116,6 +116,13 @@ export class Tab implements TabInterface {
   /**
    * {@inheritdoc}
    */
+  public async title () : Promise<string> {
+    return this.tab.title
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public async send (message: Message) : Promise<any>  {
     const { resolvable, id }: any = ResponseHub
 

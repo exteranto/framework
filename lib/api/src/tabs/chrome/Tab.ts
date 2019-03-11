@@ -123,6 +123,13 @@ export class Tab implements TabInterface {
   /**
    * {@inheritdoc}
    */
+  public async title () : Promise<string> {
+    return this.info().then((tab) => tab.title)
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public send (message: Message) : Promise<any> {
     const port: Port = chrome.tabs.connect(this.tab.id)
 

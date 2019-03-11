@@ -73,6 +73,14 @@ export interface TabInterface {
   favicon () : Promise<string>
 
   /**
+   * Returns the webpage title.
+   *
+   * @return Title of the webpage
+   * @throws {TabIdUnknownException}
+   */
+  title () : Promise<string>
+
+  /**
    * Sends a message to the tab.
    *
    * @param message Message with payload

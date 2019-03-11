@@ -115,6 +115,12 @@ export default ({ chrome }) => {
       .to.eventually.equal(2)
   })
 
+  it('resolves with a title', async () => {
+    chrome.tabs.get.yields({ title: 'test' })
+
+    await expect(new Tab({}).title()).to.eventually.equal('test')
+  })
+
   it('resolves with a favicon', async () => {
     chrome.tabs.get.yields({ favIconUrl: 'test' })
 

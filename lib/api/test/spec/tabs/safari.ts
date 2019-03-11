@@ -113,6 +113,12 @@ export default ({ safari }) => {
       .to.eventually.equal(123)
   })
 
+  it('resolves with a title', async () => {
+
+    await expect(new Tab({ title: 'test' }).title())
+      .to.eventually.equal('test')
+  })
+
   it('throws an exception if favicon method is called', async () => {
     await expect(new Tab({}).favicon())
       .to.eventually.be.rejectedWith(TabHasNoFaviconException)
