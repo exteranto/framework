@@ -117,7 +117,9 @@ export default ({ browser }) => {
   })
 
   it('resolves with a title', async () => {
-    await expect(new Tab({ title: 'test' }).title())
+    browser.tabs.get.resolves({ title: 'test' })
+
+    await expect(new Tab({}).title())
       .to.eventually.equal('test')
   })
 
