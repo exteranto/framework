@@ -9,13 +9,6 @@ export abstract class Storage {
   protected dispatcher: Dispatcher
 
   /**
-   * @param type Storage can be either local or sync
-   */
-  constructor (protected type: string) {
-    //
-  }
-
-  /**
    * If and only if the key is not set, it is populated.
    *
    * @param key Storage key to retrieve

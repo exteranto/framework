@@ -4,6 +4,7 @@
  */
 
 export { Storage } from './Storage'
+export { StorageType } from './StorageType'
 export { StorageProvider } from './StorageProvider'
 
 /**

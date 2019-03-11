@@ -1,8 +1,14 @@
+import { StorageType } from '../StorageType'
 import { StorageChangedEvent } from '../events'
 import { Storage as AbstractStorage } from '../Storage'
 import { StorageKeyNotFoundException } from '@internal/storage/exceptions'
 
-export class Storage extends AbstractStorage {
+export abstract class Storage extends AbstractStorage {
+
+  /**
+   * The storage type.
+   */
+  protected abstract type: StorageType
 
   /**
    * {@inheritdoc}
@@ -62,7 +68,7 @@ export class Storage extends AbstractStorage {
    */
   public set (key: any, value?: any) : Promise<void> {
     return new Promise((resolve) => {
-      const storable: any = value ? { [key]: value } : key
+      const storable: any = value === undefined ? key : { [key]: value }
 
       for (const property in storable) {
         if (storable.hasOwnProperty(property)) {
@@ -81,11 +87,9 @@ export class Storage extends AbstractStorage {
    */
   public remove (key: any) : Promise<void> {
     return new Promise((resolve) => {
-      key = typeof key === 'string' ? [key] : key
+      const removable: string[] = [].concat(key)
 
-      key.forEach((id) => {
-        localStorage.removeItem(this.prefix() + id)
-      })
+      removable.forEach(id => localStorage.removeItem(this.prefix() + id))
 
       resolve()
     })

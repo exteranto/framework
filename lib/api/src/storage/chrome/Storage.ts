@@ -1,8 +1,14 @@
+import { StorageType } from '../StorageType'
 import { StorageChangedEvent } from '../events'
 import { Storage as AbstractStorage } from '../Storage'
 import { StorageKeyNotFoundException } from '@internal/storage/exceptions'
 
-export class Storage extends AbstractStorage {
+export abstract class Storage extends AbstractStorage {
+
+  /**
+   * The storage type.
+   */
+  protected abstract type: StorageType
 
   /**
    * {@inheritdoc}
