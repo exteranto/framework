@@ -36,8 +36,8 @@ export class MemoryStorage extends Storage {
   public async set (key: any, value?: any) : Promise<void> {
     const storable: any = value === undefined ? key : { [key]: value }
 
-    Object.keys(storable).forEach((key) => {
-      this.data[key] = JSON.stringify(storable[key], this.replacer())
+    Object.keys(storable).forEach((id) => {
+      this.data[id] = JSON.stringify(storable[id], this.replacer())
     })
 
     this.dispatcher.fire(new StorageChangedEvent(StorageType.MEMORY, storable))
@@ -69,10 +69,10 @@ export class MemoryStorage extends Storage {
   /**
    * Circular dependency replacer.
    *
-   * @return The replace callback
+   * @return The replacer callback
    */
   private replacer () : (key: string, value: any) => any {
-    const seen = new WeakSet()
+    const seen: WeakSet<any> = new WeakSet()
 
     return (_, value) => {
       if (typeof value === 'object' && value !== null) {
