@@ -1,6 +1,7 @@
 import { Browser, Provider, Script } from '@exteranto/core'
 
 import { Storage } from './Storage'
+import { StorageType } from './StorageType'
 import { MemoryStorage } from './MemoryStorage'
 import { SyncStorage as ChromeSyncStorage } from './chrome/SyncStorage'
 import { SyncStorage as SafariSyncStorage } from './safari/SyncStorage'
@@ -8,7 +9,6 @@ import { LocalStorage as ChromeLocalStorage } from './chrome/LocalStorage'
 import { LocalStorage as SafariLocalStorage } from './safari/LocalStorage'
 import { SyncStorage as ExtensionsSyncStorage } from './extensions/SyncStorage'
 import { LocalStorage as ExtensionsLocalStorage } from './extensions/LocalStorage'
-import { StorageType } from './StorageType';
 
 export class StorageProvider extends Provider {
 
