@@ -14,7 +14,7 @@ import {
 import { Dispatcher } from '@exteranto/core'
 import { Tab } from '@internal/tabs/chrome/Tab'
 import { Tabs as ChromeTabs } from '@internal/tabs/chrome/Tabs'
-import { TabIdUnknownException, NoActiveTabException } from '@internal/tabs/exceptions'
+import { TabIdUnknownException, NoActiveTabException, TabHasNoFaviconException } from '@internal/tabs/exceptions'
 
 export default ({ chrome }) => {
   let tabs: Tabs
@@ -63,7 +63,7 @@ export default ({ chrome }) => {
     sinon.assert.calledOnce(chrome.tabs.remove)
   })
 
-  it('reloads the tab', async () => {
+  it('reloads a tab', async () => {
     chrome.tabs.reload.yields(undefined)
 
     await expect(new Tab({ id: 1 }).reload().then(tab => (tab as any).tab.id))
@@ -72,7 +72,7 @@ export default ({ chrome }) => {
     sinon.assert.calledOnce(chrome.tabs.reload)
   })
 
-  it('duplicates the tab', async () => {
+  it('duplicates a tab', async () => {
     chrome.tabs.duplicate.yields({ id: 2 })
 
     await expect(new Tab({ id: 1 }).duplicate().then(tab => (tab as any).tab.id))
@@ -113,6 +113,25 @@ export default ({ chrome }) => {
 
     await expect(tabs.get(2).then(t => t.id()))
       .to.eventually.equal(2)
+  })
+
+  it('resolves with a title', async () => {
+    chrome.tabs.get.yields({ title: 'test' })
+
+    await expect(new Tab({}).title()).to.eventually.equal('test')
+  })
+
+  it('resolves with a favicon', async () => {
+    chrome.tabs.get.yields({ favIconUrl: 'test' })
+
+    await expect(new Tab({}).favicon()).to.eventually.equal('test')
+  })
+
+  it('throws an exception if tab hasn\'t a favicon', async () => {
+    chrome.tabs.get.yields({})
+
+    await expect(new Tab({}).favicon())
+      .to.eventually.be.rejectedWith(TabHasNoFaviconException)
   })
 
   it('throws an exception if tab does not exist', async () => {

@@ -3,7 +3,7 @@ import { Autowired } from '@exteranto/core'
 import { ResponseHub } from './ResponseHub'
 import { Message } from '@internal/messaging'
 import { TabInterface } from '../TabInterface'
-import { TabIdUnknownException } from '../exceptions'
+import { TabIdUnknownException, TabHasNoFaviconException } from '../exceptions'
 
 export class Tab implements TabInterface {
 
@@ -104,6 +104,20 @@ export class Tab implements TabInterface {
    */
   public async unpin () : Promise<TabInterface> {
     return this.pin()
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public async favicon () : Promise<string> {
+    throw new TabHasNoFaviconException()
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public async title () : Promise<string> {
+    return this.tab.title
   }
 
   /**

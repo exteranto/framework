@@ -1,6 +1,6 @@
 import { Message } from '@internal/messaging'
 import { TabInterface } from '../TabInterface'
-import { TabIdUnknownException } from '@internal/tabs/exceptions'
+import { TabIdUnknownException, TabHasNoFaviconException } from '@internal/tabs/exceptions'
 
 import Port = chrome.runtime.Port
 
@@ -23,14 +23,8 @@ export class Tab implements TabInterface {
   /**
    * {@inheritdoc}
    */
-  public url () : Promise<string> {
-    return new Promise((resolve, reject) => {
-      chrome.tabs.get(this.tab.id, (tab) => {
-        chrome.runtime.lastError
-          ? reject(new TabIdUnknownException())
-          : resolve(tab.url)
-      })
-    })
+  public async url () : Promise<string> {
+    return this.info().then(tab => tab.url)
   }
 
   /**
@@ -116,6 +110,26 @@ export class Tab implements TabInterface {
   /**
    * {@inheritdoc}
    */
+  public async favicon () : Promise<string> {
+    return this.info().then((tab) => {
+      if (!tab.favIconUrl) {
+        throw new TabHasNoFaviconException()
+      }
+
+      return tab.favIconUrl
+    })
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public async title () : Promise<string> {
+    return this.info().then((tab) => tab.title)
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public send (message: Message) : Promise<any> {
     const port: Port = chrome.tabs.connect(this.tab.id)
 
@@ -137,6 +151,22 @@ export class Tab implements TabInterface {
    */
   public raw (key: string) : any {
     return this.tab[key]
+  }
+
+  /**
+   * Calls the chrome tab APIs to get information about current tab.
+   *
+   * @return Resolves with chrome tab data object
+   * @throws {TabIdUnknownException}
+   */
+  private info () : Promise<chrome.tabs.Tab> {
+    return new Promise((resolve, reject) => {
+      chrome.tabs.get(this.tab.id, (tab) => {
+        chrome.runtime.lastError
+          ? reject(new TabIdUnknownException())
+          : resolve(tab)
+      })
+    })
   }
 
 }
