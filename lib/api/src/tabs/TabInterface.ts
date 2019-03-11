@@ -13,6 +13,7 @@ export interface TabInterface {
    * Retrieves the tab url.
    *
    * @return Resolves with current url
+   * @throws {TabIdUnknownException}
    */
   url () : Promise<string>
 
@@ -25,6 +26,7 @@ export interface TabInterface {
    * Reloads the tab.
    *
    * @return Resolves with itself
+   * @throws {TabIdUnknownException}
    */
   reload () : Promise<TabInterface>
 
@@ -32,6 +34,7 @@ export interface TabInterface {
    * Duplicates the tab.
    *
    * @return Resolves with new tab instance
+   * @throws {TabIdUnknownException}
    */
   duplicate () : Promise<TabInterface>
 
@@ -39,6 +42,7 @@ export interface TabInterface {
    * Marks tab as active.
    *
    * @return Resolves with itself
+   * @throws {TabIdUnknownException}
    */
   activate () : Promise<TabInterface>
 
@@ -47,6 +51,7 @@ export interface TabInterface {
    *
    * @param pinned Whether this tab should be pinned (default true)
    * @return Resolves with itself
+   * @throws {TabIdUnknownException}
    */
   pin (pinned?: boolean) : Promise<TabInterface>
 
@@ -54,6 +59,7 @@ export interface TabInterface {
    * Unpins a tab.
    *
    * @return Resolves with itself
+   * @throws {TabIdUnknownException}
    */
   unpin () : Promise<TabInterface>
 
