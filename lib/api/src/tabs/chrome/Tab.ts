@@ -1,5 +1,6 @@
 import { Message } from '@internal/messaging'
 import { TabInterface } from '../TabInterface'
+import { TabIdUnknownException } from '@internal/tabs/exceptions'
 
 import Port = chrome.runtime.Port
 
@@ -23,16 +24,25 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public url () : Promise<string> {
-    return new Promise(resolve => chrome.tabs.get(this.tab.id, resolve))
-      .then(({ url }) => url)
+    return new Promise((resolve, reject) => {
+      chrome.tabs.get(this.tab.id, (tab) => {
+        chrome.runtime.lastError
+          ? reject(new TabIdUnknownException())
+          : resolve(tab.url)
+      })
+    })
   }
 
   /**
    * {@inheritdoc}
    */
   public close () : Promise<void> {
-    return new Promise((resolve) => {
-      chrome.tabs.remove(this.tab.id, resolve)
+    return new Promise((resolve, reject) => {
+      chrome.tabs.remove(this.tab.id, () => {
+        chrome.runtime.lastError
+          ? reject(new TabIdUnknownException())
+          : resolve()
+      })
     })
   }
 
@@ -40,8 +50,12 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public reload () : Promise<TabInterface> {
-    return new Promise((resolve) => {
-      chrome.tabs.reload(this.tab.id, {}, () => resolve(this))
+    return new Promise((resolve, reject) => {
+      chrome.tabs.reload(this.tab.id, {}, () => {
+        chrome.runtime.lastError
+          ? reject(new TabIdUnknownException())
+          : resolve(this)
+      })
     })
   }
 
@@ -49,8 +63,12 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public duplicate () : Promise<TabInterface> {
-    return new Promise((resolve) => {
-      chrome.tabs.duplicate(this.tab.id, tab => resolve(new Tab(tab)))
+    return new Promise((resolve, reject) => {
+      chrome.tabs.duplicate(this.tab.id, (tab) => {
+        chrome.runtime.lastError
+          ? reject(new TabIdUnknownException())
+          : resolve(new Tab(tab))
+      })
     })
   }
 
@@ -58,11 +76,15 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public activate () : Promise<TabInterface> {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       chrome.tabs.update(
         this.tab.id,
         { active: true },
-        () => resolve(this),
+        () => {
+          chrome.runtime.lastError
+            ? reject(new TabIdUnknownException())
+            : resolve(this)
+        },
       )
     })
   }
@@ -71,11 +93,15 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public pin (pinned: boolean = true) : Promise<TabInterface> {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       chrome.tabs.update(
         this.tab.id,
         { pinned },
-        () => resolve(this),
+        () => {
+          chrome.runtime.lastError
+            ? reject(new TabIdUnknownException())
+            : resolve(this)
+        },
       )
     })
   }

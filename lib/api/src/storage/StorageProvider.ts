@@ -1,9 +1,14 @@
 import { Browser, Provider, Script } from '@exteranto/core'
 
 import { Storage } from './Storage'
-import { Storage as ChromeStorage } from './chrome/Storage'
-import { Storage as ExtensionsStorage } from './extensions/Storage'
-import { Storage as SafariStorage } from './safari/Storage'
+import { StorageType } from './StorageType'
+import { MemoryStorage } from './MemoryStorage'
+import { SyncStorage as ChromeSyncStorage } from './chrome/SyncStorage'
+import { SyncStorage as SafariSyncStorage } from './safari/SyncStorage'
+import { LocalStorage as ChromeLocalStorage } from './chrome/LocalStorage'
+import { LocalStorage as SafariLocalStorage } from './safari/LocalStorage'
+import { SyncStorage as ExtensionsSyncStorage } from './extensions/SyncStorage'
+import { LocalStorage as ExtensionsLocalStorage } from './extensions/LocalStorage'
 
 export class StorageProvider extends Provider {
 
@@ -20,9 +25,23 @@ export class StorageProvider extends Provider {
    * Boot the provider services.
    */
   public boot () : void {
-    this.container.bind<Storage>(ChromeStorage).to(Storage).for(Browser.CHROME)
-    this.container.bind<Storage>(ExtensionsStorage).to(Storage).for(Browser.EXTENSIONS)
-    this.container.bind<Storage>(SafariStorage).to(Storage).for(Browser.SAFARI)
+    this.container.bind<Storage>(ChromeLocalStorage)
+      .to(Storage).for(Browser.CHROME).tag('type', StorageType.LOCAL)
+    this.container.bind<Storage>(ChromeSyncStorage)
+      .to(Storage).for(Browser.CHROME).tag('type', StorageType.SYNC)
+
+    this.container.bind<Storage>(ExtensionsLocalStorage)
+      .to(Storage).for(Browser.EXTENSIONS).tag('type', StorageType.LOCAL)
+    this.container.bind<Storage>(ExtensionsSyncStorage)
+      .to(Storage).for(Browser.EXTENSIONS).tag('type', StorageType.SYNC)
+
+    this.container.bind<Storage>(SafariLocalStorage)
+      .to(Storage).for(Browser.SAFARI).tag('type', StorageType.LOCAL)
+    this.container.bind<Storage>(SafariSyncStorage)
+      .to(Storage).for(Browser.SAFARI).tag('type', StorageType.SYNC)
+
+    this.container.bind<Storage>(MemoryStorage)
+      .to(Storage).tag('type', StorageType.MEMORY)
   }
 
   /**

@@ -157,4 +157,23 @@ export default ({ chrome }) => {
     verify(dispatcher.fire(deepEqual(new TabRemovedEvent(4))))
       .once()
   })
+
+  it('throws an exception if any method is called on a non existing tab', async () => {
+    chrome.tabs.update.yields()
+    chrome.tabs.duplicate.yields()
+    chrome.tabs.reload.yields()
+    chrome.tabs.remove.yields()
+    chrome.tabs.get.yields()
+    chrome.runtime.lastError = { message: 'Tab ID does not exist' }
+
+    const tab: TabInterface = new Tab({ id: 1 })
+
+    await expect(tab.activate()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.url()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.close()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.reload()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.duplicate()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.pin()).to.eventually.be.rejectedWith(TabIdUnknownException)
+  })
+
 }

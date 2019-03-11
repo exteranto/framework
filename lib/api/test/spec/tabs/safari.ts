@@ -1,14 +1,14 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
-import { mock, instance, verify, deepEqual, anything } from 'ts-mockito'
+import { mock, instance, verify, deepEqual } from 'ts-mockito'
 
 import {
   Tabs,
+  TabInterface,
   TabCreatedEvent,
   TabUpdatedEvent,
-  TabActivatedEvent,
   TabRemovedEvent,
-  TabInterface,
+  TabActivatedEvent,
 } from '@internal/tabs'
 
 import { Dispatcher } from '@exteranto/core'
@@ -19,6 +19,7 @@ import { TabIdUnknownException, NoActiveTabException } from '@internal/tabs/exce
 export default ({ safari }) => {
   let tabs: Tabs
   let dispatcher: Dispatcher
+  let testTab: TabInterface
 
   beforeEach(() => {
     dispatcher = mock(Dispatcher)
@@ -27,10 +28,18 @@ export default ({ safari }) => {
     safari.application.activeBrowserWindow = {
       openTab: sinon.stub()
     }
+
+    testTab = new Tab({
+      browserWindow: 0,
+      id: 1,
+      url: 'test',
+    })
   })
 
   it('opens a new tab', async () => {
-    safari.application.activeBrowserWindow.openTab.returns({})
+    safari.application.activeBrowserWindow.openTab.returns({
+      browserWindow: 0,
+    })
 
     const tab = await tabs.open('http://test.com')
 
@@ -61,20 +70,20 @@ export default ({ safari }) => {
   it('closes a tab', async () => {
     const close = sinon.stub()
 
-    await expect(new Tab({ id: 1, close }).close())
+    await expect(new Tab({ id: 1, close, browserWindow: 0 }).close())
       .to.eventually.be.fulfilled
 
     sinon.assert.calledOnce(close)
   })
 
   it('reloads a tab', async () => {
-    await expect(new Tab({ url: 'test' }).reload().then(t => t.url()))
+    await expect(testTab.reload().then(t => t.url()))
       .to.eventually.equal('test')
   })
 
   it('duplicates a tab', async () => {
     const tabs = mock(SafariTabs)
-    const tab = new Tab({ url: 'test' })
+    const tab = testTab
     ;(tab as any).tabs = instance(tabs)
 
     await tab.duplicate()
@@ -83,13 +92,11 @@ export default ({ safari }) => {
   })
 
   it('pins a tab', async () => {
-    await expect(new Tab({ url: 'test' }).pin())
-      .to.eventually.be.instanceOf(Tab)
+    await expect(testTab.pin()).to.eventually.be.instanceOf(Tab)
   })
 
   it('unpins a tab', async () => {
-    await expect(new Tab({ url: 'test' }).unpin())
-      .to.eventually.be.instanceOf(Tab)
+    await expect(testTab.unpin()).to.eventually.be.instanceOf(Tab)
   })
 
   it('gets a tab by id', async () => {
@@ -176,6 +183,18 @@ export default ({ safari }) => {
 
     expect((target as any).eid).to.equal(4)
   })
+
+  it('throws an exception if any method is called on a non existing tab', async () => {
+    const tab: TabInterface = new Tab({ id: 1 })
+
+    await expect(tab.activate()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.url()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.close()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.reload()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.duplicate()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.pin()).to.eventually.be.rejectedWith(TabIdUnknownException)
+  })
+
 }
 
 class SafariTabMock {
