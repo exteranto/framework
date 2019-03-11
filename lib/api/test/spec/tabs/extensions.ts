@@ -13,8 +13,8 @@ import {
 
 import { Dispatcher } from '@exteranto/core'
 import { Tab } from '@internal/tabs/extensions/Tab'
-import { TabIdUnknownException } from '@internal/tabs/exceptions'
 import { Tabs as ExtensionsTabs } from '@internal/tabs/extensions/Tabs'
+import { TabIdUnknownException, NoActiveTabException } from '@internal/tabs/exceptions'
 
 export default ({ browser }) => {
 
@@ -36,6 +36,23 @@ export default ({ browser }) => {
 
     sinon.assert.calledOnce(browser.tabs.get)
     sinon.assert.calledOnce(browser.tabs.create)
+  })
+
+  it('returns the active tab', async () => {
+    browser.tabs.query.resolves([{ id: 1 }])
+
+    const active: Promise<TabInterface> = tabs.active()
+
+    await expect(active).to.eventually.be.instanceOf(Tab)
+    expect(active.then(tab => tab.id())).to.eventually.equal(1)
+  })
+
+  it('throws an exception if no active tab found', async () => {
+    browser.tabs.query.resolves([])
+
+    const active: Promise<TabInterface> = tabs.active()
+
+    await expect(active).to.eventually.be.rejectedWith(NoActiveTabException)
   })
 
   it('closes a tab', async () => {

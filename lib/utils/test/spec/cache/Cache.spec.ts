@@ -92,7 +92,7 @@ describe('Cache', () => {
 })
 
 class StorageImplementation extends Storage {
-  async get () {}
+  async get<T> () { return {} as T}
   async set () {}
   async all () {}
   async remove () {}

@@ -1,4 +1,5 @@
 import { TabInterface } from './TabInterface'
+import { NoActiveTabException } from './exceptions'
 import { Dispatcher, RegistersNativeEvents } from '@exteranto/core'
 
 export abstract class Tabs implements RegistersNativeEvents {
@@ -7,10 +8,16 @@ export abstract class Tabs implements RegistersNativeEvents {
    * Returns the active tab instance.
    *
    * @return Tab instance
+   * @throws {NoActiveTabException}
    */
   public async active () : Promise<TabInterface> {
-    return this.query({ active: true, currentWindow: true })
-      .then(tabs => tabs.pop())
+    const tabs: TabInterface[] = await this.query({ active: true, currentWindow: true })
+
+    if (tabs.length === 0) {
+      throw new NoActiveTabException()
+    }
+
+    return tabs.pop()
   }
 
   /**
