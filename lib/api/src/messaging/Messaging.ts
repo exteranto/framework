@@ -25,6 +25,8 @@ export abstract class Messaging {
    *
    * @param message Message event
    * @return Response body
+   * @throws {ConnectionRefusedException} If the connection could not be
+   * established
    */
   public abstract async send (message: Message) : Promise<any>
 

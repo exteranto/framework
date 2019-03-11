@@ -68,6 +68,8 @@ export interface TabInterface {
    *
    * @param message Message with payload
    * @return Resolves with response data
+   * @throws {ConnectionRefusedException} If the connection could not be
+   * established
    */
   send (message: Message) : Promise<any>
 

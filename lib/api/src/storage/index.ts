@@ -18,3 +18,9 @@ export * from './events'
  */
 
 export * from './exceptions'
+
+/**
+ * Export package types.
+ */
+
+export * from './types'

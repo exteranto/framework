@@ -1,6 +1,7 @@
 import { Message } from '@internal/messaging'
 import { TabInterface } from '../TabInterface'
 import { TabIdUnknownException } from '../exceptions'
+import { ConnectionRefusedException } from '@internal/messaging/exceptions'
 
 import Port = browser.runtime.Port
 
@@ -96,8 +97,10 @@ export class Tab implements TabInterface {
     return new Promise((resolve, reject) => {
       const respond: (response: any) => void = response => response.ok ? resolve(response.body) : reject(response.body)
 
-      // This is triggered upon receiving a response from the listener.
+      // Settle the promise upon receiving a response from ther receiver or
+      // reject it if the connection could not be established.
       port.onMessage.addListener(respond)
+      port.onDisconnect.addListener(() => browser.runtime.lastError && reject(new ConnectionRefusedException()))
     })
   }
 
