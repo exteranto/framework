@@ -39,4 +39,3 @@ git remote add token-remote https://${GITHUB_TOKEN}@github.com/exteranto/framewo
 git add lib/**/*.json
 git commit -m "$TRAVIS_TAG"
 git push token-remote HEAD:master
-git push token-remote HEAD:develop
