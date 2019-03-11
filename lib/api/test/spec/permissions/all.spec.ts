@@ -6,19 +6,20 @@ import extensions from './extensions'
 import safari from './safari'
 
 import {
-  PermissionManager as AbstractPermissionManager,
   Permission,
   HasAccessTo,
+  PermissionManager,
 } from '@internal/permissions'
 
-import { Container } from '@exteranto/core'
-import { PermissionNotGrantedException } from '@exteranto/exceptions'
+import { Container, Browser } from '@exteranto/core'
+import { PermissionNotGrantedException } from '@internal/permissions/exceptions'
 
 describe('Permissions', () => {
-  let manager: AbstractPermissionManager
+  let manager: PermissionManager
 
   beforeEach(() => {
-    Container.bind(TestingPermissionManager).to(AbstractPermissionManager)
+    Container.getInstance().bindParam('browser', Browser.CHROME)
+    Container.getInstance().bind<PermissionManager>(TestingPermissionManager).to(PermissionManager)
     manager = new TestingPermissionManager
   })
 
@@ -49,19 +50,19 @@ describe('Permissions', () => {
   generate({ chrome, extensions, safari })
 })
 
-export class TestingPermissionManager extends AbstractPermissionManager {
+export class TestingPermissionManager extends PermissionManager {
   public async contains (needle: string|string[]) : Promise<boolean> {
     return needle === 'storage'
   }
 }
 
 export class AnnotationTest {
-  @HasAccessTo(AbstractPermissionManager.Permission.STORAGE)
+  @HasAccessTo(PermissionManager.Permission.STORAGE)
   public pass (string: string) : string {
     return string + string
   }
 
-  @HasAccessTo(AbstractPermissionManager.Permission.BOOKMARKS)
+  @HasAccessTo(PermissionManager.Permission.BOOKMARKS)
   public fail (string: string) : string {
     return string + string
   }

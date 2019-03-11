@@ -73,4 +73,5 @@ export interface TabInterface {
    * @return Associated value if any
    */
   raw (key: string) : any
+
 }

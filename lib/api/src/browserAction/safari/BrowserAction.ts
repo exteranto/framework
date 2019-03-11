@@ -1,13 +1,15 @@
 import { Dispatcher } from '@exteranto/core'
 import { TabActivatedEvent } from '@internal/tabs'
 import { BrowserActionClickedEvent } from '../events'
-import { TabIdUnknownException } from '@exteranto/exceptions'
+import { TabIdUnknownException } from '@internal/tabs/exceptions'
 import { BrowserAction as AbstractBrowserAction } from '../BrowserAction'
+
+declare var safari: any
 
 export class BrowserAction extends AbstractBrowserAction {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async getBadgeText (tabId: number) : Promise<string> {
     const tab: any = this.getAllTabs().find(t => t.eid === tabId)
@@ -20,7 +22,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async setBadgeText (text: string, tabId: number) : Promise<void> {
     const tab: any = this.getAllTabs().find(t => t.eid === tabId)
@@ -35,7 +37,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async getBadgeColor (_: number) : Promise<any> {
     // Safari does not provide us with APIs to change the badge background color
@@ -45,7 +47,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async setBadgeColor () : Promise<any> {
     // Safari does not provide us with APIs to change the badge background color
@@ -55,7 +57,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async getTitle (tabId: number) : Promise<string> {
     const tab: any = this.getAllTabs().find(t => t.eid === tabId)
@@ -68,7 +70,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async setTitle (title: string, tabId: number) : Promise<void> {
     const tab: any = this.getAllTabs().find(t => t.eid === tabId)
@@ -83,7 +85,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async setIcon (path: string | object, tabId: number) : Promise<void> {
     const tab: any = this.getAllTabs().find(t => t.eid === tabId)
@@ -98,7 +100,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     dispatcher

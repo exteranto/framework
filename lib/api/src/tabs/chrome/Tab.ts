@@ -1,5 +1,6 @@
 import { Message } from '@internal/messaging'
 import { TabInterface } from '../TabInterface'
+
 import Port = chrome.runtime.Port
 
 export class Tab implements TabInterface {
@@ -12,14 +13,14 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public id () : number {
     return this.tab.id
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public url () : Promise<string> {
     return new Promise(resolve => chrome.tabs.get(this.tab.id, resolve))
@@ -27,7 +28,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public close () : Promise<void> {
     return new Promise((resolve) => {
@@ -36,7 +37,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public reload () : Promise<TabInterface> {
     return new Promise((resolve) => {
@@ -45,7 +46,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public duplicate () : Promise<TabInterface> {
     return new Promise((resolve) => {
@@ -54,7 +55,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public activate () : Promise<TabInterface> {
     return new Promise(resolve => {
@@ -67,7 +68,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public pin (pinned: boolean = true) : Promise<TabInterface> {
     return new Promise(resolve => {
@@ -80,14 +81,14 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public unpin () : Promise<TabInterface> {
     return this.pin(false)
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public send (message: Message) : Promise<any> {
     const port: Port = chrome.tabs.connect(this.tab.id)
@@ -98,7 +99,7 @@ export class Tab implements TabInterface {
     })
 
     return new Promise((resolve, reject) => {
-      const respond: (response: any) => any = response => response.ok ? resolve(response.body) : reject(response.body)
+      const respond: (response: any) => void = response => response.ok ? resolve(response.body) : reject(response.body)
 
       // This is triggered upon receiving a response from the listener.
       port.onMessage.addListener(respond)
@@ -106,7 +107,7 @@ export class Tab implements TabInterface {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public raw (key: string) : any {
     return this.tab[key]

@@ -5,12 +5,12 @@ import Port = browser.runtime.Port
 export class Messaging extends AbstractMessaging {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public listen () : void {
     browser.runtime.onConnect.addListener((port) => {
       port.onMessage.addListener((request) => {
-        const respond: (body: any) => any = (body) => {
+        const respond: (body: any) => void = (body) => {
           port.postMessage({
             body: (body instanceof Error) ? { name: body.name, message: body.message } : body,
             ok: !(body instanceof Error),
@@ -28,11 +28,11 @@ export class Messaging extends AbstractMessaging {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async send (message: Message) : Promise<any> {
     return new Promise((resolve, reject) => {
-      const respond: (response: any) => any = response => response.ok ? resolve(response.body) : reject(response.body)
+      const respond: (response: any) => void = response => response.ok ? resolve(response.body) : reject(response.body)
 
       const port: Port = browser.runtime.connect()
 

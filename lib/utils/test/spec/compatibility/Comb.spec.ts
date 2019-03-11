@@ -8,7 +8,7 @@ describe('Comb', () => {
 
   beforeEach(() => {
     comb = new Comb
-    Container.bindParam('browser', Browser.TESTING)
+    Container.getInstance().bindParam('browser', Browser.TESTING)
   })
 
   it('only executes a callback on certain browser', async () => {

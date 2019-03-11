@@ -2,7 +2,7 @@
   "extends": "tslint:recommended",
   "rules": {
     "arrow-parens": [2, "as-needed", { "requireForBlockBody": true }],
-    "completed-docs": [true, "enums", "functions", "methods", "properties"],
+    "completed-docs": [true, "enums", "functions", "methods"],
     "eofline": true,
     "forin": false,
     "indent": [true, "spaces", 2],

@@ -2,13 +2,13 @@ import { expect } from 'chai'
 
 import { Container } from '@exteranto/core'
 import { Versioning } from '@internal/compatibility'
-import { VersionNotMatchedException } from '@exteranto/exceptions'
+import { VersionNotMatchedException } from '@internal/compatibility/exceptions'
 
 describe('Versioning', () => {
   let versioning: Versioning
 
   beforeEach(() => {
-    Container.bindParam('app', { version: '1.0.0' })
+    Container.getInstance().bindParam('app', { version: '1.0.0' })
 
     versioning = new Versioning
   })

@@ -1,1 +1,6 @@
-export { After, Before, Pointcut } from './Annotations'
+
+/**
+ * Export package annotations.
+ */
+
+export * from './annotations'

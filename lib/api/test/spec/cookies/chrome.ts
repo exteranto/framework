@@ -3,9 +3,10 @@ import * as sinon from 'sinon'
 import { mock, instance, verify, deepEqual } from 'ts-mockito'
 
 import { Dispatcher } from '@exteranto/core'
+import { EmptyResponseException } from '@internal/exceptions'
 import { Cookies, CookieChangedEvent } from '@internal/cookies'
 import { Cookies as ChromeCookies } from '@internal/cookies/chrome/Cookies'
-import { EmptyResponseException, InvalidCookieRequestException } from '@exteranto/exceptions'
+import { InvalidCookieRequestException } from '@internal/cookies/exceptions'
 
 export default ({ chrome }) => {
   let cookies: Cookies

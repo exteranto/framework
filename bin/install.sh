@@ -2,7 +2,7 @@
 
 cd lib
 
-for lib in exceptions core api utils
+for lib in core api utils
 do
   cd ${lib}
   # Start commands, use ${lib} to refer to the current package.

@@ -1,19 +1,19 @@
 import { register } from './events'
 import { Dispatcher } from '@exteranto/core'
 import { Runtime as AbstractRuntime } from '../Runtime'
-import { NotImplementedException } from '@exteranto/exceptions'
+import { NotImplementedException } from '@internal/exceptions'
 
 export class Runtime extends AbstractRuntime {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async setUninstallUrl (_: string) : Promise<void> {
     throw new NotImplementedException()
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     register(dispatcher)

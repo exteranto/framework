@@ -1,12 +1,12 @@
 import { Dispatcher } from '@exteranto/core'
 import { BrowserActionClickedEvent } from '../events'
-import { TabIdUnknownException } from '@exteranto/exceptions'
+import { TabIdUnknownException } from '@internal/tabs/exceptions'
 import { BrowserAction as AbstractBrowserAction } from '../BrowserAction'
 
 export class BrowserAction extends AbstractBrowserAction {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async getBadgeText (tabId: number) : Promise<string> {
     return browser.browserAction.getBadgeText({ tabId })
@@ -14,7 +14,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async setBadgeText (text: string, tabId: number) : Promise<void> {
     return (browser as any).browserAction.setBadgeText({ text, tabId })
@@ -22,7 +22,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async getBadgeColor (tabId: number) : Promise<number[]> {
     return browser.browserAction.getBadgeBackgroundColor({ tabId })
@@ -30,7 +30,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async setBadgeColor (color: number[], tabId: number) : Promise<any> {
     return (browser as any).browserAction.setBadgeBackgroundColor({ color, tabId })
@@ -38,7 +38,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async getTitle (tabId: number) : Promise<string> {
     return browser.browserAction.getTitle({ tabId })
@@ -46,7 +46,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async setTitle (title: string, tabId: number) : Promise<void> {
     try {
@@ -57,7 +57,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public async setIcon (path: string | object, tabId: number) : Promise<void> {
     return browser.browserAction.setIcon({ path, tabId })
@@ -65,7 +65,7 @@ export class BrowserAction extends AbstractBrowserAction {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public registerEvents (dispatcher: Dispatcher) : void {
     browser.browserAction.onClicked.addListener(({ id }) => {
