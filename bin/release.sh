@@ -4,7 +4,7 @@
 echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
 
 ### @exteranto/core ###
-cd ../core
+cd lib/core
 
 npm version ${TRAVIS_TAG/v/} --allow-same-version --no-git-tag-version
 npm run build
