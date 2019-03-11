@@ -14,7 +14,7 @@ import {
 import { Dispatcher } from '@exteranto/core'
 import { Tab } from '@internal/tabs/chrome/Tab'
 import { Tabs as ChromeTabs } from '@internal/tabs/chrome/Tabs'
-import { TabIdUnknownException } from '@internal/tabs/exceptions'
+import { TabIdUnknownException, NoActiveTabException } from '@internal/tabs/exceptions'
 
 export default ({ chrome }) => {
   let tabs: Tabs
@@ -35,6 +35,23 @@ export default ({ chrome }) => {
 
     sinon.assert.calledOnce(chrome.tabs.get)
     sinon.assert.calledOnce(chrome.tabs.create)
+  })
+
+  it('returns the active tab', async () => {
+    chrome.tabs.query.yields([{ id: 1 }])
+
+    const active: Promise<TabInterface> = tabs.active()
+
+    await expect(active).to.eventually.be.instanceOf(Tab)
+    expect(active.then(tab => tab.id())).to.eventually.equal(1)
+  })
+
+  it('throws an exception if no active tab found', async () => {
+    chrome.tabs.query.yields([])
+
+    const active: Promise<TabInterface> = tabs.active()
+
+    await expect(active).to.eventually.be.rejectedWith(NoActiveTabException)
   })
 
   it('closes a tab', async () => {
