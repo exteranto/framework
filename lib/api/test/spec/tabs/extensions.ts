@@ -117,9 +117,8 @@ export default ({ browser }) => {
   })
 
   it('resolves with a title', async () => {
-    browser.tabs.get.resolves({ title: 'test' })
-
-    await expect(new Tab({}).favicon()).to.eventually.equal('test')
+    await expect(new Tab({ title: 'test' }).title())
+      .to.eventually.equal('test')
   })
 
   it('resolves with a favicon', async () => {
