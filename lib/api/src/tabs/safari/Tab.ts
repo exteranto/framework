@@ -34,7 +34,7 @@ export class Tab implements TabInterface {
    */
   public async url () : Promise<string> {
     if (this.tab.browserWindow === undefined) {
-      throw new TabIdUnknownException
+      throw new TabIdUnknownException()
     }
 
     return this.tab.url
@@ -45,7 +45,7 @@ export class Tab implements TabInterface {
    */
   public async close () : Promise<void> {
     if (this.tab.browserWindow === undefined) {
-      throw new TabIdUnknownException
+      throw new TabIdUnknownException()
     }
 
     this.tab.close()
@@ -56,7 +56,7 @@ export class Tab implements TabInterface {
    */
   public async reload () : Promise<TabInterface> {
     if (this.tab.browserWindow === undefined) {
-      throw new TabIdUnknownException
+      throw new TabIdUnknownException()
     }
 
     this.tab.url = this.tab.url
@@ -69,7 +69,7 @@ export class Tab implements TabInterface {
    */
   public async duplicate () : Promise<TabInterface> {
     if (this.tab.browserWindow === undefined) {
-      throw new TabIdUnknownException
+      throw new TabIdUnknownException()
     }
 
     return this.tabs.open(this.tab, true)
@@ -80,7 +80,7 @@ export class Tab implements TabInterface {
    */
   public async activate () : Promise<TabInterface> {
     if (this.tab.browserWindow === undefined) {
-      throw new TabIdUnknownException
+      throw new TabIdUnknownException()
     }
 
     this.tab.activate()
@@ -93,7 +93,7 @@ export class Tab implements TabInterface {
    */
   public async pin () : Promise<TabInterface> {
     if (this.tab.browserWindow === undefined) {
-      throw new TabIdUnknownException
+      throw new TabIdUnknownException()
     }
 
     return this

@@ -27,7 +27,7 @@ export class Tab implements TabInterface {
     return new Promise((resolve, reject) => {
       chrome.tabs.get(this.tab.id, (tab) => {
         chrome.runtime.lastError
-          ? reject(new TabIdUnknownException)
+          ? reject(new TabIdUnknownException())
           : resolve(tab.url)
       })
     })
@@ -40,7 +40,7 @@ export class Tab implements TabInterface {
     return new Promise((resolve, reject) => {
       chrome.tabs.remove(this.tab.id, () => {
         chrome.runtime.lastError
-          ? reject(new TabIdUnknownException)
+          ? reject(new TabIdUnknownException())
           : resolve()
       })
     })
@@ -53,7 +53,7 @@ export class Tab implements TabInterface {
     return new Promise((resolve, reject) => {
       chrome.tabs.reload(this.tab.id, {}, () => {
         chrome.runtime.lastError
-          ? reject(new TabIdUnknownException)
+          ? reject(new TabIdUnknownException())
           : resolve(this)
       })
     })
@@ -66,7 +66,7 @@ export class Tab implements TabInterface {
     return new Promise((resolve, reject) => {
       chrome.tabs.duplicate(this.tab.id, (tab) => {
         chrome.runtime.lastError
-          ? reject(new TabIdUnknownException)
+          ? reject(new TabIdUnknownException())
           : resolve(new Tab(tab))
       })
     })
@@ -82,7 +82,7 @@ export class Tab implements TabInterface {
         { active: true },
         () => {
           chrome.runtime.lastError
-            ? reject(new TabIdUnknownException)
+            ? reject(new TabIdUnknownException())
             : resolve(this)
         },
       )
@@ -99,7 +99,7 @@ export class Tab implements TabInterface {
         { pinned },
         () => {
           chrome.runtime.lastError
-            ? reject(new TabIdUnknownException)
+            ? reject(new TabIdUnknownException())
             : resolve(this)
         },
       )
