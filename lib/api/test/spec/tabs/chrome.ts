@@ -4,16 +4,17 @@ import { mock, instance, verify, deepEqual } from 'ts-mockito'
 
 import {
   Tabs,
+  TabInterface,
   TabCreatedEvent,
+  TabRemovedEvent,
   TabUpdatedEvent,
   TabActivatedEvent,
-  TabRemovedEvent,
 } from '@internal/tabs'
 
 import { Dispatcher } from '@exteranto/core'
 import { Tab } from '@internal/tabs/chrome/Tab'
 import { Tabs as ChromeTabs } from '@internal/tabs/chrome/Tabs'
-import { TabIdUnknownException } from '@internal/tabs/exceptions'
+import { TabIdUnknownException, NoActiveTabException } from '@internal/tabs/exceptions'
 
 export default ({ chrome }) => {
   let tabs: Tabs
@@ -39,7 +40,18 @@ export default ({ chrome }) => {
   it('returns the active tab', async () => {
     chrome.tabs.query.yields([{ id: 1 }])
 
-    expect(tabs.active()).to.eventually.haveOwnProperty('id').that.is.equal(1)
+    const active: Promise<TabInterface> = tabs.active()
+
+    await expect(active).to.eventually.be.instanceOf(Tab)
+    expect((await active).id()).to.equal(1)
+  })
+
+  it('throws an exception if no active tab found', async () => {
+    chrome.tabs.query.yields([])
+
+    const active: Promise<TabInterface> = tabs.active()
+
+    await expect(active).to.eventually.be.rejectedWith(NoActiveTabException)
   })
 
   it('closes a tab', async () => {
