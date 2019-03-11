@@ -14,7 +14,7 @@ import {
 import { Dispatcher } from '@exteranto/core'
 import { Tab } from '@internal/tabs/extensions/Tab'
 import { Tabs as ExtensionsTabs } from '@internal/tabs/extensions/Tabs'
-import { TabIdUnknownException, NoActiveTabException } from '@internal/tabs/exceptions'
+import { TabIdUnknownException, NoActiveTabException, TabHasNoFaviconException } from '@internal/tabs/exceptions'
 
 export default ({ browser }) => {
 
@@ -114,6 +114,19 @@ export default ({ browser }) => {
 
     await expect(tabs.get(2).then(t => t.id()))
       .to.eventually.equal(2)
+  })
+
+  it('resolves with a favicon', async () => {
+    browser.tabs.get.resolves({ favIconUrl: 'test' })
+
+    await expect(new Tab({}).favicon()).to.eventually.equal('test')
+  })
+
+  it('throws an exception if tab hasn\'t a favicon', async () => {
+    browser.tabs.get.resolves({})
+
+    await expect(new Tab({}).favicon())
+      .to.eventually.be.rejectedWith(TabHasNoFaviconException)
   })
 
   it('throws an exception if tab does not exist', async () => {

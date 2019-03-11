@@ -14,7 +14,7 @@ import {
 import { Dispatcher } from '@exteranto/core'
 import { Tab } from '@internal/tabs/safari/Tab'
 import { Tabs as SafariTabs } from '@internal/tabs/safari/Tabs'
-import { TabIdUnknownException, NoActiveTabException } from '@internal/tabs/exceptions'
+import { TabIdUnknownException, NoActiveTabException, TabHasNoFaviconException } from '@internal/tabs/exceptions'
 
 export default ({ safari }) => {
   let tabs: Tabs
@@ -111,6 +111,11 @@ export default ({ safari }) => {
 
     await expect(tabs.get(123).then(t => t.id()))
       .to.eventually.equal(123)
+  })
+
+  it('throws an exception if favicon method is called', async () => {
+    await expect(new Tab({}).favicon())
+      .to.eventually.be.rejectedWith(TabHasNoFaviconException)
   })
 
   it('throws an exception if tab does not exist', async () => {
