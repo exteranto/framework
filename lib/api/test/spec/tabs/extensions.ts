@@ -4,10 +4,11 @@ import { mock, instance, verify, deepEqual } from 'ts-mockito'
 
 import {
   Tabs,
+  TabInterface,
   TabCreatedEvent,
   TabUpdatedEvent,
-  TabActivatedEvent,
   TabRemovedEvent,
+  TabActivatedEvent,
 } from '@internal/tabs'
 
 import { Dispatcher } from '@exteranto/core'
@@ -16,6 +17,7 @@ import { TabIdUnknownException } from '@internal/tabs/exceptions'
 import { Tabs as ExtensionsTabs } from '@internal/tabs/extensions/Tabs'
 
 export default ({ browser }) => {
+
   let tabs: Tabs
   let dispatcher: Dispatcher
 
@@ -138,4 +140,22 @@ export default ({ browser }) => {
     verify(dispatcher.fire(deepEqual(new TabRemovedEvent(4))))
       .once()
   })
+
+  it('throws an exception if any method is called on a non existing tab', async () => {
+    browser.tabs.update.rejects()
+    browser.tabs.duplicate.rejects()
+    browser.tabs.reload.rejects()
+    browser.tabs.remove.rejects()
+    browser.tabs.get.rejects()
+
+    const tab: TabInterface = new Tab({ id: 1 })
+
+    await expect(tab.activate()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.url()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.close()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.reload()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.duplicate()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.pin()).to.eventually.be.rejectedWith(TabIdUnknownException)
+  })
+
 }

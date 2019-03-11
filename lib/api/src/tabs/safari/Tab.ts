@@ -3,6 +3,7 @@ import { Autowired } from '@exteranto/core'
 import { ResponseHub } from './ResponseHub'
 import { Message } from '@internal/messaging'
 import { TabInterface } from '../TabInterface'
+import { TabIdUnknownException } from '../exceptions'
 
 export class Tab implements TabInterface {
 
@@ -32,6 +33,10 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public async url () : Promise<string> {
+    if (this.tab.browserWindow === undefined) {
+      throw new TabIdUnknownException()
+    }
+
     return this.tab.url
   }
 
@@ -39,6 +44,10 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public async close () : Promise<void> {
+    if (this.tab.browserWindow === undefined) {
+      throw new TabIdUnknownException()
+    }
+
     this.tab.close()
   }
 
@@ -46,6 +55,10 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public async reload () : Promise<TabInterface> {
+    if (this.tab.browserWindow === undefined) {
+      throw new TabIdUnknownException()
+    }
+
     this.tab.url = this.tab.url
 
     return this
@@ -55,6 +68,10 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public async duplicate () : Promise<TabInterface> {
+    if (this.tab.browserWindow === undefined) {
+      throw new TabIdUnknownException()
+    }
+
     return this.tabs.open(this.tab, true)
   }
 
@@ -62,6 +79,10 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public async activate () : Promise<TabInterface> {
+    if (this.tab.browserWindow === undefined) {
+      throw new TabIdUnknownException()
+    }
+
     this.tab.activate()
 
     return this
@@ -71,6 +92,10 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public async pin () : Promise<TabInterface> {
+    if (this.tab.browserWindow === undefined) {
+      throw new TabIdUnknownException()
+    }
+
     return this
   }
 
@@ -78,7 +103,7 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public async unpin () : Promise<TabInterface> {
-    return this
+    return this.pin()
   }
 
   /**
