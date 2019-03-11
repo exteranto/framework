@@ -1,3 +1,4 @@
+import { StorageKey } from '../types'
 import { StorageType } from '../StorageType'
 import { StorageChangedEvent } from '../events'
 import { Storage as AbstractStorage } from '../Storage'
@@ -13,92 +14,80 @@ export abstract class Storage extends AbstractStorage {
   /**
    * {@inheritdoc}
    */
-  public get (key: any) : Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (typeof key === 'string') {
-        const item: any = localStorage.getItem(this.prefix() + key)
+  public async get<T> (key: StorageKey) : Promise<T> {
+    if (typeof key === 'string') {
+      const item: any = localStorage.getItem(this.prefix() + key)
 
-        item ? resolve(JSON.parse(item)) : reject(new StorageKeyNotFoundException(key))
+      return item === undefined
+        ? Promise.reject(new StorageKeyNotFoundException(key))
+        : JSON.parse(item)
+    }
 
-        return
+    // If key is null return all items in the storage.
+    if (key === null) {
+      return this.all()
+    }
+
+    // If key is an array, return key value pairs.
+    return key.reduce((carry, id) => {
+      const item: any = localStorage.getItem(this.prefix() + id)
+
+      if (item) {
+        carry[id] = JSON.parse(item)
       }
 
-      // If key is null return all items in the storage.
-      if (key === null) {
-        return this.all()
-      }
-
-      // If key is an array, return key value pairs.
-      resolve(key.reduce((carry, id) => {
-        const item: any = localStorage.getItem(this.prefix() + id)
-
-        if (item) {
-          carry[id] = JSON.parse(item)
-        }
-
-        return carry
-      }, {}))
-    })
+      return carry
+    }, {}) as T
   }
 
   /**
    * {@inheritdoc}
    */
-  public all () : Promise<any> {
-    return new Promise((resolve) => {
-      const res: any = {}
+  public async all () : Promise<any> {
+    const res: any = {}
 
-      for (let i: number = 0; i < localStorage.length; i++) {
-        const id: any = localStorage.key(i)
-        const item: any = localStorage.getItem(id)
+    for (let i: number = 0; i < localStorage.length; i++) {
+      const id: any = localStorage.key(i)
+      const item: any = localStorage.getItem(id)
 
-        // If an item starts with prefix of the module, add it to response.
-        if (id.substr(0, this.prefix().length) === this.prefix()) {
-          // Get rid of the module prefix in response object.
-          res[id.replace(this.prefix(), '')] = JSON.parse(item)
-        }
+      // If an item starts with prefix of the module, add it to response.
+      if (id.substr(0, this.prefix().length) === this.prefix()) {
+        // Get rid of the module prefix in response object.
+        res[id.replace(this.prefix(), '')] = JSON.parse(item)
       }
+    }
 
-      resolve(res)
-    })
+    return res
   }
 
   /**
    * {@inheritdoc}
    */
-  public set (key: any, value?: any) : Promise<void> {
-    return new Promise((resolve) => {
-      const storable: any = value === undefined ? key : { [key]: value }
+  public async set (key: any, value?: any) : Promise<void> {
+    const storable: any = value === undefined ? key : { [key]: value }
 
-      for (const property in storable) {
-        if (storable.hasOwnProperty(property)) {
-          localStorage.setItem(this.prefix() + property, JSON.stringify(storable[property]))
-        }
+    for (const property in storable) {
+      if (storable.hasOwnProperty(property)) {
+        localStorage.setItem(this.prefix() + property, JSON.stringify(storable[property]))
       }
+    }
 
-      this.dispatcher.fire(new StorageChangedEvent(this.type, storable))
-
-      resolve()
-    })
+    this.dispatcher.fire(new StorageChangedEvent(this.type, storable))
   }
 
   /**
    * {@inheritdoc}
    */
-  public remove (key: any) : Promise<void> {
-    return new Promise((resolve) => {
-      const removable: string[] = [].concat(key)
+  public async remove (key: any) : Promise<void> {
+    const removable: string[] = [].concat(key)
 
-      removable.forEach(id => localStorage.removeItem(this.prefix() + id))
-
-      resolve()
-    })
+    removable.forEach(id => localStorage.removeItem(this.prefix() + id))
   }
 
   /**
    * {@inheritdoc}
    */
-  public clear () : Promise<void> {
+  public async clear () : Promise<void> {
     return this.all()
       .then(Object.keys)
       .then(keys => this.remove(keys))
@@ -107,7 +96,7 @@ export abstract class Storage extends AbstractStorage {
   /**
    * {@inheritdoc}
    */
-  public size () : Promise<number> {
+  public async size () : Promise<number> {
     return this.all().then(data => JSON.stringify(data).length)
   }
 

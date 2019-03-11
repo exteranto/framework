@@ -18,12 +18,12 @@ export default () => {
   })
 
   it('populates a value', async () => {
-    ;(storage as any).data = { another: 'pair' }
+    ;(storage as any).data = { another: '"pair"' }
 
     await storage.populate('key', 'value')
     await storage.populate('another', 'lorem')
 
-    expect(storage.all()).to.eventually.deep.equal({
+    await expect(storage.all()).to.eventually.deep.equal({
       key: 'value',
       another: 'pair'
     })
@@ -32,7 +32,7 @@ export default () => {
   it('stores a value', async () => {
     await storage.set('key', 'value')
 
-    expect(storage.all()).to.eventually.deep.equal({
+    await expect(storage.all()).to.eventually.deep.equal({
       key: 'value'
     })
   })
@@ -40,13 +40,13 @@ export default () => {
   it('stores an object of values', async () => {
     await storage.set({ key: 'value' })
 
-    expect(storage.all()).to.eventually.deep.equal({
+    await expect(storage.all()).to.eventually.deep.equal({
       key: 'value'
     })
   })
 
   it('collects a value', async () => {
-    ;(storage as any).data = { key: 'value' }
+    ;(storage as any).data = { key: '"value"' }
 
     await expect(storage.get('key')).to.eventually.equal('value')
   })
@@ -56,21 +56,21 @@ export default () => {
   })
 
   it('collects an array of values', async () => {
-    ;(storage as any).data = { key: 'value', another: 'pair' }
+    ;(storage as any).data = { key: '"value"', another: '"pair"' }
 
     await expect(storage.get(['key', 'another']))
       .to.eventually.deep.equal({ key: 'value', another: 'pair' })
   })
 
   it('collects all values', async () => {
-    ;(storage as any).data = { key: 'value', another: 'pair' }
+    ;(storage as any).data = { key: '"value"', another: '"pair"' }
 
     await expect(storage.all())
       .to.eventually.deep.equal({ key: 'value', another: 'pair' })
   })
 
   it('removes a value or an arary of values', async () => {
-    ;(storage as any).data = { key: 'value', another: 'pair' }
+    ;(storage as any).data = { key: '"value"', another: '"pair"' }
 
     await storage.remove('key')
 
@@ -79,7 +79,7 @@ export default () => {
   })
 
   it('clears the storage', async () => {
-    ;(storage as any).data = { key: 'value', another: 'pair' }
+    ;(storage as any).data = { key: '"value"', another: '"pair"' }
 
     await storage.clear()
 
@@ -88,7 +88,7 @@ export default () => {
   })
 
   it('returns size in bytes', async () => {
-    ;(storage as any).data = { key: 'value', another: 'pair' }
+    ;(storage as any).data = { key: '"value"', another: '"pair"' }
 
     await expect(storage.size()).to.eventually.equal(32)
   })
@@ -98,5 +98,15 @@ export default () => {
 
     verify(dispatcher.fire(deepEqual(new StorageChangedEvent(StorageType.MEMORY, { key: 'value' }))))
       .once()
+  })
+
+  it('handles circular json', async () => {
+    const a = { b: null, c: 1 }
+    const b = { a }
+    a.b = b
+
+    await storage.set({ a })
+
+    await expect(storage.get('a')).to.eventually.deep.equal({ b: { a: null }, c: 1 })
   })
 }
