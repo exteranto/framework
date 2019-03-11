@@ -8,12 +8,13 @@ import {
   TabUpdatedEvent,
   TabActivatedEvent,
   TabRemovedEvent,
+  TabInterface,
 } from '@internal/tabs'
 
 import { Dispatcher } from '@exteranto/core'
 import { Tab } from '@internal/tabs/safari/Tab'
 import { Tabs as SafariTabs } from '@internal/tabs/safari/Tabs'
-import { TabIdUnknownException } from '@internal/tabs/exceptions'
+import { TabIdUnknownException, NoActiveTabException } from '@internal/tabs/exceptions'
 
 export default ({ safari }) => {
   let tabs: Tabs
@@ -35,6 +36,26 @@ export default ({ safari }) => {
 
     expect(await tab.url()).to.equal('http://test.com')
     sinon.assert.calledOnce(safari.application.activeBrowserWindow.openTab)
+  })
+
+  it('returns the active tab', async () => {
+    const activeTab = { eid: 2, meta: {} }
+    const activeWindow = { eid: 1, activeTab, tabs: [activeTab] }
+
+    safari.application.browserWindows = [activeWindow]
+    safari.application.activeBrowserWindow = activeWindow
+
+    await expect(tabs.active()).to.eventually.be.instanceOf(Tab)
+    await expect(tabs.active().then(tab => tab.id())).to.eventually.equal(2)
+  })
+
+  it('throws an exception if no active tab found', async () => {
+    const activeWindow = { eid: 1, tabs: [{ eid: 2, meta: {} }] }
+
+    safari.application.browserWindows = [activeWindow]
+    safari.application.activeBrowserWindow = activeWindow
+
+    await expect(tabs.active()).to.eventually.be.rejectedWith(NoActiveTabException)
   })
 
   it('closes a tab', async () => {

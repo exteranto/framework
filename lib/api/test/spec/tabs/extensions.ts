@@ -43,7 +43,7 @@ export default ({ browser }) => {
     const active: Promise<TabInterface> = tabs.active()
 
     await expect(active).to.eventually.be.instanceOf(Tab)
-    expect((await active).id()).to.equal(1)
+    expect(active.then(tab => tab.id())).to.eventually.equal(1)
   })
 
   it('throws an exception if no active tab found', async () => {
