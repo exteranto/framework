@@ -36,6 +36,12 @@ export default ({ chrome }) => {
     sinon.assert.calledOnce(chrome.tabs.create)
   })
 
+  it('returns the active tab', async () => {
+    chrome.tabs.query.yields([{ id: 1 }])
+
+    expect(tabs.active()).to.eventually.haveOwnProperty('id').that.is.equal(1)
+  })
+
   it('closes a tab', async () => {
     chrome.tabs.remove.yields(undefined)
 
