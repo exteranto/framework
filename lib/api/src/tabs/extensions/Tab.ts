@@ -1,5 +1,7 @@
 import { Message } from '@internal/messaging'
 import { TabInterface } from '../TabInterface'
+import { TabIdUnknownException } from '../exceptions'
+
 import Port = browser.runtime.Port
 
 export class Tab implements TabInterface {
@@ -26,6 +28,7 @@ export class Tab implements TabInterface {
   public async url () : Promise<string> {
     return browser.tabs.get(this.tab.id)
       .then(({ url }) => url)
+      .catch(() => Promise.reject(new TabIdUnknownException))
   }
 
   /**
@@ -33,6 +36,7 @@ export class Tab implements TabInterface {
    */
   public async close () : Promise<void> {
     return browser.tabs.remove(this.tab.id)
+      .catch(() => Promise.reject(new TabIdUnknownException))
   }
 
   /**
@@ -41,6 +45,7 @@ export class Tab implements TabInterface {
   public async reload () : Promise<TabInterface> {
     return browser.tabs.reload(this.tab.id)
       .then(() => this)
+      .catch(() => Promise.reject(new TabIdUnknownException))
   }
 
   /**
@@ -49,6 +54,7 @@ export class Tab implements TabInterface {
   public async duplicate () : Promise<TabInterface> {
     return browser.tabs.duplicate(this.tab.id)
       .then(tab => new Tab(tab))
+      .catch(() => Promise.reject(new TabIdUnknownException))
   }
 
   /**
@@ -57,6 +63,7 @@ export class Tab implements TabInterface {
   public async activate () : Promise<TabInterface> {
     return browser.tabs.update(this.tab.id, { active: true })
       .then(() => this)
+      .catch(() => Promise.reject(new TabIdUnknownException))
   }
 
   /**
@@ -65,6 +72,7 @@ export class Tab implements TabInterface {
   public async pin (pinned: boolean = true) : Promise<TabInterface> {
     return browser.tabs.update(this.tab.id, { pinned })
       .then(() => this)
+      .catch(() => Promise.reject(new TabIdUnknownException))
   }
 
   /**
