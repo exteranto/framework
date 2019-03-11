@@ -7,7 +7,7 @@
     "module": "commonjs",
     "noImplicitThis": true,
     "outDir": "dist",
-    "removeComments": true,
+    "removeComments": false,
     "sourceMap": true,
     "target": "es6",
     "baseUrl": "src",

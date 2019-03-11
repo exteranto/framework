@@ -1,5 +1,7 @@
 import { Message } from '@internal/messaging'
 import { TabInterface } from '../TabInterface'
+import { ConnectionRefusedException } from '@internal/messaging/exceptions'
+import { TabIdUnknownException, TabHasNoFaviconException } from '@internal/tabs/exceptions'
 
 import Port = chrome.runtime.Port
 
@@ -22,17 +24,20 @@ export class Tab implements TabInterface {
   /**
    * {@inheritdoc}
    */
-  public url () : Promise<string> {
-    return new Promise(resolve => chrome.tabs.get(this.tab.id, resolve))
-      .then(({ url }) => url)
+  public async url () : Promise<string> {
+    return this.info().then(tab => tab.url)
   }
 
   /**
    * {@inheritdoc}
    */
   public close () : Promise<void> {
-    return new Promise((resolve) => {
-      chrome.tabs.remove(this.tab.id, resolve)
+    return new Promise((resolve, reject) => {
+      chrome.tabs.remove(this.tab.id, () => {
+        chrome.runtime.lastError
+          ? reject(new TabIdUnknownException())
+          : resolve()
+      })
     })
   }
 
@@ -40,8 +45,12 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public reload () : Promise<TabInterface> {
-    return new Promise((resolve) => {
-      chrome.tabs.reload(this.tab.id, {}, () => resolve(this))
+    return new Promise((resolve, reject) => {
+      chrome.tabs.reload(this.tab.id, {}, () => {
+        chrome.runtime.lastError
+          ? reject(new TabIdUnknownException())
+          : resolve(this)
+      })
     })
   }
 
@@ -49,8 +58,12 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public duplicate () : Promise<TabInterface> {
-    return new Promise((resolve) => {
-      chrome.tabs.duplicate(this.tab.id, tab => resolve(new Tab(tab)))
+    return new Promise((resolve, reject) => {
+      chrome.tabs.duplicate(this.tab.id, (tab) => {
+        chrome.runtime.lastError
+          ? reject(new TabIdUnknownException())
+          : resolve(new Tab(tab))
+      })
     })
   }
 
@@ -58,11 +71,15 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public activate () : Promise<TabInterface> {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       chrome.tabs.update(
         this.tab.id,
         { active: true },
-        () => resolve(this),
+        () => {
+          chrome.runtime.lastError
+            ? reject(new TabIdUnknownException())
+            : resolve(this)
+        },
       )
     })
   }
@@ -71,11 +88,15 @@ export class Tab implements TabInterface {
    * {@inheritdoc}
    */
   public pin (pinned: boolean = true) : Promise<TabInterface> {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       chrome.tabs.update(
         this.tab.id,
         { pinned },
-        () => resolve(this),
+        () => {
+          chrome.runtime.lastError
+            ? reject(new TabIdUnknownException())
+            : resolve(this)
+        },
       )
     })
   }
@@ -85,6 +106,26 @@ export class Tab implements TabInterface {
    */
   public unpin () : Promise<TabInterface> {
     return this.pin(false)
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public async favicon () : Promise<string> {
+    return this.info().then((tab) => {
+      if (!tab.favIconUrl) {
+        throw new TabHasNoFaviconException()
+      }
+
+      return tab.favIconUrl
+    })
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public async title () : Promise<string> {
+    return this.info().then((tab) => tab.title)
   }
 
   /**
@@ -101,8 +142,10 @@ export class Tab implements TabInterface {
     return new Promise((resolve, reject) => {
       const respond: (response: any) => void = response => response.ok ? resolve(response.body) : reject(response.body)
 
-      // This is triggered upon receiving a response from the listener.
+      // Settle the promise upon receiving a response from ther receiver or
+      // reject it if the connection could not be established.
       port.onMessage.addListener(respond)
+      port.onDisconnect.addListener(() => chrome.runtime.lastError && reject(new ConnectionRefusedException()))
     })
   }
 
@@ -111,6 +154,22 @@ export class Tab implements TabInterface {
    */
   public raw (key: string) : any {
     return this.tab[key]
+  }
+
+  /**
+   * Calls the chrome tab APIs to get information about current tab.
+   *
+   * @return Resolves with chrome tab data object
+   * @throws {TabIdUnknownException}
+   */
+  private info () : Promise<chrome.tabs.Tab> {
+    return new Promise((resolve, reject) => {
+      chrome.tabs.get(this.tab.id, (tab) => {
+        chrome.runtime.lastError
+          ? reject(new TabIdUnknownException())
+          : resolve(tab)
+      })
+    })
   }
 
 }

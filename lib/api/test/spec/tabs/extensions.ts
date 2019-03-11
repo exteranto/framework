@@ -4,18 +4,20 @@ import { mock, instance, verify, deepEqual } from 'ts-mockito'
 
 import {
   Tabs,
+  TabInterface,
   TabCreatedEvent,
   TabUpdatedEvent,
-  TabActivatedEvent,
   TabRemovedEvent,
+  TabActivatedEvent,
 } from '@internal/tabs'
 
 import { Dispatcher } from '@exteranto/core'
 import { Tab } from '@internal/tabs/extensions/Tab'
-import { TabIdUnknownException } from '@internal/tabs/exceptions'
 import { Tabs as ExtensionsTabs } from '@internal/tabs/extensions/Tabs'
+import { TabIdUnknownException, NoActiveTabException, TabHasNoFaviconException } from '@internal/tabs/exceptions'
 
 export default ({ browser }) => {
+
   let tabs: Tabs
   let dispatcher: Dispatcher
 
@@ -34,6 +36,23 @@ export default ({ browser }) => {
 
     sinon.assert.calledOnce(browser.tabs.get)
     sinon.assert.calledOnce(browser.tabs.create)
+  })
+
+  it('returns the active tab', async () => {
+    browser.tabs.query.resolves([{ id: 1 }])
+
+    const active: Promise<TabInterface> = tabs.active()
+
+    await expect(active).to.eventually.be.instanceOf(Tab)
+    expect(active.then(tab => tab.id())).to.eventually.equal(1)
+  })
+
+  it('throws an exception if no active tab found', async () => {
+    browser.tabs.query.resolves([])
+
+    const active: Promise<TabInterface> = tabs.active()
+
+    await expect(active).to.eventually.be.rejectedWith(NoActiveTabException)
   })
 
   it('closes a tab', async () => {
@@ -97,6 +116,26 @@ export default ({ browser }) => {
       .to.eventually.equal(2)
   })
 
+  it('resolves with a title', async () => {
+    browser.tabs.get.resolves({ title: 'test' })
+
+    await expect(new Tab({}).title())
+      .to.eventually.equal('test')
+  })
+
+  it('resolves with a favicon', async () => {
+    browser.tabs.get.resolves({ favIconUrl: 'test' })
+
+    await expect(new Tab({}).favicon()).to.eventually.equal('test')
+  })
+
+  it('throws an exception if tab hasn\'t a favicon', async () => {
+    browser.tabs.get.resolves({})
+
+    await expect(new Tab({}).favicon())
+      .to.eventually.be.rejectedWith(TabHasNoFaviconException)
+  })
+
   it('throws an exception if tab does not exist', async () => {
     browser.tabs.get.rejects()
 
@@ -138,4 +177,22 @@ export default ({ browser }) => {
     verify(dispatcher.fire(deepEqual(new TabRemovedEvent(4))))
       .once()
   })
+
+  it('throws an exception if any method is called on a non existing tab', async () => {
+    browser.tabs.update.rejects()
+    browser.tabs.duplicate.rejects()
+    browser.tabs.reload.rejects()
+    browser.tabs.remove.rejects()
+    browser.tabs.get.rejects()
+
+    const tab: TabInterface = new Tab({ id: 1 })
+
+    await expect(tab.activate()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.url()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.close()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.reload()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.duplicate()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.pin()).to.eventually.be.rejectedWith(TabIdUnknownException)
+  })
+
 }

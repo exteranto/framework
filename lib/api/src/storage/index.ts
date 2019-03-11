@@ -4,6 +4,7 @@
  */
 
 export { Storage } from './Storage'
+export { StorageType } from './StorageType'
 export { StorageProvider } from './StorageProvider'
 
 /**
@@ -17,3 +18,9 @@ export * from './events'
  */
 
 export * from './exceptions'
+
+/**
+ * Export package types.
+ */
+
+export * from './types'

@@ -1,3 +1,4 @@
+import { StorageKey } from './types'
 import { Autowired, Dispatcher } from '@exteranto/core'
 
 export abstract class Storage {
@@ -9,20 +10,13 @@ export abstract class Storage {
   protected dispatcher: Dispatcher
 
   /**
-   * @param type Storage can be either local or sync
-   */
-  constructor (protected type: string) {
-    //
-  }
-
-  /**
    * If and only if the key is not set, it is populated.
    *
    * @param key Storage key to retrieve
    * @param value Value to set the key to
    */
   public async populate (key: string, value: any) : Promise<void> {
-    return this.get(key).catch(() => this.set(key, value))
+    await this.get(key).catch(() => this.set(key, value))
   }
 
   /**
@@ -39,8 +33,10 @@ export abstract class Storage {
    *
    * @param key Storage key to retrieve
    * @return Associated value in storage
+   * @throws {StorageKeyNotFoundException} If the key does not exist in the
+   * storage
    */
-  public abstract async get (key: string|string[]) : Promise<any>
+  public abstract async get<T> (key: StorageKey | null) : Promise<T>
 
   /**
    * Saves a value in the storage.
@@ -55,7 +51,7 @@ export abstract class Storage {
    *
    * @param key Storage key to remove
    */
-  public abstract async remove (key: string|string[]) : Promise<void>
+  public abstract async remove (key: StorageKey) : Promise<void>
 
   /**
    * Clears the whole storage.

@@ -1,5 +1,7 @@
 import { Message } from '../Message'
+import { ConnectionRefusedException } from '../exceptions'
 import { Messaging as AbstractMessaging } from '../Messaging'
+
 import Port = chrome.runtime.Port
 
 export class Messaging extends AbstractMessaging {
@@ -41,8 +43,10 @@ export class Messaging extends AbstractMessaging {
         payload: message.payload,
       })
 
-      // This is triggered upon receiving a response from the listener.
+      // Settle the promise upon receiving a response from ther receiver or
+      // reject it if the connection could not be established.
       port.onMessage.addListener(respond)
+      port.onDisconnect.addListener(() => chrome.runtime.lastError && reject(new ConnectionRefusedException()))
     })
   }
 

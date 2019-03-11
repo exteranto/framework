@@ -4,16 +4,17 @@ import { mock, instance, verify, deepEqual } from 'ts-mockito'
 
 import {
   Tabs,
+  TabInterface,
   TabCreatedEvent,
+  TabRemovedEvent,
   TabUpdatedEvent,
   TabActivatedEvent,
-  TabRemovedEvent,
 } from '@internal/tabs'
 
 import { Dispatcher } from '@exteranto/core'
 import { Tab } from '@internal/tabs/chrome/Tab'
 import { Tabs as ChromeTabs } from '@internal/tabs/chrome/Tabs'
-import { TabIdUnknownException } from '@internal/tabs/exceptions'
+import { TabIdUnknownException, NoActiveTabException, TabHasNoFaviconException } from '@internal/tabs/exceptions'
 
 export default ({ chrome }) => {
   let tabs: Tabs
@@ -36,6 +37,23 @@ export default ({ chrome }) => {
     sinon.assert.calledOnce(chrome.tabs.create)
   })
 
+  it('returns the active tab', async () => {
+    chrome.tabs.query.yields([{ id: 1 }])
+
+    const active: Promise<TabInterface> = tabs.active()
+
+    await expect(active).to.eventually.be.instanceOf(Tab)
+    expect(active.then(tab => tab.id())).to.eventually.equal(1)
+  })
+
+  it('throws an exception if no active tab found', async () => {
+    chrome.tabs.query.yields([])
+
+    const active: Promise<TabInterface> = tabs.active()
+
+    await expect(active).to.eventually.be.rejectedWith(NoActiveTabException)
+  })
+
   it('closes a tab', async () => {
     chrome.tabs.remove.yields(undefined)
 
@@ -45,7 +63,7 @@ export default ({ chrome }) => {
     sinon.assert.calledOnce(chrome.tabs.remove)
   })
 
-  it('reloads the tab', async () => {
+  it('reloads a tab', async () => {
     chrome.tabs.reload.yields(undefined)
 
     await expect(new Tab({ id: 1 }).reload().then(tab => (tab as any).tab.id))
@@ -54,7 +72,7 @@ export default ({ chrome }) => {
     sinon.assert.calledOnce(chrome.tabs.reload)
   })
 
-  it('duplicates the tab', async () => {
+  it('duplicates a tab', async () => {
     chrome.tabs.duplicate.yields({ id: 2 })
 
     await expect(new Tab({ id: 1 }).duplicate().then(tab => (tab as any).tab.id))
@@ -95,6 +113,25 @@ export default ({ chrome }) => {
 
     await expect(tabs.get(2).then(t => t.id()))
       .to.eventually.equal(2)
+  })
+
+  it('resolves with a title', async () => {
+    chrome.tabs.get.yields({ title: 'test' })
+
+    await expect(new Tab({}).title()).to.eventually.equal('test')
+  })
+
+  it('resolves with a favicon', async () => {
+    chrome.tabs.get.yields({ favIconUrl: 'test' })
+
+    await expect(new Tab({}).favicon()).to.eventually.equal('test')
+  })
+
+  it('throws an exception if tab hasn\'t a favicon', async () => {
+    chrome.tabs.get.yields({})
+
+    await expect(new Tab({}).favicon())
+      .to.eventually.be.rejectedWith(TabHasNoFaviconException)
   })
 
   it('throws an exception if tab does not exist', async () => {
@@ -139,4 +176,23 @@ export default ({ chrome }) => {
     verify(dispatcher.fire(deepEqual(new TabRemovedEvent(4))))
       .once()
   })
+
+  it('throws an exception if any method is called on a non existing tab', async () => {
+    chrome.tabs.update.yields()
+    chrome.tabs.duplicate.yields()
+    chrome.tabs.reload.yields()
+    chrome.tabs.remove.yields()
+    chrome.tabs.get.yields()
+    chrome.runtime.lastError = { message: 'Tab ID does not exist' }
+
+    const tab: TabInterface = new Tab({ id: 1 })
+
+    await expect(tab.activate()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.url()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.close()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.reload()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.duplicate()).to.eventually.be.rejectedWith(TabIdUnknownException)
+    await expect(tab.pin()).to.eventually.be.rejectedWith(TabIdUnknownException)
+  })
+
 }

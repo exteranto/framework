@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
 
-import { Messaging, Message } from '@internal/messaging'
 import { Messaging as ChromeMessaging } from '@internal/messaging/chrome/Messaging'
+import { Messaging, Message, ConnectionRefusedException } from '@internal/messaging'
 
 export default ({ chrome }) => {
   let messaging: Messaging
@@ -27,7 +27,8 @@ export default ({ chrome }) => {
 
         return message
       },
-      onMessage: { addListener: l => l({ ok: true, body: 'resolved' }) }
+      onMessage: { addListener: l => l({ ok: true, body: 'resolved' }) },
+      onDisconnect: { addListener: l => undefined }
     })
 
     await expect(messaging.send(new TestMessage('test')))
@@ -39,12 +40,34 @@ export default ({ chrome }) => {
   it('rejects the promise when error returned', async () => {
     chrome.runtime.connect.returns({
       postMessage: m => m,
-      onMessage: { addListener: l => l({ ok: false, body: 'error' }) }
+      onMessage: { addListener: l => l({ ok: false, body: 'error' }) },
+      onDisconnect: { addListener: l => undefined }
     })
 
     await expect(messaging.send(new TestMessage('test')))
       .to.eventually.be.rejected
       .and.to.equal('error')
+
+    sinon.assert.calledOnce(chrome.runtime.connect)
+  })
+
+  it('rejects if connection could not be established', async () => {
+    chrome.runtime.lastError = true
+    chrome.runtime.connect.returns({
+      postMessage: (message) => {
+        expect(message).to.deep.equal({
+          event: 'TestMessage',
+          payload: 'test'
+        })
+
+        return message
+      },
+      onMessage: { addListener: l => undefined },
+      onDisconnect: { addListener: l => l() }
+    })
+
+    await expect(messaging.send(new TestMessage('test')))
+      .to.eventually.be.rejectedWith(ConnectionRefusedException)
 
     sinon.assert.calledOnce(chrome.runtime.connect)
   })

@@ -2,8 +2,9 @@ import { expect } from 'chai'
 import { mock, instance, verify, deepEqual } from 'ts-mockito'
 
 import { Dispatcher } from '@exteranto/core'
-import { Storage, StorageChangedEvent } from '@internal/storage'
-import { Storage as SafariStorage } from '@internal/storage/safari/Storage'
+import { Storage, StorageChangedEvent, StorageType } from '@internal/storage'
+import { SyncStorage as SafariSyncStorage } from '@internal/storage/safari/SyncStorage'
+import { LocalStorage as SafariLocalStorage } from '@internal/storage/safari/LocalStorage'
 
 export default ({ localStorage }) => {
   let local: Storage
@@ -12,8 +13,8 @@ export default ({ localStorage }) => {
 
   beforeEach(() => {
     dispatcher = mock(Dispatcher)
-    local = new SafariStorage('local')
-    sync = new SafariStorage('sync')
+    local = new SafariLocalStorage
+    sync = new SafariSyncStorage
     ;(local as any).dispatcher = instance(dispatcher)
     ;(sync as any).dispatcher = instance(dispatcher)
   })
@@ -102,7 +103,7 @@ export default ({ localStorage }) => {
   it('registers the correct listener', async () => {
     await local.set('key', 'value')
 
-    verify(dispatcher.fire(deepEqual(new StorageChangedEvent('local', { key: 'value' }))))
+    verify(dispatcher.fire(deepEqual(new StorageChangedEvent(StorageType.LOCAL, { key: 'value' }))))
       .once()
   })
 }
