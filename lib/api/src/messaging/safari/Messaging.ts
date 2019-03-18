@@ -1,4 +1,5 @@
 import { Message } from '../Message'
+import { Param, Script } from '@exteranto/core'
 import { Messaging as AbstractMessaging } from '../Messaging'
 
 declare var safari: any
@@ -11,14 +12,29 @@ export class Messaging extends AbstractMessaging {
   private promises: any = {}
 
   /**
+   * The current script.
+   */
+  @Param('script')
+  protected script: Script
+
+  /**
    * {@inheritdoc}
    */
   public listen () : void {
-    safari.application.addEventListener('message', (event) => {
+    safari[
+      this.script === Script.BACKGROUND ? 'application' : 'self'
+    ].addEventListener('message', (event) => {
       // If the message is a response, resolve the stored promise and do not
       // dispatch any events.
       if (event.name === '_response_') {
-        return this.promises[event.message.id](event.message.payload)
+        if (this.promises[event.message.id]) {
+          this.promises[event.message.id](event.message.payload)
+        }
+
+        // Remove the promise.
+        delete this.promises[event.message.id]
+
+        return
       }
 
       const respond: (response: any) => void = (response) => {
@@ -26,7 +42,9 @@ export class Messaging extends AbstractMessaging {
         // specifying that it is a response in the name. The response object is
         // also carrying the event id, so we can find the promise to be
         // resolved
-        event.target.page.dispatchMessage('_response_', {
+        event.target[
+          this.script === Script.BACKGROUND ? 'page' : 'tab'
+        ].dispatchMessage('_response_', {
           event: event.message.event,
           id: event.message.id,
           payload: {
