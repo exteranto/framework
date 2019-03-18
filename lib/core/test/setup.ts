@@ -8,6 +8,10 @@ import * as chaiAsPromised from 'chai-as-promised'
 
 chai.use(chaiAsPromised)
 
-;(global as any).window = {
+const window: any = {
   addEventListener: (_, l) => l()
 }
+
+window.top = window
+
+;(global as any).window = window

@@ -37,6 +37,10 @@ export default ({ safari }) => {
   })
 
   it('opens a new tab', async () => {
+    safari.application.activeBrowserWindow.activeTab = {
+      activate: () => null
+    }
+
     safari.application.activeBrowserWindow.openTab.returns({
       browserWindow: 0,
     })

@@ -1,5 +1,5 @@
 import { Message } from './Message'
-import { Script, Dispatcher, Autowired, Param, Class, Event } from '@exteranto/core'
+import { Dispatcher, Autowired, Class } from '@exteranto/core'
 
 export abstract class Messaging {
 
@@ -8,12 +8,6 @@ export abstract class Messaging {
    */
   @Autowired
   private dispatcher: Dispatcher
-
-  /**
-   * The current script.
-   */
-  @Param('script')
-  protected script: Script
 
   /**
    * Establish a listener server.

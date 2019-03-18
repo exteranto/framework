@@ -25,6 +25,14 @@ class Safari {
       self: {
         tab: {
           dispatchMessage: this.stub()
+        },
+        addEventListener: this.stub().callsFake((name, cb) => {
+          this.listeners[name] === undefined
+            ? this.listeners[name] = [cb]
+            : this.listeners[name].push(cb)
+        }),
+        trigger: (event, payload) => {
+          (this.listeners[event] || []).forEach(l => l(payload))
         }
       },
       flush: () => {

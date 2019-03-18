@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
 
+import { Container, Script } from '@exteranto/core'
 import { Messaging, Message } from '@internal/messaging'
 import { Messaging as SafariMessaging } from '@internal/messaging/safari/Messaging'
 
@@ -9,12 +10,21 @@ export default ({ safari }) => {
 
   beforeEach(() => {
     messaging = new SafariMessaging
+    Container.getInstance().bindParam('script', Script.BACKGROUND)
   })
 
   it('boots up a message listener', () => {
     messaging.listen()
 
     sinon.assert.calledOnce(safari.application.addEventListener)
+  })
+
+  it('boots up a message listener for the content script', () => {
+    ;(messaging as any).script = Script.CONTENT
+
+    messaging.listen()
+
+    sinon.assert.calledOnce(safari.self.addEventListener)
   })
 
   it('sends a message via runtime port', async () => {

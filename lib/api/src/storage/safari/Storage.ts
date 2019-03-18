@@ -18,7 +18,7 @@ export abstract class Storage extends AbstractStorage {
     if (typeof key === 'string') {
       const item: any = localStorage.getItem(this.prefix() + key)
 
-      return item === undefined
+      return item === undefined || item === null
         ? Promise.reject(new StorageKeyNotFoundException(key))
         : JSON.parse(item)
     }

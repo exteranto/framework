@@ -126,7 +126,7 @@ export class Tab implements TabInterface {
   public async send (message: Message) : Promise<any>  {
     const { resolvable, id }: any = ResponseHub
 
-    this.tab.dispatchMessage('_', {
+    this.tab.page.dispatchMessage('_', {
       event: message.constructor.name,
       id,
       payload: message.payload,

@@ -11,9 +11,9 @@ export class MessagingProvider extends Provider {
    * Boot the provider services.
    */
   public boot () : void {
-    this.container.bind<Messaging>(ChromeMessaging).to(Messaging).for(Browser.CHROME)
-    this.container.bind<Messaging>(ExtensionsMessaging).to(Messaging).for(Browser.EXTENSIONS)
-    this.container.bind<Messaging>(SafariMessaging).to(Messaging).for(Browser.SAFARI)
+    this.container.bind<Messaging>(ChromeMessaging).to(Messaging).for(Browser.CHROME).asSingleton()
+    this.container.bind<Messaging>(ExtensionsMessaging).to(Messaging).for(Browser.EXTENSIONS).asSingleton()
+    this.container.bind<Messaging>(SafariMessaging).to(Messaging).for(Browser.SAFARI).asSingleton()
   }
 
   /**

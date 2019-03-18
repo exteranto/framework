@@ -25,12 +25,14 @@ export class Tabs extends AbstractTabs implements RegistersNativeEvents {
    * {@inheritdoc}
    */
   public async open (url: string, active: boolean = false) : Promise<TabInterface> {
+    const activeTab: any = safari.application.activeBrowserWindow.activeTab
     const tab: any = safari.application.activeBrowserWindow.openTab()
 
     tab.url = url
 
-    if (active) {
-      tab.activate()
+    // Reactivate the previously active tab.
+    if (!active) {
+      activeTab.activate()
     }
 
     return new Tab(tab)
