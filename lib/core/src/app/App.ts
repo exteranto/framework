@@ -41,12 +41,6 @@ export class App {
    * and firing the application booted event.
    */
   public bootstrap () : void {
-    // This is safari content script fix to avoid reinjecting the script over
-    // and over again.
-    if (window !== window.top) {
-      return
-    }
-
     this.registerBaseParams()
     this.registerParamBindings()
     this.registerWindowLoadEvent()
