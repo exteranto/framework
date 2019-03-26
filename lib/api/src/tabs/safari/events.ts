@@ -1,4 +1,3 @@
-import { Tab } from './Tab'
 import { ResponseHub } from './ResponseHub'
 import { Dispatcher } from '@exteranto/core'
 import {
@@ -89,10 +88,10 @@ const introduceToEcosystem: (target: any, dispatcher: Dispatcher) => void = (tar
     return
   }
 
-  dispatcher.fire(new TabCreatedEvent(new Tab(target)))
+  dispatcher.fire(new TabCreatedEvent(target.eid))
 
   target.addEventListener('navigate', () => {
-    dispatcher.fire(new TabUpdatedEvent(new Tab(target)))
+    dispatcher.fire(new TabUpdatedEvent(target.eid))
   }, true)
 
   target.addEventListener('close', () => {
