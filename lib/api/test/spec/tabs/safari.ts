@@ -145,7 +145,7 @@ export default ({ safari }) => {
     tabs.registerEvents(instance(dispatcher))
     Date.now = sinon.stub().returns(1)
 
-    const target: any = new SafariTabMock('http://test.com')
+    const target = new SafariTabMock('http://test.com')
     safari.application.trigger('open', { target })
 
     verify(dispatcher.fire(deepEqual(new TabCreatedEvent(target.eid))))
