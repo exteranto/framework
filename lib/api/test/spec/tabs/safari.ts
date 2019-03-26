@@ -145,10 +145,10 @@ export default ({ safari }) => {
     tabs.registerEvents(instance(dispatcher))
     Date.now = sinon.stub().returns(1)
 
-    const target = new SafariTabMock('http://test.com')
+    const target: any = new SafariTabMock('http://test.com')
     safari.application.trigger('open', { target })
 
-    verify(dispatcher.fire(deepEqual(new TabCreatedEvent(new Tab(target)))))
+    verify(dispatcher.fire(deepEqual(new TabCreatedEvent(target.eid))))
       .once()
 
     expect((target as any).eid).to.equal(1)
@@ -163,7 +163,7 @@ export default ({ safari }) => {
 
     target.trigger('navigate')
 
-    verify(dispatcher.fire(deepEqual(new TabUpdatedEvent(new Tab(target)))))
+    verify(dispatcher.fire(deepEqual(new TabUpdatedEvent(target.eid))))
       .once()
 
     expect((target as any).eid).to.equal(2)
@@ -213,6 +213,8 @@ export default ({ safari }) => {
 }
 
 class SafariTabMock {
+  public eid: number
+
   private listeners = {}
 
   constructor (public url: string) {
