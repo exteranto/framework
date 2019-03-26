@@ -147,7 +147,7 @@ export default ({ browser }) => {
 
     browser.tabs.onCreated.trigger({ id: 1 })
 
-    verify(dispatcher.fire(deepEqual(new TabCreatedEvent(new Tab({ id: 1 })))))
+    verify(dispatcher.fire(deepEqual(new TabCreatedEvent(1))))
       .once()
   })
 
@@ -156,7 +156,7 @@ export default ({ browser }) => {
 
     browser.tabs.onUpdated.trigger(1, 2, { id: 2 })
 
-    verify(dispatcher.fire(deepEqual(new TabUpdatedEvent(new Tab({ id: 2 })))))
+    verify(dispatcher.fire(deepEqual(new TabUpdatedEvent(2))))
       .once()
   })
 
