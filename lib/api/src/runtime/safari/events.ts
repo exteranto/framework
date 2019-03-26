@@ -1,7 +1,6 @@
 import { Container } from '@exteranto/core'
 import { Dispatcher, Event } from '@exteranto/core'
 import {
-  WebRequestBeforeRedirectedEvent,
   WebRequestCompletedEvent,
   ExtensionUpdatedEvent,
   ExtensionInstalledEvent,
@@ -10,15 +9,6 @@ import {
 declare var safari: any
 
 export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
-  safari.application.addEventListener('beforeNavigate', (event) => {
-    dispatcher.fire(new WebRequestBeforeRedirectedEvent({
-      redirectUrl: event.url,
-      tabId: event.target.eid,
-      timeStamp: event.timeStamp,
-      url: event.target.url,
-    }))
-  })
-
   safari.application.addEventListener('navigate', (event) => {
     dispatcher.fire(new WebRequestCompletedEvent({
       tabId: event.target.eid,

@@ -154,7 +154,7 @@ export default ({ safari }) => {
     expect((target as any).eid).to.equal(1)
   })
 
-  it('registers tab updated event', () => {
+  it('registers tab updated event for navigate event', () => {
     tabs.registerEvents(instance(dispatcher))
     Date.now = sinon.stub().returns(2)
 
@@ -163,7 +163,51 @@ export default ({ safari }) => {
 
     target.trigger('navigate')
 
-    verify(dispatcher.fire(deepEqual(new TabUpdatedEvent(target.eid))))
+    verify(dispatcher.fire(deepEqual(new TabUpdatedEvent(target.eid, {
+      status: 'complete',
+    }))))
+      .once()
+
+    expect((target as any).eid).to.equal(2)
+  })
+
+  it('registers tab updated event for beforeNavigate event with same url', () => {
+    tabs.registerEvents(instance(dispatcher))
+    Date.now = sinon.stub().returns(2)
+
+    const target = new SafariTabMock('http://test.com')
+    safari.application.trigger('open', { target })
+
+    target.trigger('beforeNavigate', {
+      url: 'test',
+      target: { url: 'test' },
+    })
+
+    verify(dispatcher.fire(deepEqual(new TabUpdatedEvent(target.eid, {
+      status: 'loading',
+      url: undefined,
+    }))))
+      .once()
+
+    expect((target as any).eid).to.equal(2)
+  })
+
+  it('registers tab updated event for beforeNavigate event with different url', () => {
+    tabs.registerEvents(instance(dispatcher))
+    Date.now = sinon.stub().returns(2)
+
+    const target = new SafariTabMock('http://test.com')
+    safari.application.trigger('open', { target })
+
+    target.trigger('beforeNavigate', {
+      url: 'test',
+      target: { url: 'test2' },
+    })
+
+    verify(dispatcher.fire(deepEqual(new TabUpdatedEvent(target.eid, {
+      status: 'loading',
+      url: 'test',
+    }))))
       .once()
 
     expect((target as any).eid).to.equal(2)

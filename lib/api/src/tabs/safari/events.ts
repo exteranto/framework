@@ -91,7 +91,17 @@ const introduceToEcosystem: (target: any, dispatcher: Dispatcher) => void = (tar
   dispatcher.fire(new TabCreatedEvent(target.eid))
 
   target.addEventListener('navigate', () => {
-    dispatcher.fire(new TabUpdatedEvent(target.eid))
+    dispatcher.fire(new TabUpdatedEvent(target.eid, { status: 'complete' }))
+  }, true)
+
+  target.addEventListener('beforeNavigate', (event) => {
+    // Whether the tab url has been changed.
+    const isUrlNew: boolean = event.url !== event.target.url
+
+    dispatcher.fire(new TabUpdatedEvent(target.eid, {
+      status: 'loading',
+      url: isUrlNew ? event.url : undefined,
+    }))
   }, true)
 
   target.addEventListener('close', () => {

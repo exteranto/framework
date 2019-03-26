@@ -153,9 +153,14 @@ export default ({ chrome }) => {
   it('registers tab updated event', () => {
     tabs.registerEvents(instance(dispatcher))
 
-    chrome.tabs.onUpdated.trigger(1, 2, { id: 2 })
+    chrome.tabs.onUpdated.trigger(1, { status: 'loading' }, { id: 2 })
 
-    verify(dispatcher.fire(deepEqual(new TabUpdatedEvent(2))))
+    verify(dispatcher.fire(deepEqual(new TabUpdatedEvent(2, {
+      status: 'loading',
+      url: undefined,
+      title: undefined,
+      pinned: undefined,
+    }))))
       .once()
   })
 
