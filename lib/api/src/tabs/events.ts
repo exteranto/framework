@@ -1,4 +1,5 @@
 import { Event } from '@exteranto/core'
+import { TabChangeInfo } from './TabChangeInfo'
 
 /**
  * Parent event for all tab events.
@@ -26,7 +27,14 @@ export class TabCreatedEvent extends TabEvent {
  * most common is loading new url.
  */
 export class TabUpdatedEvent extends TabEvent {
-  //
+
+  /**
+   * @param tabId Id of tab that was activated
+   */
+  constructor (tabId: number, public changeInfo: TabChangeInfo) {
+    super(tabId)
+  }
+
 }
 
 /**

@@ -1,4 +1,5 @@
 import { Dispatcher } from '@exteranto/core'
+import { TabChangeInfo } from '../TabChangeInfo'
 import {
   TabCreatedEvent,
   TabUpdatedEvent,
@@ -11,8 +12,8 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
     dispatcher.fire(new TabCreatedEvent(tab.id))
   })
 
-  chrome.tabs.onUpdated.addListener((_, __, tab) => {
-    dispatcher.fire(new TabUpdatedEvent(tab.id))
+  chrome.tabs.onUpdated.addListener((_, info, tab) => {
+    dispatcher.fire(new TabUpdatedEvent(tab.id, info as TabChangeInfo))
   })
 
   chrome.tabs.onActivated.addListener(({ tabId }) => {
