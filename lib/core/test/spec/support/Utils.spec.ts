@@ -9,7 +9,7 @@ describe('Utility Class', () => {
   })
 
   it('determines extensions', () => {
-    (global as any).window = { }
+    (global as any).window = { browser: {} }
 
     expect(Utils.currentBrowser()).to.equal(Browser.EXTENSIONS)
   })

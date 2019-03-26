@@ -12,10 +12,9 @@ export class Utils {
       return Browser.TESTING
     }
 
-    return (window as any).chrome === undefined ? (window as any).safari === undefined
-      ? Browser.EXTENSIONS
+    return (window as any).browser !== undefined ? Browser.EXTENSIONS
+      : (window as any).safari === undefined ? Browser.CHROME
       : Browser.SAFARI
-      : Browser.CHROME
   }
 
 }
