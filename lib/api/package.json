@@ -1,6 +1,6 @@
 {
   "name": "@exteranto/api",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "description": "The collection of API Drivers for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -32,7 +32,7 @@
   "repository": "github:exteranto/api",
   "license": "MIT",
   "dependencies": {
-    "@exteranto/core": "^3.0.2"
+    "@exteranto/core": "^3.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
