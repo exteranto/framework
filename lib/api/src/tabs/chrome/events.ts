@@ -12,14 +12,7 @@ export const register: (dispatcher: Dispatcher) => void = (dispatcher) => {
   })
 
   chrome.tabs.onUpdated.addListener((_, info, tab) => {
-    const status: 'loading' | 'complete' = info.status as 'loading' | 'complete'
-
-    dispatcher.fire(new TabUpdatedEvent(tab.id, {
-      pinned: info.pinned,
-      status,
-      title: info.title,
-      url: info.url,
-    }))
+    dispatcher.fire(new TabUpdatedEvent(tab.id, info))
   })
 
   chrome.tabs.onActivated.addListener(({ tabId }) => {

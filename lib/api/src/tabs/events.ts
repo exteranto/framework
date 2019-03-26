@@ -1,29 +1,5 @@
 import { Event } from '@exteranto/core'
 
-export interface ChangeInfo {
-
-  /**
-   * The loading status of the tab.
-   */
-  status?: 'loading' | 'complete'
-
-  /**
-   * The tab's new URL if it has changed.
-   */
-  url?: string
-
-  /**
-   * The tab's new title if it has changed.
-   */
-  title?: string
-
-  /**
-   * The tab's new pinned status if it has changed.
-   */
-  pinned?: boolean
-
-}
-
 /**
  * Parent event for all tab events.
  */
@@ -54,7 +30,7 @@ export class TabUpdatedEvent extends TabEvent {
   /**
    * @param tabId Id of tab that was activated
    */
-  constructor (tabId: number, public changeInfo: ChangeInfo) {
+  constructor (tabId: number, public changeInfo: chrome.tabs.TabChangeInfo) {
     super(tabId)
   }
 

@@ -157,11 +157,7 @@ export default ({ chrome }) => {
 
     verify(dispatcher.fire(deepEqual(new TabUpdatedEvent(2, {
       status: 'loading',
-      url: undefined,
-      title: undefined,
-      pinned: undefined,
-    }))))
-      .once()
+    })))).once()
   })
 
   it('registers tab activated event', () => {
