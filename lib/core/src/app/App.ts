@@ -72,6 +72,10 @@ export class App {
    * Register the arbitrary window load event.
    */
   private registerWindowLoadEvent () : void {
+    if (document.readyState === 'complete') {
+      return this.dispatcher.mail(new WindowLoadedEvent())
+    }
+
     window.addEventListener('load', () => {
       this.dispatcher.mail(new WindowLoadedEvent())
     })

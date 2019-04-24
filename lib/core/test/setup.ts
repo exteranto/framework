@@ -12,6 +12,9 @@ const window: any = {
   addEventListener: (_, l) => l()
 }
 
+const document: any = {}
+
 window.top = window
 
 ;(global as any).window = window
+;(global as any).document = document
