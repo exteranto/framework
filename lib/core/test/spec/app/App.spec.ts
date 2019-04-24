@@ -88,6 +88,23 @@ describe('App', () => {
 
     verify(dispatcher.mail(deepEqual(new WindowLoadedEvent))).once()
   })
+
+  it('fire the window load event if window is already loaded', () => {
+    const app: App = new App(Script.BACKGROUND, { providers: [] }, () => {})
+
+    ;(app as any).dispatcher = instance(dispatcher)
+
+    const referenceStore = (global as any).window.addEventListener
+    ;(global as any).window.addEventListener = () => {}
+    ;(global as any).document.readyState = 'complete'
+
+    app.bootstrap()
+
+    ;(global as any).window.addEventListener = referenceStore
+
+    verify(dispatcher.mail(deepEqual(new WindowLoadedEvent))).once()
+  })
+
 })
 
 class TestProvider extends Provider {
