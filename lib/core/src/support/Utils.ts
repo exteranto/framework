@@ -12,8 +12,15 @@ export class Utils {
       return Browser.TESTING
     }
 
-    return (window as any).browser !== undefined ? Browser.EXTENSIONS
-      : (window as any).safari === undefined ? Browser.CHROME
+    // Some checking logic for browsers.
+    const extensions: boolean = typeof (window as any).InstallTrigger !== 'undefined'
+      || (!(document as any).documentNode && (window as any).StyleMedia)
+
+    const chrome: boolean = !!(window as any).chrome
+      && (!!(window as any).chrome.webstore || !!(window as any).chrome.runtime)
+
+    return extensions ? Browser.EXTENSIONS
+      : chrome ? Browser.CHROME
       : Browser.SAFARI
   }
 
