@@ -32,25 +32,25 @@
   "license": "MIT",
   "dependencies": {
     "@bausano/data-structures": "^1.0.3",
-    "reflect-metadata": "^0.1.12"
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7.1.0",
-    "@types/mocha": "^5.2.6",
-    "@types/node": "^11.11.3",
-    "@zerollup/ts-transform-paths": "^1.7.0",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.6.2",
+    "@zerollup/ts-transform-paths": "^1.7.3",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "mocha": "^6.1.4",
-    "nyc": "^13.3.0",
-    "sinon": "^7.2.7",
+    "nyc": "^14.1.1",
+    "sinon": "^7.3.2",
     "ts-mockito": "^2.3.1",
-    "ts-node": "^8.0.2",
+    "ts-node": "^8.3.0",
     "tsconfig-paths": "^3.8.0",
-    "tslint": "^5.14.0",
-    "ttypescript": "^1.5.6",
-    "typescript": "^3.3.3333"
+    "tslint": "^5.18.0",
+    "ttypescript": "^1.5.7",
+    "typescript": "^3.5.3"
   },
   "nyc": {
     "extension": [
