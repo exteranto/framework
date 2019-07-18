@@ -10,6 +10,7 @@ export * from './storage'
 export * from './extension'
 export * from './messaging'
 export * from './permissions'
+export * from './contextMenus'
 export * from './browserAction'
 
 /**
