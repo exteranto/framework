@@ -30,6 +30,11 @@ export class StorageProvider extends Provider {
     this.container.bind<Storage>(ChromeSyncStorage)
       .to(Storage).for(Browser.CHROME).tag('type', StorageType.SYNC)
 
+    // this.container.bind<Storage>(ChromeLocalStorage)
+    //   .to(Storage).for(Browser.EDGE).tag('type', StorageType.LOCAL)
+    // this.container.bind<Storage>(ChromeSyncStorage)
+    //   .to(Storage).for(Browser.EDGE).tag('type', StorageType.SYNC)
+
     this.container.bind<Storage>(ExtensionsLocalStorage)
       .to(Storage).for(Browser.EXTENSIONS).tag('type', StorageType.LOCAL)
     this.container.bind<Storage>(ExtensionsSyncStorage)
