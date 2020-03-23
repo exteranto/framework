@@ -20,7 +20,7 @@ export class ContextMenusProvider extends Provider {
    */
   public boot () : void {
     this.container.bind(ChromeContextMenus).to(ContextMenus).for(Browser.CHROME)
-    // this.container.bind(ChromeContextMenus).to(ContextMenus).for(Browser.EDGE)
+    this.container.bind(ChromeContextMenus).to(ContextMenus).for(Browser.EDGE)
     this.container.bind(ExtensionsContextMenus).to(ContextMenus).for(Browser.EXTENSIONS)
     this.container.bind(SafariContextMenus).to(ContextMenus).for(Browser.SAFARI)
 

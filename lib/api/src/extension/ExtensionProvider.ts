@@ -12,7 +12,7 @@ export class ExtensionProvider extends Provider {
    */
   public boot () : void {
     this.container.bind<Extension>(ChromeExtension).to(Extension).for(Browser.CHROME)
-    // this.container.bind<Extension>(ChromeExtension).to(Extension).for(Browser.EDGE)
+    this.container.bind<Extension>(ChromeExtension).to(Extension).for(Browser.EDGE)
     this.container.bind<Extension>(ExtensionsExtension).to(Extension).for(Browser.EXTENSIONS)
     this.container.bind<Extension>(SafariExtension).to(Extension).for(Browser.SAFARI)
   }

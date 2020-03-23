@@ -22,7 +22,7 @@ export class CookiesProvider extends Provider {
    */
   public boot () : void {
     this.container.bind<Cookies>(ChromeCookies).to(Cookies).for(Browser.CHROME)
-    // this.container.bind<Cookies>(ChromeCookies).to(Cookies).for(Browser.EDGE)
+    this.container.bind<Cookies>(ChromeCookies).to(Cookies).for(Browser.EDGE)
     this.container.bind<Cookies>(ExtensionsCookies).to(Cookies).for(Browser.EXTENSIONS)
     this.container.bind<Cookies>(SafariCookies).to(Cookies).for(Browser.SAFARI)
 

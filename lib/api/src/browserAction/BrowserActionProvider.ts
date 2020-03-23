@@ -21,7 +21,7 @@ export class BrowserActionProvider extends Provider {
    */
   public boot () : void {
     this.container.bind<BrowserAction>(ChromeBrowserAction).to(BrowserAction).for(Browser.CHROME)
-    // this.container.bind<BrowserAction>(ChromeBrowserAction).to(BrowserAction).for(Browser.EDGE)
+    this.container.bind<BrowserAction>(ChromeBrowserAction).to(BrowserAction).for(Browser.EDGE)
     this.container.bind<BrowserAction>(ExtensionsBrowserAction).to(BrowserAction).for(Browser.EXTENSIONS)
     this.container.bind<BrowserAction>(SafariBrowserAction).to(BrowserAction).for(Browser.SAFARI)
   }
