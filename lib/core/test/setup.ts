@@ -14,7 +14,12 @@ const window: any = {
 
 const document: any = {}
 
+const navigator: any = {
+  userAgent: ''
+}
+
 window.top = window
 
 ;(global as any).window = window
 ;(global as any).document = document
+;(global as any).navigator = navigator

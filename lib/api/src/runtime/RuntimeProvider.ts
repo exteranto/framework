@@ -22,6 +22,7 @@ export class RuntimeProvider extends Provider {
    */
   public boot () : void {
     this.container.bind<Runtime>(ChromeRuntime).to(Runtime).for(Browser.CHROME)
+    this.container.bind<Runtime>(ChromeRuntime).to(Runtime).for(Browser.EDGE)
     this.container.bind<Runtime>(ExtensionsRuntime).to(Runtime).for(Browser.EXTENSIONS)
     this.container.bind<Runtime>(SafariRuntime).to(Runtime).for(Browser.SAFARI)
 
