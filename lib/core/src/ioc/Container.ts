@@ -18,7 +18,7 @@ export class Container {
   /**
    * The bound container dependencies.
    */
-  private dependencies: Array<Dependency<any>> = []
+  private dependencies: Dependency<any>[] = []
 
   /**
    * The bound container dependencies.
