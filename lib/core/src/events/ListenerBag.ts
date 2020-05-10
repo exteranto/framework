@@ -48,7 +48,7 @@ export class ListenerBag {
   /**
    * Adds a middlware to this listener bag instance.
    *
-   * @param handle The middleware to be added
+   * @param middleware The middleware to be added
    * @return This instance for chaining
    */
   public addMiddleware (middleware: Middleware) : ListenerBag {
@@ -76,6 +76,33 @@ export class ListenerBag {
    */
   public hasListeners () : boolean {
     return this.listeners.length !== 0
+  }
+
+  /**
+   * Checks if this listener bag instance has at least one of `name` assigned
+   *
+   * @return Whether this instance has at least one of listener `name`
+   */
+  public hasListener (name: string) : boolean {
+    return this.listeners.some(listener => listener.constructor.name === name)
+  }
+
+  /**
+   * Removes any listeners of `name` from the listener bag instance.
+   *
+   * @param name The class name of the Listener to be removed
+   * @return This instance for chaining
+   */
+  public removeListener (name: string) : ListenerBag {
+    const filteredList: Listener[] = []
+
+    this.listeners.forEach(listener => {
+      listener.constructor.name === name ? null : filteredList.push(listener)
+    })
+
+    this.listeners = filteredList
+
+    return this
   }
 
   /**
