@@ -81,6 +81,7 @@ export class ListenerBag {
   /**
    * Checks if this listener bag instance has at least one of `name` assigned
    *
+   * @param name The class name of the Listener to be removed
    * @return Whether this instance has at least one of listener `name`
    */
   public hasListener (name: string) : boolean {
