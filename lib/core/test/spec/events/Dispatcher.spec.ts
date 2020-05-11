@@ -30,17 +30,24 @@ describe('Dispatcher', () => {
   })
 
   it('confirms registration of named listener', () => {
-    dispatcher.touch(TestEvent).addListener(new TestListener)
+    dispatcher.touch(TestEvent).addListener(new TestListenerA)
 
-    expect(dispatcher.touch(TestEvent).hasListener('TestListener')).to.be.true
+    expect(dispatcher.touch(TestEvent).hasListener('TestListenerA')).to.be.true
   })
 
   it('removes a named registered listener', () => {
     dispatcher.touch(TestEvent)
-      .addListener(new TestListener)
-      .removeListener('TestListener')
+      .addListener(new TestListenerA)
+      .addListener(new TestListenerB)
+      .addListener(new class implements Listener {
+        handle () : void {}
+      })
+      .addHook((event: TestEvent) => event)
+      .removeListener('TestListenerA')
 
-    expect(dispatcher.touch(TestEvent).hasListener('TestListener')).to.be.false
+    expect(dispatcher.touch(TestEvent).listeners).to.have.length(3)
+    expect(dispatcher.touch(TestEvent).hasListener('TestListenerB')).to.be.true
+    expect(dispatcher.touch(TestEvent).hasListener('TestListenerA')).to.be.false
   })
 
   it('binds an event hook', (done) => {
@@ -199,9 +206,14 @@ describe('Dispatcher', () => {
   })
 })
 
-class TestListener implements Listener {
+class TestListenerA implements Listener {
   public handle () : void {}
 }
+
+class TestListenerB implements Listener {
+  public handle () : void {}
+}
+
 
 class TestException extends Error {
   //

@@ -95,13 +95,9 @@ export class ListenerBag {
    * @return This instance for chaining
    */
   public removeListener (name: string) : ListenerBag {
-    const filteredList: Listener[] = []
-
-    this.listeners.forEach(listener => {
-      listener.constructor.name === name ? null : filteredList.push(listener)
+    this.listeners = this.listeners.filter(listener => {
+      return listener.constructor.name !== name
     })
-
-    this.listeners = filteredList
 
     return this
   }
