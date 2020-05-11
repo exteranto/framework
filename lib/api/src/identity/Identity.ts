@@ -11,11 +11,11 @@ export abstract class Identity {
 
   /**
    * Performs first steps of OAuth2 flow, including authenticating user with the
-   * service provider and and handling client authorization.
+   * service provider and handling client authorization.
    *
    * @param url The url required by service provider to grant access token
-   * @param interactive Whether flow should complete/fail silently
-   * @returns The redirect url + credentials
+   * @param interactive Whether flow should complete/fail silently - defaults true
+   * @return The redirect url + credentials
    */
   public abstract launchAuthFlow (url: string, interactive?: boolean) : Promise<string>
 

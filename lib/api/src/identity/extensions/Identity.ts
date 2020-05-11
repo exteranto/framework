@@ -13,8 +13,7 @@ export class Identity extends AbstractIdentity {
    * {@inheritdoc}
    */
   public launchAuthFlow (url: string, interactive: boolean = true) : Promise<string> {
-    return browser.identity.launchWebAuthFlow({ url, interactive })
-      .catch(error => Promise.reject(error))
+    return browser.identity.launchWebAuthFlow({ url, interactive }).catch(Promise.reject)
   }
 
 }
