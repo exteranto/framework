@@ -24,7 +24,7 @@ export default ({ chrome }) => {
     const details = { url: 'authentication-endpoint', interactive: true }
 
     chrome.identity.launchWebAuthFlow.withArgs(details)
-      .resolves('https://xyz.chromiumapp.org/oauth2?code=123')
+      .yields('https://xyz.chromiumapp.org/oauth2?code=123')
 
     expect(identity.launchAuthFlow('authentication-endpoint'))
       .to.eventually.equal('https://xyz.chromiumapp.org/oauth2?code=123')
