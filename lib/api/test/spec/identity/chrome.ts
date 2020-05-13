@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { Identity } from '@internal/identity'
+import { Identity, AuthFlowFailedException } from '@internal/identity'
 import { Identity as ChromeIdentity } from '@internal/identity/chrome/Identity'
 
 export default ({ chrome }) => {
@@ -39,7 +39,7 @@ export default ({ chrome }) => {
     chrome.identity.launchWebAuthFlow.yields(undefined)
 
     expect(identity.launchAuthFlow('invalid-endpoint', false))
-      .to.eventually.be.rejected
+      .to.eventually.be.rejectedWith(AuthFlowFailedException)
     expect(chrome.identity.launchWebAuthFlow.calledOnce).to.be.true
     expect(chrome.identity.launchWebAuthFlow.calledWith(details)).to.be.true
   })

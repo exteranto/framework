@@ -14,7 +14,7 @@ export abstract class Identity {
    * service provider and handling client authorization.
    *
    * @param url The url required by service provider to grant access token
-   * @param interactive Whether flow should complete/fail silently - defaults true
+   * @param interactive If false, flow completes/fails silently
    * @return The redirect url + credentials
    */
   public abstract launchAuthFlow (url: string, interactive?: boolean) : Promise<string>

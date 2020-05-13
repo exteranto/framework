@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { Identity } from '@internal/identity'
+import { Identity, AuthFlowFailedException } from '@internal/identity'
 import { Identity as ExtensionsIdentity } from '@internal/identity/extensions/Identity'
 
 export default ({ browser }) => {
@@ -35,7 +35,7 @@ export default ({ browser }) => {
   it('rejects with invalid url argument', () => {
     const details = { url: 'invalid-endpoint', interactive: false }
 
-    browser.identity.launchWebAuthFlow.withArgs(details).rejects()
+    browser.identity.launchWebAuthFlow.withArgs(details).rejects(AuthFlowFailedException)
 
     expect(identity.launchAuthFlow('invalid-endpoint', false))
       .to.eventually.be.rejected
