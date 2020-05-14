@@ -1,8 +1,8 @@
 import { Event } from './Event'
+import { Class } from '@internal/ioc'
 import { Listener } from './Listener'
 import { Middleware } from './Middleware'
 import { HandlePipeline } from '@bausano/data-structures'
-import { Class } from '@internal/ioc'
 
 export class ListenerBag {
 
@@ -96,9 +96,7 @@ export class ListenerBag {
    * @return This instance for chaining
    */
   public removeListener (listener: Class<Listener>) : ListenerBag {
-    this.listeners = this.listeners.filter(l => {
-      return l.constructor.name !== listener.name
-    })
+    this.listeners = this.listeners.filter(l => l.constructor.name !== listener.name)
 
     return this
   }
