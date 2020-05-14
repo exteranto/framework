@@ -32,7 +32,7 @@ describe('Dispatcher', () => {
   it('confirms registration of named listener', () => {
     dispatcher.touch(TestEvent).addListener(new TestListenerA)
 
-    expect(dispatcher.touch(TestEvent).hasListener('TestListenerA')).to.be.true
+    expect(dispatcher.touch(TestEvent).hasListener(TestListenerA)).to.be.true
   })
 
   it('removes a named registered listener', () => {
@@ -43,11 +43,11 @@ describe('Dispatcher', () => {
         handle () : void {}
       })
       .addHook((event: TestEvent) => event)
-      .removeListener('TestListenerA')
+      .removeListener(TestListenerA)
 
     expect(dispatcher.touch(TestEvent).listeners).to.have.length(3)
-    expect(dispatcher.touch(TestEvent).hasListener('TestListenerB')).to.be.true
-    expect(dispatcher.touch(TestEvent).hasListener('TestListenerA')).to.be.false
+    expect(dispatcher.touch(TestEvent).hasListener(TestListenerB)).to.be.true
+    expect(dispatcher.touch(TestEvent).hasListener(TestListenerA)).to.be.false
   })
 
   it('binds an event hook', (done) => {
