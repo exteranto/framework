@@ -29,6 +29,27 @@ describe('Dispatcher', () => {
     dispatcher.fire(new TestEvent({ text: 'asd' }))
   })
 
+  it('confirms registration of named listener', () => {
+    dispatcher.touch(TestEvent).addListener(new TestListenerA)
+
+    expect(dispatcher.touch(TestEvent).hasListener(TestListenerA)).to.be.true
+  })
+
+  it('removes a named registered listener', () => {
+    dispatcher.touch(TestEvent)
+      .addListener(new TestListenerA)
+      .addListener(new TestListenerB)
+      .addListener(new class implements Listener {
+        handle () : void {}
+      })
+      .addHook((event: TestEvent) => event)
+      .removeListener(TestListenerA)
+
+    expect(dispatcher.touch(TestEvent).listeners).to.have.length(3)
+    expect(dispatcher.touch(TestEvent).hasListener(TestListenerB)).to.be.true
+    expect(dispatcher.touch(TestEvent).hasListener(TestListenerA)).to.be.false
+  })
+
   it('binds an event hook', (done) => {
     dispatcher.touch(TestEvent).addHook((event: TestEvent) => {
       try {
@@ -87,7 +108,7 @@ describe('Dispatcher', () => {
     expect(dispatcher.touch(TestEvent).middleware).to.have.lengthOf(1)
   })
 
-  it('correctly exetuces middleware', (done) => {
+  it('correctly executes middleware', (done) => {
     dispatcher.touch(TestEvent).addMiddleware(new class implements Middleware {
       public async handle (event: TestEvent) {
         event.setText(event.getText() + '_changed')
@@ -184,6 +205,15 @@ describe('Dispatcher', () => {
     dispatcher.fire(new ChildTestEvent)
   })
 })
+
+class TestListenerA implements Listener {
+  public handle () : void {}
+}
+
+class TestListenerB implements Listener {
+  public handle () : void {}
+}
+
 
 class TestException extends Error {
   //

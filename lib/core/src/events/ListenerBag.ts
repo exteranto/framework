@@ -1,4 +1,5 @@
 import { Event } from './Event'
+import { Class } from '@internal/ioc'
 import { Listener } from './Listener'
 import { Middleware } from './Middleware'
 import { HandlePipeline } from '@bausano/data-structures'
@@ -48,7 +49,7 @@ export class ListenerBag {
   /**
    * Adds a middlware to this listener bag instance.
    *
-   * @param handle The middleware to be added
+   * @param middleware The middleware to be added
    * @return This instance for chaining
    */
   public addMiddleware (middleware: Middleware) : ListenerBag {
@@ -66,7 +67,7 @@ export class ListenerBag {
   public async dispatch (event: Event) : Promise<void> {
     return new HandlePipeline<Event>()
       .feed(event, this.middleware)
-      .then(result => this.listeners.forEach(listener => listener.handle(result)))
+      .then(result => this.listeners.forEach(l => l.handle(result)))
   }
 
   /**
@@ -76,6 +77,28 @@ export class ListenerBag {
    */
   public hasListeners () : boolean {
     return this.listeners.length !== 0
+  }
+
+  /**
+   * Checks if this listener bag instance has at least one of `name` assigned
+   *
+   * @param listener The class of the Listener to be queried
+   * @return Whether this instance has at least one of listener `name`
+   */
+  public hasListener (listener: Class<Listener>) : boolean {
+    return this.listeners.some(l => l.constructor.name === listener.name)
+  }
+
+  /**
+   * Removes any listeners of `name` from the listener bag instance.
+   *
+   * @param listener The class of the Listener to be removed
+   * @return This instance for chaining
+   */
+  public removeListener (listener: Class<Listener>) : ListenerBag {
+    this.listeners = this.listeners.filter(l => l.constructor.name !== listener.name)
+
+    return this
   }
 
   /**
