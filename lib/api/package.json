@@ -1,6 +1,6 @@
 {
   "name": "@exteranto/api",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "description": "The collection of API Drivers for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -68,5 +68,8 @@
       "html"
     ],
     "all": true
+  },
+  "dependencies": {
+    "@exteranto/core": "^3.2.3"
   }
 }
