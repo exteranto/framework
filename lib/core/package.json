@@ -1,6 +1,6 @@
 {
   "name": "@exteranto/core",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "description": "The Application Core Functionality for the Exteranto Framework.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
