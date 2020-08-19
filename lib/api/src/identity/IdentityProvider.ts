@@ -12,7 +12,7 @@ export class IdentityProvider extends Provider {
   public boot () : void {
     this.container.bind<Identity>(ChromeIdentity).to(Identity).for(Browser.CHROME)
     this.container.bind<Identity>(ChromeIdentity).to(Identity).for(Browser.EDGE)
-    this.container.bind<Identity>(ExtensionsIdentity).to(Identity).for(Browser.EXTENSIONS)
+    this.container.bind<Identity>(ExtensionsIdentity).to(Identity).for(Browser.FIREFOX)
   }
 
   /**

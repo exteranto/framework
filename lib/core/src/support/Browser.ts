@@ -5,7 +5,7 @@
 export enum Browser {
   CHROME = 'chrome',
   EDGE = 'edge',
-  EXTENSIONS = 'extensions',
+  FIREFOX = 'firefox',
   OPERA = 'opera',
   SAFARI = 'safari',
   TESTING = 'testing',

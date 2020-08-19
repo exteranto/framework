@@ -21,17 +21,21 @@ export class Utils {
 
     const edge: boolean = chrome && (navigator.userAgent.indexOf('Edg') !== -1)
 
-    const extensions: boolean = typeof (window as any).InstallTrigger !== 'undefined'
+    const firefox: boolean = typeof (window as any).InstallTrigger !== 'undefined'
       || (!(document as any).documentNode && (window as any).StyleMedia)
 
     const opera: boolean = (!!(window as any).opr && !!(window as any).addons)
       || !!(window as any).opera || navigator.userAgent.indexOf(' OPR/') >= 0
 
-    // Currently we will not return `Browser.OPERA` but fall back to `.CHROME`
-    return extensions ? Browser.EXTENSIONS
+    const safari: boolean = /constructor/i.test((window as any).HTMLElement)
+      || (function (p: any) : boolean { return p.toString() === '[object SafariRemoteNotification]' })
+      ((typeof (window as any).safari !== 'undefined' && (window as any).safari.pushNotification))
+
+    return firefox ? Browser.FIREFOX
       : edge ? Browser.EDGE
-      : chrome ? Browser.CHROME
-      : Browser.SAFARI
+      : opera ? Browser.OPERA
+      : safari ? Browser.SAFARI
+      : Browser.CHROME
   }
 
 }

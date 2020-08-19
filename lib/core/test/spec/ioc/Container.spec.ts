@@ -66,12 +66,12 @@ describe('Container', () => {
 
   it('binds a dependency to an abstract type with a browser specified', () => {
     container.bind<ChromeDependency>(ChromeDependency).to(Abstract).for(Browser.CHROME)
-    container.bind<ExtensionsDependency>(ExtensionsDependency).to(Abstract).for(Browser.EXTENSIONS)
+    container.bind<ExtensionsDependency>(ExtensionsDependency).to(Abstract).for(Browser.FIREFOX)
 
     expect(container.resolve<Abstract>(Abstract)).to.be.instanceof(ChromeDependency)
       .and.not.be.instanceof(ExtensionsDependency)
 
-    container.bindParam('browser', Browser.EXTENSIONS)
+    container.bindParam('browser', Browser.FIREFOX)
 
     expect(container.resolve<Abstract>(Abstract))
       .to.be.instanceof(ExtensionsDependency)

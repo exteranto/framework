@@ -36,9 +36,9 @@ export class StorageProvider extends Provider {
       .to(Storage).for(Browser.EDGE).tag('type', StorageType.SYNC)
 
     this.container.bind<Storage>(ExtensionsLocalStorage)
-      .to(Storage).for(Browser.EXTENSIONS).tag('type', StorageType.LOCAL)
+      .to(Storage).for(Browser.FIREFOX).tag('type', StorageType.LOCAL)
     this.container.bind<Storage>(ExtensionsSyncStorage)
-      .to(Storage).for(Browser.EXTENSIONS).tag('type', StorageType.SYNC)
+      .to(Storage).for(Browser.FIREFOX).tag('type', StorageType.SYNC)
 
     this.container.bind<Storage>(SafariLocalStorage)
       .to(Storage).for(Browser.SAFARI).tag('type', StorageType.LOCAL)

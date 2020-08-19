@@ -22,7 +22,7 @@ export class TabsProvider extends Provider {
   public boot () : void {
     this.container.bind<Tabs>(ChromeTabs).to(Tabs).for(Browser.CHROME)
     this.container.bind<Tabs>(ChromeTabs).to(Tabs).for(Browser.EDGE)
-    this.container.bind<Tabs>(ExtensionsTabs).to(Tabs).for(Browser.EXTENSIONS)
+    this.container.bind<Tabs>(ExtensionsTabs).to(Tabs).for(Browser.FIREFOX)
     this.container.bind<Tabs>(SafariTabs).to(Tabs).for(Browser.SAFARI)
   }
 
