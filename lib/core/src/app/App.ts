@@ -1,7 +1,7 @@
 import { Provider, Script, Utils } from '@internal/support'
-import { AppBootedEvent, WindowLoadedEvent, WindowContentEvent } from './events'
 import { Autowired, Container, Self, Class } from '@internal/ioc'
 import { Dispatcher, Event, ListenerBag } from '@internal/events'
+import { AppBootedEvent, WindowLoadedEvent, WindowContentEvent } from './events'
 
 export class App {
 
