@@ -76,12 +76,16 @@ export class App {
       return this.dispatcher.mail(new WindowLoadedEvent())
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      this.dispatcher.mail(new WindowContentEvent())
-    }, { once: true })
-
     window.addEventListener('load', () => {
       this.dispatcher.mail(new WindowLoadedEvent())
+    }, { once: true })
+
+    if (document.readyState === 'interactive') {
+      return this.dispatcher.mail(new WindowContentEvent())
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      this.dispatcher.mail(new WindowContentEvent())
     }, { once: true })
   }
 
