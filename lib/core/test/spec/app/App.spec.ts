@@ -129,6 +129,7 @@ describe('App', () => {
     ;(global as any).window.addEventListener = referenceStore
 
     verify(dispatcher.mail(deepEqual(new WindowContentEvent))).once()
+    verify(dispatcher.mail(deepEqual(new WindowLoadedEvent))).never()
   })
 
   it('does not fire the window content event if window is already loaded', () => {

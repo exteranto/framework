@@ -69,9 +69,10 @@ export class App {
   }
 
   /**
-   * Register the arbitrary window content / load events.
+   * Register the arbitrary window content/load events.
    */
   private registerWindowEvents () : void {
+    // Handy full window load state
     if (document.readyState === 'complete') {
       return this.dispatcher.mail(new WindowLoadedEvent())
     }
@@ -80,6 +81,7 @@ export class App {
       this.dispatcher.mail(new WindowLoadedEvent())
     }, { once: true })
 
+    // Handle window in interactive state
     if (document.readyState === 'interactive') {
       return this.dispatcher.mail(new WindowContentEvent())
     }
