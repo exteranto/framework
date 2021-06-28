@@ -1,7 +1,7 @@
 import { Provider, Script, Utils } from '@internal/support'
-import { AppBootedEvent, WindowLoadedEvent } from './events'
 import { Autowired, Container, Self, Class } from '@internal/ioc'
 import { Dispatcher, Event, ListenerBag } from '@internal/events'
+import { AppBootedEvent, WindowLoadedEvent, WindowContentEvent } from './events'
 
 export class App {
 
@@ -43,7 +43,7 @@ export class App {
   public bootstrap () : void {
     this.registerBaseParams()
     this.registerParamBindings()
-    this.registerWindowLoadEvent()
+    this.registerWindowEvents()
     this.findProviders()
     this.bootProviders()
     this.registerProviders()
@@ -69,16 +69,26 @@ export class App {
   }
 
   /**
-   * Register the arbitrary window load event.
+   * Register the arbitrary window content/load events.
    */
-  private registerWindowLoadEvent () : void {
+  private registerWindowEvents () : void {
+    // Handy full window load state
     if (document.readyState === 'complete') {
       return this.dispatcher.mail(new WindowLoadedEvent())
     }
 
     window.addEventListener('load', () => {
       this.dispatcher.mail(new WindowLoadedEvent())
-    })
+    }, { once: true })
+
+    // Handle window in interactive state
+    if (document.readyState === 'interactive') {
+      return this.dispatcher.mail(new WindowContentEvent())
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      this.dispatcher.mail(new WindowContentEvent())
+    }, { once: true })
   }
 
   /**

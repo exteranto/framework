@@ -1,6 +1,14 @@
 import { Event } from '@internal/events'
 
 /**
+ * The Window content event is fired after the native window.domcontentloaded
+ * event is triggered. This event has no payload.
+ */
+export class WindowContentEvent extends Event {
+  //
+}
+
+/**
  * The window loaded event is fired after the native window.load event is
  * triggered. This event has no payload.
  */
