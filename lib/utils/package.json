@@ -44,7 +44,7 @@
     "@zerollup/ts-transform-paths": "^1.7.17",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "mocha": "^7.1.2",
+    "mocha": "^10.2.0",
     "nyc": "^15.0.1",
     "sinon": "^9.0.2",
     "ts-mockito": "^2.5.0",
